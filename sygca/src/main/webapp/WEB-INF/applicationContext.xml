@@ -11,13 +11,13 @@
 
 
 <!-- <context:annotation-config /> -->
-	<context:component-scan base-package="com.sati" />
+	<context:component-scan base-package="com.daaje" />
  
  
    <!-- definition de la datasource -->
 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://127.0.0.1/sygca_bd?zeroDateTimeBehavior=convertToNull"/>
+		<property name="url" value="jdbc:mysql://127.0.0.1/sigca_bd?zeroDateTimeBehavior=convertToNull"/>
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
@@ -26,7 +26,7 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.sati.model" />
+		<property name="packagesToScan" value="com.daaje.model" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -44,11 +44,11 @@
        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
-     <bean id="Dao" class="com.sati.dao.Dao">
+     <bean id="Dao" class="com.daaje.dao.Dao">
      	<property name="sessionFactory" ref="sessionFactory"></property>
      </bean>
      
-     <bean id="service" class="com.sati.service.Service">
+     <bean id="service" class="com.daaje.service.Service">
      	<property name="DAO" ref="Dao"></property>
      </bean>
 </beans>
