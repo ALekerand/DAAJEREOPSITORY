@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/templates/template.xhtml">
+	
+	<ui:define name="body">
+	
+		<h:form id="form">
+		
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<h:panelGrid columns="2">		
+			<p:outputLabel value="Code :"></p:outputLabel>
+			<p:inputText value="#{typeActiviteControllers.typeActivite.codeTypeactivite}"></p:inputText>
+			
+			<p:outputLabel value="Activité :"></p:outputLabel>
+			<p:inputText value="#{typeActiviteControllers.typeActivite.libelleTypeactivite}"></p:inputText>
+			
+			<p:commandButton value="Enregistrer" actionListener="typeActiviteControllers.enregistrer" update="form"></p:commandButton>
+			<p:commandButton value="Annuler"></p:commandButton>	
+	   </h:panelGrid>
+		
+		</h:form>
+				
+	</ui:define>
+	
+	</ui:composition>
+</html>
