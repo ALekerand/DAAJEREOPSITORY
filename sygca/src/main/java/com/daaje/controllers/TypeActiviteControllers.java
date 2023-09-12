@@ -1,5 +1,8 @@
 package com.daaje.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -13,14 +16,20 @@ import com.daaje.service.Iservice;
 public class TypeActiviteControllers {
 	@Autowired
 	public Iservice iservice;
-	
 	public TypeActivite typeActivite =  new TypeActivite();
+	public List listObject = new ArrayList<>();
 	
 //Methodes
 	public void enregistrer(){
 		iservice.addObject(typeActivite);
+		annuler();
 		info("Enregistrement effectué");
 	}
+	
+	public void annuler() {
+		typeActivite.setCodeTypeactivite(null);
+		typeActivite.setLibelleTypeactivite(null);
+	}	
 	
 	public void info(String message){
 	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", message));	
@@ -33,6 +42,14 @@ public class TypeActiviteControllers {
 
 	public void setTypeActivite(TypeActivite typeActivite) {
 		this.typeActivite = typeActivite;
+	}
+
+	public List getListObject() {
+		return listObject = iservice.getObjects("TypeActivite");
+	}
+
+	public void setListObject(List listObject) {
+		this.listObject = listObject;
 	}
 		
 }

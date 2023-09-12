@@ -7,7 +7,7 @@
       
       
 <ui:composition template="/templates/template.xhtml">
-	
+
 	<ui:define name="body">
 	
 		<h:form id="form">
@@ -22,8 +22,29 @@
 			<p:inputText value="#{niveauAnimateurControllers.niveauAnimateur.nomNiveau}"></p:inputText>
 			
 			<p:commandButton value="Enregistrer" actionListener="#{niveauAnimateurControllers.enregistrer}" update="form"></p:commandButton>
-			<p:commandButton value="Annuler"></p:commandButton>	
+			<p:commandButton value="Annuler" actionListener="#{niveauAnimateurControllers.annuler}" update="form"></p:commandButton>
+			<p:commandButton value="Modifier"></p:commandButton>	
 	    </h:panelGrid>
+	    
+	    <p:dataTable var="toto" value="#{niveauAnimateurControllers.listObject}" selectionMode="single" selection="#{niveauAnimateurControllers.selectedObject}" rowKey="#{toto.idNiveau}"       
+	     rows="5" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    <p:ajax event="rowSelect" process="@this" listener="#{niveauAnimateurControllers.selectionnerLigne}" update="form"></p:ajax>
+	    	<f:facet name="header">
+                Liste des niveaux animateurs
+            </f:facet>	
+	    	<p:column headerText="Code">
+	    		<h:outputText value="#{toto.codeNiveau}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Niveau">
+	    		<h:outputText value="#{toto.nomNiveau}" />
+	    	</p:column>
+	    
+	    </p:dataTable>
 		
 		</h:form>
 				
