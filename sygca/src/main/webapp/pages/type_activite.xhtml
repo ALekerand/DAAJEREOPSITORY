@@ -26,12 +26,13 @@
 			<p:commandButton value="Modifier"></p:commandButton>	
 	   </h:panelGrid>
 	   
-	   <p:dataTable var="toto" value="#{typeActiviteControllers.listObject}" rows="5" paginatorPosition="bottom"
-                 paginator="true"
+	   <p:dataTable var="toto" value="#{typeActiviteControllers.listObject}" selectionMode="single" selection="#{typeActiviteControllers.selectedObject}" rowKey="#{toto.idTypeactivite}"
+	   rows="5" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,15">
 	    
+	    <p:ajax event="rowSelect" process="@this" listener="#{typeActiviteControllers.selectionnerLigne}" update="form"></p:ajax>
 	    	<f:facet name="header">
                 Liste des types d'activité
             </f:facet>	

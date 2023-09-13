@@ -17,7 +17,8 @@ public class TypeActiviteControllers {
 	@Autowired
 	public Iservice iservice;
 	public TypeActivite typeActivite =  new TypeActivite();
-	public List listObject = new ArrayList<>();
+	public TypeActivite selectedObject = new TypeActivite();
+	public List listObject = new ArrayList();
 	
 //Methodes
 	public void enregistrer(){
@@ -30,6 +31,10 @@ public class TypeActiviteControllers {
 		typeActivite.setCodeTypeactivite(null);
 		typeActivite.setLibelleTypeactivite(null);
 	}	
+	
+	public void selectionnerLigne() {
+		typeActivite = selectedObject;
+	}
 	
 	public void info(String message){
 	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", message));	
@@ -50,6 +55,14 @@ public class TypeActiviteControllers {
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
+	}
+
+	public TypeActivite getSelectedObject() {
+		return selectedObject;
+	}
+
+	public void setSelectedObject(TypeActivite selectedObject) {
+		this.selectedObject = selectedObject;
 	}
 		
 }

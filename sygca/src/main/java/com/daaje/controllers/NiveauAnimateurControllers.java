@@ -19,8 +19,7 @@ public class NiveauAnimateurControllers {
 	public NiveauAnimateur niveauAnimateur = new NiveauAnimateur();
 	public NiveauAnimateur selectedObject = new NiveauAnimateur();
 	public List listObject = new ArrayList();
-	
-	
+		
 //Methodes
 	public void enregistrer(){
 		iservice.addObject(niveauAnimateur);
