@@ -12,21 +12,31 @@
 	
 		<h:form id="form">
 		
-		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		<p:messages id="message" autoUpdate="true" closable="true" showDetail="false"/>
 		
+		<p:panel header="Enregistrement des niveaux animateurs">
 		<h:panelGrid columns="2">		
-			<p:outputLabel value="Code:"></p:outputLabel>
-			<p:inputText value="#{niveauAnimateurControllers.niveauAnimateur.codeNiveau}"></p:inputText>
+			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+			<p:inputText id="input_code" value="#{niveauAnimateurControllers.niveauAnimateur.codeNiveau}" required="true"></p:inputText>
 			
-			<p:outputLabel value="Niveau:"></p:outputLabel>
-			<p:inputText value="#{niveauAnimateurControllers.niveauAnimateur.nomNiveau}"></p:inputText>
+			<p:outputLabel for="input_niveau" value="Niveau:"></p:outputLabel>
+			<p:inputText id="input_niveau" value="#{niveauAnimateurControllers.niveauAnimateur.nomNiveau}" required="true"></p:inputText>
 			
-			<p:commandButton value="Enregistrer" actionListener="#{niveauAnimateurControllers.enregistrer}" update="form"></p:commandButton>
-			<p:commandButton value="Annuler" actionListener="#{niveauAnimateurControllers.annuler}" update="form"></p:commandButton>
-			<p:commandButton value="Modifier"></p:commandButton>	
+			
 	    </h:panelGrid>
+	    </p:panel>
 	    
-	    <p:dataTable var="toto" value="#{niveauAnimateurControllers.listObject}" selectionMode="single" selection="#{niveauAnimateurControllers.selectedObject}" rowKey="#{toto.idNiveau}"       
+	    <p:toolbar>
+	    	<f:facet name="left">
+	    		<p:commandButton value="Enregistrer" actionListener="#{niveauAnimateurControllers.enregistrer}" update="form" binding="#{niveauAnimateurControllers.cmdBEnregistrer}"></p:commandButton>
+			<p:commandButton value="Annuler" process="@this" actionListener="#{niveauAnimateurControllers.annuler}" update="form"></p:commandButton>
+			<p:commandButton value="Modifier" actionListener="#{niveauAnimateurControllers.modifier}" update="form" binding="#{niveauAnimateurControllers.cmdBModifier}"></p:commandButton>	
+	    	</f:facet>
+	    </p:toolbar>
+	    
+	    <br />
+	    
+	    <p:dataTable id="data" var="toto" value="#{niveauAnimateurControllers.listObject}" selectionMode="single" selection="#{niveauAnimateurControllers.selectedObject}" rowKey="#{toto.idNiveau}"       
 	     rows="5" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
