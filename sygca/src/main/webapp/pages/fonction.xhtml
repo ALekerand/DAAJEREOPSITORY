@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/template.xhtml">
+
+	<ui:define name="body">
+	
+		<h:form id="form">
+		
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<h:panelGrid columns="2">		
+			<p:outputLabel value="Code:"></p:outputLabel>
+			<p:inputText value="#{fonctionControllers.fonction.codeFonction}"></p:inputText>
+			
+			<p:outputLabel value="Fonction:"></p:outputLabel>
+			<p:inputText value="#{fonctionControllers.fonction.libelleFonction}"></p:inputText>
+			
+			<p:commandButton value="Enregistrer" actionListener="#{fonctionControllers.enregistrer}" update="form"></p:commandButton>
+			<p:commandButton value="Annuler" actionListener="#{fonctionControllers.annuler}" update="form"></p:commandButton>
+			<p:commandButton value="Modifier"></p:commandButton>	
+	    </h:panelGrid>
+	    
+	    <p:dataTable var="toto" value="#{fonctionControllers.listObject}" selectionMode="single" selection="#{fonctionControllers.selectedObject}" rowKey="#{toto.idFonction}"       
+	     rows="5" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    <p:ajax event="rowSelect" process="@this" listener="#{fonctionControllers.selectionnerLigne}" update="form"></p:ajax>
+	    	<f:facet name="header">
+                Liste des fonctions
+            </f:facet>	
+	    	<p:column headerText="Code">
+	    		<h:outputText value="#{toto.codeFonction}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Fonction">
+	    		<h:outputText value="#{toto.libelleFonction}" />
+	    	</p:column>
+	    
+	    </p:dataTable>
+		
+		</h:form>
+				
+	</ui:define>
+
+</ui:composition>
+</html>
