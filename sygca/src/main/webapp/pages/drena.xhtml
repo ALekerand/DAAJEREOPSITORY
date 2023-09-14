@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/template.xhtml">
+	
+	<ui:define name="body">
+	
+		<h:form id="form">
+		
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<h:panelGrid columns="2">		
+			<p:outputLabel value="Code:"></p:outputLabel>
+			<p:inputText value="#{drenaController.drena.codeDrena}"></p:inputText>
+			
+			<p:outputLabel value="Nom:"></p:outputLabel>
+			<p:inputText value="#{drenaController.drena.nomDrena}"></p:inputText>
+			
+			<p:outputLabel value="Mail:"></p:outputLabel>
+			<p:inputText value="#{drenaController.drena.mailDrena}"></p:inputText>
+			
+			<p:commandButton value="Enregistrer" actionListener="#{drenaController.enregistrer}" update="form"></p:commandButton>
+			<p:commandButton value="Annuler" actionListener="#{drenaController.annuler}" update="form"></p:commandButton>
+			<p:commandButton value="Modifier"></p:commandButton>	
+	    </h:panelGrid>
+	    
+	    <p:dataTable var="toto" value="#{drenaControllers.listObject}" selectionMode="single" selection="#{drenaController.selectedObject}" rowKey="#{toto.idDrena}"       
+	     rows="5" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    <p:ajax event="rowSelect" process="@this" listener="#{drenaController.selectionnerLigne}" update="form"></p:ajax>
+	    	<f:facet name="header">
+                Liste des DRENA
+            </f:facet>	
+	    	<p:column headerText="Code">
+	    		<h:outputText value="#{toto.codeDrena}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Nom">
+	    		<h:outputText value="#{toto.nomDrena}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Mail">
+	    		<h:outputText value="#{toto.mailDrena}" />
+	    	</p:column>
+	    
+	    </p:dataTable>
+		
+		</h:form>
+				
+	</ui:define>
+	
+	</ui:composition>
+</html>
