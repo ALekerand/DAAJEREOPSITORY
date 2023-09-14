@@ -11,16 +11,15 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.daaje.model.Iepp;
-import com.daaje.model.NiveauAnimateur;
+import com.daaje.model.SousPrefecture;
 import com.daaje.service.Iservice;
 
 @Component
-public class IepController {
+public class SousPrefectureController {
 	@Autowired
 	public Iservice iservice;
-	public Iepp iep = new Iepp();
-	public Iepp selectedObject = new Iepp();
+	public SousPrefecture sousPrefecture = new SousPrefecture();
+	public SousPrefecture selectedObject = new SousPrefecture();
 	public List listObject = new ArrayList();
 	
 //Controle des composants
@@ -35,28 +34,27 @@ public class IepController {
 	
 	
 	public void enregistrer(){
-		iservice.addObject(this.iep);
+		iservice.addObject(this.sousPrefecture);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(iep);
+		iservice.updateObject(sousPrefecture);
 		annuler();
 		info("Modification effectuée");
 	}
 	
 	public void annuler() {
-		iep.setCodeIepp(null);
-		iep.setNomIepp(null);
-		iep.setMailIepp(null);
+		sousPrefecture.setCodePrefecture(null);
+		sousPrefecture.setNomPrefecture(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		
 	}
 	
 	public void selectionnerLigne() {
-		iep = selectedObject;
+		sousPrefecture = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
 	}
@@ -66,17 +64,29 @@ public class IepController {
 	}
 		
 //Getters and setters
-	
+	public SousPrefecture getSousPrefecture() {
+		return sousPrefecture;
+	}
+
+	public void setSousPrefecture(SousPrefecture sousPrefecture) {
+		this.sousPrefecture = sousPrefecture;
+	}
 
 	public List getListObject() {
-		return listObject = iservice.getObjects("Iepp");
+		return listObject = iservice.getObjects("SousPrefecture");
 	}
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
 	}
 
-	
+	public SousPrefecture getSelectedObject() {
+		return selectedObject;
+	}
+
+	public void setSelectedObject(SousPrefecture selectedObject) {
+		this.selectedObject = selectedObject;
+	}
 
 	public CommandButton getCmdBModifier() {
 		return cmdBModifier;
@@ -93,27 +103,5 @@ public class IepController {
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
 	}
-
-
-	public Iepp getIep() {
-		return iep;
-	}
-
-
-	public void setIep(Iepp iep) {
-		this.iep = iep;
-	}
-
-
-	public Iepp getSelectedObject() {
-		return selectedObject;
-	}
-
-
-	public void setSelectedObject(Iepp selectedObject) {
-		this.selectedObject = selectedObject;
-	}
-	
-	
 
 }

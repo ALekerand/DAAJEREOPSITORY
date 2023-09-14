@@ -28,7 +28,7 @@
 			<p:commandButton value="Modifier"></p:commandButton>	
 	    </h:panelGrid>
 	    
-	    <p:dataTable var="toto" value="#{drenaControllers.listObject}" selectionMode="single" selection="#{drenaController.selectedObject}" rowKey="#{toto.idDrena}"       
+	    <p:dataTable var="toto" value="#{drenaController.listObject}" selectionMode="single" selection="#{drenaController.selectedObject}" rowKey="#{toto.idDrena}"       
 	     rows="5" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
