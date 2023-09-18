@@ -5,28 +5,32 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
-	<ui:composition template="/templates/template.xhtml">
-	
-	<ui:define name="body">
-	
+<ui:composition template="/templates/template.xhtml">
+ 	<ui:define name="body">
 		<h:form id="form">
-		
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
-		<h:panelGrid columns="2">		
-			<p:outputLabel value="Code:"></p:outputLabel>
-			<p:inputText value="#{drenaController.drena.codeDrena}"></p:inputText>
+		<p:panel header="Enregistrement des DRENA">
+		<h:panelGrid columns="6" cellpadding="8">		
+			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+			<p:inputText id="input_code" value="#{drenaController.drena.codeDrena}" required="true"></p:inputText>
 			
-			<p:outputLabel value="Nom:"></p:outputLabel>
-			<p:inputText value="#{drenaController.drena.nomDrena}"></p:inputText>
+			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom" value="#{drenaController.drena.nomDrena}" required="true"></p:inputText>
 			
-			<p:outputLabel value="Mail:"></p:outputLabel>
-			<p:inputText value="#{drenaController.drena.mailDrena}"></p:inputText>
-			
-			<p:commandButton value="Enregistrer" actionListener="#{drenaController.enregistrer}" update="form"></p:commandButton>
-			<p:commandButton value="Annuler" actionListener="#{drenaController.annuler}" update="form"></p:commandButton>
-			<p:commandButton value="Modifier"></p:commandButton>	
+			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_mail" value="#{drenaController.drena.mailDrena}" required="true"></p:inputText>
+				
 	    </h:panelGrid>
+	    </p:panel>
+	    
+	    <p:toolbar>
+	    	<f:facet name="left">
+	    	<p:commandButton value="Enregistrer" actionListener="#{drenaController.enregistrer}" update="form"></p:commandButton>
+			<p:commandButton value="Annuler" actionListener="#{drenaController.annuler}" update="form"></p:commandButton>
+			<p:commandButton value="Modifier"></p:commandButton>
+			</f:facet>
+	    </p:toolbar>
 	    
 	    <p:dataTable var="toto" value="#{drenaController.listObject}" selectionMode="single" selection="#{drenaController.selectedObject}" rowKey="#{toto.idDrena}"       
 	     rows="5" paginatorPosition="bottom" paginator="true"

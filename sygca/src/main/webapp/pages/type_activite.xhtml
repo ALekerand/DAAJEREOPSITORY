@@ -14,17 +14,22 @@
 		
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
-		<h:panelGrid columns="2">		
-			<p:outputLabel value="Code:"></p:outputLabel>
-			<p:inputText value="#{typeActiviteControllers.typeActivite.codeTypeactivite}"></p:inputText>
+		<h:panelGrid columns="6" cellpadding="8">		
+			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+			<p:inputText id="input_code" value="#{typeActiviteControllers.typeActivite.codeTypeactivite}" required="true"></p:inputText>
 			
-			<p:outputLabel value="Activité:"></p:outputLabel>
-			<p:inputText value="#{typeActiviteControllers.typeActivite.libelleTypeactivite}"></p:inputText>
-			
-			<p:commandButton value="Enregistrer" actionListener="#{typeActiviteControllers.enregistrer}" update="form"></p:commandButton>
-			<p:commandButton value="Annuler" actionListener="#{typeActiviteControllers.annuler}" update="form"></p:commandButton>
-			<p:commandButton value="Modifier"></p:commandButton>	
+			<p:outputLabel for="input_activite" value="Activité:"></p:outputLabel>
+			<p:inputText id="input_activite" value="#{typeActiviteControllers.typeActivite.libelleTypeactivite}" required="true"></p:inputText>
+				
 	   </h:panelGrid>
+	   
+	   <p:toolbar>
+	   	<f:facet name="left">
+	   		<p:commandButton value="Enregistrer" actionListener="#{typeActiviteControllers.enregistrer}" update="form"></p:commandButton>
+			<p:commandButton value="Annuler" actionListener="#{typeActiviteControllers.annuler}" update="form"></p:commandButton>
+			<p:commandButton value="Modifier"></p:commandButton>
+	   	</f:facet>
+	   </p:toolbar>
 	   
 	   <p:dataTable var="toto" value="#{typeActiviteControllers.listObject}" selectionMode="single" selection="#{typeActiviteControllers.selectedObject}" rowKey="#{toto.idTypeactivite}"
 	   rows="5" paginatorPosition="bottom" paginator="true"

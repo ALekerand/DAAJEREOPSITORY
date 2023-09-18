@@ -12,14 +12,13 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des niveaux animateurs">
-		<h:panelGrid id="info_grid" columns="2">		
+		<h:panelGrid id="info_grid" columns="2" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{niveauAnimateurControllers.niveauAnimateur.codeNiveau}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_niveau" value="Niveau:"></p:outputLabel>
 			<p:inputText id="input_niveau" value="#{niveauAnimateurControllers.niveauAnimateur.nomNiveau}" required="true"></p:inputText>
-			
-			
+				
 	    </h:panelGrid>
 	    </p:panel>
 	    
@@ -30,8 +29,6 @@
 				<p:commandButton value="Annuler" process="@this" actionListener="#{niveauAnimateurControllers.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>
-	    
-	    
 	    
 	    <p:dataTable id="data" var="toto" value="#{niveauAnimateurControllers.listObject}" selectionMode="single" selection="#{niveauAnimateurControllers.selectedObject}" rowKey="#{toto.idNiveau}"       
 	     rows="5" paginatorPosition="bottom" paginator="true"

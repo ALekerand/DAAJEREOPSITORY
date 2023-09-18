@@ -14,20 +14,28 @@
 		
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
-		<h:panelGrid columns="2">		
-			<p:outputLabel value="Code:"></p:outputLabel>
-			<p:inputText value="#{departementControllers.departement.codeDepartement}"></p:inputText>
+		<p:panel header="Enregistrement des départements">
+		<h:panelGrid columns="6" cellpadding="8">		
+			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+			<p:inputText id="input_code" value="#{departementControllers.departement.codeDepartement}" required="true"></p:inputText>
 			
-			<p:outputLabel value="Nom:"></p:outputLabel>
-			<p:inputText value="#{departementControllers.departement.nomDepartement}"></p:inputText>
+			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom" value="#{departementControllers.departement.nomDepartement}" required="true"></p:inputText>
 			
-			<p:outputLabel value="Mail:"></p:outputLabel>
-			<p:inputText value="#{departementControllers.departement.mailDepartement}"></p:inputText>
-			
-			<p:commandButton value="Enregistrer" actionListener="#{departementControllers.enregistrer}" update="form"></p:commandButton>
-			<p:commandButton value="Annuler" actionListener="#{departementControllers.annuler}" update="form"></p:commandButton>
-			<p:commandButton value="Modifier"></p:commandButton>	
+			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_mail" value="#{departementControllers.departement.mailDepartement}" required="true"></p:inputText>
+				
 	    </h:panelGrid>
+	    </p:panel>
+	    
+	    <p:toolbar>
+	    	<f:facet name="left">
+	    		<p:commandButton value="Enregistrer" actionListener="#{departementControllers.enregistrer}" update="form"></p:commandButton>
+				<p:commandButton value="Annuler" actionListener="#{departementControllers.annuler}" update="form"></p:commandButton>
+				<p:commandButton value="Modifier"></p:commandButton>
+	    	</f:facet>
+	    	
+	    </p:toolbar>
 	    
 	    <p:dataTable var="toto" value="#{departementControllers.listObject}" selectionMode="single" selection="#{departementControllers.selectedObject}" rowKey="#{toto.idDepartement}"       
 	     rows="5" paginatorPosition="bottom" paginator="true"
