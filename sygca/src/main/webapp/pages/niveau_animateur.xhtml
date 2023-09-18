@@ -7,32 +7,28 @@
       
       
 <ui:composition template="/templates/template.xhtml">
-
 	<ui:define name="body">
-	
 		<h:form id="form">
-		
-		<p:messages id="message" autoUpdate="true" closable="true" showDetail="false"/>
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des niveaux animateurs">
-		<h:panelGrid columns="2">		
+		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{niveauAnimateurControllers.niveauAnimateur.codeNiveau}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_niveau" value="Niveau:"></p:outputLabel>
 			<p:inputText id="input_niveau" value="#{niveauAnimateurControllers.niveauAnimateur.nomNiveau}" required="true"></p:inputText>
+				
 	    </h:panelGrid>
 	    </p:panel>
 	    
-	    <p:toolbar>
-	    	<f:facet name="left">
-	    	<p:commandButton value="Enregistrer" actionListener="#{niveauAnimateurControllers.enregistrer}" update="form" binding="#{niveauAnimateurControllers.cmdBEnregistrer}"></p:commandButton>
-			<p:commandButton value="Annuler" process="@this" actionListener="#{niveauAnimateurControllers.annuler}" update="form"></p:commandButton>
-			<p:commandButton value="Modifier" actionListener="#{niveauAnimateurControllers.modifier}" update="form" binding="#{niveauAnimateurControllers.cmdBModifier}"></p:commandButton>	
-	    	</f:facet>
-	    </p:toolbar>
-	    
-	    <br />
+	    <p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" actionListener="#{niveauAnimateurControllers.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{niveauAnimateurControllers.modifier}" update="form">      <p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{niveauAnimateurControllers.annuler}" update="form"></p:commandButton>
+			</f:facet>
+		</p:toolbar>
 	    
 	    <p:dataTable id="data" var="toto" value="#{niveauAnimateurControllers.listObject}" selectionMode="single" selection="#{niveauAnimateurControllers.selectedObject}" rowKey="#{toto.idNiveau}"       
 	     rows="5" paginatorPosition="bottom" paginator="true"
@@ -54,8 +50,24 @@
 	    
 	    </p:dataTable>
 		
-		</h:form>
 				
+<br />
+
+
+		<br/>
+		
+		
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
+	   
+		</h:form>
+	
 	</ui:define>
 
 </ui:composition> 
