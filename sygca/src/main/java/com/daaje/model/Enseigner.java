@@ -1,11 +1,17 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -16,27 +22,30 @@ import javax.persistence.Table;
 public class Enseigner implements java.io.Serializable {
 
 	private Integer idEnseigner;
-	private int idNiveauFormation;
-	private int idCampagne;
-	private int idAnimateur;
-	private Integer idCentre;
+	private Animateur animateur;
+	private Campagne campagne;
+	private Centre centre;
+	private NiveauFormation niveauFormation;
 	private String codeEnseigner;
+	private Set<Centre> centres = new HashSet<Centre>(0);
 
 	public Enseigner() {
 	}
 
-	public Enseigner(int idNiveauFormation, int idCampagne, int idAnimateur) {
-		this.idNiveauFormation = idNiveauFormation;
-		this.idCampagne = idCampagne;
-		this.idAnimateur = idAnimateur;
+	public Enseigner(Animateur animateur, Campagne campagne, NiveauFormation niveauFormation) {
+		this.animateur = animateur;
+		this.campagne = campagne;
+		this.niveauFormation = niveauFormation;
 	}
 
-	public Enseigner(int idNiveauFormation, int idCampagne, int idAnimateur, Integer idCentre, String codeEnseigner) {
-		this.idNiveauFormation = idNiveauFormation;
-		this.idCampagne = idCampagne;
-		this.idAnimateur = idAnimateur;
-		this.idCentre = idCentre;
+	public Enseigner(Animateur animateur, Campagne campagne, Centre centre, NiveauFormation niveauFormation,
+			String codeEnseigner, Set<Centre> centres) {
+		this.animateur = animateur;
+		this.campagne = campagne;
+		this.centre = centre;
+		this.niveauFormation = niveauFormation;
 		this.codeEnseigner = codeEnseigner;
+		this.centres = centres;
 	}
 
 	@Id
@@ -51,40 +60,44 @@ public class Enseigner implements java.io.Serializable {
 		this.idEnseigner = idEnseigner;
 	}
 
-	@Column(name = "ID_NIVEAU_FORMATION", nullable = false)
-	public int getIdNiveauFormation() {
-		return this.idNiveauFormation;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_ANIMATEUR", nullable = false)
+	public Animateur getAnimateur() {
+		return this.animateur;
 	}
 
-	public void setIdNiveauFormation(int idNiveauFormation) {
-		this.idNiveauFormation = idNiveauFormation;
+	public void setAnimateur(Animateur animateur) {
+		this.animateur = animateur;
 	}
 
-	@Column(name = "ID_CAMPAGNE", nullable = false)
-	public int getIdCampagne() {
-		return this.idCampagne;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_CAMPAGNE", nullable = false)
+	public Campagne getCampagne() {
+		return this.campagne;
 	}
 
-	public void setIdCampagne(int idCampagne) {
-		this.idCampagne = idCampagne;
+	public void setCampagne(Campagne campagne) {
+		this.campagne = campagne;
 	}
 
-	@Column(name = "ID_ANIMATEUR", nullable = false)
-	public int getIdAnimateur() {
-		return this.idAnimateur;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_CENTRE")
+	public Centre getCentre() {
+		return this.centre;
 	}
 
-	public void setIdAnimateur(int idAnimateur) {
-		this.idAnimateur = idAnimateur;
+	public void setCentre(Centre centre) {
+		this.centre = centre;
 	}
 
-	@Column(name = "ID_CENTRE")
-	public Integer getIdCentre() {
-		return this.idCentre;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_NIVEAU_FORMATION", nullable = false)
+	public NiveauFormation getNiveauFormation() {
+		return this.niveauFormation;
 	}
 
-	public void setIdCentre(Integer idCentre) {
-		this.idCentre = idCentre;
+	public void setNiveauFormation(NiveauFormation niveauFormation) {
+		this.niveauFormation = niveauFormation;
 	}
 
 	@Column(name = "CODE_ENSEIGNER", length = 10)
@@ -94,6 +107,15 @@ public class Enseigner implements java.io.Serializable {
 
 	public void setCodeEnseigner(String codeEnseigner) {
 		this.codeEnseigner = codeEnseigner;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "enseigner")
+	public Set<Centre> getCentres() {
+		return this.centres;
+	}
+
+	public void setCentres(Set<Centre> centres) {
+		this.centres = centres;
 	}
 
 }

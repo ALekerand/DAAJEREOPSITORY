@@ -1,11 +1,15 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -19,14 +23,16 @@ public class Departement implements java.io.Serializable {
 	private String codeDepartement;
 	private String nomDepartement;
 	private String mailDepartement;
+	private Set<Centre> centres = new HashSet<Centre>(0);
 
 	public Departement() {
 	}
 
-	public Departement(String codeDepartement, String nomDepartement, String mailDepartement) {
+	public Departement(String codeDepartement, String nomDepartement, String mailDepartement, Set<Centre> centres) {
 		this.codeDepartement = codeDepartement;
 		this.nomDepartement = nomDepartement;
 		this.mailDepartement = mailDepartement;
+		this.centres = centres;
 	}
 
 	@Id
@@ -66,6 +72,15 @@ public class Departement implements java.io.Serializable {
 
 	public void setMailDepartement(String mailDepartement) {
 		this.mailDepartement = mailDepartement;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "departement")
+	public Set<Centre> getCentres() {
+		return this.centres;
+	}
+
+	public void setCentres(Set<Centre> centres) {
+		this.centres = centres;
 	}
 
 }

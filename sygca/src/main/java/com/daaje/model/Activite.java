@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,14 +22,16 @@ public class Activite implements java.io.Serializable {
 	private Integer idActivite;
 	private String codeActivite;
 	private String nomActivite;
+	private Set<Profession> professions = new HashSet<Profession>(0);
 	private Set<Apprenant> apprenants = new HashSet<Apprenant>(0);
 
 	public Activite() {
 	}
 
-	public Activite(String codeActivite, String nomActivite, Set<Apprenant> apprenants) {
+	public Activite(String codeActivite, String nomActivite, Set<Profession> professions, Set<Apprenant> apprenants) {
 		this.codeActivite = codeActivite;
 		this.nomActivite = nomActivite;
+		this.professions = professions;
 		this.apprenants = apprenants;
 	}
 
@@ -61,6 +63,15 @@ public class Activite implements java.io.Serializable {
 
 	public void setNomActivite(String nomActivite) {
 		this.nomActivite = nomActivite;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "activite")
+	public Set<Profession> getProfessions() {
+		return this.professions;
+	}
+
+	public void setProfessions(Set<Profession> professions) {
+		this.professions = professions;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "activite")

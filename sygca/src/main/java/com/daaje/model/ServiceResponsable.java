@@ -1,12 +1,15 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,9 +22,9 @@ import javax.persistence.TemporalType;
 public class ServiceResponsable implements java.io.Serializable {
 
 	private Integer idServiceDrena;
-	private Integer attributIdIepp16;
-	private Integer idResponsable;
-	private Integer idDrena;
+	private Drena drena;
+	private Iepp iepp;
+	private Responsable responsable;
 	private String codeService;
 	private Date dateArrivee;
 	private Date dateDepart;
@@ -29,11 +32,11 @@ public class ServiceResponsable implements java.io.Serializable {
 	public ServiceResponsable() {
 	}
 
-	public ServiceResponsable(Integer attributIdIepp16, Integer idResponsable, Integer idDrena, String codeService,
-			Date dateArrivee, Date dateDepart) {
-		this.attributIdIepp16 = attributIdIepp16;
-		this.idResponsable = idResponsable;
-		this.idDrena = idDrena;
+	public ServiceResponsable(Drena drena, Iepp iepp, Responsable responsable, String codeService, Date dateArrivee,
+			Date dateDepart) {
+		this.drena = drena;
+		this.iepp = iepp;
+		this.responsable = responsable;
 		this.codeService = codeService;
 		this.dateArrivee = dateArrivee;
 		this.dateDepart = dateDepart;
@@ -51,31 +54,34 @@ public class ServiceResponsable implements java.io.Serializable {
 		this.idServiceDrena = idServiceDrena;
 	}
 
-	@Column(name = "ATTRIBUT_ID_IEPP16")
-	public Integer getAttributIdIepp16() {
-		return this.attributIdIepp16;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_DRENA")
+	public Drena getDrena() {
+		return this.drena;
 	}
 
-	public void setAttributIdIepp16(Integer attributIdIepp16) {
-		this.attributIdIepp16 = attributIdIepp16;
+	public void setDrena(Drena drena) {
+		this.drena = drena;
 	}
 
-	@Column(name = "ID_RESPONSABLE")
-	public Integer getIdResponsable() {
-		return this.idResponsable;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ATTRIBUT_ID_IEPP16")
+	public Iepp getIepp() {
+		return this.iepp;
 	}
 
-	public void setIdResponsable(Integer idResponsable) {
-		this.idResponsable = idResponsable;
+	public void setIepp(Iepp iepp) {
+		this.iepp = iepp;
 	}
 
-	@Column(name = "ID_DRENA")
-	public Integer getIdDrena() {
-		return this.idDrena;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_RESPONSABLE")
+	public Responsable getResponsable() {
+		return this.responsable;
 	}
 
-	public void setIdDrena(Integer idDrena) {
-		this.idDrena = idDrena;
+	public void setResponsable(Responsable responsable) {
+		this.responsable = responsable;
 	}
 
 	@Column(name = "CODE_SERVICE", length = 10)

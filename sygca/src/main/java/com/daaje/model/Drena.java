@@ -1,11 +1,15 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -19,14 +23,19 @@ public class Drena implements java.io.Serializable {
 	private String codeDrena;
 	private String nomDrena;
 	private String mailDrena;
+	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
+	private Set<Iepp> iepps = new HashSet<Iepp>(0);
 
 	public Drena() {
 	}
 
-	public Drena(String codeDrena, String nomDrena, String mailDrena) {
+	public Drena(String codeDrena, String nomDrena, String mailDrena, Set<ServiceResponsable> serviceResponsables,
+			Set<Iepp> iepps) {
 		this.codeDrena = codeDrena;
 		this.nomDrena = nomDrena;
 		this.mailDrena = mailDrena;
+		this.serviceResponsables = serviceResponsables;
+		this.iepps = iepps;
 	}
 
 	@Id
@@ -66,6 +75,24 @@ public class Drena implements java.io.Serializable {
 
 	public void setMailDrena(String mailDrena) {
 		this.mailDrena = mailDrena;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "drena")
+	public Set<ServiceResponsable> getServiceResponsables() {
+		return this.serviceResponsables;
+	}
+
+	public void setServiceResponsables(Set<ServiceResponsable> serviceResponsables) {
+		this.serviceResponsables = serviceResponsables;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "drena")
+	public Set<Iepp> getIepps() {
+		return this.iepps;
+	}
+
+	public void setIepps(Set<Iepp> iepps) {
+		this.iepps = iepps;
 	}
 
 }

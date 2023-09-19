@@ -1,11 +1,17 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -16,15 +22,15 @@ import javax.persistence.Table;
 public class Centre implements java.io.Serializable {
 
 	private Integer idCentre;
-	private int idPromoteur;
-	private int idDepartement;
-	private int idCommune;
-	private int attributIdIepp16;
-	private int idNatureProjet;
-	private int idNature;
-	private int idPrefecture;
-	private int idLocalite;
-	private int idEnseigner;
+	private Commune commune;
+	private Departement departement;
+	private Enseigner enseigner;
+	private Iepp iepp;
+	private LocaliteDImplantation localiteDImplantation;
+	private Nature nature;
+	private NatureProjet natureProjet;
+	private Promoteur promoteur;
+	private SousPrefecture sousPrefecture;
 	private String codeCentre;
 	private String nomCentre;
 	private String abreviationNomCentre;
@@ -32,36 +38,40 @@ public class Centre implements java.io.Serializable {
 	private String adresseCentre;
 	private String mailCentre;
 	private String droitOuvertureCentre;
+	private Set<Inscription> inscriptions = new HashSet<Inscription>(0);
+	private Set<Enseigner> enseigners = new HashSet<Enseigner>(0);
 
 	public Centre() {
 	}
 
-	public Centre(int idPromoteur, int idDepartement, int idCommune, int attributIdIepp16, int idNatureProjet,
-			int idNature, int idPrefecture, int idLocalite, int idEnseigner) {
-		this.idPromoteur = idPromoteur;
-		this.idDepartement = idDepartement;
-		this.idCommune = idCommune;
-		this.attributIdIepp16 = attributIdIepp16;
-		this.idNatureProjet = idNatureProjet;
-		this.idNature = idNature;
-		this.idPrefecture = idPrefecture;
-		this.idLocalite = idLocalite;
-		this.idEnseigner = idEnseigner;
+	public Centre(Commune commune, Departement departement, Enseigner enseigner, Iepp iepp,
+			LocaliteDImplantation localiteDImplantation, Nature nature, NatureProjet natureProjet, Promoteur promoteur,
+			SousPrefecture sousPrefecture) {
+		this.commune = commune;
+		this.departement = departement;
+		this.enseigner = enseigner;
+		this.iepp = iepp;
+		this.localiteDImplantation = localiteDImplantation;
+		this.nature = nature;
+		this.natureProjet = natureProjet;
+		this.promoteur = promoteur;
+		this.sousPrefecture = sousPrefecture;
 	}
 
-	public Centre(int idPromoteur, int idDepartement, int idCommune, int attributIdIepp16, int idNatureProjet,
-			int idNature, int idPrefecture, int idLocalite, int idEnseigner, String codeCentre, String nomCentre,
-			String abreviationNomCentre, String telephoneCentre, String adresseCentre, String mailCentre,
-			String droitOuvertureCentre) {
-		this.idPromoteur = idPromoteur;
-		this.idDepartement = idDepartement;
-		this.idCommune = idCommune;
-		this.attributIdIepp16 = attributIdIepp16;
-		this.idNatureProjet = idNatureProjet;
-		this.idNature = idNature;
-		this.idPrefecture = idPrefecture;
-		this.idLocalite = idLocalite;
-		this.idEnseigner = idEnseigner;
+	public Centre(Commune commune, Departement departement, Enseigner enseigner, Iepp iepp,
+			LocaliteDImplantation localiteDImplantation, Nature nature, NatureProjet natureProjet, Promoteur promoteur,
+			SousPrefecture sousPrefecture, String codeCentre, String nomCentre, String abreviationNomCentre,
+			String telephoneCentre, String adresseCentre, String mailCentre, String droitOuvertureCentre,
+			Set<Inscription> inscriptions, Set<Enseigner> enseigners) {
+		this.commune = commune;
+		this.departement = departement;
+		this.enseigner = enseigner;
+		this.iepp = iepp;
+		this.localiteDImplantation = localiteDImplantation;
+		this.nature = nature;
+		this.natureProjet = natureProjet;
+		this.promoteur = promoteur;
+		this.sousPrefecture = sousPrefecture;
 		this.codeCentre = codeCentre;
 		this.nomCentre = nomCentre;
 		this.abreviationNomCentre = abreviationNomCentre;
@@ -69,6 +79,8 @@ public class Centre implements java.io.Serializable {
 		this.adresseCentre = adresseCentre;
 		this.mailCentre = mailCentre;
 		this.droitOuvertureCentre = droitOuvertureCentre;
+		this.inscriptions = inscriptions;
+		this.enseigners = enseigners;
 	}
 
 	@Id
@@ -83,85 +95,94 @@ public class Centre implements java.io.Serializable {
 		this.idCentre = idCentre;
 	}
 
-	@Column(name = "ID_PROMOTEUR", nullable = false)
-	public int getIdPromoteur() {
-		return this.idPromoteur;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_COMMUNE", nullable = false)
+	public Commune getCommune() {
+		return this.commune;
 	}
 
-	public void setIdPromoteur(int idPromoteur) {
-		this.idPromoteur = idPromoteur;
+	public void setCommune(Commune commune) {
+		this.commune = commune;
 	}
 
-	@Column(name = "ID_DEPARTEMENT", nullable = false)
-	public int getIdDepartement() {
-		return this.idDepartement;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_DEPARTEMENT", nullable = false)
+	public Departement getDepartement() {
+		return this.departement;
 	}
 
-	public void setIdDepartement(int idDepartement) {
-		this.idDepartement = idDepartement;
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
 	}
 
-	@Column(name = "ID_COMMUNE", nullable = false)
-	public int getIdCommune() {
-		return this.idCommune;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_ENSEIGNER", nullable = false)
+	public Enseigner getEnseigner() {
+		return this.enseigner;
 	}
 
-	public void setIdCommune(int idCommune) {
-		this.idCommune = idCommune;
+	public void setEnseigner(Enseigner enseigner) {
+		this.enseigner = enseigner;
 	}
 
-	@Column(name = "ATTRIBUT_ID_IEPP16", nullable = false)
-	public int getAttributIdIepp16() {
-		return this.attributIdIepp16;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ATTRIBUT_ID_IEPP16", nullable = false)
+	public Iepp getIepp() {
+		return this.iepp;
 	}
 
-	public void setAttributIdIepp16(int attributIdIepp16) {
-		this.attributIdIepp16 = attributIdIepp16;
+	public void setIepp(Iepp iepp) {
+		this.iepp = iepp;
 	}
 
-	@Column(name = "ID_NATURE_PROJET", nullable = false)
-	public int getIdNatureProjet() {
-		return this.idNatureProjet;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_LOCALITE", nullable = false)
+	public LocaliteDImplantation getLocaliteDImplantation() {
+		return this.localiteDImplantation;
 	}
 
-	public void setIdNatureProjet(int idNatureProjet) {
-		this.idNatureProjet = idNatureProjet;
+	public void setLocaliteDImplantation(LocaliteDImplantation localiteDImplantation) {
+		this.localiteDImplantation = localiteDImplantation;
 	}
 
-	@Column(name = "ID_NATURE", nullable = false)
-	public int getIdNature() {
-		return this.idNature;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_NATURE", nullable = false)
+	public Nature getNature() {
+		return this.nature;
 	}
 
-	public void setIdNature(int idNature) {
-		this.idNature = idNature;
+	public void setNature(Nature nature) {
+		this.nature = nature;
 	}
 
-	@Column(name = "ID_PREFECTURE", nullable = false)
-	public int getIdPrefecture() {
-		return this.idPrefecture;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_NATURE_PROJET", nullable = false)
+	public NatureProjet getNatureProjet() {
+		return this.natureProjet;
 	}
 
-	public void setIdPrefecture(int idPrefecture) {
-		this.idPrefecture = idPrefecture;
+	public void setNatureProjet(NatureProjet natureProjet) {
+		this.natureProjet = natureProjet;
 	}
 
-	@Column(name = "ID_LOCALITE", nullable = false)
-	public int getIdLocalite() {
-		return this.idLocalite;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_PROMOTEUR", nullable = false)
+	public Promoteur getPromoteur() {
+		return this.promoteur;
 	}
 
-	public void setIdLocalite(int idLocalite) {
-		this.idLocalite = idLocalite;
+	public void setPromoteur(Promoteur promoteur) {
+		this.promoteur = promoteur;
 	}
 
-	@Column(name = "ID_ENSEIGNER", nullable = false)
-	public int getIdEnseigner() {
-		return this.idEnseigner;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_PREFECTURE", nullable = false)
+	public SousPrefecture getSousPrefecture() {
+		return this.sousPrefecture;
 	}
 
-	public void setIdEnseigner(int idEnseigner) {
-		this.idEnseigner = idEnseigner;
+	public void setSousPrefecture(SousPrefecture sousPrefecture) {
+		this.sousPrefecture = sousPrefecture;
 	}
 
 	@Column(name = "CODE_CENTRE", length = 10)
@@ -225,6 +246,24 @@ public class Centre implements java.io.Serializable {
 
 	public void setDroitOuvertureCentre(String droitOuvertureCentre) {
 		this.droitOuvertureCentre = droitOuvertureCentre;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "centre")
+	public Set<Inscription> getInscriptions() {
+		return this.inscriptions;
+	}
+
+	public void setInscriptions(Set<Inscription> inscriptions) {
+		this.inscriptions = inscriptions;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "centre")
+	public Set<Enseigner> getEnseigners() {
+		return this.enseigners;
+	}
+
+	public void setEnseigners(Set<Enseigner> enseigners) {
+		this.enseigners = enseigners;
 	}
 
 }

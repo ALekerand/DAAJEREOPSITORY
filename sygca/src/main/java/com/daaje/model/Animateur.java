@@ -1,6 +1,8 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,6 +31,8 @@ public class Animateur implements java.io.Serializable {
 	private String telephoneAnimateur;
 	private String adresseAnimateur;
 	private String mailAnimateur;
+	private Set<Profession> professions = new HashSet<Profession>(0);
+	private Set<Enseigner> enseigners = new HashSet<Enseigner>(0);
 
 	public Animateur() {
 	}
@@ -39,7 +44,7 @@ public class Animateur implements java.io.Serializable {
 
 	public Animateur(Genre genre, NiveauAnimateur niveauAnimateur, String codeAnimateur, String nomAnimateur,
 			String prenomAnimateur, String ageAnimateur, String telephoneAnimateur, String adresseAnimateur,
-			String mailAnimateur) {
+			String mailAnimateur, Set<Profession> professions, Set<Enseigner> enseigners) {
 		this.genre = genre;
 		this.niveauAnimateur = niveauAnimateur;
 		this.codeAnimateur = codeAnimateur;
@@ -49,6 +54,8 @@ public class Animateur implements java.io.Serializable {
 		this.telephoneAnimateur = telephoneAnimateur;
 		this.adresseAnimateur = adresseAnimateur;
 		this.mailAnimateur = mailAnimateur;
+		this.professions = professions;
+		this.enseigners = enseigners;
 	}
 
 	@Id
@@ -144,6 +151,24 @@ public class Animateur implements java.io.Serializable {
 
 	public void setMailAnimateur(String mailAnimateur) {
 		this.mailAnimateur = mailAnimateur;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "animateur")
+	public Set<Profession> getProfessions() {
+		return this.professions;
+	}
+
+	public void setProfessions(Set<Profession> professions) {
+		this.professions = professions;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "animateur")
+	public Set<Enseigner> getEnseigners() {
+		return this.enseigners;
+	}
+
+	public void setEnseigners(Set<Enseigner> enseigners) {
+		this.enseigners = enseigners;
 	}
 
 }

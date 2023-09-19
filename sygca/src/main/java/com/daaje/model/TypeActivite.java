@@ -1,11 +1,15 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,13 +22,15 @@ public class TypeActivite implements java.io.Serializable {
 	private Integer idTypeactivite;
 	private String codeTypeactivite;
 	private String libelleTypeactivite;
+	private Set<Profession> professions = new HashSet<Profession>(0);
 
 	public TypeActivite() {
 	}
 
-	public TypeActivite(String codeTypeactivite, String libelleTypeactivite) {
+	public TypeActivite(String codeTypeactivite, String libelleTypeactivite, Set<Profession> professions) {
 		this.codeTypeactivite = codeTypeactivite;
 		this.libelleTypeactivite = libelleTypeactivite;
+		this.professions = professions;
 	}
 
 	@Id
@@ -55,6 +61,15 @@ public class TypeActivite implements java.io.Serializable {
 
 	public void setLibelleTypeactivite(String libelleTypeactivite) {
 		this.libelleTypeactivite = libelleTypeactivite;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "typeActivite")
+	public Set<Profession> getProfessions() {
+		return this.professions;
+	}
+
+	public void setProfessions(Set<Profession> professions) {
+		this.professions = professions;
 	}
 
 }

@@ -1,11 +1,15 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,13 +22,15 @@ public class Commune implements java.io.Serializable {
 	private Integer idCommune;
 	private String codeCommune;
 	private String nomCommune;
+	private Set<Centre> centres = new HashSet<Centre>(0);
 
 	public Commune() {
 	}
 
-	public Commune(String codeCommune, String nomCommune) {
+	public Commune(String codeCommune, String nomCommune, Set<Centre> centres) {
 		this.codeCommune = codeCommune;
 		this.nomCommune = nomCommune;
+		this.centres = centres;
 	}
 
 	@Id
@@ -55,6 +61,15 @@ public class Commune implements java.io.Serializable {
 
 	public void setNomCommune(String nomCommune) {
 		this.nomCommune = nomCommune;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commune")
+	public Set<Centre> getCentres() {
+		return this.centres;
+	}
+
+	public void setCentres(Set<Centre> centres) {
+		this.centres = centres;
 	}
 
 }

@@ -1,11 +1,15 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -19,14 +23,19 @@ public class NiveauFormation implements java.io.Serializable {
 	private String codeNiveauFormation;
 	private String libelleNiveauFormation;
 	private String trimestre;
+	private Set<Inscription> inscriptions = new HashSet<Inscription>(0);
+	private Set<Enseigner> enseigners = new HashSet<Enseigner>(0);
 
 	public NiveauFormation() {
 	}
 
-	public NiveauFormation(String codeNiveauFormation, String libelleNiveauFormation, String trimestre) {
+	public NiveauFormation(String codeNiveauFormation, String libelleNiveauFormation, String trimestre,
+			Set<Inscription> inscriptions, Set<Enseigner> enseigners) {
 		this.codeNiveauFormation = codeNiveauFormation;
 		this.libelleNiveauFormation = libelleNiveauFormation;
 		this.trimestre = trimestre;
+		this.inscriptions = inscriptions;
+		this.enseigners = enseigners;
 	}
 
 	@Id
@@ -66,6 +75,24 @@ public class NiveauFormation implements java.io.Serializable {
 
 	public void setTrimestre(String trimestre) {
 		this.trimestre = trimestre;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "niveauFormation")
+	public Set<Inscription> getInscriptions() {
+		return this.inscriptions;
+	}
+
+	public void setInscriptions(Set<Inscription> inscriptions) {
+		this.inscriptions = inscriptions;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "niveauFormation")
+	public Set<Enseigner> getEnseigners() {
+		return this.enseigners;
+	}
+
+	public void setEnseigners(Set<Enseigner> enseigners) {
+		this.enseigners = enseigners;
 	}
 
 }

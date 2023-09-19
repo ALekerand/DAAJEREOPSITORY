@@ -1,11 +1,14 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,17 +19,17 @@ import javax.persistence.Table;
 public class Profession implements java.io.Serializable {
 
 	private Integer idProfession;
-	private int idTypeactivite;
-	private int idAnimateur;
-	private int idActivite;
+	private Activite activite;
+	private Animateur animateur;
+	private TypeActivite typeActivite;
 
 	public Profession() {
 	}
 
-	public Profession(int idTypeactivite, int idAnimateur, int idActivite) {
-		this.idTypeactivite = idTypeactivite;
-		this.idAnimateur = idAnimateur;
-		this.idActivite = idActivite;
+	public Profession(Activite activite, Animateur animateur, TypeActivite typeActivite) {
+		this.activite = activite;
+		this.animateur = animateur;
+		this.typeActivite = typeActivite;
 	}
 
 	@Id
@@ -41,31 +44,34 @@ public class Profession implements java.io.Serializable {
 		this.idProfession = idProfession;
 	}
 
-	@Column(name = "ID_TYPEACTIVITE", nullable = false)
-	public int getIdTypeactivite() {
-		return this.idTypeactivite;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_ACTIVITE", nullable = false)
+	public Activite getActivite() {
+		return this.activite;
 	}
 
-	public void setIdTypeactivite(int idTypeactivite) {
-		this.idTypeactivite = idTypeactivite;
+	public void setActivite(Activite activite) {
+		this.activite = activite;
 	}
 
-	@Column(name = "ID_ANIMATEUR", nullable = false)
-	public int getIdAnimateur() {
-		return this.idAnimateur;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_ANIMATEUR", nullable = false)
+	public Animateur getAnimateur() {
+		return this.animateur;
 	}
 
-	public void setIdAnimateur(int idAnimateur) {
-		this.idAnimateur = idAnimateur;
+	public void setAnimateur(Animateur animateur) {
+		this.animateur = animateur;
 	}
 
-	@Column(name = "ID_ACTIVITE", nullable = false)
-	public int getIdActivite() {
-		return this.idActivite;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_TYPEACTIVITE", nullable = false)
+	public TypeActivite getTypeActivite() {
+		return this.typeActivite;
 	}
 
-	public void setIdActivite(int idActivite) {
-		this.idActivite = idActivite;
+	public void setTypeActivite(TypeActivite typeActivite) {
+		this.typeActivite = typeActivite;
 	}
 
 }

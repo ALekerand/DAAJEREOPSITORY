@@ -1,12 +1,18 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Responsable implements java.io.Serializable {
 
 	private Integer idResponsable;
-	private int idFonction;
+	private Fonction fonction;
 	private String matriculeResponsable;
 	private String nomResponsable;
 	private String prenomResponsable;
@@ -29,18 +35,19 @@ public class Responsable implements java.io.Serializable {
 	private Date dateRetraite;
 	private Date dateNaissance;
 	private String mailResponsable;
+	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
 
 	public Responsable() {
 	}
 
-	public Responsable(int idFonction) {
-		this.idFonction = idFonction;
+	public Responsable(Fonction fonction) {
+		this.fonction = fonction;
 	}
 
-	public Responsable(int idFonction, String matriculeResponsable, String nomResponsable, String prenomResponsable,
+	public Responsable(Fonction fonction, String matriculeResponsable, String nomResponsable, String prenomResponsable,
 			String telephoneResponsable, String adresseResponsable, Date datePriseService, Date dateRetraite,
-			Date dateNaissance, String mailResponsable) {
-		this.idFonction = idFonction;
+			Date dateNaissance, String mailResponsable, Set<ServiceResponsable> serviceResponsables) {
+		this.fonction = fonction;
 		this.matriculeResponsable = matriculeResponsable;
 		this.nomResponsable = nomResponsable;
 		this.prenomResponsable = prenomResponsable;
@@ -50,6 +57,7 @@ public class Responsable implements java.io.Serializable {
 		this.dateRetraite = dateRetraite;
 		this.dateNaissance = dateNaissance;
 		this.mailResponsable = mailResponsable;
+		this.serviceResponsables = serviceResponsables;
 	}
 
 	@Id
@@ -64,13 +72,14 @@ public class Responsable implements java.io.Serializable {
 		this.idResponsable = idResponsable;
 	}
 
-	@Column(name = "ID_FONCTION", nullable = false)
-	public int getIdFonction() {
-		return this.idFonction;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_FONCTION", nullable = false)
+	public Fonction getFonction() {
+		return this.fonction;
 	}
 
-	public void setIdFonction(int idFonction) {
-		this.idFonction = idFonction;
+	public void setFonction(Fonction fonction) {
+		this.fonction = fonction;
 	}
 
 	@Column(name = "MATRICULE_RESPONSABLE", length = 10)
@@ -155,6 +164,15 @@ public class Responsable implements java.io.Serializable {
 
 	public void setMailResponsable(String mailResponsable) {
 		this.mailResponsable = mailResponsable;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "responsable")
+	public Set<ServiceResponsable> getServiceResponsables() {
+		return this.serviceResponsables;
+	}
+
+	public void setServiceResponsables(Set<ServiceResponsable> serviceResponsables) {
+		this.serviceResponsables = serviceResponsables;
 	}
 
 }

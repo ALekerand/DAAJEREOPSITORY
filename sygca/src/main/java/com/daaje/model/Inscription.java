@@ -1,12 +1,15 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,10 +22,10 @@ import javax.persistence.TemporalType;
 public class Inscription implements java.io.Serializable {
 
 	private Integer idInscription;
-	private int idCentre;
-	private int idApprenant;
-	private int idCampagne;
-	private int idNiveauFormation;
+	private Apprenant apprenant;
+	private Campagne campagne;
+	private Centre centre;
+	private NiveauFormation niveauFormation;
 	private String codeInscription;
 	private Date dateInscription;
 	private Boolean clotureInscription;
@@ -30,19 +33,19 @@ public class Inscription implements java.io.Serializable {
 	public Inscription() {
 	}
 
-	public Inscription(int idCentre, int idApprenant, int idCampagne, int idNiveauFormation) {
-		this.idCentre = idCentre;
-		this.idApprenant = idApprenant;
-		this.idCampagne = idCampagne;
-		this.idNiveauFormation = idNiveauFormation;
+	public Inscription(Apprenant apprenant, Campagne campagne, Centre centre, NiveauFormation niveauFormation) {
+		this.apprenant = apprenant;
+		this.campagne = campagne;
+		this.centre = centre;
+		this.niveauFormation = niveauFormation;
 	}
 
-	public Inscription(int idCentre, int idApprenant, int idCampagne, int idNiveauFormation, String codeInscription,
-			Date dateInscription, Boolean clotureInscription) {
-		this.idCentre = idCentre;
-		this.idApprenant = idApprenant;
-		this.idCampagne = idCampagne;
-		this.idNiveauFormation = idNiveauFormation;
+	public Inscription(Apprenant apprenant, Campagne campagne, Centre centre, NiveauFormation niveauFormation,
+			String codeInscription, Date dateInscription, Boolean clotureInscription) {
+		this.apprenant = apprenant;
+		this.campagne = campagne;
+		this.centre = centre;
+		this.niveauFormation = niveauFormation;
 		this.codeInscription = codeInscription;
 		this.dateInscription = dateInscription;
 		this.clotureInscription = clotureInscription;
@@ -60,40 +63,44 @@ public class Inscription implements java.io.Serializable {
 		this.idInscription = idInscription;
 	}
 
-	@Column(name = "ID_CENTRE", nullable = false)
-	public int getIdCentre() {
-		return this.idCentre;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_APPRENANT", nullable = false)
+	public Apprenant getApprenant() {
+		return this.apprenant;
 	}
 
-	public void setIdCentre(int idCentre) {
-		this.idCentre = idCentre;
+	public void setApprenant(Apprenant apprenant) {
+		this.apprenant = apprenant;
 	}
 
-	@Column(name = "ID_APPRENANT", nullable = false)
-	public int getIdApprenant() {
-		return this.idApprenant;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_CAMPAGNE", nullable = false)
+	public Campagne getCampagne() {
+		return this.campagne;
 	}
 
-	public void setIdApprenant(int idApprenant) {
-		this.idApprenant = idApprenant;
+	public void setCampagne(Campagne campagne) {
+		this.campagne = campagne;
 	}
 
-	@Column(name = "ID_CAMPAGNE", nullable = false)
-	public int getIdCampagne() {
-		return this.idCampagne;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_CENTRE", nullable = false)
+	public Centre getCentre() {
+		return this.centre;
 	}
 
-	public void setIdCampagne(int idCampagne) {
-		this.idCampagne = idCampagne;
+	public void setCentre(Centre centre) {
+		this.centre = centre;
 	}
 
-	@Column(name = "ID_NIVEAU_FORMATION", nullable = false)
-	public int getIdNiveauFormation() {
-		return this.idNiveauFormation;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_NIVEAU_FORMATION", nullable = false)
+	public NiveauFormation getNiveauFormation() {
+		return this.niveauFormation;
 	}
 
-	public void setIdNiveauFormation(int idNiveauFormation) {
-		this.idNiveauFormation = idNiveauFormation;
+	public void setNiveauFormation(NiveauFormation niveauFormation) {
+		this.niveauFormation = niveauFormation;
 	}
 
 	@Column(name = "CODE_INSCRIPTION", length = 10)

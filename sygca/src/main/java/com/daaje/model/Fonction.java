@@ -1,11 +1,15 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,13 +22,15 @@ public class Fonction implements java.io.Serializable {
 	private Integer idFonction;
 	private String codeFonction;
 	private String libelleFonction;
+	private Set<Responsable> responsables = new HashSet<Responsable>(0);
 
 	public Fonction() {
 	}
 
-	public Fonction(String codeFonction, String libelleFonction) {
+	public Fonction(String codeFonction, String libelleFonction, Set<Responsable> responsables) {
 		this.codeFonction = codeFonction;
 		this.libelleFonction = libelleFonction;
+		this.responsables = responsables;
 	}
 
 	@Id
@@ -55,6 +61,15 @@ public class Fonction implements java.io.Serializable {
 
 	public void setLibelleFonction(String libelleFonction) {
 		this.libelleFonction = libelleFonction;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fonction")
+	public Set<Responsable> getResponsables() {
+		return this.responsables;
+	}
+
+	public void setResponsables(Set<Responsable> responsables) {
+		this.responsables = responsables;
 	}
 
 }

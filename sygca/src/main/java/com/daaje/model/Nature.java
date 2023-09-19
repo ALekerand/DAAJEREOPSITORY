@@ -1,11 +1,15 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,13 +22,15 @@ public class Nature implements java.io.Serializable {
 	private Integer idNature;
 	private String codeNature;
 	private String libelleNature;
+	private Set<Centre> centres = new HashSet<Centre>(0);
 
 	public Nature() {
 	}
 
-	public Nature(String codeNature, String libelleNature) {
+	public Nature(String codeNature, String libelleNature, Set<Centre> centres) {
 		this.codeNature = codeNature;
 		this.libelleNature = libelleNature;
+		this.centres = centres;
 	}
 
 	@Id
@@ -55,6 +61,15 @@ public class Nature implements java.io.Serializable {
 
 	public void setLibelleNature(String libelleNature) {
 		this.libelleNature = libelleNature;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "nature")
+	public Set<Centre> getCentres() {
+		return this.centres;
+	}
+
+	public void setCentres(Set<Centre> centres) {
+		this.centres = centres;
 	}
 
 }

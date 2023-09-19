@@ -1,7 +1,9 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +26,7 @@ public class Apprenant implements java.io.Serializable {
 
 	private Integer idApprenant;
 	private Activite activite;
-	private int idGenre;
+	private Genre genre;
 	private String codeApprenant;
 	private String nomApprenant;
 	private String prenomApprenant;
@@ -31,18 +34,20 @@ public class Apprenant implements java.io.Serializable {
 	private String telephoneApprenant;
 	private String adresseApprenant;
 	private String mailApprenant;
+	private Set<Inscription> inscriptions = new HashSet<Inscription>(0);
 
 	public Apprenant() {
 	}
 
-	public Apprenant(int idGenre) {
-		this.idGenre = idGenre;
+	public Apprenant(Genre genre) {
+		this.genre = genre;
 	}
 
-	public Apprenant(Activite activite, int idGenre, String codeApprenant, String nomApprenant, String prenomApprenant,
-			Date dateNaissApprenant, String telephoneApprenant, String adresseApprenant, String mailApprenant) {
+	public Apprenant(Activite activite, Genre genre, String codeApprenant, String nomApprenant, String prenomApprenant,
+			Date dateNaissApprenant, String telephoneApprenant, String adresseApprenant, String mailApprenant,
+			Set<Inscription> inscriptions) {
 		this.activite = activite;
-		this.idGenre = idGenre;
+		this.genre = genre;
 		this.codeApprenant = codeApprenant;
 		this.nomApprenant = nomApprenant;
 		this.prenomApprenant = prenomApprenant;
@@ -50,6 +55,7 @@ public class Apprenant implements java.io.Serializable {
 		this.telephoneApprenant = telephoneApprenant;
 		this.adresseApprenant = adresseApprenant;
 		this.mailApprenant = mailApprenant;
+		this.inscriptions = inscriptions;
 	}
 
 	@Id
@@ -74,13 +80,14 @@ public class Apprenant implements java.io.Serializable {
 		this.activite = activite;
 	}
 
-	@Column(name = "ID_GENRE", nullable = false)
-	public int getIdGenre() {
-		return this.idGenre;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_GENRE", nullable = false)
+	public Genre getGenre() {
+		return this.genre;
 	}
 
-	public void setIdGenre(int idGenre) {
-		this.idGenre = idGenre;
+	public void setGenre(Genre genre) {
+		this.genre = genre;
 	}
 
 	@Column(name = "CODE_APPRENANT", length = 10)
@@ -145,6 +152,15 @@ public class Apprenant implements java.io.Serializable {
 
 	public void setMailApprenant(String mailApprenant) {
 		this.mailApprenant = mailApprenant;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apprenant")
+	public Set<Inscription> getInscriptions() {
+		return this.inscriptions;
+	}
+
+	public void setInscriptions(Set<Inscription> inscriptions) {
+		this.inscriptions = inscriptions;
 	}
 
 }

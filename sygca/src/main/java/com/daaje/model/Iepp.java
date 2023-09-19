@@ -1,11 +1,17 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -16,23 +22,28 @@ import javax.persistence.Table;
 public class Iepp implements java.io.Serializable {
 
 	private Integer attributIdIepp16;
-	private int idDrena;
+	private Drena drena;
 	private String codeIepp;
 	private String nomIepp;
 	private String mailIepp;
+	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
+	private Set<Centre> centres = new HashSet<Centre>(0);
 
 	public Iepp() {
 	}
 
-	public Iepp(int idDrena) {
-		this.idDrena = idDrena;
+	public Iepp(Drena drena) {
+		this.drena = drena;
 	}
 
-	public Iepp(int idDrena, String codeIepp, String nomIepp, String mailIepp) {
-		this.idDrena = idDrena;
+	public Iepp(Drena drena, String codeIepp, String nomIepp, String mailIepp,
+			Set<ServiceResponsable> serviceResponsables, Set<Centre> centres) {
+		this.drena = drena;
 		this.codeIepp = codeIepp;
 		this.nomIepp = nomIepp;
 		this.mailIepp = mailIepp;
+		this.serviceResponsables = serviceResponsables;
+		this.centres = centres;
 	}
 
 	@Id
@@ -47,13 +58,14 @@ public class Iepp implements java.io.Serializable {
 		this.attributIdIepp16 = attributIdIepp16;
 	}
 
-	@Column(name = "ID_DRENA", nullable = false)
-	public int getIdDrena() {
-		return this.idDrena;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_DRENA", nullable = false)
+	public Drena getDrena() {
+		return this.drena;
 	}
 
-	public void setIdDrena(int idDrena) {
-		this.idDrena = idDrena;
+	public void setDrena(Drena drena) {
+		this.drena = drena;
 	}
 
 	@Column(name = "CODE_IEPP", length = 10)
@@ -81,6 +93,24 @@ public class Iepp implements java.io.Serializable {
 
 	public void setMailIepp(String mailIepp) {
 		this.mailIepp = mailIepp;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iepp")
+	public Set<ServiceResponsable> getServiceResponsables() {
+		return this.serviceResponsables;
+	}
+
+	public void setServiceResponsables(Set<ServiceResponsable> serviceResponsables) {
+		this.serviceResponsables = serviceResponsables;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iepp")
+	public Set<Centre> getCentres() {
+		return this.centres;
+	}
+
+	public void setCentres(Set<Centre> centres) {
+		this.centres = centres;
 	}
 
 }

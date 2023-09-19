@@ -1,12 +1,16 @@
 package com.daaje.model;
-// Generated 15 sept. 2023, 12:30:20 by Hibernate Tools 4.3.6.Final
+// Generated 19 sept. 2023, 10:50:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,17 +28,21 @@ public class Campagne implements java.io.Serializable {
 	private Date finCampagne;
 	private String libelleCampagne;
 	private Boolean etatCampagne;
+	private Set<Enseigner> enseigners = new HashSet<Enseigner>(0);
+	private Set<Inscription> inscriptions = new HashSet<Inscription>(0);
 
 	public Campagne() {
 	}
 
 	public Campagne(String codeCampagne, Date debutCampagne, Date finCampagne, String libelleCampagne,
-			Boolean etatCampagne) {
+			Boolean etatCampagne, Set<Enseigner> enseigners, Set<Inscription> inscriptions) {
 		this.codeCampagne = codeCampagne;
 		this.debutCampagne = debutCampagne;
 		this.finCampagne = finCampagne;
 		this.libelleCampagne = libelleCampagne;
 		this.etatCampagne = etatCampagne;
+		this.enseigners = enseigners;
+		this.inscriptions = inscriptions;
 	}
 
 	@Id
@@ -94,6 +102,24 @@ public class Campagne implements java.io.Serializable {
 
 	public void setEtatCampagne(Boolean etatCampagne) {
 		this.etatCampagne = etatCampagne;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "campagne")
+	public Set<Enseigner> getEnseigners() {
+		return this.enseigners;
+	}
+
+	public void setEnseigners(Set<Enseigner> enseigners) {
+		this.enseigners = enseigners;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "campagne")
+	public Set<Inscription> getInscriptions() {
+		return this.inscriptions;
+	}
+
+	public void setInscriptions(Set<Inscription> inscriptions) {
+		this.inscriptions = inscriptions;
 	}
 
 }
