@@ -32,7 +32,6 @@ public class NiveauAnimateurControllers {
 		this.cmdBModifier.setDisabled(true);
 	}
 	
-	
 	public void enregistrer(){
 		iservice.addObject(this.niveauAnimateur);
 		annuler();

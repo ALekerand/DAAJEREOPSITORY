@@ -3,9 +3,11 @@ package com.daaje.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,50 +22,81 @@ public class DrenaController {
 	public Drena selectedObject = new Drena();
 	public List listObject = new ArrayList();
 	
+//Controle des composants
+	public CommandButton cmdBModifier = new CommandButton();
+	public CommandButton cmdBEnregistrer = new CommandButton();
+	
 //Methodes
-		public void enregistrer(){
-			iservice.addObject(drena);
-			annuler();
-			info("Enregistrement effectué");
-		}
+	@PostConstruct
+	public void initialisation(){
+		this.cmdBModifier.setDisabled(true);
+	}
+	
+	public void enregistrer(){
+		iservice.addObject(this.drena);
+		annuler();
+		info("Enregistrement effectué");
+	}
 		
-		public void annuler() {
-			drena.setCodeDrena(null);
-			drena.setNomDrena(null);
-			drena.setMailDrena(null);
-		}
+	public void modifier () {
+		iservice.updateObject(drena);
+		annuler();
+		info("Modification effectuée");
+	}
 		
-		public void selectionnerLigne() {
-			drena = selectedObject;
-		}
+	public void annuler() {
+		drena.setCodeDrena(null);
+		drena.setNomDrena(null);
+		drena.setMailDrena(null);
+		cmdBEnregistrer.setDisabled(false);
+		cmdBModifier.setDisabled(true);
+	}
 		
-		public void info(String message){
-		    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", message));	
-		}
+	public void selectionnerLigne() {
+		drena = selectedObject;
+		cmdBEnregistrer.setDisabled(true);
+		cmdBModifier.setDisabled(false);	
+	}
+		
+	public void info(String message){
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
+	}
 			
 //Getters and setters
-		public Drena getDrena() {
-			return drena;
-		}
+	public Drena getDrena() {
+		return drena;
+	}
 
-		public void setDrena(Drena drena) {
-			this.drena = drena;
-		}
+	public void setDrena(Drena drena) {
+		this.drena = drena;
+	}
 
-		public List getListObject() {
-			return listObject = iservice.getObjects("Drena");
-		}
+	public List getListObject() {
+		return listObject = iservice.getObjects("Drena");
+	}
 
-		public void setListObject(List listObject) {
-			this.listObject = listObject;
-		}
+	public void setListObject(List listObject) {
+		this.listObject = listObject;
+	}
 
-		public Drena getSelectedObject() {
+	public Drena getSelectedObject() {
 			return selectedObject;
 		}
 
 		public void setSelectedObject(Drena selectedObject) {
 			this.selectedObject = selectedObject;
+		}
+		public CommandButton getCmdBModifier() {
+			return cmdBModifier;
+		}
+		public void setCmdBModifier(CommandButton cmdBModifier) {
+			this.cmdBModifier = cmdBModifier;
+		}
+		public CommandButton getCmdBEnregistrer() {
+			return cmdBEnregistrer;
+		}
+		public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
+			this.cmdBEnregistrer = cmdBEnregistrer;
 		}
 
 }
