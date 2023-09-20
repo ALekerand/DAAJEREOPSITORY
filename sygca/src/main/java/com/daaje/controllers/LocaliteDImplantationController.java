@@ -11,6 +11,7 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Commune;
 import com.daaje.model.LocaliteDImplantation;
 import com.daaje.service.Iservice;
 
@@ -18,9 +19,11 @@ import com.daaje.service.Iservice;
 public class LocaliteDImplantationController {
 	@Autowired
 	public Iservice iservice;
+	public int idCommune;
 	public LocaliteDImplantation localiteDImplantation = new LocaliteDImplantation();
 	public LocaliteDImplantation selectedObject = new LocaliteDImplantation();
 	public List listObject = new ArrayList();
+	public List<Commune> listCommune = new ArrayList<Commune>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -34,6 +37,7 @@ public class LocaliteDImplantationController {
 	
 	
 	public void enregistrer(){
+		localiteDImplantation.setCommune((Commune)iservice.getObjectById(idCommune, "Commune"));
 		iservice.addObject(this.localiteDImplantation);
 		annuler();
 		info("Enregistrement effectué");
@@ -102,6 +106,26 @@ public class LocaliteDImplantationController {
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+
+	public int getIdCommune() {
+		return idCommune;
+	}
+
+
+	public void setIdCommune(int idCommune) {
+		this.idCommune = idCommune;
+	}
+
+
+	public List<Commune> getListCommune() {
+		return listCommune;
+	}
+
+
+	public void setListCommune(List<Commune> listCommune) {
+		this.listCommune = listCommune;
 	}
 
 }

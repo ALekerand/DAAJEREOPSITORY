@@ -18,6 +18,12 @@
 			
 			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
 			<p:inputText id="input_nom" value="#{communeController.commune.nomCommune}" required="true"></p:inputText>		
+	    
+	    <p:outputLabel for="cb_prefecture" value="Sous Prefecture:" />
+            <p:selectOneMenu id="cb_prefecture" value="#{communeController.idPrefecture}">
+            <f:selectItems value="#{communeController.listSousPrefecture}" var="toto" itemLabel="#{toto.nomPrefecture}" itemValue="#{toto.idPrefecture}" />
+			</p:selectOneMenu>
+	    
 	    </h:panelGrid>
 	    </p:panel>
 	    

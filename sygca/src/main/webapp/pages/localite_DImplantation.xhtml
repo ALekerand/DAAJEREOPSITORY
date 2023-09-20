@@ -18,6 +18,10 @@
 			<p:outputLabel for="input_localite" value="Localité:"></p:outputLabel>
 			<p:inputText id="input_localite" value="#{localiteDImplantationController.localiteDImplantation.nomLocalite}" required="true"></p:inputText>
 			
+			<p:outputLabel for="cb_commune" value="Commune:" />
+            <p:selectOneMenu id="cb_commune" value="#{localiteDImplantationController.idCommune}">
+            <f:selectItems value="#{localiteDImplantationController.listCommune}" var="toto" itemLabel="#{toto.nomCommune}" itemValue="#{toto.idCommune}" />
+			</p:selectOneMenu>
 			
 	    </h:panelGrid>
 	    </p:panel>

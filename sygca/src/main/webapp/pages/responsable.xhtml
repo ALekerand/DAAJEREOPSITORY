@@ -28,13 +28,13 @@
 			<p:inputText id="input_adresse" value="#{responsableController.responsable.adresseResponsable}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_dservice" value="Date prise de service:"></p:outputLabel>
-			<p:inputText id="input_dservice" value="#{responsableController.responsable.datePriseService}" required="true"></p:inputText>
+			<p:inputText id="input_dservice" value="#{responsableController.responsable.datePriseService}" required="true" pattern="dd/MM/yyyy"></p:inputText>
 			
 			<p:outputLabel for="input_dretraite" value="Date retraite:"></p:outputLabel>
-			<p:inputText id="input_dretraite" value="#{responsableController.responsable.dateRetraite}" required="true"></p:inputText>
+			<p:inputText id="input_dretraite" value="#{responsableController.responsable.dateRetraite}" required="true" pattern="dd/MM/yyyy"></p:inputText>
 			
 			<p:outputLabel for="input_naissance" value="Date naissance:"></p:outputLabel>
-			<p:inputText id="input_naissance" value="#{responsableController.responsable.dateNaissance}" required="true"></p:inputText>
+			<p:inputText id="input_naissance" value="#{responsableController.responsable.dateNaissance}" required="true" pattern="dd/MM/yyyy"></p:inputText>
 			
 			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
 			<p:inputText id="input_mail" value="#{responsableController.responsable.mailResponsable}" required="true"></p:inputText>																				
@@ -88,15 +88,21 @@
 	    	</p:column>
 	    	
 	    	<p:column headerText="Date de prise de service">
-	    		<h:outputText value="#{toto.datePriseService}" />
+	    		<h:outputText value="#{toto.datePriseService}" >
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    		</h:outputText>
 	    	</p:column>
 	    	
 	    	<p:column headerText="Date de retraite">
-	    		<h:outputText value="#{toto.dateRetraite}" />
+	    		<h:outputText value="#{toto.dateRetraite}" >
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    		</h:outputText>
 	    	</p:column>
 	    	
 	    	<p:column headerText="Date de naissance">
-	    		<h:outputText value="#{toto.dateNaissance}" />
+	    		<h:outputText value="#{toto.dateNaissance}" >
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    		</h:outputText>
 	    	</p:column>
 	    	
 	    	<p:column headerText="Mail">
