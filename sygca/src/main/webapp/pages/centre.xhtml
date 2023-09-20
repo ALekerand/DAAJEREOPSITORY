@@ -10,7 +10,7 @@
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
-		<p:panel header="Enregistrement des niveaux animateurs">
+		<p:panel header="Enregistrement des centre d'aphabétisation">
 		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{centreControllers.centre.codeCentre}" ></p:inputText>
@@ -22,7 +22,7 @@
 			<p:inputText id="input_abrev" value="#{centreControllers.centre.abreviationNomCentre}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_adr" value="Adresse:"></p:outputLabel>
-			<p:inputText id="input_adr" value="#{centreControllers.niveauAnimateur.nomNiveau}" required="true"></p:inputText>
+			<p:inputText id="input_adr" value="#{centreControllers.centre.adresseCentre}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_tel" value="Téléphone:"></p:outputLabel>
 			<p:inputText id="input_tel" value="#{centreControllers.centre.telephoneCentre}"></p:inputText>
@@ -33,11 +33,23 @@
 			<p:outputLabel for="input_droit" value="Droit d'ouverture:"></p:outputLabel>
 			<p:inputText id="input_droit" ></p:inputText>
 			
-			<p:outputLabel for="cb_depart" value="Départment"/>
-			<p:selectOneMenu id="cb_depart" required="true" value="#{entreeController.idDepartement}">
-			<p:ajax listener="#{centreControllers.chargerMateriel}" event="change" update=":form" process="@this"/>
+			<p:outputLabel for="cb_iep" value="IEP"/>
+			<p:selectOneMenu id="cb_iep" required="true" value="#{centreControllers.idIep}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
-			<f:selectItems value="#{centreControllers.list}" var="tata" itemLabel="#{tata.nomMateriel}" itemValue="#{tata.idMateriel}"></f:selectItems>
+			<f:selectItems value="#{centreControllers.listIep}" var="tata" itemLabel="#{tata.nomIep}" itemValue="#{tata.aidIep}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_localite" value="Localité"/>
+			<p:selectOneMenu id="cb_localite" required="true" value="#{centreControllers.idLocalite}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listLocalite}" var="tata" itemLabel="#{tata.nomLocalite}" itemValue="#{tata.idLocalite}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			
+			<p:outputLabel for="cb_natureP" value="Nature du projet"/>
+			<p:selectOneMenu id="cb_natureP" required="true" value="#{centreControllers.idNatureProjet}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listNatureProjet}" var="tata" itemLabel="#{tata.libelleNatureProjet}" itemValue="#{tata.idNatureProjet}"></f:selectItems>
 			</p:selectOneMenu>
 			
 	    </h:panelGrid>
@@ -51,7 +63,7 @@
 			</f:facet>
 		</p:toolbar>
 	    
-	    <p:dataTable id="data" var="toto" value="#{centreControllers.listObject}" selectionMode="single" selection="#{centreControllers.selectedObject}" rowKey="#{toto.centre}"       
+	    <p:dataTable id="data" var="toto" value="#{centreControllers.listObject}" selectionMode="single" selection="#{centreControllers.selectedObject}" rowKey="#{toto.idCentre}"       
 	     rows="5" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
