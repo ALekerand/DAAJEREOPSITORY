@@ -12,18 +12,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Drena;
-import com.daaje.model.Iep;
+import com.daaje.model.Iepp;
+import com.daaje.model.Responsable;
+import com.daaje.model.ServiceResponsable;
 import com.daaje.service.Iservice;
 
 @Component
-public class IepController {
+public class ServiceResponsableContoller {
 	@Autowired
 	public Iservice iservice;
 	public int idDrena;
-	public Iep iep = new Iep();
-	public Iep selectedObject = new Iep();
+	public int attributIdIepp16;
+	public int idResponsable;
+	public ServiceResponsable serviceResponsable = new ServiceResponsable();
+	public ServiceResponsable selectedObject = new ServiceResponsable();
 	public List listObject = new ArrayList();
 	public List<Drena> listDrena = new ArrayList<Drena>();
+	public List<Iepp> listIep = new ArrayList<Iepp>();
+	public List<Responsable> listResponsable = new ArrayList<Responsable>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -37,29 +43,31 @@ public class IepController {
 	
 	
 	public void enregistrer(){
-		iep.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
-		iservice.addObject(this.iep);
+		serviceResponsable.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
+		serviceResponsable.setIepp((Iepp) iservice.getObjectById(attributIdIepp16, "Iepp"));
+		serviceResponsable.setResponsable((Responsable) iservice.getObjectById(idResponsable, "Responsable"));
+		iservice.addObject(this.serviceResponsable);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(iep);
+		iservice.updateObject(serviceResponsable);
 		annuler();
 		info("Modification effectuée");
 	}
 	
 	public void annuler() {
-		iep.setCodeIep(null);
-		iep.setNomIep(null);
-		iep.setMailIep(null);
+		serviceResponsable.setCodeService(null);
+		serviceResponsable.setDateArrivee(null);
+		serviceResponsable.setDateDepart(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		
 	}
 	
 	public void selectionnerLigne() {
-		iep = selectedObject;
+		serviceResponsable = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
 	}
@@ -70,18 +78,18 @@ public class IepController {
 		
 //Getters and setters
 	public List getListObject() {
-		return listObject = iservice.getObjects("Iepp");
+		return listObject = iservice.getObjects("ServiceResponsable");
 	}
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
 	}
 
-	public Iep getSelectedObject() {
+	public ServiceResponsable getSelectedObject() {
 		return selectedObject;
 	}
 
-	public void setSelectedObject(Iep selectedObject) {
+	public void setSelectedObject(ServiceResponsable selectedObject) {
 		this.selectedObject = selectedObject;
 	}
 
@@ -102,13 +110,13 @@ public class IepController {
 	}
 
 
-	public Iep getIep() {
-		return iep;
+	public ServiceResponsable getServiceResponsable() {
+		return serviceResponsable;
 	}
 
 
-	public void setIep(Iep iep) {
-		this.iep = iep;
+	public void setServiceResponsable(ServiceResponsable serviceResponsable) {
+		this.serviceResponsable = serviceResponsable;
 	}
 
 
@@ -130,6 +138,46 @@ public class IepController {
 
 	public void setIdDrena(int idDrena) {
 		this.idDrena = idDrena;
+	}
+
+
+	public int getAttributIdIepp16() {
+		return attributIdIepp16;
+	}
+
+
+	public void setAttributIdIepp16(int attributIdIepp16) {
+		this.attributIdIepp16 = attributIdIepp16;
+	}
+
+
+	public int getIdResponsable() {
+		return idResponsable;
+	}
+
+
+	public void setIdResponsable(int idResponsable) {
+		this.idResponsable = idResponsable;
+	}
+
+
+	public List<Iepp> getListIep() {
+		return listIep;
+	}
+
+
+	public void setListIep(List<Iepp> listIep) {
+		this.listIep = listIep;
+	}
+
+
+	public List<Responsable> getListResponsable() {
+		return listResponsable;
+	}
+
+
+	public void setListResponsable(List<Responsable> listResponsable) {
+		this.listResponsable = listResponsable;
 	}
 
 }
