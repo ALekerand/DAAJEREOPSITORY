@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.daaje.model.Activite;
 import com.daaje.model.Drena;
-import com.daaje.model.Iepp;
+import com.daaje.model.Iep;
 import com.daaje.service.Iservice;
 
 @Component
@@ -21,8 +21,8 @@ public class IepController {
 	@Autowired
 	public Iservice iservice;
 	public int idDrena;
-	public Iepp iep = new Iepp();
-	public Iepp selectedObject = new Iepp();
+	public Iep iep = new Iep();
+	public Iep selectedObject = new Iep();
 	public List listObject = new ArrayList();
 	public List<Drena> listDrena = new ArrayList<Drena>();
 	
@@ -38,7 +38,7 @@ public class IepController {
 	
 	
 	public void enregistrer(){
-		iep.set(iservice.getObjectById(idDrena, "Drena"));
+		iep.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
 		iservice.addObject(this.iep);
 		annuler();
 		info("Enregistrement effectué");
@@ -51,9 +51,9 @@ public class IepController {
 	}
 	
 	public void annuler() {
-		iep.setCodeIepp(null);
-		iep.setNomIepp(null);
-		iep.setMailIepp(null);
+		iep.setCodeIep(null);
+		iep.setNomIep(null);
+		iep.setMailIep(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		
@@ -82,11 +82,11 @@ public class IepController {
 		this.listObject = listObject;
 	}
 
-	public Iepp getSelectedObject() {
+	public Iep getSelectedObject() {
 		return selectedObject;
 	}
 
-	public void setSelectedObject(Iepp selectedObject) {
+	public void setSelectedObject(Iep selectedObject) {
 		this.selectedObject = selectedObject;
 	}
 
@@ -107,12 +107,12 @@ public class IepController {
 	}
 
 
-	public Iepp getIep() {
+	public Iep getIep() {
 		return iep;
 	}
 
 
-	public void setIep(Iepp iep) {
+	public void setIep(Iep iep) {
 		this.iep = iep;
 	}
 

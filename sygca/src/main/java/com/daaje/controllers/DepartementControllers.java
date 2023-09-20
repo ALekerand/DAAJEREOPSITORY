@@ -30,7 +30,6 @@ public class DepartementControllers {
 		public void annuler() {
 			departement.setCodeDepartement(null);
 			departement.setNomDepartement(null);
-			departement.setMailDepartement(null);
 		}
 		
 		public void selectionnerLigne() {
