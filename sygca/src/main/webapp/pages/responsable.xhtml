@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<p:panel header="Enregistrement des responsable">
+		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
+			<p:outputLabel for="input_matricule" value="Matricule:"></p:outputLabel>
+			<p:inputText id="input_matricule" value="#{responsableController.responsable.matriculeResponsable}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom" value="#{responsableController.responsable.nomResponsable}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_prenom" value="Prénom:"></p:outputLabel>
+			<p:inputText id="input_prenom" value="#{responsableController.responsable.prenomResponsable}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_tel" value="Contact:"></p:outputLabel>
+			<p:inputText id="input_tel" value="#{responsableController.responsable.telephoneResponsable}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_adresse" value="Adresse:"></p:outputLabel>
+			<p:inputText id="input_adresse" value="#{responsableController.responsable.adresseResponsable}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_dservice" value="Date prise de service:"></p:outputLabel>
+			<p:inputText id="input_dservice" value="#{responsableController.responsable.datePriseService}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_dretraite" value="Date retraite:"></p:outputLabel>
+			<p:inputText id="input_dretraite" value="#{responsableController.responsable.dateRetraite}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_naissance" value="Date naissance:"></p:outputLabel>
+			<p:inputText id="input_naissance" value="#{responsableController.responsable.dateNaissance}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_mail" value="#{responsableController.responsable.mailResponsable}" required="true"></p:inputText>																				
+						
+			<p:outputLabel for="cb_fonction" value="Fonction:" />
+            <p:selectOneMenu id="cb_fonction" value="#{responsableController.idFonction}">
+            <f:selectItems value="#{responsableController.listFonction}" var="toto" itemLabel="#{toto.libelleFonction}" itemValue="#{toto.idFonction}" />
+			</p:selectOneMenu>
+			
+	    </h:panelGrid>
+	    </p:panel>
+	    
+	    <p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" actionListener="#{responsableController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{responsableController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{responsableController.annuler}" update="form"></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+	    
+	    
+	    
+	    <p:dataTable id="data" var="toto" value="#{responsableController.listObject}" selectionMode="single" selection="#{responsableController.selectedObject}" rowKey="#{toto.idResponsable}"       
+	     rows="10" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    <p:ajax event="rowSelect" process="@this" listener="#{responsableController.selectionnerLigne}" update="form"></p:ajax>
+	    	<f:facet name="header">
+                Liste des responsables
+            </f:facet>	
+	    	<p:column headerText="Matricule">
+	    		<h:outputText value="#{toto.matriculeResponsable}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Nom">
+	    		<h:outputText value="#{toto.nomResponsable}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Prénom">
+	    		<h:outputText value="#{toto.prenomResponsable}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Téléphone">
+	    		<h:outputText value="#{toto.telephoneResponsable}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="IEP">
+	    		<h:outputText value="#{toto.adresseResponsable}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Date de prise de service">
+	    		<h:outputText value="#{toto.datePriseService}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Date de retraite">
+	    		<h:outputText value="#{toto.dateRetraite}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Date de naissance">
+	    		<h:outputText value="#{toto.dateNaissance}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Mail">
+	    		<h:outputText value="#{toto.mailResponsable}" />
+	    	</p:column>
+	    
+	    </p:dataTable>
+		
+				
+<br />
+
+
+		<br/>
+		
+		
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
+	   
+		</h:form>
+	
+	</ui:define>
+	
+	</ui:composition>
+</html>

@@ -18,7 +18,7 @@
 			<p:outputLabel for="input_iep" value="IEP:"></p:outputLabel>
 			<p:inputText id="input_iep" value="#{iepController.iep.nomIepp}" required="true"></p:inputText>
 			
-			<p:outputLabel for="input_mail" value="IEP:"></p:outputLabel>
+			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
 			<p:inputText id="input_mail" value="#{iepController.iep.mailIepp}" required="true"></p:inputText>
 			
 			<p:outputLabel for="cb_drena" value="Drena:" />
@@ -39,7 +39,7 @@
 	    
 	    
 	    
-	    <p:dataTable id="data" var="toto" value="#{activiteController.listObject}" selectionMode="single" selection="#{activiteController.selectedObject}" rowKey="#{toto.idActivite}"       
+	    <p:dataTable id="data" var="toto" value="#{iepController.listObject}" selectionMode="single" selection="#{iepController.selectedObject}" rowKey="#{toto.attributIdIepp16}"       
 	     rows="5" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"

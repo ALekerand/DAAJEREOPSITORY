@@ -11,19 +11,19 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.daaje.model.Drena;
-import com.daaje.model.Iepp;
+import com.daaje.model.Fonction;
+import com.daaje.model.Responsable;
 import com.daaje.service.Iservice;
 
 @Component
-public class IepController {
+public class ResponsableController {
 	@Autowired
 	public Iservice iservice;
-	public int idDrena;
-	public Iepp iep = new Iepp();
-	public Iepp selectedObject = new Iepp();
+	public int idFonction;
+	public Responsable responsable = new Responsable();
+	public Responsable selectedObject = new Responsable();
 	public List listObject = new ArrayList();
-	public List<Drena> listDrena = new ArrayList<Drena>();
+	public List<Fonction> listFonction = new ArrayList<Fonction>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -37,29 +37,35 @@ public class IepController {
 	
 	
 	public void enregistrer(){
-		iep.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
-		iservice.addObject(this.iep);
+		responsable.setFonction((Fonction) iservice.getObjectById(idFonction, "Fonction"));
+		iservice.addObject(this.responsable);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(iep);
+		iservice.updateObject(responsable);
 		annuler();
 		info("Modification effectuée");
 	}
 	
 	public void annuler() {
-		iep.setCodeIepp(null);
-		iep.setNomIepp(null);
-		iep.setMailIepp(null);
+		responsable.setMatriculeResponsable(null);
+		responsable.setNomResponsable(null);
+		responsable.setPrenomResponsable(null);
+		responsable.setTelephoneResponsable(null);
+		responsable.setAdresseResponsable(null);
+		responsable.setDatePriseService(null);
+		responsable.setDateRetraite(null);
+		responsable.setDateNaissance(null);
+		responsable.setMailResponsable(null);		
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		
 	}
 	
 	public void selectionnerLigne() {
-		iep = selectedObject;
+		responsable = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
 	}
@@ -69,19 +75,23 @@ public class IepController {
 	}
 		
 //Getters and setters
+	
+
+	
+
 	public List getListObject() {
-		return listObject = iservice.getObjects("Iepp");
+		return listObject = iservice.getObjects("Responsable");
 	}
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
 	}
 
-	public Iepp getSelectedObject() {
+	public Responsable getSelectedObject() {
 		return selectedObject;
 	}
 
-	public void setSelectedObject(Iepp selectedObject) {
+	public void setSelectedObject(Responsable selectedObject) {
 		this.selectedObject = selectedObject;
 	}
 
@@ -102,34 +112,34 @@ public class IepController {
 	}
 
 
-	public Iepp getIep() {
-		return iep;
+	public Responsable getResponsable() {
+		return responsable;
 	}
 
 
-	public void setIep(Iepp iep) {
-		this.iep = iep;
+	public void setIep(Responsable responsable) {
+		this.responsable = responsable;
 	}
 
 
-	public List<Drena> getListDrena() {
-		return listDrena = iservice.getObjects("Drena");
+	public List<Fonction> getListFonction() {
+		return listFonction = iservice.getObjects("Fonction");
 		
 	}
 
 
-	public void setListDrena(List<Drena> listDrena) {
-		this.listDrena = listDrena;
+	public void setListFonction(List<Fonction> listFonction) {
+		this.listFonction = listFonction;
 	}
 
 
-	public int getIdDrena() {
-		return idDrena;
+	public int getIdFonction() {
+		return idFonction;
 	}
 
 
-	public void setIdDrena(int idDrena) {
-		this.idDrena = idDrena;
+	public void setIdFonction(int idDrena) {
+		this.idFonction = idFonction;
 	}
 
 }
