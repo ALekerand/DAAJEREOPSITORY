@@ -5,7 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
-	<ui:composition template="/templates/template.xhtml">
+<ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
@@ -18,6 +18,10 @@
 			<p:outputLabel for="input_prefecture" value="Préfecture:"></p:outputLabel>
 			<p:inputText id="input_prefecture" value="#{sousPrefectureController.sousPrefecture.nomPrefecture}" required="true"></p:inputText>
 			
+		<p:outputLabel for="cb_departement" value="Département:" />
+            <p:selectOneMenu id="cb_departement" value="#{sousPrefectureController.idDepartement}">
+            <f:selectItems value="#{sousPrefectureController.listDepartement}" var="toto" itemLabel="#{toto.nomDepartement}" itemValue="#{toto.idDepartement}" />
+			</p:selectOneMenu>
 			
 	    </h:panelGrid>
 	    </p:panel>
@@ -33,7 +37,7 @@
 	    
 	    
 	    <p:dataTable id="data" var="toto" value="#{sousPrefectureController.listObject}" selectionMode="single" selection="#{sousPrefectureController.selectedObject}" rowKey="#{toto.idPrefecture}"       
-	     rows="5" paginatorPosition="bottom" paginator="true"
+	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,15">

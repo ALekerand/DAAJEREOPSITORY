@@ -108,4 +108,24 @@ public class SousPrefectureController {
 		this.cmdBEnregistrer = cmdBEnregistrer;
 	}
 
+
+	public int getIdDepartement() {
+		return idDepartement;
+	}
+
+
+	public void setIdDepartement(int idDepartement) {
+		this.idDepartement = idDepartement;
+	}
+
+
+	public List<Departement> getListDepartement() {
+		return listDepartement;
+	}
+
+
+	public void setListDepartement(List<Departement> listDepartement) {
+		this.listDepartement = listDepartement;
+	}
+
 }

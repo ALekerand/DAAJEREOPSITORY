@@ -7,12 +7,11 @@
 
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
-		<h:form id="form">
-		
+		<h:form id="form">		
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des communes">
-		<h:panelGrid columns="4" cellpadding="8">		
+		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{communeController.commune.codeCommune}" required="true"></p:inputText>
 			
@@ -36,7 +35,7 @@
 	    </p:toolbar>
 	    
 	    <p:dataTable var="toto" value="#{communeController.listObject}" selectionMode="single" selection="#{communeController.selectedObject}" rowKey="#{toto.idCommune}"       
-	     rows="5" paginatorPosition="bottom" paginator="true"
+	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,15">
