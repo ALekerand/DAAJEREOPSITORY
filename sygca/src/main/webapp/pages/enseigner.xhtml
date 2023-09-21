@@ -10,33 +10,31 @@
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
-		<p:panel header="Enregistrement des services responsable">
+		<p:panel header="Enregistrement Enseigner">
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{serviceResponsableController.serviceResponsable.codeService}" required="true"></p:inputText>
-			
-			<p:outputLabel for="input_arrivee" value="Date d'arrivée:"></p:outputLabel>
-			<p:inputText id="input_arrivee" value="#{serviceResponsableController.serviceResponsable.dateArrivee}" required="true" pattern="dd/MM/yyyy"></p:inputText>
-			
-			<p:outputLabel for="input_depart" value="Date de départ:"></p:outputLabel>
-			<p:inputText id="input_depart" value="#{serviceResponsableController.serviceResponsable.dateDepart}" required="true" pattern="dd/MM/yyyy"></p:inputText>
+			<p:inputText id="input_code" value="#{enseignerController.enseigner.codeEnseigner}" required="true"></p:inputText>	
 			</h:panelGrid>
 			
-			
-		<h:panelGrid columns="6" cellpadding="8">			
-			<p:outputLabel for="cb_drena" value="Drena:" />
-            <p:selectOneMenu id="cb_drena" value="#{serviceResponsableController.idDrena}">
-            <f:selectItems value="#{serviceResponsableController.listDrena}" var="toto" itemLabel="#{toto.nomDrena}" itemValue="#{toto.idDrena}" />
+		<h:panelGrid columns="8" cellpadding="8">			
+			<p:outputLabel for="cb_animateur" value="Animateur:" />
+            <p:selectOneMenu id="cb_animateur" value="#{enseignerController.idAnimateur}">
+            <f:selectItems value="#{enseignerController.listAnimateur}" var="toto" itemLabel="#{toto.nomAnimateur}" itemValue="#{toto.idAnimateur}" />
 			</p:selectOneMenu>
 			
-			<p:outputLabel for="cb_iep" value="IEP:" />
-            <p:selectOneMenu id="cb_iep" value="#{serviceResponsableController.attributIdIepp16}">
-            <f:selectItems value="#{serviceResponsableController.listIep}" var="toto" itemLabel="#{toto.nomIepp}" itemValue="#{toto.attributIdIepp16}" />
+			<p:outputLabel for="cb_campagne" value="Campagne:" />
+            <p:selectOneMenu id="cb_campagne" value="#{enseignerController.idCampagne}">
+            <f:selectItems value="#{enseignerController.listCampagne}" var="toto" itemLabel="#{toto.libelleCampagne}" itemValue="#{toto.idCampagne}" />
 			</p:selectOneMenu>
 			
-			<p:outputLabel for="cb_responsable" value="Responsable:" />
-            <p:selectOneMenu id="cb_responsable" value="#{serviceResponsableController.idResponsable}">
-            <f:selectItems value="#{serviceResponsableController.listResponsable}" var="toto" itemLabel="#{toto.nomResponsable}" itemValue="#{toto.idResponsable}" />
+			<p:outputLabel for="cb_centre" value="Centre:" />
+            <p:selectOneMenu id="cb_centre" value="#{enseignerController.idCentre}">
+            <f:selectItems value="#{enseignerController.listCentre}" var="toto" itemLabel="#{toto.nomCentre}" itemValue="#{toto.idCentre}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_niveau_formation" value="Niveau de formation:" />
+            <p:selectOneMenu id="cb_niveau_formation" value="#{enseignerController.idNiveauFormation}">
+            <f:selectItems value="#{enseignerController.listNiveauFormation}" var="toto" itemLabel="#{toto.libelleNiveauFormation}" itemValue="#{toto.idNiveauFormation}" />
 			</p:selectOneMenu>			
 		</h:panelGrid>
 	    
@@ -45,36 +43,24 @@
 	    
 	    <p:toolbar >
 			<f:facet name="left">
-				<p:commandButton value="Enregistrer" actionListener="#{serviceResponsableController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{serviceResponsableController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-				<p:commandButton value="Annuler" process="@this" actionListener="#{serviceResponsableController.annuler}" update="form"></p:commandButton>
+				<p:commandButton value="Enregistrer" actionListener="#{enseignerController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{enseignerController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{enseignerController.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>	    
 	    	    
-	    <p:dataTable id="data" var="toto" value="#{serviceResponsableController.listObject}" selectionMode="single" selection="#{serviceResponsableController.selectedObject}" rowKey="#{toto.idServiceDrena}"       
-	     rows="5" paginatorPosition="bottom" paginator="true"
+	    <p:dataTable id="data" var="toto" value="#{enseignerController.listObject}" selectionMode="single" selection="#{enseignerController.selectedObject}" rowKey="#{toto.idEnseigner}"       
+	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,15">
 	    
-	    <p:ajax event="rowSelect" process="@this" listener="#{serviceResponsableController.selectionnerLigne}" update="form"></p:ajax>
+	    <p:ajax event="rowSelect" process="@this" listener="#{enseignerController.selectionnerLigne}" update="form"></p:ajax>
 	    	<f:facet name="header">
-                Liste des services responsables
+                Liste Enseigner
             </f:facet>	
 	    	<p:column headerText="Code">
-	    		<h:outputText value="#{toto.codeService}" />
-	    	</p:column>
-	    	
-	    	<p:column headerText="Date d'arrivée">
-	    		<h:outputText value="#{toto.dateArrivee}" >
-	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
-	    		</h:outputText>
-	    	</p:column>
-	    	
-	    	<p:column headerText="Date de départ">
-	    		<h:outputText value="#{toto.dateDepart}" >
-	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
-	    		</h:outputText>
+	    		<h:outputText value="#{toto.codeEnseigner}" />
 	    	</p:column>
 	    
 	    </p:dataTable>

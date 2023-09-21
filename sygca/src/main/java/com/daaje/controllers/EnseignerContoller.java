@@ -11,26 +11,28 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.daaje.model.Drena;
-import com.daaje.model.Iep;
-import com.daaje.model.Responsable;
-import com.daaje.model.ServiceResponsable;
+import com.daaje.model.Animateur;
+import com.daaje.model.Campagne;
+import com.daaje.model.Centre;
+import com.daaje.model.NiveauFormation;
+import com.daaje.model.Enseigner;
 import com.daaje.service.Iservice;
 
 @Component
 public class EnseignerContoller {
 	@Autowired
 	public Iservice iservice;
-	public int idDrena;
-	public int attributIdIepp16;
-	public int idResponsable;
-	public ServiceResponsable serviceResponsable = new ServiceResponsable();
-	public ServiceResponsable selectedObject = new ServiceResponsable();
+	public int idAnimateur;
+	public int idCampagne;
+	public int idCentre;
+	public int idNiveauFormation;	
+	public Enseigner enseigner = new Enseigner();
+	public Enseigner selectedObject = new Enseigner();
 	public List listObject = new ArrayList();
-	public List<Drena> listDrena = new ArrayList<Drena>();
-	public List<Iep> listIep = new ArrayList<Iep>();
-	public List<Responsable> listResponsable = new ArrayList<Responsable>();
-	public List<Responsable> listResponsable1 = new ArrayList<Responsable>();
+	public List<Animateur> listAnimateur = new ArrayList<Animateur>();
+	public List<Campagne> listCampagne = new ArrayList<Campagne>();
+	public List<Centre> listCentre = new ArrayList<Centre>();
+	public List<NiveauFormation> listNiveauFormation = new ArrayList<NiveauFormation>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -44,31 +46,30 @@ public class EnseignerContoller {
 	
 	
 	public void enregistrer(){
-		serviceResponsable.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
-		serviceResponsable.setIep((Iep) (iservice.getObjectById(attributIdIepp16, "Iepp")));
-		serviceResponsable.setResponsable((Responsable) iservice.getObjectById(idResponsable, "Responsable"));
-		iservice.addObject(this.serviceResponsable);
+		enseigner.setAnimateur((Animateur) iservice.getObjectById(idAnimateur, "Animateur"));
+		enseigner.setCampagne((Campagne) (iservice.getObjectById(idCampagne, "Campagne")));
+		enseigner.setCentre((Centre) iservice.getObjectById(idCentre, "Centre"));
+		enseigner.setNiveauFormation((NiveauFormation) iservice.getObjectById(idNiveauFormation, "NiveauFormation"));
+		iservice.addObject(this.enseigner);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(serviceResponsable);
+		iservice.updateObject(enseigner);
 		annuler();
 		info("Modification effectuée");
 	}
 	
 	public void annuler() {
-		serviceResponsable.setCodeService(null);
-		serviceResponsable.setDateArrivee(null);
-		serviceResponsable.setDateDepart(null);
+		enseigner.setCodeEnseigner(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		
 	}
 	
 	public void selectionnerLigne() {
-		serviceResponsable = selectedObject;
+		enseigner = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
 	}
@@ -79,18 +80,18 @@ public class EnseignerContoller {
 		
 //Getters and setters
 	public List getListObject() {
-		return listObject = iservice.getObjects("ServiceResponsable");
+		return listObject = iservice.getObjects("Enseigner");
 	}
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
 	}
 
-	public ServiceResponsable getSelectedObject() {
+	public Enseigner getSelectedObject() {
 		return selectedObject;
 	}
 
-	public void setSelectedObject(ServiceResponsable selectedObject) {
+	public void setSelectedObject(Enseigner selectedObject) {
 		this.selectedObject = selectedObject;
 	}
 
@@ -111,74 +112,93 @@ public class EnseignerContoller {
 	}
 
 
-	public ServiceResponsable getServiceResponsable() {
-		return serviceResponsable;
+	public Enseigner getEnseigner() {
+		return enseigner;
 	}
 
 
-	public void setServiceResponsable(ServiceResponsable serviceResponsable) {
-		this.serviceResponsable = serviceResponsable;
+	public void setEnseigner(Enseigner enseigner) {
+		this.enseigner = enseigner;
+	}
+
+	
+	public int getIdAnimateur() {
+		return idAnimateur;
 	}
 
 
-	public List<Drena> getListDrena() {
-		return listDrena = iservice.getObjects("Drena");
-		
+	public void setIdAnimateur(int idAnimateur) {
+		this.idAnimateur = idAnimateur;
 	}
 
 
-	public void setListDrena(List<Drena> listDrena) {
-		this.listDrena = listDrena;
+	public int getIdCampagne() {
+		return idCampagne;
 	}
 
 
-	public int getIdDrena() {
-		return idDrena;
+	public void setIdCampagne(int idCampagne) {
+		this.idCampagne = idCampagne;
 	}
 
 
-	public void setIdDrena(int idDrena) {
-		this.idDrena = idDrena;
+	public int getIdCentre() {
+		return idCentre;
 	}
 
 
-	public int getAttributIdIepp16() {
-		return attributIdIepp16;
+	public void setIdCentre(int idCentre) {
+		this.idCentre = idCentre;
 	}
 
 
-	public void setAttributIdIepp16(int attributIdIepp16) {
-		this.attributIdIepp16 = attributIdIepp16;
+	public int getIdNiveauFormation() {
+		return idNiveauFormation;
 	}
 
 
-	public int getIdResponsable() {
-		return idResponsable;
+	public void setIdNiveauFormation(int idNiveauFormation) {
+		this.idNiveauFormation = idNiveauFormation;
 	}
 
 
-	public void setIdResponsable(int idResponsable) {
-		this.idResponsable = idResponsable;
+	public List<Animateur> getListAnimateur() {
+		return listAnimateur;
 	}
 
 
-	public List<Iep> getListIep() {
-		return listIep;
+	public void setListAnimateur(List<Animateur> listAnimateur) {
+		this.listAnimateur = listAnimateur;
 	}
 
 
-	public void setListIep(List<Iep> listIep) {
-		this.listIep = listIep;
+	public List<Campagne> getListCampagne() {
+		return listCampagne;
 	}
 
 
-	public List<Responsable> getListResponsable() {
-		return listResponsable;
+	public void setListCampagne(List<Campagne> listCampagne) {
+		this.listCampagne = listCampagne;
 	}
 
 
-	public void setListResponsable(List<Responsable> listResponsable) {
-		this.listResponsable = listResponsable;
+	public List<Centre> getListCentre() {
+		return listCentre;
+	}
+
+
+	public void setListCentre(List<Centre> listCentre) {
+		this.listCentre = listCentre;
+	}
+
+
+	public List<NiveauFormation> getListNiveauFormation() {
+		return listNiveauFormation;
+	}
+
+
+	public void setListNiveauFormation(List<NiveauFormation> listNiveauFormation) {
+		this.listNiveauFormation = listNiveauFormation;
 	}
 
 }

@@ -38,7 +38,7 @@ public class CommuneController {
 	
 	public void enregistrer(){
 		commune.setSousPrefecture((SousPrefecture) iservice.getObjectById(idPrefecture, "SousPrefecture"));
-		iservice.addObject(commune);
+		iservice.addObject(this.commune);
 		annuler();
 		info("Enregistrement effectué");
 	}
