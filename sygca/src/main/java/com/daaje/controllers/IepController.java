@@ -70,7 +70,7 @@ public class IepController {
 		
 //Getters and setters
 	public List getListObject() {
-		return listObject = iservice.getObjects("Iepp");
+		return listObject = iservice.getObjects("Iep");
 	}
 
 	public void setListObject(List listObject) {
