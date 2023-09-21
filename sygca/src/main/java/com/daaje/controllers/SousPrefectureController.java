@@ -11,6 +11,7 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Departement;
 import com.daaje.model.SousPrefecture;
 import com.daaje.service.Iservice;
 
@@ -18,9 +19,11 @@ import com.daaje.service.Iservice;
 public class SousPrefectureController {
 	@Autowired
 	public Iservice iservice;
+	public int idDepartement;
 	public SousPrefecture sousPrefecture = new SousPrefecture();
 	public SousPrefecture selectedObject = new SousPrefecture();
 	public List listObject = new ArrayList();
+	public List<Departement> listDepartement = new ArrayList<Departement>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -34,7 +37,8 @@ public class SousPrefectureController {
 	
 	
 	public void enregistrer(){
-		iservice.addObject(this.sousPrefecture);
+		sousPrefecture.setDepartement((Departement) iservice.getObjectById(idDepartement, "Departement"));
+		iservice.addObject(sousPrefecture);
 		annuler();
 		info("Enregistrement effectué");
 	}

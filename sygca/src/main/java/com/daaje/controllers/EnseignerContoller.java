@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Drena;
-import com.daaje.model.Iepp;
+import com.daaje.model.Iep;
 import com.daaje.model.Responsable;
-import com.daaje.model.Enseigner;
+import com.daaje.model.ServiceResponsable;
 import com.daaje.service.Iservice;
 
 @Component
@@ -28,9 +28,9 @@ public class EnseignerContoller {
 	public ServiceResponsable selectedObject = new ServiceResponsable();
 	public List listObject = new ArrayList();
 	public List<Drena> listDrena = new ArrayList<Drena>();
-	public List<Iepp> listIep = new ArrayList<Iepp>();
+	public List<Iep> listIep = new ArrayList<Iep>();
 	public List<Responsable> listResponsable = new ArrayList<Responsable>();
-	public List<Responsable> listResponsable = new ArrayList<Responsable>();
+	public List<Responsable> listResponsable1 = new ArrayList<Responsable>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -45,7 +45,7 @@ public class EnseignerContoller {
 	
 	public void enregistrer(){
 		serviceResponsable.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
-		serviceResponsable.setIepp((Iepp) iservice.getObjectById(attributIdIepp16, "Iepp"));
+		serviceResponsable.setIep((Iep) (iservice.getObjectById(attributIdIepp16, "Iepp")));
 		serviceResponsable.setResponsable((Responsable) iservice.getObjectById(idResponsable, "Responsable"));
 		iservice.addObject(this.serviceResponsable);
 		annuler();
@@ -162,12 +162,12 @@ public class EnseignerContoller {
 	}
 
 
-	public List<Iepp> getListIep() {
+	public List<Iep> getListIep() {
 		return listIep;
 	}
 
 
-	public void setListIep(List<Iepp> listIep) {
+	public void setListIep(List<Iep> listIep) {
 		this.listIep = listIep;
 	}
 
