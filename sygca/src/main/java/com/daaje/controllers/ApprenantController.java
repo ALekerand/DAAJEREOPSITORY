@@ -11,22 +11,21 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-import com.daaje.model.Animateur;
+import com.daaje.model.Activite;
+import com.daaje.model.Apprenant;
 import com.daaje.model.Genre;
-import com.daaje.model.NiveauAnimateur;
 import com.daaje.service.Iservice;
 
 @Component
-public class AnimateurContoller {
+public class ApprenantController {
 	@Autowired
 	public Iservice iservice;
 	public int idGenre;
-	public int idNiveau;
-	public Animateur animateur = new Animateur();
-	public Animateur selectedObject = new Animateur();
+	public int idActivite;
+	public Apprenant apprenant = new Apprenant();
+	public Apprenant selectedObject = new Apprenant();
 	public List listObject = new ArrayList();
-	public List<NiveauAnimateur> listNiveauAnimateur = new ArrayList<NiveauAnimateur>();
+	public List<Activite> listActivite = new ArrayList<Activite>();
 	public List<Genre> listGenre = new ArrayList<Genre>();
 	
 //Controle des composants
@@ -41,34 +40,34 @@ public class AnimateurContoller {
 	
 	
 	public void enregistrer(){
-		animateur.setNiveauAnimateur((NiveauAnimateur) iservice.getObjectById(idNiveau, "NiveauAnimateur"));
-		animateur.setGenre((Genre) iservice.getObjectById(idGenre, "Genre"));
-		iservice.addObject(this.animateur);
+		apprenant.setActivite((Activite) iservice.getObjectById(idActivite, "Activite"));
+		apprenant.setGenre((Genre) iservice.getObjectById(idGenre, "Genre"));
+		iservice.addObject(this.apprenant);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(animateur);
+		iservice.updateObject(apprenant);
 		annuler();
 		info("Modification effectuée");
 	}
 	
 	public void annuler() {
-		animateur.setCodeAnimateur(null);
-		animateur.setNomAnimateur(null);
-		animateur.setPrenomAnimateur(null);
-		animateur.setAgeAnimateur(null);
-		animateur.setTelephoneAnimateur(null);
-		animateur.setAdresseAnimateur(null);
-		animateur.setMailAnimateur(null);
+		apprenant.setCodeApprenant(null);
+		apprenant.setNomApprenant(null);
+		apprenant.setPrenomApprenant(null);
+		apprenant.setDateNaissApprenant(null);
+		apprenant.setTelephoneApprenant(null);
+		apprenant.setAdresseApprenant(null);
+		apprenant.setMailApprenant(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		
 	}
 	
 	public void selectionnerLigne() {
-		animateur = selectedObject;
+		apprenant = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
 	}
@@ -79,18 +78,18 @@ public class AnimateurContoller {
 		
 //Getters and setters
 	public List getListObject() {
-		return listObject = iservice.getObjects("Animateur");
+		return listObject = iservice.getObjects("Apprenant");
 	}
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
 	}
 
-	public Animateur getSelectedObject() {
+	public Apprenant getSelectedObject() {
 		return selectedObject;
 	}
 
-	public void setSelectedObject(Animateur selectedObject) {
+	public void setSelectedObject(Apprenant selectedObject) {
 		this.selectedObject = selectedObject;
 	}
 
@@ -111,38 +110,17 @@ public class AnimateurContoller {
 	}
 
 
-	public Animateur getAnimateur() {
-		return animateur;
+	public Apprenant getApprenant() {
+		return apprenant;
 	}
 
 
-	public void setAnimateur(Animateur animateur) {
-		this.animateur = animateur;
+	public void setApprenant(Apprenant apprenant) {
+		this.apprenant = apprenant;
 	}
 
 
-	public List<NiveauAnimateur> getListNiveauAnimateur() {
-		return listNiveauAnimateur = iservice.getObjects("NiveauAnimateur");
-		
-	}
-
-
-	public void setListNiveauAnimateur(List<NiveauAnimateur> listNiveauAnimateur) {
-		this.listNiveauAnimateur = listNiveauAnimateur;
-	}
-
-
-	public int getidNiveau() {
-		return idNiveau;
-	}
-
-
-	public void setidNiveau(int idNiveau) {
-		this.idNiveau = idNiveau;
-	}
-
-
-	public int getidGenre() {
+	public int getIdGenre() {
 		return idGenre;
 	}
 
@@ -152,13 +130,23 @@ public class AnimateurContoller {
 	}
 
 
-	public int getIdNiveau() {
-		return idNiveau;
+	public int getIdActivite() {
+		return idActivite;
 	}
 
 
-	public void setIdNiveau(int idNiveau) {
-		this.idNiveau = idNiveau;
+	public void setIdActivite(int idActivite) {
+		this.idActivite = idActivite;
+	}
+
+
+	public List<Activite> getListActivite() {
+		return listActivite;
+	}
+
+
+	public void setListActivite(List<Activite> listActivite) {
+		this.listActivite = listActivite;
 	}
 
 
@@ -169,11 +157,6 @@ public class AnimateurContoller {
 
 	public void setListGenre(List<Genre> listGenre) {
 		this.listGenre = listGenre;
-	}
-
-
-	public int getIdGenre() {
-		return idGenre;
 	}
 
 }
