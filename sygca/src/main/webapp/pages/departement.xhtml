@@ -35,7 +35,7 @@
 	    </p:toolbar>
 	    
 	    <p:dataTable var="toto" value="#{departementControllers.listObject}" selectionMode="single" selection="#{departementControllers.selectedObject}" rowKey="#{toto.idDepartement}"       
-	     rows="5" paginatorPosition="bottom" paginator="true"
+	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,15">

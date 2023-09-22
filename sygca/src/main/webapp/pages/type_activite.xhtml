@@ -32,7 +32,7 @@
 	   </p:toolbar>
 	   
 	   <p:dataTable var="toto" value="#{typeActiviteControllers.listObject}" selectionMode="single" selection="#{typeActiviteControllers.selectedObject}" rowKey="#{toto.idTypeactivite}"
-	   rows="5" paginatorPosition="bottom" paginator="true"
+	   rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,15">
