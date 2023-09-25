@@ -30,12 +30,11 @@ public class IepController {
 	public CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
-	@PostConstruct
+@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
 	}
-	
-	
+		
 	public void enregistrer(){
 		iep.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
 		iservice.addObject(this.iep);
@@ -110,7 +109,6 @@ public class IepController {
 	public void setIep(Iep iep) {
 		this.iep = iep;
 	}
-
 
 	public List<Drena> getListDrena() {
 		return listDrena = iservice.getObjects("Drena");

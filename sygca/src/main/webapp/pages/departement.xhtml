@@ -4,37 +4,38 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-
 	
-<ui:composition template="/templates/template.xhtml">
-
+    <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
-	
 		<h:form id="form">
-		
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des départements">
-		<h:panelGrid columns="6" cellpadding="8">		
+		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{departementControllers.departement.codeDepartement}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
 			<p:inputText id="input_nom" value="#{departementControllers.departement.nomDepartement}" required="true"></p:inputText>
+			
+			<p:outputLabel for="cb_drena" value="Drena:" />
+            <p:selectOneMenu id="cb_drena" value="#{departementControllers.idDrena}">
+            <f:selectItems value="#{departementControllers.listDrena}" var="toto" itemLabel="#{toto.nomDrena}" itemValue="#{toto.idDrena}" />
+			</p:selectOneMenu>
 				
 	    </h:panelGrid>
 	    </p:panel>
 	    
 	    <p:toolbar>
 	    	<f:facet name="left">
-	    		<p:commandButton value="Enregistrer" actionListener="#{departementControllers.enregistrer}" update="form"></p:commandButton>
-				<p:commandButton value="Annuler" actionListener="#{departementControllers.annuler}" update="form"></p:commandButton>
-				<p:commandButton value="Modifier"></p:commandButton>
+	    		<p:commandButton value="Enregistrer" actionListener="#{departementControllers.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{departementControllers.modifier}" update="form" ><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+	    		<p:commandButton value="Annuler" process="@this" actionListener="#{departementControllers.annuler}" update="form"></p:commandButton>
 	    	</f:facet>
 	    	
 	    </p:toolbar>
 	    
-	    <p:dataTable var="toto" value="#{departementControllers.listObject}" selectionMode="single" selection="#{departementControllers.selectedObject}" rowKey="#{toto.idDepartement}"       
+	    <p:dataTable id="data" var="toto" value="#{departementControllers.listObject}" selectionMode="single" selection="#{departementControllers.selectedObject}" rowKey="#{toto.idDepartement}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
@@ -51,12 +52,24 @@
 	    	<p:column headerText="Nom">
 	    		<h:outputText value="#{toto.nomDepartement}" />
 	    	</p:column>
-	    	
-	    	<p:column headerText="Mail">
-	    		<h:outputText value="#{toto.mailDepartement}" />
-	    	</p:column>
 	    
 	    </p:dataTable>
+	  
+	    
+<br />
+
+
+		<br/>
+		
+		
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
 		
 		</h:form>
 				
