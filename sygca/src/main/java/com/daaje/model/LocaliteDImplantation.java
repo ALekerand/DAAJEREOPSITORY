@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 20 sept. 2023, 12:20:34 by Hibernate Tools 4.3.6.Final
+// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +23,7 @@ public class LocaliteDImplantation implements java.io.Serializable {
 
 	private Integer idLocalite;
 	private Commune commune;
+	private SousPrefecture sousPrefecture;
 	private String codeLocalite;
 	private String nomLocalite;
 	private Set<Centre> centres = new HashSet<Centre>(0);
@@ -30,12 +31,14 @@ public class LocaliteDImplantation implements java.io.Serializable {
 	public LocaliteDImplantation() {
 	}
 
-	public LocaliteDImplantation(Commune commune) {
-		this.commune = commune;
+	public LocaliteDImplantation(SousPrefecture sousPrefecture) {
+		this.sousPrefecture = sousPrefecture;
 	}
 
-	public LocaliteDImplantation(Commune commune, String codeLocalite, String nomLocalite, Set<Centre> centres) {
+	public LocaliteDImplantation(Commune commune, SousPrefecture sousPrefecture, String codeLocalite,
+			String nomLocalite, Set<Centre> centres) {
 		this.commune = commune;
+		this.sousPrefecture = sousPrefecture;
 		this.codeLocalite = codeLocalite;
 		this.nomLocalite = nomLocalite;
 		this.centres = centres;
@@ -54,13 +57,23 @@ public class LocaliteDImplantation implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_COMMUNE", nullable = false)
+	@JoinColumn(name = "ID_COMMUNE")
 	public Commune getCommune() {
 		return this.commune;
 	}
 
 	public void setCommune(Commune commune) {
 		this.commune = commune;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_SOUS_PREFECTURE", nullable = false)
+	public SousPrefecture getSousPrefecture() {
+		return this.sousPrefecture;
+	}
+
+	public void setSousPrefecture(SousPrefecture sousPrefecture) {
+		this.sousPrefecture = sousPrefecture;
 	}
 
 	@Column(name = "CODE_LOCALITE", length = 10)

@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 20 sept. 2023, 12:20:34 by Hibernate Tools 4.3.6.Final
+// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,11 +21,12 @@ import javax.persistence.Table;
 @Table(name = "iep", catalog = "sygca_bd")
 public class Iep implements java.io.Serializable {
 
-	private Integer aidIep;
+	private Integer idIep;
 	private Drena drena;
 	private String codeIep;
 	private String nomIep;
 	private String mailIep;
+	private String telephoneIep;
 	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
 	private Set<Centre> centres = new HashSet<Centre>(0);
 
@@ -36,12 +37,13 @@ public class Iep implements java.io.Serializable {
 		this.drena = drena;
 	}
 
-	public Iep(Drena drena, String codeIep, String nomIep, String mailIep, Set<ServiceResponsable> serviceResponsables,
-			Set<Centre> centres) {
+	public Iep(Drena drena, String codeIep, String nomIep, String mailIep, String telephoneIep,
+			Set<ServiceResponsable> serviceResponsables, Set<Centre> centres) {
 		this.drena = drena;
 		this.codeIep = codeIep;
 		this.nomIep = nomIep;
 		this.mailIep = mailIep;
+		this.telephoneIep = telephoneIep;
 		this.serviceResponsables = serviceResponsables;
 		this.centres = centres;
 	}
@@ -49,13 +51,13 @@ public class Iep implements java.io.Serializable {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "AID_IEP", unique = true, nullable = false)
-	public Integer getAidIep() {
-		return this.aidIep;
+	@Column(name = "ID_IEP", unique = true, nullable = false)
+	public Integer getIdIep() {
+		return this.idIep;
 	}
 
-	public void setAidIep(Integer aidIep) {
-		this.aidIep = aidIep;
+	public void setIdIep(Integer idIep) {
+		this.idIep = idIep;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -93,6 +95,15 @@ public class Iep implements java.io.Serializable {
 
 	public void setMailIep(String mailIep) {
 		this.mailIep = mailIep;
+	}
+
+	@Column(name = "TELEPHONE_IEP", length = 10)
+	public String getTelephoneIep() {
+		return this.telephoneIep;
+	}
+
+	public void setTelephoneIep(String telephoneIep) {
+		this.telephoneIep = telephoneIep;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iep")

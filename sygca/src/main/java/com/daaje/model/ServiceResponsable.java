@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 20 sept. 2023, 12:20:34 by Hibernate Tools 4.3.6.Final
+// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -65,7 +65,7 @@ public class ServiceResponsable implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "AID_IEP")
+	@JoinColumn(name = "ID_IEP")
 	public Iep getIep() {
 		return this.iep;
 	}

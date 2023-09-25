@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 20 sept. 2023, 12:20:34 by Hibernate Tools 4.3.6.Final
+// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,11 +21,11 @@ import javax.persistence.Table;
 @Table(name = "sous_prefecture", catalog = "sygca_bd")
 public class SousPrefecture implements java.io.Serializable {
 
-	private Integer idPrefecture;
+	private Integer idSousPrefecture;
 	private Departement departement;
-	private String codePrefecture;
-	private String nomPrefecture;
-	private Set<Commune> communes = new HashSet<Commune>(0);
+	private String codeSousPrefecture;
+	private String nomSousPrefecture;
+	private Set<LocaliteDImplantation> localiteDImplantations = new HashSet<LocaliteDImplantation>(0);
 
 	public SousPrefecture() {
 	}
@@ -34,23 +34,24 @@ public class SousPrefecture implements java.io.Serializable {
 		this.departement = departement;
 	}
 
-	public SousPrefecture(Departement departement, String codePrefecture, String nomPrefecture, Set<Commune> communes) {
+	public SousPrefecture(Departement departement, String codeSousPrefecture, String nomSousPrefecture,
+			Set<LocaliteDImplantation> localiteDImplantations) {
 		this.departement = departement;
-		this.codePrefecture = codePrefecture;
-		this.nomPrefecture = nomPrefecture;
-		this.communes = communes;
+		this.codeSousPrefecture = codeSousPrefecture;
+		this.nomSousPrefecture = nomSousPrefecture;
+		this.localiteDImplantations = localiteDImplantations;
 	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "ID_PREFECTURE", unique = true, nullable = false)
-	public Integer getIdPrefecture() {
-		return this.idPrefecture;
+	@Column(name = "ID_SOUS_PREFECTURE", unique = true, nullable = false)
+	public Integer getIdSousPrefecture() {
+		return this.idSousPrefecture;
 	}
 
-	public void setIdPrefecture(Integer idPrefecture) {
-		this.idPrefecture = idPrefecture;
+	public void setIdSousPrefecture(Integer idSousPrefecture) {
+		this.idSousPrefecture = idSousPrefecture;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -63,31 +64,31 @@ public class SousPrefecture implements java.io.Serializable {
 		this.departement = departement;
 	}
 
-	@Column(name = "CODE_PREFECTURE", length = 10)
-	public String getCodePrefecture() {
-		return this.codePrefecture;
+	@Column(name = "CODE_SOUS_PREFECTURE", length = 10)
+	public String getCodeSousPrefecture() {
+		return this.codeSousPrefecture;
 	}
 
-	public void setCodePrefecture(String codePrefecture) {
-		this.codePrefecture = codePrefecture;
+	public void setCodeSousPrefecture(String codeSousPrefecture) {
+		this.codeSousPrefecture = codeSousPrefecture;
 	}
 
-	@Column(name = "NOM_PREFECTURE", length = 30)
-	public String getNomPrefecture() {
-		return this.nomPrefecture;
+	@Column(name = "NOM_SOUS_PREFECTURE", length = 30)
+	public String getNomSousPrefecture() {
+		return this.nomSousPrefecture;
 	}
 
-	public void setNomPrefecture(String nomPrefecture) {
-		this.nomPrefecture = nomPrefecture;
+	public void setNomSousPrefecture(String nomSousPrefecture) {
+		this.nomSousPrefecture = nomSousPrefecture;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sousPrefecture")
-	public Set<Commune> getCommunes() {
-		return this.communes;
+	public Set<LocaliteDImplantation> getLocaliteDImplantations() {
+		return this.localiteDImplantations;
 	}
 
-	public void setCommunes(Set<Commune> communes) {
-		this.communes = communes;
+	public void setLocaliteDImplantations(Set<LocaliteDImplantation> localiteDImplantations) {
+		this.localiteDImplantations = localiteDImplantations;
 	}
 
 }
