@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 20 sept. 2023, 12:20:34 by Hibernate Tools 4.3.6.Final
+// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +22,7 @@ import javax.persistence.Table;
 public class Departement implements java.io.Serializable {
 
 	private Integer idDepartement;
+	private Drena drena;
 	private String codeDepartement;
 	private String nomDepartement;
 	private Set<SousPrefecture> sousPrefectures = new HashSet<SousPrefecture>(0);
@@ -27,7 +30,13 @@ public class Departement implements java.io.Serializable {
 	public Departement() {
 	}
 
-	public Departement(String codeDepartement, String nomDepartement, Set<SousPrefecture> sousPrefectures) {
+	public Departement(Drena drena) {
+		this.drena = drena;
+	}
+
+	public Departement(Drena drena, String codeDepartement, String nomDepartement,
+			Set<SousPrefecture> sousPrefectures) {
+		this.drena = drena;
 		this.codeDepartement = codeDepartement;
 		this.nomDepartement = nomDepartement;
 		this.sousPrefectures = sousPrefectures;
@@ -43,6 +52,16 @@ public class Departement implements java.io.Serializable {
 
 	public void setIdDepartement(Integer idDepartement) {
 		this.idDepartement = idDepartement;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_DRENA", nullable = false)
+	public Drena getDrena() {
+		return this.drena;
+	}
+
+	public void setDrena(Drena drena) {
+		this.drena = drena;
 	}
 
 	@Column(name = "CODE_DEPARTEMENT", length = 10)

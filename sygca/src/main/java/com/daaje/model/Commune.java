@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 20 sept. 2023, 12:20:34 by Hibernate Tools 4.3.6.Final
+// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,8 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,7 +20,6 @@ import javax.persistence.Table;
 public class Commune implements java.io.Serializable {
 
 	private Integer idCommune;
-	private SousPrefecture sousPrefecture;
 	private String codeCommune;
 	private String nomCommune;
 	private Set<LocaliteDImplantation> localiteDImplantations = new HashSet<LocaliteDImplantation>(0);
@@ -30,13 +27,7 @@ public class Commune implements java.io.Serializable {
 	public Commune() {
 	}
 
-	public Commune(SousPrefecture sousPrefecture) {
-		this.sousPrefecture = sousPrefecture;
-	}
-
-	public Commune(SousPrefecture sousPrefecture, String codeCommune, String nomCommune,
-			Set<LocaliteDImplantation> localiteDImplantations) {
-		this.sousPrefecture = sousPrefecture;
+	public Commune(String codeCommune, String nomCommune, Set<LocaliteDImplantation> localiteDImplantations) {
 		this.codeCommune = codeCommune;
 		this.nomCommune = nomCommune;
 		this.localiteDImplantations = localiteDImplantations;
@@ -52,16 +43,6 @@ public class Commune implements java.io.Serializable {
 
 	public void setIdCommune(Integer idCommune) {
 		this.idCommune = idCommune;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_PREFECTURE", nullable = false)
-	public SousPrefecture getSousPrefecture() {
-		return this.sousPrefecture;
-	}
-
-	public void setSousPrefecture(SousPrefecture sousPrefecture) {
-		this.sousPrefecture = sousPrefecture;
 	}
 
 	@Column(name = "CODE_COMMUNE", length = 10)

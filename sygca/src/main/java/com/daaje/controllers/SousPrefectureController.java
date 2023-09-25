@@ -50,8 +50,8 @@ public class SousPrefectureController {
 	}
 	
 	public void annuler() {
-		sousPrefecture.setCodePrefecture(null);
-		sousPrefecture.setNomPrefecture(null);
+		sousPrefecture.setCodeSousPrefecture(null);
+		sousPrefecture.setNomSousPrefecture(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		

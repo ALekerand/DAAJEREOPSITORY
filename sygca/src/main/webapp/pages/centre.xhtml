@@ -42,6 +42,13 @@
 			<f:selectItems value="#{centreControllers.listIep}" var="tata" itemLabel="#{tata.nomIep}" itemValue="#{tata.aidIep}"></f:selectItems>
 			</p:selectOneMenu>
 			
+			
+			<p:outputLabel for="cb_departement" value="Localité"/>
+			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listDepartement}" var="tata" itemLabel="#{tata.nomDepartement}" itemValue="#{tata.idDepartement}"></f:selectItems>
+			</p:selectOneMenu>
+			
 			<p:outputLabel for="cb_localite" value="Localité"/>
 			<p:selectOneMenu id="cb_localite" required="true" value="#{centreControllers.idLocalite}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
