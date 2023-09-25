@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.component.panelgrid.PanelGrid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,8 @@ public class centreControllers {
 	public int idIep;
 	public int idNature;
 	public int idNatureProjet;
-	public List listObject = new ArrayList();
+	public String type_promoteur;
+	public List listObject = new ArrayList<>();
 	public List listLocalite = new ArrayList<>();
 	public List listIep = new ArrayList<>();
 	public List listNatureProjet = new ArrayList<>();
@@ -39,16 +41,26 @@ public class centreControllers {
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
 	public CommandButton cmdBEnregistrer = new CommandButton();
+	public PanelGrid pGridOng = new PanelGrid();
+	public PanelGrid pGridPh = new PanelGrid();
+	public PanelGrid pGridMini = new PanelGrid();
+	public PanelGrid pGridProg = new PanelGrid();
 		
 //Methodes
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		this.pGridOng.setRendered(false);
+		this.pGridMini.setRendered(false);
+		this.pGridPh.setRendered(false);
+		this.pGridProg.setRendered(false);
 	}
 	
 	public void enregistrer(){
 		centre.setIep((Iep) iservice.getObjectById(idIep, "Iep"));
 		centre.setLocaliteDImplantation((LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation"));
+		centre.setNature((Nature) iservice.getObjectById(idNature, "Nature"));
+		centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
 		iservice.addObject(this.centre);
 		annuler();
 		info("Enregistrement effectué");
@@ -68,7 +80,46 @@ public class centreControllers {
 		centre.setIep(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+	}
+	
+	
+	public void activiverChamp() {
+		System.out.println("===== Déclenchement de la méthode=====");
+		switch (type_promoteur) {
+		case "personne_physique": {
+			this.pGridOng.setRendered(false);
+			this.pGridMini.setRendered(false);
+			this.pGridPh.setRendered(true);
+			this.pGridProg.setRendered(false);
+			break;
+		}
 		
+		case "ong": {
+			this.pGridOng.setRendered(true);
+			this.pGridMini.setRendered(false);
+			this.pGridPh.setRendered(false);
+			this.pGridProg.setRendered(false);
+			break;
+		}
+		
+		case "programme": {
+			this.pGridOng.setRendered(false);
+			this.pGridMini.setRendered(false);
+			this.pGridPh.setRendered(false);
+			this.pGridProg.setRendered(true);
+			break;
+		}
+		
+		
+		case "ministere": {
+			this.pGridOng.setRendered(false);
+			this.pGridMini.setRendered(true);
+			this.pGridPh.setRendered(false);
+			this.pGridProg.setRendered(false);
+			break;
+		}
+		
+		}
 	}
 	
 	public void selectionnerLigne() {
@@ -186,6 +237,46 @@ public class centreControllers {
 
 	public void setListNature(List listNature) {
 		this.listNature = listNature;
+	}
+
+	public PanelGrid getpGridOng() {
+		return pGridOng;
+	}
+
+	public void setpGridOng(PanelGrid pGridOng) {
+		this.pGridOng = pGridOng;
+	}
+
+	public PanelGrid getpGridPh() {
+		return pGridPh;
+	}
+
+	public void setpGridPh(PanelGrid pGridPh) {
+		this.pGridPh = pGridPh;
+	}
+
+	public PanelGrid getpGridMini() {
+		return pGridMini;
+	}
+
+	public void setpGridMini(PanelGrid pGridMini) {
+		this.pGridMini = pGridMini;
+	}
+
+	public PanelGrid getpGridProg() {
+		return pGridProg;
+	}
+
+	public void setpGridPhProg(PanelGrid pGridProg) {
+		this.pGridProg = pGridProg;
+	}
+
+	public String getType_promoteur() {
+		return type_promoteur;
+	}
+
+	public void setType_promoteur(String type_promoteur) {
+		this.type_promoteur = type_promoteur;
 	}
 	
 	
