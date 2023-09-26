@@ -23,6 +23,11 @@
             <f:selectItems value="#{localiteDImplantationController.listCommune}" var="toto" itemLabel="#{toto.nomCommune}" itemValue="#{toto.idCommune}" />
 			</p:selectOneMenu>
 			
+			<p:outputLabel for="cb_sousPrefecture" value="Sous Prefecture:" />
+            <p:selectOneMenu id="cb_sousPrefecture" value="#{localiteDImplantationController.idSousPrefecture}">
+            <f:selectItems value="#{localiteDImplantationController.listSousPrefecture}" var="toto" itemLabel="#{toto.nomSousPrefecture}" itemValue="#{toto.idSousPrefecture}" />
+			</p:selectOneMenu>
+			
 	    </h:panelGrid>
 	    </p:panel>
 	    

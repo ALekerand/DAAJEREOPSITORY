@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.daaje.model.Commune;
 import com.daaje.model.LocaliteDImplantation;
+import com.daaje.model.SousPrefecture;
 import com.daaje.service.Iservice;
 
 @Component
@@ -20,10 +21,13 @@ public class LocaliteDImplantationController {
 	@Autowired
 	public Iservice iservice;
 	public int idCommune;
+	public int idSousPrefecture;
 	public LocaliteDImplantation localiteDImplantation = new LocaliteDImplantation();
 	public LocaliteDImplantation selectedObject = new LocaliteDImplantation();
 	public List listObject = new ArrayList();
 	public List<Commune> listCommune = new ArrayList<Commune>();
+	public List<SousPrefecture> listSousPrefecture = new ArrayList<SousPrefecture>();
+	
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -38,6 +42,7 @@ public class LocaliteDImplantationController {
 	
 	public void enregistrer(){
 		localiteDImplantation.setCommune((Commune)iservice.getObjectById(idCommune, "Commune"));
+		localiteDImplantation.setSousPrefecture((SousPrefecture)iservice.getObjectById(idSousPrefecture, "SousPrefecture"));
 		iservice.addObject(this.localiteDImplantation);
 		annuler();
 		info("Enregistrement effectué");
@@ -126,6 +131,26 @@ public class LocaliteDImplantationController {
 
 	public void setListCommune(List<Commune> listCommune) {
 		this.listCommune = listCommune;
+	}
+
+
+	public int getIdSousPrefecture() {
+		return idSousPrefecture;
+	}
+
+
+	public void setIdSousPrefecture(int idSousPrefecture) {
+		this.idSousPrefecture = idSousPrefecture;
+	}
+
+
+	public List<SousPrefecture> getListSousPrefecture() {
+		return listSousPrefecture;
+	}
+
+
+	public void setListSousPrefecture(List<SousPrefecture> listSousPrefecture) {
+		this.listSousPrefecture = listSousPrefecture;
 	}
 
 }
