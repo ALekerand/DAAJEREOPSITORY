@@ -35,10 +35,9 @@ public class SousPrefectureController {
 		this.cmdBModifier.setDisabled(true);
 	}
 	
-	
 	public void enregistrer(){
 		sousPrefecture.setDepartement((Departement) iservice.getObjectById(idDepartement, "Departement"));
-		iservice.addObject(sousPrefecture);
+		iservice.addObject(this.sousPrefecture);
 		annuler();
 		info("Enregistrement effectué");
 	}
