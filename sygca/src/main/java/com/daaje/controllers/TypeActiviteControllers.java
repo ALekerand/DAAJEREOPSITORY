@@ -3,9 +3,11 @@ package com.daaje.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,30 +16,49 @@ import com.daaje.service.Iservice;
 
 @Component
 public class TypeActiviteControllers {
-	@Autowired
+@Autowired
 	public Iservice iservice;
 	public TypeActivite typeActivite =  new TypeActivite();
 	public TypeActivite selectedObject = new TypeActivite();
 	public List listObject = new ArrayList();
 	
+//Controle des composants
+	public CommandButton cmdBModifier = new CommandButton();
+	public CommandButton cmdBEnregistrer = new CommandButton();
+	
 //Methodes
+@PostConstruct
+	public void initialisation(){
+		this.cmdBModifier.setDisabled(true);
+	}
+		
 	public void enregistrer(){
-		iservice.addObject(typeActivite);
+		iservice.addObject(this.typeActivite);
 		annuler();
 		info("Enregistrement effectué");
+	}
+	
+	public void modifier() {
+		iservice.updateObject(typeActivite);
+		annuler();
+		info("Modification effectuée");
 	}
 	
 	public void annuler() {
 		typeActivite.setCodeTypeactivite(null);
 		typeActivite.setLibelleTypeactivite(null);
+		cmdBEnregistrer.setDisabled(false);
+		cmdBModifier.setDisabled(true);
 	}	
 	
 	public void selectionnerLigne() {
 		typeActivite = selectedObject;
+		cmdBEnregistrer.setDisabled(true);
+		cmdBModifier.setDisabled(false);
 	}
 	
 	public void info(String message){
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", message));	
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
 	}
 
 //Getters and setters
@@ -63,6 +84,22 @@ public class TypeActiviteControllers {
 
 	public void setSelectedObject(TypeActivite selectedObject) {
 		this.selectedObject = selectedObject;
+	}
+
+	public CommandButton getCmdBModifier() {
+		return cmdBModifier;
+	}
+
+	public void setCmdBModifier(CommandButton cmdBModifier) {
+		this.cmdBModifier = cmdBModifier;
+	}
+
+	public CommandButton getCmdBEnregistrer() {
+		return cmdBEnregistrer;
+	}
+
+	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
+		this.cmdBEnregistrer = cmdBEnregistrer;
 	}
 		
 }

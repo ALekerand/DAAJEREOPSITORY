@@ -12,19 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Commune;
-import com.daaje.model.Drena;
-import com.daaje.model.SousPrefecture;
 import com.daaje.service.Iservice;
 
 @Component
 public class CommuneController {
 	@Autowired
 	public Iservice iservice;
-	public int idPrefecture;
 	public Commune commune = new Commune();
 	public Commune selectedObject = new Commune();
 	public List listObject = new ArrayList();
-	public List<SousPrefecture> listSousPrefecture = new ArrayList<SousPrefecture>();
 
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -104,22 +100,5 @@ public class CommuneController {
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
-	}
-
-	public int getIdPrefecture() {
-		return idPrefecture;
-	}
-
-	public void setIdPrefecture(int idPrefecture) {
-		this.idPrefecture = idPrefecture;
-	}
-
-	public List<SousPrefecture> getListSousPrefecture() {
-		return listSousPrefecture;
-	}
-
-	public void setListSousPrefecture(List<SousPrefecture> listSousPrefecture) {
-		this.listSousPrefecture = listSousPrefecture;
 	}	
-
 }

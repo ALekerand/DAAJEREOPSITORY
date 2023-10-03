@@ -10,7 +10,7 @@
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
-		<p:panel header="Enregistrement des responsable">
+		<p:panel header="Enregistrement des responsables">
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_matricule" value="Matricule:"></p:outputLabel>
 			<p:inputText id="input_matricule" value="#{responsableController.responsable.matriculeResponsable}" required="true"></p:inputText>
@@ -28,13 +28,13 @@
 			<p:inputText id="input_adresse" value="#{responsableController.responsable.adresseResponsable}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_dservice" value="Date prise de service:"></p:outputLabel>
-			<p:inputText id="input_dservice" value="#{responsableController.responsable.datePriseService}" required="true" pattern="dd/MM/yyyy"></p:inputText>
+			<p:calendar id="input_dservice" value="#{responsableController.responsable.datePriseService}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_dretraite" value="Date retraite:"></p:outputLabel>
-			<p:inputText id="input_dretraite" value="#{responsableController.responsable.dateRetraite}" required="true" pattern="dd/MM/yyyy"></p:inputText>
+			<p:calendar id="input_dretraite" value="#{responsableController.responsable.dateRetraite}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_naissance" value="Date naissance:"></p:outputLabel>
-			<p:inputText id="input_naissance" value="#{responsableController.responsable.dateNaissance}" required="true" pattern="dd/MM/yyyy"></p:inputText>
+			<p:calendar id="input_naissance" value="#{responsableController.responsable.dateNaissance}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
 			<p:inputText id="input_mail" value="#{responsableController.responsable.mailResponsable}" required="true"></p:inputText>																				
@@ -83,7 +83,7 @@
 	    		<h:outputText value="#{toto.telephoneResponsable}" />
 	    	</p:column>
 	    	
-	    	<p:column headerText="IEP">
+	    	<p:column headerText="Adresse">
 	    		<h:outputText value="#{toto.adresseResponsable}" />
 	    	</p:column>
 	    	

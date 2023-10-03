@@ -75,13 +75,14 @@ public class ResponsableController {
 	}
 		
 //Getters and setters
-	
-
-	
-
 	public List getListObject() {
 		return listObject = iservice.getObjects("Responsable");
 	}
+
+	public void setResponsable(Responsable responsable) {
+		this.responsable = responsable;
+	}
+
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;

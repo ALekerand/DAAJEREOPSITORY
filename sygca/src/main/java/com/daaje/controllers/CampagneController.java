@@ -31,8 +31,7 @@ public class CampagneController {
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
 	}
-	
-	
+		
 	public void enregistrer(){
 		iservice.addObject(this.campagne);
 		annuler();

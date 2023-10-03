@@ -16,7 +16,7 @@ import com.daaje.service.Iservice;
 
 @Component
 public class ActiviteController {
-	@Autowired
+@Autowired
 	public Iservice iservice;
 	public Activite activite = new Activite();
 	public Activite selectedObject = new Activite();
@@ -27,12 +27,11 @@ public class ActiviteController {
 	public CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
-	@PostConstruct
+@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
 	}
-	
-	
+		
 	public void enregistrer(){
 		iservice.addObject(this.activite);
 		annuler();
