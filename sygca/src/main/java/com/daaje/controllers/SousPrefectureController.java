@@ -119,7 +119,7 @@ public class SousPrefectureController {
 
 
 	public List<Departement> getListDepartement() {
-		return listDepartement;
+		return listDepartement = iservice.getObjects("Departement");
 	}
 
 

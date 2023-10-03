@@ -125,7 +125,7 @@ public class LocaliteDImplantationController {
 
 
 	public List<Commune> getListCommune() {
-		return listCommune;
+		return listCommune = iservice.getObjects("Commune");
 	}
 
 
@@ -145,7 +145,7 @@ public class LocaliteDImplantationController {
 
 
 	public List<SousPrefecture> getListSousPrefecture() {
-		return listSousPrefecture;
+		return listSousPrefecture = iservice.getObjects("SousPrefecture");
 	}
 
 
