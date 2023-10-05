@@ -163,7 +163,7 @@ public class AnimateurContoller {
 
 
 	public List<Genre> getListGenre() {
-		return listGenre;
+		return listGenre = iservice.getObjects("Genre");
 	}
 
 

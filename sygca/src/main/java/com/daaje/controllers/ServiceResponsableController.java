@@ -11,25 +11,26 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Departement;
 import com.daaje.model.Drena;
+import com.daaje.model.ServiceResponsable;
 import com.daaje.model.Iep;
 import com.daaje.model.Responsable;
-import com.daaje.model.ServiceResponsable;
 import com.daaje.service.Iservice;
 
 @Component
-public class ServiceResponsableContoller {
+public class ServiceResponsableController {
 	@Autowired
 	public Iservice iservice;
-	public int idDrena;
-	public int attributIdIepp16;
 	public int idResponsable;
+	public int idDrena;
+	public int idIep;
 	public ServiceResponsable serviceResponsable = new ServiceResponsable();
 	public ServiceResponsable selectedObject = new ServiceResponsable();
 	public List listObject = new ArrayList();
+	public List<Responsable> listResponsable = new ArrayList<Responsable>();
 	public List<Drena> listDrena = new ArrayList<Drena>();
 	public List<Iep> listIep = new ArrayList<Iep>();
-	public List<Responsable> listResponsable = new ArrayList<Responsable>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -43,9 +44,9 @@ public class ServiceResponsableContoller {
 	
 	
 	public void enregistrer(){
-		serviceResponsable.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
-		serviceResponsable.setIep((Iep) iservice.getObjectById(attributIdIepp16, "Iepp"));
 		serviceResponsable.setResponsable((Responsable) iservice.getObjectById(idResponsable, "Responsable"));
+		serviceResponsable.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
+		serviceResponsable.setIep((Iep) iservice.getObjectById(idIep, "Iep"));
 		iservice.addObject(this.serviceResponsable);
 		annuler();
 		info("Enregistrement effectué");
@@ -120,14 +121,13 @@ public class ServiceResponsableContoller {
 	}
 
 
-	public List<Drena> getListDrena() {
-		return listDrena = iservice.getObjects("Drena");
-		
+	public int getIdResponsable() {
+		return idResponsable;
 	}
 
 
-	public void setListDrena(List<Drena> listDrena) {
-		this.listDrena = listDrena;
+	public void setIdResponsable(int idResponsable) {
+		this.idResponsable = idResponsable;
 	}
 
 
@@ -141,38 +141,18 @@ public class ServiceResponsableContoller {
 	}
 
 
-	public int getAttributIdIepp16() {
-		return attributIdIepp16;
+	public int getIdIep() {
+		return idIep;
 	}
 
 
-	public void setAttributIdIepp16(int attributIdIepp16) {
-		this.attributIdIepp16 = attributIdIepp16;
-	}
-
-
-	public int getIdResponsable() {
-		return idResponsable;
-	}
-
-
-	public void setIdResponsable(int idResponsable) {
-		this.idResponsable = idResponsable;
-	}
-
-
-	public List<Iep> getListIep() {
-		return listIep;
-	}
-
-
-	public void setListIep(List<Iep> listIep) {
-		this.listIep = listIep;
+	public void setIdIep(int idIep) {
+		this.idIep = idIep;
 	}
 
 
 	public List<Responsable> getListResponsable() {
-		return listResponsable;
+		return listResponsable = iservice.getObjects("Responsable");
 	}
 
 
@@ -180,4 +160,23 @@ public class ServiceResponsableContoller {
 		this.listResponsable = listResponsable;
 	}
 
+
+	public List<Drena> getListDrena() {
+		return listDrena = iservice.getObjects("Drena");
+	}
+
+
+	public void setListDrena(List<Drena> listDrena) {
+		this.listDrena = listDrena;
+	}
+
+
+	public List<Iep> getListIep() {
+		return listIep = iservice.getObjects("Iep");
+	}
+
+
+	public void setListIep(List<Iep> listIep) {
+		this.listIep = listIep;
+	}
 }

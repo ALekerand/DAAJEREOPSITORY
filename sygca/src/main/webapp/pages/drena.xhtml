@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des DRENA">
+		<fieldset>
+		<legend>Informations du DRENA</legend>
 		<h:panelGrid columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{drenaController.drena.codeDrena}" required="true"></p:inputText>
@@ -22,7 +24,10 @@
 			<p:inputText id="input_mail" value="#{drenaController.drena.mailDrena}" required="true"></p:inputText>
 				
 	    </h:panelGrid>
+	    </fieldset>
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar>
 	    	<f:facet name="left">
@@ -31,6 +36,8 @@
 				<p:commandButton value="Annuler" process="@this" actionListener="#{drenaController.annuler}" update="form"></p:commandButton>
 			</f:facet>
 	    </p:toolbar>
+	    
+	    <br />
 	    
 	    <p:dataTable var="toto" value="#{drenaController.listObject}" selectionMode="single" selection="#{drenaController.selectedObject}" rowKey="#{toto.idDrena}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

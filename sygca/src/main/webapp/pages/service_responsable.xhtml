@@ -10,37 +10,38 @@
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
-		<p:panel header="Enregistrement des services responsable">
+		<p:panel header="Enregistrement des services responsables">
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{serviceResponsableController.serviceResponsable.codeService}" required="true"></p:inputText>
 			
-			<p:outputLabel for="input_arrivee" value="Date d'arrivée:"></p:outputLabel>
-			<p:inputText id="input_arrivee" value="#{serviceResponsableController.serviceResponsable.dateArrivee}" required="true" pattern="dd/MM/yyyy"></p:inputText>
+			<p:outputLabel for="input_nom" value="Date Arrivée:"></p:outputLabel>
+			<p:calendar id="input_nom" value="#{serviceResponsableController.serviceResponsable.dateArrivee}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
-			<p:outputLabel for="input_depart" value="Date de départ:"></p:outputLabel>
-			<p:inputText id="input_depart" value="#{serviceResponsableController.serviceResponsable.dateDepart}" required="true" pattern="dd/MM/yyyy"></p:inputText>
-			</h:panelGrid>
+			<p:outputLabel for="input_prenom" value="Date Départ:"></p:outputLabel>
+			<p:calendar id="input_prenom" value="#{serviceResponsableController.serviceResponsable.dateDepart}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+		</h:panelGrid>
 			
 			
-		<h:panelGrid columns="6" cellpadding="8">			
-			<p:outputLabel for="cb_drena" value="Drena:" />
+		<h:panelGrid columns="6" cellpadding="8">								
+			<p:outputLabel for="cb_responsable" value="Responsable:" />
+            <p:selectOneMenu id="cb_responsable" value="#{serviceResponsableController.idResponsable}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{serviceResponsableController.listResponsable}" var="toto" itemLabel="#{toto.nomResponsable}" itemValue="#{toto.idResponsable}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_drena" value="DRENA:" />
             <p:selectOneMenu id="cb_drena" value="#{serviceResponsableController.idDrena}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{serviceResponsableController.listDrena}" var="toto" itemLabel="#{toto.nomDrena}" itemValue="#{toto.idDrena}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_iep" value="IEP:" />
-            <p:selectOneMenu id="cb_iep" value="#{serviceResponsableController.attributIdIepp16}">
-            <f:selectItems value="#{serviceResponsableController.listIep}" var="toto" itemLabel="#{toto.nomIepp}" itemValue="#{toto.attributIdIepp16}" />
-			</p:selectOneMenu>
-			
-			<p:outputLabel for="cb_responsable" value="Responsable:" />
-            <p:selectOneMenu id="cb_responsable" value="#{serviceResponsableController.idResponsable}">
-            <f:selectItems value="#{serviceResponsableController.listResponsable}" var="toto" itemLabel="#{toto.nomResponsable}" itemValue="#{toto.idResponsable}" />
+            <p:selectOneMenu id="cb_iep" value="#{serviceResponsableController.idIep}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{serviceResponsableController.listIep}" var="toto" itemLabel="#{toto.nomIep}" itemValue="#{toto.idIep}" />
 			</p:selectOneMenu>			
-		</h:panelGrid>
-	    
-	    
+		</h:panelGrid>	    	    
 	    </p:panel>
 	    
 	    <p:toolbar >
@@ -76,7 +77,6 @@
 	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	    		</h:outputText>
 	    	</p:column>
-	    
 	    </p:dataTable>
 		
 				

@@ -13,31 +13,31 @@
 		<p:panel header="Enregistrement des inscriptions">
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{inscriptionController.inscription.codeInscription}" required="true"></p:inputText>	
+			<p:inputText id="input_code" value="#{inscriptionContoller.inscription.codeInscription}" required="true"></p:inputText>	
 			
 			<p:outputLabel for="input_date" value="Date d'inscription:"></p:outputLabel>
-			<p:inputText id="input_date" value="#{inscriptionController.inscription.dateInscription}" required="true"></p:inputText>	
+			<p:calendar id="input_date" value="#{inscriptionContoller.inscription.dateInscription}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 		</h:panelGrid>
 			
 		<h:panelGrid columns="8" cellpadding="8">			
 			<p:outputLabel for="cb_apprenant" value="Apprenant:" />
-            <p:selectOneMenu id="cb_apprenant" value="#{inscriptionController.idApprenant}">
-            <f:selectItems value="#{inscriptionController.listApprenant}" var="toto" itemLabel="#{toto.nomApprenant}" itemValue="#{toto.idApprenant}" />
+            <p:selectOneMenu id="cb_apprenant" value="#{inscriptionContoller.idApprenant}">
+            <f:selectItems value="#{inscriptionContoller.listApprenant}" var="toto" itemLabel="#{toto.nomApprenant}" itemValue="#{toto.idApprenant}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_campagne" value="Campagne:" />
-            <p:selectOneMenu id="cb_campagne" value="#{inscriptionController.idCampagne}">
-            <f:selectItems value="#{inscriptionController.listCampagne}" var="toto" itemLabel="#{toto.libelleCampagne}" itemValue="#{toto.idCampagne}" />
+            <p:selectOneMenu id="cb_campagne" value="#{inscriptionContoller.idCampagne}">
+            <f:selectItems value="#{inscriptionContoller.listCampagne}" var="toto" itemLabel="#{toto.libelleCampagne}" itemValue="#{toto.idCampagne}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_centre" value="Centre:" />
-            <p:selectOneMenu id="cb_centre" value="#{inscriptionController.idCentre}">
-            <f:selectItems value="#{inscriptionController.listCentre}" var="toto" itemLabel="#{toto.nomCentre}" itemValue="#{toto.idCentre}" />
+            <p:selectOneMenu id="cb_centre" value="#{inscriptionContoller.idCentre}">
+            <f:selectItems value="#{inscriptionContoller.listCentre}" var="toto" itemLabel="#{toto.nomCentre}" itemValue="#{toto.idCentre}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_niveau_formation" value="Niveau de formation:" />
-            <p:selectOneMenu id="cb_niveau_formation" value="#{inscriptionController.idNiveauFormation}">
-            <f:selectItems value="#{inscriptionController.listNiveauFormation}" var="toto" itemLabel="#{toto.libelleNiveauFormation}" itemValue="#{toto.idNiveauFormation}" />
+            <p:selectOneMenu id="cb_niveau_formation" value="#{inscriptionContoller.idNiveauFormation}">
+            <f:selectItems value="#{inscriptionContoller.listNiveauFormation}" var="toto" itemLabel="#{toto.libelleNiveauFormation}" itemValue="#{toto.idNiveauFormation}" />
 			</p:selectOneMenu>			
 		</h:panelGrid>
 	    
@@ -46,19 +46,19 @@
 	    
 	    <p:toolbar >
 			<f:facet name="left">
-				<p:commandButton value="Enregistrer" actionListener="#{inscriptionController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{inscriptionController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-				<p:commandButton value="Annuler" process="@this" actionListener="#{inscriptionController.annuler}" update="form"></p:commandButton>
+				<p:commandButton value="Enregistrer" actionListener="#{inscriptionContoller.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{inscriptionContoller.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{inscriptionContoller.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>	    
 	    	    
-	    <p:dataTable id="data" var="toto" value="#{inscriptionController.listObject}" selectionMode="single" selection="#{inscriptionController.selectedObject}" rowKey="#{toto.idInscription}"       
+	    <p:dataTable id="data" var="toto" value="#{inscriptionContoller.listObject}" selectionMode="single" selection="#{inscriptionContoller.selectedObject}" rowKey="#{toto.idInscription}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,15">
 	    
-	    <p:ajax event="rowSelect" process="@this" listener="#{inscriptionController.selectionnerLigne}" update="form"></p:ajax>
+	    <p:ajax event="rowSelect" process="@this" listener="#{inscriptionContoller.selectionnerLigne}" update="form"></p:ajax>
 	    	<f:facet name="header">
                 Liste des inscriptions
             </f:facet>
@@ -68,7 +68,9 @@
 	    	</p:column>
 	    	
 	    	<p:column headerText="Date d'inscription">
-	    		<h:outputText value="#{toto.dateInscription}" />
+	    		<h:outputText value="#{toto.dateInscription}" >
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    		</h:outputText>
 	    	</p:column>
 	    
 	    </p:dataTable>
