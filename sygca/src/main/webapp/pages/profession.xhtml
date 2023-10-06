@@ -31,7 +31,7 @@
 			<p:outputLabel for="cb_type_activite" value="Type activité:" />
             <p:selectOneMenu id="cb_type_activite" value="#{professionController.idTypeactivite}">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
-            <f:selectItems value="#{professionController.listTypeactivite}" var="toto" itemLabel="#{toto.libelleTypeactivite}" itemValue="#{toto.idTypeactivite}" />
+            <f:selectItems value="#{professionController.listTypeActivite}" var="toto" itemLabel="#{toto.libelleTypeactivite}" itemValue="#{toto.idTypeactivite}" />
 			</p:selectOneMenu>			
 		</h:panelGrid>	    	    
 	    </p:panel>
@@ -44,7 +44,7 @@
 			</f:facet>
 		</p:toolbar>	    
 	    	    
-	    <p:dataTable id="data" var="toto" value="#{professionController.listObject}" selectionMode="single" selection="#{professionController.selectedObject}" rowKey="#{toto.idServiceDrena}"       
+	    <p:dataTable id="data" var="toto" value="#{professionController.listObject}" selectionMode="single" selection="#{professionController.selectedObject}" rowKey="#{toto.idProfession}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
