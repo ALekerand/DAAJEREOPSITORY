@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des communes">
+		<fieldset>
+		<legend>Informations sur la commune</legend>
 		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{communeController.commune.codeCommune}" required="true"></p:inputText>
@@ -18,7 +20,12 @@
 			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
 			<p:inputText id="input_nom" value="#{communeController.commune.nomCommune}" required="true"></p:inputText>			    
 	    </h:panelGrid>
+	    
+	    </fieldset>
+	    
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar>
 	    	<f:facet name="left">
@@ -27,6 +34,8 @@
 	    		<p:commandButton value="Annuler" process="@this" actionListener="#{communeController.annuler}" update="form"></p:commandButton>
 	    	</f:facet>
 	    </p:toolbar>
+	    
+	    <br />
 	    
 	    <p:dataTable var="toto" value="#{communeController.listObject}" selectionMode="single" selection="#{communeController.selectedObject}" rowKey="#{toto.idCommune}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

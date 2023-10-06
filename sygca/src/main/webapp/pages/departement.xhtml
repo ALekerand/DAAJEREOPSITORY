@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des départements">
+		<fieldset>
+		<legend>Informations sur le département</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{departementControllers.departement.codeDepartement}" required="true"></p:inputText>
@@ -20,11 +22,17 @@
 			
 			<p:outputLabel for="cb_drena" value="Drena:" />
             <p:selectOneMenu id="cb_drena" value="#{departementControllers.idDrena}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{departementControllers.listDrena}" var="toto" itemLabel="#{toto.nomDrena}" itemValue="#{toto.idDrena}" />
 			</p:selectOneMenu>
 				
 	    </h:panelGrid>
+	 
+	    </fieldset>
+	    
 	    </p:panel>
+	    
+		<br />
 	    
 	    <p:toolbar>
 	    	<f:facet name="left">
@@ -32,8 +40,12 @@
 				<p:commandButton value="Modifier" actionListener="#{departementControllers.modifier}" update="form" ><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 	    		<p:commandButton value="Annuler" process="@this" actionListener="#{departementControllers.annuler}" update="form"></p:commandButton>
 	    	</f:facet>
+	    
+	    
 	    	
 	    </p:toolbar>
+	    
+	    <br />
 	    
 	    <p:dataTable id="data" var="toto" value="#{departementControllers.listObject}" selectionMode="single" selection="#{departementControllers.selectedObject}" rowKey="#{toto.idDepartement}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

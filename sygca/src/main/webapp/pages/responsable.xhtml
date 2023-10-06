@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des responsables">
+		<fieldset>
+		<legend>Informations sur le responsable</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_matricule" value="Matricule:"></p:outputLabel>
 			<p:inputText id="input_matricule" value="#{responsableController.responsable.matriculeResponsable}" required="true"></p:inputText>
@@ -41,11 +43,15 @@
 						
 			<p:outputLabel for="cb_fonction" value="Fonction:" />
             <p:selectOneMenu id="cb_fonction" value="#{responsableController.idFonction}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{responsableController.listFonction}" var="toto" itemLabel="#{toto.libelleFonction}" itemValue="#{toto.idFonction}" />
 			</p:selectOneMenu>
 			
 	    </h:panelGrid>
+	    </fieldset>
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -55,7 +61,7 @@
 			</f:facet>
 		</p:toolbar>
 	    
-	    
+	    <br />
 	    
 	    <p:dataTable id="data" var="toto" value="#{responsableController.listObject}" selectionMode="single" selection="#{responsableController.selectedObject}" rowKey="#{toto.idResponsable}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

@@ -11,51 +11,62 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement Enseigner">
+		<fieldset>
+		<legend>Informations sur enseigner</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{enseignerController.enseigner.codeEnseigner}" required="true"></p:inputText>	
+			<p:inputText id="input_code" value="#{enseignerContoller.enseigner.codeEnseigner}" required="true"></p:inputText>	
 			</h:panelGrid>
 			
 		<h:panelGrid columns="8" cellpadding="8">			
 			<p:outputLabel for="cb_animateur" value="Animateur:" />
-            <p:selectOneMenu id="cb_animateur" value="#{enseignerController.idAnimateur}">
-            <f:selectItems value="#{enseignerController.listAnimateur}" var="toto" itemLabel="#{toto.nomAnimateur}" itemValue="#{toto.idAnimateur}" />
+            <p:selectOneMenu id="cb_animateur" value="#{enseignerContoller.idAnimateur}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{enseignerContoller.listAnimateur}" var="toto" itemLabel="#{toto.nomAnimateur}" itemValue="#{toto.idAnimateur}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_campagne" value="Campagne:" />
-            <p:selectOneMenu id="cb_campagne" value="#{enseignerController.idCampagne}">
-            <f:selectItems value="#{enseignerController.listCampagne}" var="toto" itemLabel="#{toto.libelleCampagne}" itemValue="#{toto.idCampagne}" />
+            <p:selectOneMenu id="cb_campagne" value="#{enseignerContoller.idCampagne}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{enseignerContoller.listCampagne}" var="toto" itemLabel="#{toto.libelleCampagne}" itemValue="#{toto.idCampagne}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_centre" value="Centre:" />
-            <p:selectOneMenu id="cb_centre" value="#{enseignerController.idCentre}">
-            <f:selectItems value="#{enseignerController.listCentre}" var="toto" itemLabel="#{toto.nomCentre}" itemValue="#{toto.idCentre}" />
+            <p:selectOneMenu id="cb_centre" value="#{enseignerContoller.idCentre}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{enseignerContoller.listCentre}" var="toto" itemLabel="#{toto.nomCentre}" itemValue="#{toto.idCentre}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_niveau_formation" value="Niveau de formation:" />
-            <p:selectOneMenu id="cb_niveau_formation" value="#{enseignerController.idNiveauFormation}">
-            <f:selectItems value="#{enseignerController.listNiveauFormation}" var="toto" itemLabel="#{toto.libelleNiveauFormation}" itemValue="#{toto.idNiveauFormation}" />
+            <p:selectOneMenu id="cb_niveau_formation" value="#{enseignerContoller.idNiveauFormation}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{enseignerContoller.listNiveauFormation}" var="toto" itemLabel="#{toto.libelleNiveauFormation}" itemValue="#{toto.idNiveauFormation}" />
 			</p:selectOneMenu>			
 		</h:panelGrid>
 	    
+	    </fieldset>
 	    
 	    </p:panel>
 	    
+	    <br />
+	    
 	    <p:toolbar >
 			<f:facet name="left">
-				<p:commandButton value="Enregistrer" actionListener="#{enseignerController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{enseignerController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-				<p:commandButton value="Annuler" process="@this" actionListener="#{enseignerController.annuler}" update="form"></p:commandButton>
+				<p:commandButton value="Enregistrer" actionListener="#{enseignerContoller.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{enseignerContoller.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{enseignerContoller.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>	    
+	    
+	    <br />
 	    	    
-	    <p:dataTable id="data" var="toto" value="#{enseignerController.listObject}" selectionMode="single" selection="#{enseignerController.selectedObject}" rowKey="#{toto.idEnseigner}"       
+	    <p:dataTable id="data" var="toto" value="#{enseignerContoller.listObject}" selectionMode="single" selection="#{enseignerContoller.selectedObject}" rowKey="#{toto.idEnseigner}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,15">
 	    
-	    <p:ajax event="rowSelect" process="@this" listener="#{enseignerController.selectionnerLigne}" update="form"></p:ajax>
+	    <p:ajax event="rowSelect" process="@this" listener="#{enseignerContoller.selectionnerLigne}" update="form"></p:ajax>
 	    	<f:facet name="header">
                 Liste Enseigner
             </f:facet>	

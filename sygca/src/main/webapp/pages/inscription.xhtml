@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des inscriptions">
+		<fieldset>
+		<legend>Informations sur l'inscription</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{inscriptionContoller.inscription.codeInscription}" required="true"></p:inputText>	
@@ -22,27 +24,34 @@
 		<h:panelGrid columns="8" cellpadding="8">			
 			<p:outputLabel for="cb_apprenant" value="Apprenant:" />
             <p:selectOneMenu id="cb_apprenant" value="#{inscriptionContoller.idApprenant}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{inscriptionContoller.listApprenant}" var="toto" itemLabel="#{toto.nomApprenant}" itemValue="#{toto.idApprenant}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_campagne" value="Campagne:" />
             <p:selectOneMenu id="cb_campagne" value="#{inscriptionContoller.idCampagne}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{inscriptionContoller.listCampagne}" var="toto" itemLabel="#{toto.libelleCampagne}" itemValue="#{toto.idCampagne}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_centre" value="Centre:" />
             <p:selectOneMenu id="cb_centre" value="#{inscriptionContoller.idCentre}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{inscriptionContoller.listCentre}" var="toto" itemLabel="#{toto.nomCentre}" itemValue="#{toto.idCentre}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_niveau_formation" value="Niveau de formation:" />
             <p:selectOneMenu id="cb_niveau_formation" value="#{inscriptionContoller.idNiveauFormation}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{inscriptionContoller.listNiveauFormation}" var="toto" itemLabel="#{toto.libelleNiveauFormation}" itemValue="#{toto.idNiveauFormation}" />
 			</p:selectOneMenu>			
 		</h:panelGrid>
 	    
+	    </fieldset>
 	    
 	    </p:panel>
+
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -51,6 +60,8 @@
 				<p:commandButton value="Annuler" process="@this" actionListener="#{inscriptionContoller.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>	    
+	    
+	    <br />
 	    	    
 	    <p:dataTable id="data" var="toto" value="#{inscriptionContoller.listObject}" selectionMode="single" selection="#{inscriptionContoller.selectedObject}" rowKey="#{toto.idInscription}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

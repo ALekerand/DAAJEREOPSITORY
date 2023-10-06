@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des Sous Préfectures">
+		<fieldset>
+		<legend>Informations sur la sous préfecture</legend>
 		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{sousPrefectureController.sousPrefecture.codeSousPrefecture}" required="true"></p:inputText>
@@ -20,11 +22,15 @@
 			
 		<p:outputLabel for="cb_departement" value="Département:" />
             <p:selectOneMenu id="cb_departement" value="#{sousPrefectureController.idDepartement}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{sousPrefectureController.listDepartement}" var="toto" itemLabel="#{toto.nomDepartement}" itemValue="#{toto.idDepartement}" />
 			</p:selectOneMenu>
 			
 	    </h:panelGrid>
+	    </fieldset>
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -34,7 +40,7 @@
 			</f:facet>
 		</p:toolbar>
 	    
-	    
+	    <br />
 	    
 	    <p:dataTable id="data" var="toto" value="#{sousPrefectureController.listObject}" selectionMode="single" selection="#{sousPrefectureController.selectedObject}" rowKey="#{toto.idSousPrefecture}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

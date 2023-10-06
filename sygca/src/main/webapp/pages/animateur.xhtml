@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des animateurs">
+		<fieldset>
+		<legend>Informations sur l'animateur</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{animateurContoller.animateur.codeAnimateur}" required="true"></p:inputText>
@@ -22,7 +24,7 @@
 			<p:inputText id="input_prenom" value="#{animateurContoller.animateur.prenomAnimateur}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_age" value="Age:"></p:outputLabel>
-			<p:calendar id="input_age" value="#{animateurContoller.animateur.ageAnimateur}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+			<p:inputText id="input_age" value="#{animateurContoller.animateur.ageAnimateur}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_tel" value="Contact:"></p:outputLabel>
 			<p:inputText id="input_tel" value="#{animateurContoller.animateur.telephoneAnimateur}" required="true"></p:inputText>
@@ -33,23 +35,27 @@
 			<p:outputLabel for="input_adresse" value="Mail:"></p:outputLabel>
 			<p:inputText id="input_adresse" value="#{animateurContoller.animateur.mailAnimateur}" required="true"></p:inputText>
 			
-			</h:panelGrid>
+		</h:panelGrid>
 			
 			
 		<h:panelGrid columns="6" cellpadding="8">			
 			<p:outputLabel for="cb_niv_animateur" value="Niveau animateur:" />
             <p:selectOneMenu id="cb_niv_animateur" value="#{animateurContoller.idNiveau}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{animateurContoller.listNiveauAnimateur}" var="toto" itemLabel="#{toto.nomNiveau}" itemValue="#{toto.idNiveau}" />
 			</p:selectOneMenu>
 					
 			<p:outputLabel for="cb_genre" value="Genre:" />
             <p:selectOneMenu id="cb_genre" value="#{animateurContoller.idGenre}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{animateurContoller.listGenre}" var="toto" itemLabel="#{toto.libelleGenre}" itemValue="#{toto.idGenre}" />
 			</p:selectOneMenu>			
 		</h:panelGrid>
 	    
-	    
+	    </fieldset>
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -58,6 +64,8 @@
 				<p:commandButton value="Annuler" process="@this" actionListener="#{animateurContoller.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>	    
+	    
+	    <br />
 	    	    
 	    <p:dataTable id="data" var="toto" value="#{animateurContoller.listObject}" selectionMode="single" selection="#{animateurContoller.selectedObject}" rowKey="#{toto.idAnimateur}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"
@@ -82,9 +90,7 @@
 	    	</p:column>	
 	    	
 	    	<p:column headerText="Age">
-	    		<h:outputText value="#{toto.ageAnimateur}" >
-	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
-	    		</h:outputText>
+	    		<h:outputText value="#{toto.ageAnimateur}" />
 	    	</p:column>
 	    	
 	    	<p:column headerText="Téléphone">

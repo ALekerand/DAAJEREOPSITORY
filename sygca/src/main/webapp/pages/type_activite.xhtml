@@ -10,7 +10,9 @@
 		<h:form id="form">	
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 
-		<p:panel header="Enregistrement des types d'activité">		
+		<p:panel header="Enregistrement des types d'activité">
+		<fieldset>
+		<legend>Informations sur le type d'activité</legend>		
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{typeActiviteControllers.typeActivite.codeTypeactivite}" required="true"></p:inputText>
@@ -19,7 +21,10 @@
 			<p:inputText id="input_activite" value="#{typeActiviteControllers.typeActivite.libelleTypeactivite}" required="true"></p:inputText>
 				
 	   </h:panelGrid>
+	   </fieldset>
 	   </p:panel>
+	   
+	   <br />
 	   
 	   <p:toolbar>
 	   	<f:facet name="left">
@@ -28,6 +33,8 @@
 			<p:commandButton value="Annuler" process="@this" actionListener="#{typeActiviteControllers.annuler}" update="form"></p:commandButton>
 	   	</f:facet>
 	   </p:toolbar>
+	   
+	   <br />
 	   
 	   <p:dataTable var="toto" value="#{typeActiviteControllers.listObject}" selectionMode="single" selection="#{typeActiviteControllers.selectedObject}" rowKey="#{toto.idTypeactivite}"
 	   rows="10" paginatorPosition="bottom" paginator="true"

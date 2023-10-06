@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des fonctions">
+		<fieldset>
+		<legend>Informations sur la fonction</legend>
 		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{fonctionControllers.fonction.codeFonction}" required="true"></p:inputText>
@@ -19,7 +21,12 @@
 			<p:inputText id="input_fonction" value="#{fonctionControllers.fonction.libelleFonction}" required="true"></p:inputText>
 				
 	    </h:panelGrid>
+	   
+	    </fieldset>
+	    
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar>
 	    	<f:facet name="left">
@@ -28,6 +35,8 @@
 			    <p:commandButton value="Annuler" process="@this" actionListener="#{fonctionControllers.annuler}" update="form"></p:commandButton>
 	    	</f:facet>
 	    </p:toolbar>
+	    
+	    <br />
 	    
 	    <p:dataTable var="toto" value="#{fonctionControllers.listObject}" selectionMode="single" selection="#{fonctionControllers.selectedObject}" rowKey="#{toto.idFonction}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

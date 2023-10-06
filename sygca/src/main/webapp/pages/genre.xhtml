@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des genres">
+		<fieldset>
+		<legend>Informations sur le genre</legend>
 		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{genreController.genre.codeGenre}" required="true"></p:inputText>
@@ -20,7 +22,12 @@
 			
 			
 	    </h:panelGrid>
+	    
+	    </fieldset>
+	    
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -30,7 +37,7 @@
 			</f:facet>
 		</p:toolbar>
 	    
-	    
+	    <br />
 	    
 	    <p:dataTable id="data" var="toto" value="#{genreController.listObject}" selectionMode="single" selection="#{genreController.selectedObject}" rowKey="#{toto.idGenre}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

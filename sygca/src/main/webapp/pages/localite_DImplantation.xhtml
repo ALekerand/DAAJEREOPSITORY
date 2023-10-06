@@ -10,7 +10,9 @@
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
-		<p:panel header="Enregistrement des localités">
+		<p:panel header="Enregistrement des localités d'implantation">
+		<fieldset>
+		<legend>Informations sur la localité d'implantation</legend>
 		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{localiteDImplantationController.localiteDImplantation.codeLocalite}" required="true"></p:inputText>
@@ -20,16 +22,21 @@
 			
 			<p:outputLabel for="cb_commune" value="Commune:" />
             <p:selectOneMenu id="cb_commune" value="#{localiteDImplantationController.idCommune}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{localiteDImplantationController.listCommune}" var="toto" itemLabel="#{toto.nomCommune}" itemValue="#{toto.idCommune}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_sousPrefecture" value="Sous Prefecture:" />
             <p:selectOneMenu id="cb_sousPrefecture" value="#{localiteDImplantationController.idSousPrefecture}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{localiteDImplantationController.listSousPrefecture}" var="toto" itemLabel="#{toto.nomSousPrefecture}" itemValue="#{toto.idSousPrefecture}" />
 			</p:selectOneMenu>
 			
 	    </h:panelGrid>
+	    </fieldset>
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -39,7 +46,7 @@
 			</f:facet>
 		</p:toolbar>
 	    
-	    
+	    <br />
 	    
 	    <p:dataTable id="data" var="toto" value="#{localiteDImplantationController.listObject}" selectionMode="single" selection="#{localiteDImplantationController.selectedObject}" rowKey="#{toto.idLocalite}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

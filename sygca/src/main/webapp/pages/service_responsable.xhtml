@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des services responsables">
+		<fieldset>
+		<legend>Informations sur le service du responsable</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{serviceResponsableController.serviceResponsable.codeService}" required="true"></p:inputText>
@@ -19,11 +21,8 @@
 			<p:calendar id="input_nom" value="#{serviceResponsableController.serviceResponsable.dateArrivee}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_prenom" value="Date Départ:"></p:outputLabel>
-			<p:calendar id="input_prenom" value="#{serviceResponsableController.serviceResponsable.dateDepart}" required="true" pattern="dd/MM/yyyy"></p:calendar>
-		</h:panelGrid>
-			
-			
-		<h:panelGrid columns="6" cellpadding="8">								
+			<p:calendar id="input_prenom" value="#{serviceResponsableController.serviceResponsable.dateDepart}" required="true" pattern="dd/MM/yyyy"></p:calendar>						
+										
 			<p:outputLabel for="cb_responsable" value="Responsable:" />
             <p:selectOneMenu id="cb_responsable" value="#{serviceResponsableController.idResponsable}">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
@@ -41,8 +40,12 @@
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{serviceResponsableController.listIep}" var="toto" itemLabel="#{toto.nomIep}" itemValue="#{toto.idIep}" />
 			</p:selectOneMenu>			
-		</h:panelGrid>	    	    
+		
+		</h:panelGrid>	
+		</fieldset>    	    
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -51,6 +54,8 @@
 				<p:commandButton value="Annuler" process="@this" actionListener="#{serviceResponsableController.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>	    
+	    
+	    <br />
 	    	    
 	    <p:dataTable id="data" var="toto" value="#{serviceResponsableController.listObject}" selectionMode="single" selection="#{serviceResponsableController.selectedObject}" rowKey="#{toto.idServiceDrena}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"
