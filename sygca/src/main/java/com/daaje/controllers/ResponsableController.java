@@ -34,8 +34,7 @@ public class ResponsableController {
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
 	}
-	
-	
+		
 	public void enregistrer(){
 		responsable.setFonction((Fonction) iservice.getObjectById(idFonction, "Fonction"));
 		iservice.addObject(this.responsable);
@@ -75,14 +74,17 @@ public class ResponsableController {
 	}
 		
 //Getters and setters
-	public List getListObject() {
-		return listObject = iservice.getObjects("Responsable");
+	public Responsable getResponsable() {
+		return responsable;
 	}
-
+	
 	public void setResponsable(Responsable responsable) {
 		this.responsable = responsable;
 	}
-
+	
+	public List getListObject() {
+		return listObject = iservice.getObjects("Responsable");
+	}
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
@@ -112,17 +114,6 @@ public class ResponsableController {
 		this.cmdBEnregistrer = cmdBEnregistrer;
 	}
 
-
-	public Responsable getResponsable() {
-		return responsable;
-	}
-
-
-	public void setIep(Responsable responsable) {
-		this.responsable = responsable;
-	}
-
-
 	public List<Fonction> getListFonction() {
 		return listFonction = iservice.getObjects("Fonction");
 		
@@ -139,7 +130,7 @@ public class ResponsableController {
 	}
 
 
-	public void setIdFonction(int idDrena) {
+	public void setIdFonction(int idFonction) {
 		this.idFonction = idFonction;
 	}
 

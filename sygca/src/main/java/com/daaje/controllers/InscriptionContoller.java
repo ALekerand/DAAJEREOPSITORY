@@ -164,7 +164,7 @@ public class InscriptionContoller {
 
 
 	public List<Apprenant> getListApprenant() {
-		return listApprenant;
+		return listApprenant = iservice.getObjects("Apprenant");
 	}
 
 
@@ -174,7 +174,7 @@ public class InscriptionContoller {
 
 
 	public List<Campagne> getListCampagne() {
-		return listCampagne;
+		return listCampagne = iservice.getObjects("Campagne");
 	}
 
 
@@ -184,7 +184,7 @@ public class InscriptionContoller {
 
 
 	public List<Centre> getListCentre() {
-		return listCentre;
+		return listCentre = iservice.getObjects("Centre");
 	}
 
 
@@ -194,7 +194,7 @@ public class InscriptionContoller {
 
 
 	public List<NiveauFormation> getListNiveauFormation() {
-		return listNiveauFormation;
+		return listNiveauFormation = iservice.getObjects("NiveauFormation");
 	}
 
 

@@ -12,12 +12,17 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement de promoteur">
+		<fieldset>
+		<legend>Informations sur le promoteur</legend>
 		<h:panelGrid id="info_grid" columns="2" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{promoteurController.promoteur.codePromoteur}" required="true"></p:inputText>
 			
 	    </h:panelGrid>
+	    </fieldset>
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -26,6 +31,8 @@
 				<p:commandButton value="Annuler" process="@this" actionListener="#{promoteurController.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>
+	     
+	    <br /> 
 	        
 	    <p:dataTable id="data" var="toto" value="#{promoteurController.listObject}" selectionMode="single" selection="#{promoteurController.selectedObject}" rowKey="#{toto.idPromoteur}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

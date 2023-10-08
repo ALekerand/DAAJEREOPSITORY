@@ -12,21 +12,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Activite;
-import com.daaje.model.Apprenant;
-import com.daaje.model.Genre;
+import com.daaje.model.Animateur;
+import com.daaje.model.Profession;
+import com.daaje.model.TypeActivite;
 import com.daaje.service.Iservice;
 
 @Component
-public class ApprenantController {
+public class ProfessionController {
 	@Autowired
 	public Iservice iservice;
-	public int idGenre;
+	public int idAnimateur;
 	public int idActivite;
-	public Apprenant apprenant = new Apprenant();
-	public Apprenant selectedObject = new Apprenant();
+	public int idTypeactivite;
+	public Profession profession = new Profession();
+	public Profession selectedObject = new Profession();
 	public List listObject = new ArrayList();
+	public List<Animateur> listAnimateur = new ArrayList<Animateur>();
 	public List<Activite> listActivite = new ArrayList<Activite>();
-	public List<Genre> listGenre = new ArrayList<Genre>();
+	public List<TypeActivite> listTypeActivite = new ArrayList<TypeActivite>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -40,34 +43,27 @@ public class ApprenantController {
 	
 	
 	public void enregistrer(){
-		apprenant.setActivite((Activite) iservice.getObjectById(idActivite, "Activite"));
-		apprenant.setGenre((Genre) iservice.getObjectById(idGenre, "Genre"));
-		iservice.addObject(this.apprenant);
+		profession.setAnimateur((Animateur) iservice.getObjectById(idAnimateur, "Animateur"));
+		profession.setActivite((Activite) iservice.getObjectById(idActivite, "Activite"));
+		profession.setTypeActivite((TypeActivite) iservice.getObjectById(idTypeactivite, "TypeActivite"));
+		iservice.addObject(this.profession);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(apprenant);
+		iservice.updateObject(profession);
 		annuler();
 		info("Modification effectuée");
 	}
 	
 	public void annuler() {
-		apprenant.setCodeApprenant(null);
-		apprenant.setNomApprenant(null);
-		apprenant.setPrenomApprenant(null);
-		apprenant.setDateNaissApprenant(null);
-		apprenant.setTelephoneApprenant(null);
-		apprenant.setAdresseApprenant(null);
-		apprenant.setMailApprenant(null);
 		cmdBEnregistrer.setDisabled(false);
-		cmdBModifier.setDisabled(true);
-		
+		cmdBModifier.setDisabled(true);	
 	}
 	
 	public void selectionnerLigne() {
-		apprenant = selectedObject;
+		profession = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
 	}
@@ -78,18 +74,18 @@ public class ApprenantController {
 		
 //Getters and setters
 	public List getListObject() {
-		return listObject = iservice.getObjects("Apprenant");
+		return listObject = iservice.getObjects("Profession");
 	}
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
 	}
 
-	public Apprenant getSelectedObject() {
+	public Profession getSelectedObject() {
 		return selectedObject;
 	}
 
-	public void setSelectedObject(Apprenant selectedObject) {
+	public void setSelectedObject(Profession selectedObject) {
 		this.selectedObject = selectedObject;
 	}
 
@@ -110,23 +106,23 @@ public class ApprenantController {
 	}
 
 
-	public Apprenant getApprenant() {
-		return apprenant;
+	public Profession getProfession() {
+		return profession;
 	}
 
 
-	public void setApprenant(Apprenant apprenant) {
-		this.apprenant = apprenant;
+	public void setProfession(Profession profession) {
+		this.profession = profession;
 	}
 
 
-	public int getIdGenre() {
-		return idGenre;
+	public int getIdAnimateur() {
+		return idAnimateur;
 	}
 
 
-	public void setIdGenre(int idGenre) {
-		this.idGenre = idGenre;
+	public void setIdAnimateur(int idAnimateur) {
+		this.idAnimateur = idAnimateur;
 	}
 
 
@@ -140,8 +136,28 @@ public class ApprenantController {
 	}
 
 
+	public int getIdTypeactivite() {
+		return idTypeactivite;
+	}
+
+
+	public void setIdTypeactivite(int idTypeactivite) {
+		this.idTypeactivite = idTypeactivite;
+	}
+
+
+	public List<Animateur> getListAnimateur() {
+		return listAnimateur;
+	}
+
+
+	public void setListAnimateur(List<Animateur> listAnimateur) {
+		this.listAnimateur = listAnimateur;
+	}
+
+
 	public List<Activite> getListActivite() {
-		return listActivite = iservice.getObjects("Activite");
+		return listActivite;
 	}
 
 
@@ -150,13 +166,12 @@ public class ApprenantController {
 	}
 
 
-	public List<Genre> getListGenre() {
-		return listGenre = iservice.getObjects("Genre");
+	public List<TypeActivite> getListTypeActivite() {
+		return listTypeActivite;
 	}
 
 
-	public void setListGenre(List<Genre> listGenre) {
-		this.listGenre = listGenre;
+	public void setListTypeActivite(List<TypeActivite> listTypeActivite) {
+		this.listTypeActivite = listTypeActivite;
 	}
-
 }

@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des niveaux de formation">
+		<fieldset>
+		<legend>Informations sur le niveau de formation</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{niveauFormationController.niveauFormation.codeNiveauFormation}" required="true"></p:inputText>
@@ -23,7 +25,10 @@
 			
 			
 	    </h:panelGrid>
+	    </fieldset>
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -33,7 +38,7 @@
 			</f:facet>
 		</p:toolbar>
 	    
-	    
+	    <br />
 	    
 	    <p:dataTable id="data" var="toto" value="#{niveauFormationController.listObject}" selectionMode="single" selection="#{niveauFormationController.selectedObject}" rowKey="#{toto.idNiveauFormation}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

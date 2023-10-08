@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des apprenants">
+		<fieldset>
+		<legend>Informations sur l'apprenant</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{apprenantController.apprenant.codeApprenant}" required="true"></p:inputText>
@@ -22,7 +24,7 @@
 			<p:inputText id="input_prenom" value="#{apprenantController.apprenant.prenomApprenant}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_age" value="Age:"></p:outputLabel>
-			<p:inputText id="input_age" value="#{apprenantController.apprenant.dateNaissApprenant}" required="true"></p:inputText>
+			<p:calendar id="input_age" value="#{apprenantController.apprenant.dateNaissApprenant}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_tel" value="Contact:"></p:outputLabel>
 			<p:inputText id="input_tel" value="#{apprenantController.apprenant.telephoneApprenant}" required="true"></p:inputText>
@@ -39,25 +41,31 @@
 		<h:panelGrid columns="6" cellpadding="8">			
 			<p:outputLabel for="cb_activite" value="Activite:" />
             <p:selectOneMenu id="cb_activite" value="#{apprenantController.idActivite}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{apprenantController.listActivite}" var="toto" itemLabel="#{toto.nomActivite}" itemValue="#{toto.idActivite}" />
 			</p:selectOneMenu>
 					
 			<p:outputLabel for="cb_genre" value="Genre:" />
             <p:selectOneMenu id="cb_genre" value="#{apprenantController.idGenre}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{apprenantController.listGenre}" var="toto" itemLabel="#{toto.libelleGenre}" itemValue="#{toto.idGenre}" />
 			</p:selectOneMenu>			
 		</h:panelGrid>
 	    
-	    
+	    </fieldset>
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
-				<p:commandButton value="Enregistrer" actionListener="#{animateurController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{animateurController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-				<p:commandButton value="Annuler" process="@this" actionListener="#{animateurController.annuler}" update="form"></p:commandButton>
+				<p:commandButton value="Enregistrer" actionListener="#{apprenantController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{apprenantController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{apprenantController.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>	    
+	    
+	    <br />
 	    	    
 	    <p:dataTable id="data" var="toto" value="#{apprenantController.listObject}" selectionMode="single" selection="#{apprenantController.selectedObject}" rowKey="#{toto.idApprenant}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"
@@ -82,7 +90,9 @@
 	    	</p:column>	
 	    	
 	    	<p:column headerText="Age">
-	    		<h:outputText value="#{toto.dateNaissApprenant}" />
+	    		<h:outputText value="#{toto.dateNaissApprenant}" >
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    		</h:outputText>
 	    	</p:column>
 	    	
 	    	<p:column headerText="Téléphone">

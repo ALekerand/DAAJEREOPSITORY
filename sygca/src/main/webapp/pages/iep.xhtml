@@ -11,6 +11,8 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:panel header="Enregistrement des IEP">
+		<fieldset>
+		<legend>Informations sur l'IEP</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{iepController.iep.codeIep}" required="true"></p:inputText>
@@ -23,11 +25,15 @@
 			
 			<p:outputLabel for="cb_drena" value="Drena:" />
             <p:selectOneMenu id="cb_drena" value="#{iepController.idDrena}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{iepController.listDrena}" var="toto" itemLabel="#{toto.nomDrena}" itemValue="#{toto.idDrena}" />
 			</p:selectOneMenu>
 			
 	    </h:panelGrid>
+	    </fieldset>
 	    </p:panel>
+	    
+	    <br />
 	    
 	    <p:toolbar >
 			<f:facet name="left">
@@ -37,7 +43,7 @@
 			</f:facet>
 		</p:toolbar>
 	    
-	    
+	    <br />
 	    
 	    <p:dataTable id="data" var="toto" value="#{iepController.listObject}" selectionMode="single" selection="#{iepController.selectedObject}" rowKey="#{toto.idIep}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"

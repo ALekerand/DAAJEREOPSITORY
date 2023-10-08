@@ -163,7 +163,7 @@ public class EnseignerContoller {
 
 
 	public List<Animateur> getListAnimateur() {
-		return listAnimateur;
+		return listAnimateur = iservice.getObjects("Animateur");
 	}
 
 
@@ -173,7 +173,7 @@ public class EnseignerContoller {
 
 
 	public List<Campagne> getListCampagne() {
-		return listCampagne;
+		return listCampagne = iservice.getObjects("Campagne");
 	}
 
 
@@ -183,7 +183,7 @@ public class EnseignerContoller {
 
 
 	public List<Centre> getListCentre() {
-		return listCentre;
+		return listCentre = iservice.getObjects("Centre");
 	}
 
 
@@ -193,7 +193,7 @@ public class EnseignerContoller {
 
 
 	public List<NiveauFormation> getListNiveauFormation() {
-		return listNiveauFormation;
+		return listNiveauFormation = iservice.getObjects("NiveauFormation");
 	}
 
 
