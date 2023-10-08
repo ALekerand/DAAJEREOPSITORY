@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Centre;
+import com.daaje.model.Departement;
+import com.daaje.model.Drena;
 import com.daaje.model.Iep;
 import com.daaje.model.LocaliteDImplantation;
 import com.daaje.model.Nature;
@@ -25,15 +27,22 @@ public class centreControllers {
 	@Autowired
 	public Iservice iservice;
 	public Centre centre = new Centre();
-	public Centre selectedObject = new Centre();
+	//public dep
 	public int idLocalite;
 	public int idIep;
 	public int idNature;
 	public int idNatureProjet;
+	public int idDepartement;
+	public int idDrena;
+	public Drena choosedDepartement = new Drena();
+	public Drena choosedDrena = new Drena();
+	public Centre selectedObject = new Centre();
 	public String type_promoteur;
 	public List listObject = new ArrayList<>();
 	public List listLocalite = new ArrayList<>();
 	public List listIep = new ArrayList<>();
+	public List listDrena = new ArrayList<>();
+	public List listDepartement = new ArrayList<>();
 	public List listNatureProjet = new ArrayList<>();
 	public List listNature = new ArrayList<>();
 	
@@ -126,6 +135,12 @@ public class centreControllers {
 		centre = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
+	}
+	
+	public void chargerDrena() {
+		choosedDepartement = (Drena) iservice.getObjectById(idDepartement,"Departement");
+		//listDrena = choosedDepartement.getdr
+		
 	}
 	
 	public void info(String message){
@@ -277,6 +292,42 @@ public class centreControllers {
 
 	public void setType_promoteur(String type_promoteur) {
 		this.type_promoteur = type_promoteur;
+	}
+
+	public int getIdDepartement() {
+		return idDepartement;
+	}
+
+	public void setIdDepartement(int idDepartement) {
+		this.idDepartement = idDepartement;
+	}
+
+	public List getListDepartement() {
+		return listDepartement = iservice.getObjects("Departement");
+	}
+
+	public void setListDepartement(List listDepartement) {
+		this.listDepartement = listDepartement;
+	}
+
+	public void setpGridProg(PanelGrid pGridProg) {
+		this.pGridProg = pGridProg;
+	}
+
+	public List getListDrena() {
+		return listDrena = iservice.getObjects("Drena");
+	}
+
+	public void setListDrena(List listDrena) {
+		this.listDrena = listDrena;
+	}
+
+	public int getIdDrena() {
+		return idDrena;
+	}
+
+	public void setIdDrena(int idDrena) {
+		this.idDrena = idDrena;
 	}
 	
 	

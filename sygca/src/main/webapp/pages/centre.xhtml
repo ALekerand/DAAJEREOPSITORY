@@ -36,34 +36,45 @@
 			<p:outputLabel for="input_droit" value="Droit d'ouverture:"></p:outputLabel>
 			<p:inputText id="input_droit" ></p:inputText>
 			
-			<p:outputLabel for="cb_iep" value="IEP"/>
-			<p:selectOneMenu id="cb_iep" required="true" value="#{centreControllers.idIep}">
-			<f:selectItem itemLabel="Selectionnez" itemValue="" />
-			<f:selectItems value="#{centreControllers.listIep}" var="tata" itemLabel="#{tata.nomIep}" itemValue="#{tata.aidIep}"></f:selectItems>
-			</p:selectOneMenu>
-			
-			
-			<p:outputLabel for="cb_departement" value="Localité"/>
+			<p:outputLabel for="cb_departement" value="Département:"/>
 			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
+			<p:ajax listener="#{centreControllers.chargerDrena}" event="change" process="@this"  update="cb_iep"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listDepartement}" var="tata" itemLabel="#{tata.nomDepartement}" itemValue="#{tata.idDepartement}"></f:selectItems>
 			</p:selectOneMenu>
 			
-			<p:outputLabel for="cb_localite" value="Localité"/>
+			
+			<p:outputLabel for="cb_drena" value="DRENA:"/>
+			<p:selectOneMenu id="cb_drena" required="true" value="#{centreControllers.idDrena}">
+			<p:ajax listener="#{centreControllers.chargerIep}" event="change" process="@this"  update="cb_iep"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listDrena}" var="tata" itemLabel="#{tata.nomDrena}" itemValue="#{tata.idDrena}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_iep" value="IEP:"/>
+			<p:selectOneMenu id="cb_iep" required="true" value="#{centreControllers.idIep}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listIep}" var="tata" itemLabel="#{tata.nomIep}" itemValue="#{tata.idIep}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			
+			
+			
+			<p:outputLabel for="cb_localite" value="Localité:"/>
 			<p:selectOneMenu id="cb_localite" required="true" value="#{centreControllers.idLocalite}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listLocalite}" var="tata" itemLabel="#{tata.nomLocalite}" itemValue="#{tata.idLocalite}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			
-			<p:outputLabel for="cb_natureP" value="Nature du projet"/>
+			<p:outputLabel for="cb_natureP" value="Nature du projet:"/>
 			<p:selectOneMenu id="cb_natureP" required="true" value="#{centreControllers.idNatureProjet}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listNatureProjet}" var="tata" itemLabel="#{tata.libelleNatureProjet}" itemValue="#{tata.idNatureProjet}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			
-			<p:outputLabel for="cb_nature_centre" value="Nature du centre"/>
+			<p:outputLabel for="cb_nature_centre" value="Nature du centre:"/>
 			<p:selectOneMenu id="cb_nature_centre" required="true" value="#{centreControllers.idNature}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listNature}" var="tata" itemLabel="#{tata.libelleNature}" itemValue="#{tata.idNature}"></f:selectItems>
@@ -141,7 +152,7 @@
 		</p:toolbar>
 	    
 	    <p:dataTable id="data" var="toto" value="#{centreControllers.listObject}" selectionMode="single" selection="#{centreControllers.selectedObject}" rowKey="#{toto.idCentre}"       
-	     rows="10" paginatorPosition="bottom" paginator="true"
+	     rows="5" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                  rowsPerPageTemplate="5,10,15">
