@@ -33,6 +33,7 @@ public class CampagneController {
 	}
 		
 	public void enregistrer(){
+		campagne.setEtatCampagne(false);
 		iservice.addObject(this.campagne);
 		annuler();
 		info("Enregistrement effectué");

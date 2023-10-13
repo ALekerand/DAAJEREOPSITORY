@@ -10,11 +10,78 @@
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
-		<p:panel header="Enregistrement des centre d'aphabétisation">
+		<p:wizard flowListener="#{centreControllers.onFlowProcess}">
+            <p:tab id="promoteur" title="Promoteur">
+            	<p:panel header="Enregistrement du promoteur">
+		
+		<fieldset>
+	    
+		<legend> Informations sur le promoteur</legend>
+		
+        <p:selectOneRadio id="promo_rodio" value="#{centreControllers.type_promoteur}" binding="#{centreControllers.radio_promo}">
+          <p:ajax partialSubmit="true" process="@this"  update="form" listener="#{centreControllers.activiverChamp}"/> 
+          <f:selectItem itemLabel="Personne physique" itemValue="personne_physique"/>
+          <f:selectItem itemLabel="ONG" itemValue="ong"/>
+          <f:selectItem itemLabel="Programme" itemValue="programme"/>
+          <f:selectItem itemLabel="Ministère" itemValue="ministere"/>
+        </p:selectOneRadio>
+        
+        
+			<p:panelGrid id="info_ong" columns="6" cellpadding="8" binding="#{centreControllers.pGridOng}">
+			<p:outputLabel for="input_nom_ong" value="Nom ONG:"></p:outputLabel>
+			<p:inputText id="input_nom_ong" value="#{centreControllers.ong.nomOng}" ></p:inputText>
+			
+			<p:outputLabel for="input_phone" value="Téléphone:"></p:outputLabel>
+			<p:inputText id="input_phone" value="#{centreControllers.ong.telephoneOng}" ></p:inputText>
+			
+			<p:outputLabel for="input_mail_ong" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_mail_ong" value="#{centreControllers.ong.mailOng}" ></p:inputText>
+	    	</p:panelGrid>
+	    	
+	    	<p:panelGrid id="info_ph" columns="6" cellpadding="8" binding="#{centreControllers.pGridPh}">
+			<p:outputLabel for="input_nom_ph" value="Nom :"></p:outputLabel>
+			<p:inputText id="input_nom_ph" value="#{centreControllers.personnePhysique.nomPersonne}"></p:inputText>
+			
+			<p:outputLabel for="input_prenom_ph" value="Prénoms:"></p:outputLabel>
+			<p:inputText id="input_prenom_ph" value="#{centreControllers.personnePhysique.prenomsPersonne}"></p:inputText>
+			
+			<p:outputLabel for="input_phone_ph" value="Téléphone:"></p:outputLabel>
+			<p:inputText id="input_phone_ph" value="#{centreControllers.personnePhysique.telephonePersonne}" ></p:inputText>
+			
+			<p:outputLabel for="input_mail_ph" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_mail_ph" value="#{centreControllers.personnePhysique.mailPersonne}" ></p:inputText>
+	    	</p:panelGrid>
+	    	
+	    	<p:panelGrid id="info_prog" columns="6" cellpadding="8" binding="#{centreControllers.pGridProg}">
+			<p:outputLabel for="input_lib_prog" value="Nom programme:"></p:outputLabel>
+			<p:inputText id="input_lib_prog" value="#{centreControllers.programme.libelleProgramme}"></p:inputText>
+	    	
+	    	</p:panelGrid>
+	    	
+	    	
+	    	<p:panelGrid id="info_mini" columns="6" cellpadding="8" binding="#{centreControllers.pGridMini}">
+			<p:outputLabel for="input_nom_min" value="Nom :"></p:outputLabel>
+			<p:inputText id="input_nom_min" ></p:inputText>
+			
+			<p:outputLabel for="input_phone_min" value="Téléphone:"></p:outputLabel>
+			<p:inputText id="input_phone_min" ></p:inputText>
+	
+	    	</p:panelGrid>
+	    	
+	    </fieldset>
+		
+		
+		
+	    
+	    </p:panel>
+			</p:tab>
+			
+			<p:tab id="centre" title="Centre">
+				<p:panel header="Enregistrement des centre d'aphabétisation">
 		
 		<fieldset>
 		<legend> Informations sur le centre</legend>
-		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
+		<h:panelGrid id="centre_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
 			<p:inputText id="input_code" value="#{centreControllers.centre.codeCentre}" ></p:inputText>
 			
@@ -43,7 +110,6 @@
 			<f:selectItems value="#{centreControllers.listDepartement}" var="tata" itemLabel="#{tata.nomDepartement}" itemValue="#{tata.idDepartement}"></f:selectItems>
 			</p:selectOneMenu>
 			
-			
 			<p:outputLabel for="cb_drena" value="DRENA:"/>
 			<p:selectOneMenu id="cb_drena" required="true" value="#{centreControllers.idDrena}">
 			<p:ajax listener="#{centreControllers.chargerIep}" event="change" process="@this"  update="cb_iep"></p:ajax>
@@ -57,15 +123,11 @@
 			<f:selectItems value="#{centreControllers.listIep}" var="tata" itemLabel="#{tata.nomIep}" itemValue="#{tata.idIep}"></f:selectItems>
 			</p:selectOneMenu>
 			
-			
-			
-			
 			<p:outputLabel for="cb_localite" value="Localité:"/>
 			<p:selectOneMenu id="cb_localite" required="true" value="#{centreControllers.idLocalite}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listLocalite}" var="tata" itemLabel="#{tata.nomLocalite}" itemValue="#{tata.idLocalite}"></f:selectItems>
 			</p:selectOneMenu>
-			
 			
 			<p:outputLabel for="cb_natureP" value="Nature du projet:"/>
 			<p:selectOneMenu id="cb_natureP" required="true" value="#{centreControllers.idNatureProjet}">
@@ -73,75 +135,40 @@
 			<f:selectItems value="#{centreControllers.listNatureProjet}" var="tata" itemLabel="#{tata.libelleNatureProjet}" itemValue="#{tata.idNatureProjet}"></f:selectItems>
 			</p:selectOneMenu>
 			
-			
 			<p:outputLabel for="cb_nature_centre" value="Nature du centre:"/>
 			<p:selectOneMenu id="cb_nature_centre" required="true" value="#{centreControllers.idNature}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listNature}" var="tata" itemLabel="#{tata.libelleNature}" itemValue="#{tata.idNature}"></f:selectItems>
 			</p:selectOneMenu>
-			
 	    </h:panelGrid>
+	     
 	     </fieldset>
 	    
-	    <fieldset>
 	    
-		<legend> Informations sur le promoteur</legend>
-		
-		<h5 class="mt-0">Nature du promoteur</h5>
-        <p:selectOneRadio id="line" value="#{centreControllers.type_promoteur}" onclick="this.form.submit();" valueChangeListener="#{centreControllers.activiverChamp}">
-            <f:selectItem itemLabel="Personne physique" itemValue="personne_physique"/>
-            <f:selectItem itemLabel="ONG" itemValue="ong"/>
-            <f:selectItem itemLabel="Programme" itemValue="programme"/>
-            <f:selectItem itemLabel="Ministère" itemValue="ministere"/>
-        </p:selectOneRadio>
-		
-			
-		
-			<h:panelGrid id="info_ong" columns="6" cellpadding="8" binding="#{centreControllers.pGridOng}">
-			<p:outputLabel for="input_nom_ong" value="Nom ONG:"></p:outputLabel>
-			<p:inputText id="input_nom_ong" ></p:inputText>
-			
-			<p:outputLabel for="input_phone" value="Téléphone:"></p:outputLabel>
-			<p:inputText id="input_phone" ></p:inputText>
-			
-			<p:outputLabel for="input_mail_ong" value="Mail:"></p:outputLabel>
-			<p:inputText id="input_mail_ong" ></p:inputText>
-	    	</h:panelGrid>
-	    	
-	    	
-	    	
-	    	<h:panelGrid id="info_ph" columns="6" cellpadding="8" binding="#{centreControllers.pGridPh}">
-			<p:outputLabel for="input_nom_ph" value="Nom :"></p:outputLabel>
-			<p:inputText id="input_nom_ph" ></p:inputText>
-			
-			<p:outputLabel for="input_prenom_ph" value="Prénoms:"></p:outputLabel>
-			<p:inputText id="input_prenom_ph" ></p:inputText>
-			
-			<p:outputLabel for="input_phone_ph" value="Téléphone:"></p:outputLabel>
-			<p:inputText id="input_phone_ph" ></p:inputText>
-			
-			<p:outputLabel for="input_mail_ph" value="Mail:"></p:outputLabel>
-			<p:inputText id="input_mail_ph" ></p:inputText>
-	    	</h:panelGrid>
-	    	
-	    	<h:panelGrid id="info_prog" columns="6" cellpadding="8">
-			<p:outputLabel for="input_lib_prog" value="Nom programme:"></p:outputLabel>
-			<p:inputText id="input_lib_prog" ></p:inputText>
-	    	
-	    	</h:panelGrid>
-	    	
-	    	
-	    	<h:panelGrid id="info_mini" columns="6" cellpadding="8" binding="#{centreControllers.pGridMini}">
-			<p:outputLabel for="input_nom_min" value="Nom :"></p:outputLabel>
-			<p:inputText id="input_nom_min" ></p:inputText>
-			
-			<p:outputLabel for="input_phone_min" value="Téléphone:"></p:outputLabel>
-			<p:inputText id="input_phone_min" ></p:inputText>
-	
-	    	</h:panelGrid>
-	    	
-	    </fieldset>
 	    </p:panel>
+			</p:tab>
+			
+			<p:tab id="animateur" title="Animateur">
+			
+			<p:panelGrid id="info_animateur" columns="6" cellpadding="8">
+			<p:outputLabel for="input_nom_anim" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom_anim" value="#{centreControllers.animateur.nomAnimateur}" ></p:inputText>
+			
+			<p:outputLabel for="input_prenom_anim" value="Prenoms:"></p:outputLabel>
+			<p:inputText id="input_prenom_anim" value="#{centreControllers.animateur.prenomAnimateur}" ></p:inputText>
+			
+			<p:outputLabel for="input_adresse_anim" value="Adresse:"></p:outputLabel>
+			<p:inputText id="input_adresse_anim" value="#{centreControllers.animateur.adresseAnimateur}" ></p:inputText>
+			
+			
+			<p:outputLabel for="input_mail_anim" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_mail_anim" value="#{centreControllers.animateur.mailAnimateur}"></p:inputText>
+	    	</p:panelGrid>
+			</p:tab>
+			
+		</p:wizard>
+		
+		
 	    
 	    <p:toolbar >
 			<f:facet name="left">

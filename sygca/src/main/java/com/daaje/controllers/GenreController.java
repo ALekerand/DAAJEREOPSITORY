@@ -30,6 +30,19 @@ public class GenreController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
+	}
+	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Genre").size();
+		if(nbEnregistrement < 10)
+			prefix = "GN00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "GN0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "GN" ;
+		this.genre.setCodeGenre(prefix+(nbEnregistrement+1));
 	}
 	
 	
@@ -50,6 +63,7 @@ public class GenreController {
 		genre.setLibelleGenre(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 		
 	}
 	

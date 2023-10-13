@@ -15,7 +15,7 @@
 		<legend>Informations sur le genre</legend>
 		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{genreController.genre.codeGenre}" required="true"></p:inputText>
+			<p:inputText id="input_code" value="#{genreController.genre.codeGenre}" readonly="true"></p:inputText>
 			
 			<p:outputLabel for="input_genre" value="Genre:"></p:outputLabel>
 			<p:inputText id="input_genre" value="#{genreController.genre.libelleGenre}" required="true"></p:inputText>
@@ -31,8 +31,8 @@
 	    
 	    <p:toolbar >
 			<f:facet name="left">
-				<p:commandButton value="Enregistrer" actionListener="#{genreController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{genreController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Enregistrer" actionListener="#{genreController.enregistrer}" binding="#{genreController.cmdBEnregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{genreController.modifier}" binding="#{genreController.cmdBModifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 				<p:commandButton value="Annuler" process="@this" actionListener="#{genreController.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>
