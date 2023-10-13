@@ -30,12 +30,26 @@ public class ActiviteController {
 @PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
 	}
+
+public void genererCode() {
+	String prefix="";
+	int nbEnregistrement = this.iservice.getObjects("Activite").size();
+	if(nbEnregistrement < 10)
+		prefix = "ACT00" ;
+	if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+		prefix = "ACT0" ;
+	if (nbEnregistrement > 100) 
+		prefix = "ACT" ;
+	this.activite.setCodeActivite(prefix+(nbEnregistrement+1));
+}
 		
 	public void enregistrer(){
 		iservice.addObject(this.activite);
 		annuler();
 		info("Enregistrement effectué");
+		
 	}
 	
 	public void modifier() {
@@ -49,6 +63,7 @@ public class ActiviteController {
 		activite.setNomActivite(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 		
 	}
 	

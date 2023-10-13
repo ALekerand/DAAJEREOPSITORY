@@ -15,7 +15,7 @@
 		<legend>Informations sur le service du responsable</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{serviceResponsableController.serviceResponsable.codeService}" required="true"></p:inputText>
+			<p:inputText id="input_code" value="#{serviceResponsableController.serviceResponsable.codeService}" readonly="true"></p:inputText>
 			
 			<p:outputLabel for="input_nom" value="Date Arrivée:"></p:outputLabel>
 			<p:calendar id="input_nom" value="#{serviceResponsableController.serviceResponsable.dateArrivee}" required="true" pattern="dd/MM/yyyy"></p:calendar>
@@ -82,14 +82,11 @@
 	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
 	    		</h:outputText>
 	    	</p:column>
-	    </p:dataTable>
-		
+	    </p:dataTable>		
 				
 <br />
 
-
-		<br/>
-		
+		<br/>		
 		
 	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 	   <p:commandButton value="Oui" type="button"

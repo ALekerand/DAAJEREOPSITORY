@@ -37,8 +37,20 @@ public class LocaliteDImplantationController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("LocaliteDImplantation").size();
+		if(nbEnregistrement < 10)
+			prefix = "LI00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "LI0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "LI" ;
+		this.localiteDImplantation.setCodeLocalite(prefix+(nbEnregistrement+1));
+	}
 	
 	public void enregistrer(){
 		localiteDImplantation.setCommune((Commune)iservice.getObjectById(idCommune, "Commune"));
@@ -59,6 +71,7 @@ public class LocaliteDImplantationController {
 		localiteDImplantation.setNomLocalite(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 		
 	}
 	

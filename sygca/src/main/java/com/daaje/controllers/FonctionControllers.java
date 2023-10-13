@@ -30,6 +30,19 @@ public class FonctionControllers {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
+	}
+	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Fonction").size();
+		if(nbEnregistrement < 10)
+			prefix = "FON00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "FON0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "FON" ;
+		this.fonction.setCodeFonction(prefix+(nbEnregistrement+1));
 	}
 	
 	public void enregistrer(){
@@ -49,6 +62,7 @@ public class FonctionControllers {
 		fonction.setLibelleFonction(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 		
 	public void selectionnerLigne() {

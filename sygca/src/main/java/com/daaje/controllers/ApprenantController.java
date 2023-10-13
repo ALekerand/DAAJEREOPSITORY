@@ -36,8 +36,20 @@ public class ApprenantController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Apprenant").size();
+		if(nbEnregistrement < 10)
+			prefix = "AP00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "AP0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "AP" ;
+		this.apprenant.setCodeApprenant(prefix+(nbEnregistrement+1));
+	}	
 	
 	public void enregistrer(){
 		apprenant.setActivite((Activite) iservice.getObjectById(idActivite, "Activite"));
@@ -63,6 +75,7 @@ public class ApprenantController {
 		apprenant.setMailApprenant(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 		
 	}
 	

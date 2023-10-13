@@ -15,7 +15,7 @@
 		<legend>Informations sur le département</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{departementControllers.departement.codeDepartement}" required="true"></p:inputText>
+			<p:inputText id="input_code" value="#{departementControllers.departement.codeDepartement}" readonly="true"></p:inputText>
 			
 			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
 			<p:inputText id="input_nom" value="#{departementControllers.departement.nomDepartement}" required="true"></p:inputText>

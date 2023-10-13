@@ -15,7 +15,7 @@
 		<legend>Informations sur la localité d'implantation</legend>
 		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{localiteDImplantationController.localiteDImplantation.codeLocalite}" required="true"></p:inputText>
+			<p:inputText id="input_code" value="#{localiteDImplantationController.localiteDImplantation.codeLocalite}" readonly="true"></p:inputText>
 			
 			<p:outputLabel for="input_localite" value="Localité:"></p:outputLabel>
 			<p:inputText id="input_localite" value="#{localiteDImplantationController.localiteDImplantation.nomLocalite}" required="true"></p:inputText>

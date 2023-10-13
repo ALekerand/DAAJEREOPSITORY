@@ -30,6 +30,19 @@ public class DrenaController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
+	}
+	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Drena").size();
+		if(nbEnregistrement < 10)
+			prefix = "DR00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "DR0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "DR" ;
+		this.drena.setCodeDrena(prefix+(nbEnregistrement+1));
 	}
 	
 	public void enregistrer(){
@@ -50,6 +63,7 @@ public class DrenaController {
 		drena.setMailDrena(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 		
 	public void selectionnerLigne() {

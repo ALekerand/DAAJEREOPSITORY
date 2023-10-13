@@ -37,9 +37,21 @@ public class AnimateurContoller {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 	
-	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Animateur").size();
+		if(nbEnregistrement < 10)
+			prefix = "AN00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "AN0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "AN" ;
+		this.animateur.setCodeAnimateur(prefix+(nbEnregistrement+1));
+	}
+		
 	public void enregistrer(){
 		animateur.setNiveauAnimateur((NiveauAnimateur) iservice.getObjectById(idNiveau, "NiveauAnimateur"));
 		animateur.setGenre((Genre) iservice.getObjectById(idGenre, "Genre"));
@@ -64,6 +76,7 @@ public class AnimateurContoller {
 		animateur.setMailAnimateur(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 		
 	}
 	

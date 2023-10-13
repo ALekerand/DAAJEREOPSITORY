@@ -30,8 +30,20 @@ public class PromoteurController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Promoteur").size();
+		if(nbEnregistrement < 10)
+			prefix = "PR00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "PR0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "PR" ;
+		this.promoteur.setCodePromoteur(prefix+(nbEnregistrement+1));
+	}
 	
 	public void enregistrer(){
 		iservice.addObject(this.promoteur);
@@ -49,7 +61,7 @@ public class PromoteurController {
 		promoteur.setCodePromoteur(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
-		
+		genererCode();
 	}
 	
 	public void selectionnerLigne() {

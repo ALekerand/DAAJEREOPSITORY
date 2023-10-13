@@ -30,8 +30,21 @@ public class TypeActiviteControllers {
 @PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
 	}
-		
+	
+public void genererCode() {
+	String prefix="";
+	int nbEnregistrement = this.iservice.getObjects("TypeActivite").size();
+	if(nbEnregistrement < 10)
+		prefix = "TA00" ;
+	if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+		prefix = "TA0" ;
+	if (nbEnregistrement > 100) 
+		prefix = "TA" ;
+	this.typeActivite.setCodeTypeactivite(prefix+(nbEnregistrement+1));
+}
+
 	public void enregistrer(){
 		iservice.addObject(this.typeActivite);
 		annuler();
@@ -49,6 +62,7 @@ public class TypeActiviteControllers {
 		typeActivite.setLibelleTypeactivite(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 	}	
 	
 	public void selectionnerLigne() {

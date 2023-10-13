@@ -33,6 +33,19 @@ public class SousPrefectureController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
+	}
+	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("SousPrefecture").size();
+		if(nbEnregistrement < 10)
+			prefix = "SP00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "SP0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "SP" ;
+		this.sousPrefecture.setCodeSousPrefecture(prefix+(nbEnregistrement+1));
 	}
 	
 	public void enregistrer(){
@@ -53,6 +66,7 @@ public class SousPrefectureController {
 		sousPrefecture.setNomSousPrefecture(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 		
 	}
 	

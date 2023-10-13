@@ -15,7 +15,7 @@
 		<legend>Informations sur l'inscription</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{inscriptionContoller.inscription.codeInscription}" required="true"></p:inputText>	
+			<p:inputText id="input_code" value="#{inscriptionContoller.inscription.codeInscription}" readonly="true"></p:inputText>	
 			
 			<p:outputLabel for="input_date" value="Date d'inscription:"></p:outputLabel>
 			<p:calendar id="input_date" value="#{inscriptionContoller.inscription.dateInscription}" required="true" pattern="dd/MM/yyyy"></p:calendar>

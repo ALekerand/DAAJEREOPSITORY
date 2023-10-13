@@ -30,8 +30,20 @@ public class NatureProjetController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("NatureProjet").size();
+		if(nbEnregistrement < 10)
+			prefix = "NP00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "NP0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "NP" ;
+		this.natureProjet.setCodeNatureProjet(prefix+(nbEnregistrement+1));
+	}
 	
 	public void enregistrer(){
 		iservice.addObject(this.natureProjet);
@@ -50,6 +62,7 @@ public class NatureProjetController {
 		natureProjet.setLibelleNatureProjet(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 		
 	}
 	

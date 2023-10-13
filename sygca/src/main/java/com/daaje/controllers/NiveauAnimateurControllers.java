@@ -30,6 +30,19 @@ public class NiveauAnimateurControllers {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
+	}
+	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("NiveauAnimateur").size();
+		if(nbEnregistrement < 10)
+			prefix = "NIA00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "NIA" ;
+		if (nbEnregistrement > 100) 
+			prefix = "NIA" ;
+		this.niveauAnimateur.setCodeNiveau(prefix+(nbEnregistrement+1));
 	}
 	
 	public void enregistrer(){
@@ -49,6 +62,7 @@ public class NiveauAnimateurControllers {
 		niveauAnimateur.setNomNiveau(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 		
 	}
 	

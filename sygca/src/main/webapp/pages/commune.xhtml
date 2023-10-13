@@ -15,7 +15,7 @@
 		<legend>Informations sur la commune</legend>
 		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{communeController.commune.codeCommune}" required="true"></p:inputText>
+			<p:inputText id="input_code" value="#{communeController.commune.codeCommune}" readonly="true"></p:inputText>
 			
 			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
 			<p:inputText id="input_nom" value="#{communeController.commune.nomCommune}" required="true"></p:inputText>			    

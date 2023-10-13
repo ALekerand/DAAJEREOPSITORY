@@ -15,7 +15,7 @@
 		<legend>Informations sur le type d'activité</legend>		
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{typeActiviteControllers.typeActivite.codeTypeactivite}" required="true"></p:inputText>
+			<p:inputText id="input_code" value="#{typeActiviteControllers.typeActivite.codeTypeactivite}" readonly="true"></p:inputText>
 			
 			<p:outputLabel for="input_activite" value="Activité:"></p:outputLabel>
 			<p:inputText id="input_activite" value="#{typeActiviteControllers.typeActivite.libelleTypeactivite}" required="true"></p:inputText>

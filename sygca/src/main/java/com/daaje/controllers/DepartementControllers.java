@@ -33,6 +33,19 @@ public class DepartementControllers {
 @PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
+	}
+		
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Departement").size();
+		if(nbEnregistrement < 10)
+			prefix = "DEP00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "DEP0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "DEP" ;
+		this.departement.setCodeDepartement(prefix+(nbEnregistrement+1));
 	}
 		
 	public void enregistrer(){
@@ -53,6 +66,7 @@ public class DepartementControllers {
 		departement.setNomDepartement(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 		
 	public void selectionnerLigne() {

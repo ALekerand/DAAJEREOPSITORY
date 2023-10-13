@@ -15,7 +15,7 @@
 		<legend>Informations sur le niveau de formation</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{niveauFormationController.niveauFormation.codeNiveauFormation}" required="true"></p:inputText>
+			<p:inputText id="input_code" value="#{niveauFormationController.niveauFormation.codeNiveauFormation}" readonly="true"></p:inputText>
 			
 			<p:outputLabel for="input_formation" value="Niveau de formation:"></p:outputLabel>
 			<p:inputText id="input_formation" value="#{niveauFormationController.niveauFormation.libelleNiveauFormation}" required="true"></p:inputText>

@@ -15,7 +15,7 @@
 		<legend>Informations sur l'animateur</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{animateurContoller.animateur.codeAnimateur}" required="true"></p:inputText>
+			<p:inputText id="input_code" value="#{animateurContoller.animateur.codeAnimateur}" readonly="true"></p:inputText>
 			
 			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
 			<p:inputText id="input_nom" value="#{animateurContoller.animateur.nomAnimateur}" required="true"></p:inputText>

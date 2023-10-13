@@ -40,8 +40,20 @@ public class ServiceResponsableController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("ServiceResponsable").size();
+		if(nbEnregistrement < 10)
+			prefix = "SR00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "SR0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "SR" ;
+		this.serviceResponsable.setCodeService(prefix+(nbEnregistrement+1));
+	}
 	
 	public void enregistrer(){
 		serviceResponsable.setResponsable((Responsable) iservice.getObjectById(idResponsable, "Responsable"));
@@ -64,7 +76,7 @@ public class ServiceResponsableController {
 		serviceResponsable.setDateDepart(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
-		
+		genererCode();
 	}
 	
 	public void selectionnerLigne() {

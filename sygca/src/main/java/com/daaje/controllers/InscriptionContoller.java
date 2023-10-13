@@ -42,8 +42,20 @@ public class InscriptionContoller {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
 	}
 	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Inscription").size();
+		if(nbEnregistrement < 10)
+			prefix = "IN00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "IN0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "IN" ;
+		this.inscription.setCodeInscription(prefix+(nbEnregistrement+1));
+	}
 	
 	public void enregistrer(){
 		inscription.setApprenant((Apprenant) iservice.getObjectById(idApprenant, "Apprenant"));
@@ -66,7 +78,7 @@ public class InscriptionContoller {
 		inscription.setDateInscription(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
-		
+		genererCode();
 	}
 	
 	public void selectionnerLigne() {

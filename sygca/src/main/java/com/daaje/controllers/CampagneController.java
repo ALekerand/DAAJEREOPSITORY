@@ -30,6 +30,19 @@ public class CampagneController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+		genererCode();
+	}
+	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Campagne").size();
+		if(nbEnregistrement < 10)
+			prefix = "CAM00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "CAM0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "CAM" ;
+		this.campagne.setCodeCampagne(prefix+(nbEnregistrement+1));
 	}
 		
 	public void enregistrer(){
@@ -53,6 +66,7 @@ public class CampagneController {
 		campagne.setEtatCampagne(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		genererCode();
 		
 	}
 	
