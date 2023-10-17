@@ -1,5 +1,10 @@
 package com.daaje.controllers;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +16,7 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.panelgrid.PanelGrid;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -84,6 +90,9 @@ public class centreControllers {
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
 	private boolean skip;
 	
+	private UploadedFile fichier;
+	private String chemin = "C:\\SYGCA\\AUTORISATION";
+	
 	
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
@@ -113,6 +122,42 @@ public class centreControllers {
 			if (var.getEtatCampagne()== false) {
 				campagneEnCours = var;
 			}
+		}
+	}
+	
+	
+	public void upload() {
+		String extValidate;
+		if(getFichier() != null) {
+			String ext = getFichier().getFileName();
+			if(ext != null) {
+				extValidate = ext.substring(ext.indexOf(".")+1);
+			}else {
+				extValidate = "null";
+			}
+			if(extValidate.equals("docx") || extValidate.equals("pdf") || extValidate.equals("pptx") || extValidate.equals("xlsx")) {
+				try {
+					transfererFile(getFichier().getFileName(), getFichier().getInputstream());
+				}catch (IOException ex) {
+					System.out.println(ex);
+				}
+			}
+		}
+	}
+	
+	public void transfererFile(String fileName, InputStream in) {
+		try {
+			OutputStream out = new FileOutputStream(new File(chemin + fileName));
+			int reader = 0;
+			byte[] bytes = new byte[(int)getFichier().getSize()];
+			while ((reader = in.read(bytes))!= -1) {
+				out.write(bytes,0,reader);
+			}
+			in.close();
+			out.flush();
+			out.close();
+		}catch (IOException e) {
+			System.out.println(e);
 		}
 	}
 	
@@ -191,6 +236,8 @@ public class centreControllers {
 			centre.setNature((Nature) iservice.getObjectById(idNature, "Nature"));
 			centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
 			centre.setPromoteur(promoteur);
+			centre.setDroitOuvertureCentre(chemin);
+			upload();
 			iservice.addObject(this.centre);
 		
 			//Gestion de l'animateur
@@ -718,5 +765,13 @@ public class centreControllers {
 
 	public void setValue3(String value3) {
 		this.value3 = value3;
+	}
+
+	public UploadedFile getFichier() {
+		return fichier;
+	}
+
+	public void setFichier(UploadedFile fichier) {
+		this.fichier = fichier;
 	}
 }

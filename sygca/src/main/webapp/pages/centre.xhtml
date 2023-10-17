@@ -100,9 +100,6 @@
 			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
 			<p:inputText id="input_mail" value="#{centreControllers.centre.mailCentre}" required="true"></p:inputText>
 			
-			<p:outputLabel for="input_droit" value="Droit d'ouverture:"></p:outputLabel>
-			<p:inputText id="input_droit" ></p:inputText>
-			
 			<p:outputLabel for="cb_departement" value="Département:"/>
 			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
 			<p:ajax listener="#{centreControllers.chargerDrena}" event="change" process="@this"  update="cb_iep"></p:ajax>
@@ -149,6 +146,12 @@
 	       		<p:selectBooleanCheckbox value="#{centreControllers.value2}" itemLabel="Niveau 2"/>
 	       		<p:selectBooleanCheckbox value="#{centreControllers.value3}" itemLabel="Post Alphabétisation"/>
 	     	</h:panelGrid>
+	     	
+	     	<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel  value="Autorisation(PDF):"></p:outputLabel>
+			<p:fileUpload id="fichier" value="#{centreControllers.fichier}" mode="simple" skinSimple="true"> </p:fileUpload>
+            </h:panelGrid>
+	     	
 	     </fieldset>
 	    
 	   
@@ -208,7 +211,7 @@
 	    	
 	    	<p:toolbar >
 			<f:facet name="right">
-				<p:commandButton value="Enregistrer" actionListener="#{centreControllers.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Enregistrer" actionListener="#{centreControllers.enregistrer}" update=":form" ><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
 				<p:commandButton value="Modifier" actionListener="#{centreControllers.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 				<p:commandButton value="Annuler" process="@this" actionListener="#{centreControllers.annuler}" update="form"></p:commandButton>
 			</f:facet>

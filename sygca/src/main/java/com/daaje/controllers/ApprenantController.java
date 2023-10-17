@@ -18,6 +18,7 @@ import com.daaje.model.Campagne;
 import com.daaje.model.Centre;
 import com.daaje.model.Genre;
 import com.daaje.model.Inscription;
+import com.daaje.model.NiveauFormation;
 import com.daaje.service.Iservice;
 
 @Component
@@ -79,6 +80,7 @@ public class ApprenantController {
 		inscription.setCampagne(campagne);
 		inscription.setCentre((Centre) iservice.getObjectById(idCentre, "Centre"));
 		inscription.setDateInscription(new Date());
+		inscription.setNiveauFormation((NiveauFormation) iservice.getObjectById(1, "NiveauFormation"));
 		iservice.addObject(this.inscription);
 		
 		annuler();
@@ -99,6 +101,7 @@ public class ApprenantController {
 		apprenant.setTelephoneApprenant(null);
 		apprenant.setAdresseApprenant(null);
 		apprenant.setMailApprenant(null);
+		
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		genererCode();
