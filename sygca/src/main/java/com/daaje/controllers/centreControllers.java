@@ -14,39 +14,58 @@ import org.primefaces.event.FlowEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Activite;
 import com.daaje.model.Animateur;
+import com.daaje.model.Campagne;
 import com.daaje.model.Centre;
 import com.daaje.model.Drena;
+import com.daaje.model.Enseigner;
 import com.daaje.model.Genre;
 import com.daaje.model.Iep;
 import com.daaje.model.LocaliteDImplantation;
 import com.daaje.model.Ministere;
 import com.daaje.model.Nature;
 import com.daaje.model.NatureProjet;
+import com.daaje.model.NiveauAnimateur;
+import com.daaje.model.NiveauFormation;
 import com.daaje.model.Ong;
 import com.daaje.model.PersonnePhysique;
+import com.daaje.model.Profession;
 import com.daaje.model.Progamme;
 import com.daaje.model.Promoteur;
+import com.daaje.model.TypeActivite;
 import com.daaje.service.Iservice;
 
 @Component
 public class centreControllers {
 	@Autowired
-	public Iservice iservice;
+	private Iservice iservice;
+
 	public Centre centre = new Centre();
-	//public dep
 	private int idLocalite;
 	private int idIep;
 	private int idNature;
 	private int idNatureProjet;
 	private int idDepartement;
 	private int idDrena;
+	private int idNiveau;
+	private int idGenre;
+	private int idActivitePrimaire;
+	private int idActiviteSecondaire;
+	private String value1, value2, value3;
 	private Animateur animateur = new Animateur();
 	private Drena choosedDepartement = new Drena();
 	private Drena choosedDrena = new Drena();
 	private Centre selectedObject = new Centre();
 	private Promoteur promoteur = new Promoteur();
+	private Campagne campagneEnCours = new Campagne();
+	private TypeActivite typeActivitePrincipale = new TypeActivite();
+	private TypeActivite typeActiviteSecondaire = new TypeActivite();
 	private Genre genre = new Genre();
+	private Profession profession = new Profession();
+	private Activite activitePrimaire = new Activite();
+	private Activite activiteSecondaire = new Activite();
+	private Enseigner enseigner = new Enseigner();
 	private  Ong ong = new Ong();
 	private PersonnePhysique personnePhysique = new PersonnePhysique();
 	private Progamme programme = new Progamme();
@@ -59,6 +78,10 @@ public class centreControllers {
 	private List listDepartement = new ArrayList<>();
 	private List listNatureProjet = new ArrayList<>();
 	private List listNature = new ArrayList<>();
+	private List listActivite = new ArrayList<>();
+	private List listGenre = new ArrayList<>();
+	private List listNiveauAnimateur = new ArrayList<>();
+	private List<Campagne> campagnes = new ArrayList<Campagne>();
 	private boolean skip;
 	
 	
@@ -79,8 +102,19 @@ public class centreControllers {
 		this.pGridMini.setRendered(false);
 		this.pGridPh.setRendered(false);
 		this.pGridProg.setRendered(false);
+		recupererCampagneEncours();
+		genererCodePromoteur();
+		genererCodeAnimateur();
 	}
 	
+	public void recupererCampagneEncours() {
+		campagnes = iservice.getObjects("Campagne");
+		for (Campagne var : campagnes) {
+			if (var.getEtatCampagne()== false) {
+				campagneEnCours = var;
+			}
+		}
+	}
 	
 	public String onFlowProcess(FlowEvent event) {
         if (skip) {
@@ -104,51 +138,108 @@ public class centreControllers {
 		this.promoteur.setCodePromoteur(prefix+(nbEnregistrement+1));
 	}
 	
+	public void genererCodeAnimateur() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Animateur").size();
+		if(nbEnregistrement < 10)
+			prefix = "AN00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "AN0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "AN" ;
+		this.animateur.setCodeAnimateur(prefix+(nbEnregistrement+1));
+	}
+	
 	public void enregistrer(){
-		centre.setIep((Iep) iservice.getObjectById(idIep, "Iep"));
-		centre.setLocaliteDImplantation((LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation"));
-		centre.setNature((Nature) iservice.getObjectById(idNature, "Nature"));
-		centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
-		
-		//Enregistrer du promoteur
+		//Enregistrer le promoteur
 		 genererCodePromoteur();
-		iservice.addObject(this.promoteur);
+		 iservice.addObject(this.promoteur);
+		 
+			switch (type_promoteur){
+			case "personne_physique": {
+				personnePhysique.setPromoteur(promoteur);
+				personnePhysique.setCodePromoteur(promoteur.getCodePromoteur());
+				iservice.addObject(personnePhysique);
+				break;
+			}
+			
+			case "ong": {
+				ong.setPromoteur(promoteur);
+				ong.setCodePromoteur(promoteur.getCodePromoteur());
+				iservice.addObject(ong);
+				break;
+			}
+			
+			case "programme": {
+				programme.setPromoteur(promoteur);
+				programme.setCodePromoteur(promoteur.getCodePromoteur());
+				iservice.addObject(programme);
+				break;
+			}
+			
+			case "ministere": {
+				ministere.setPromoteur(promoteur);
+				ministere.setCodePromoteur(promoteur.getCodePromoteur());
+				iservice.addObject(ministere);
+				break;
+			}
+			}
+			
+			//Enregistrer le centre
+			centre.setIep((Iep) iservice.getObjectById(idIep, "Iep"));
+			centre.setLocaliteDImplantation((LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation"));
+			centre.setNature((Nature) iservice.getObjectById(idNature, "Nature"));
+			centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
+			centre.setPromoteur(promoteur);
+			iservice.addObject(this.centre);
 		
-		switch (type_promoteur) {
-		case "personne_physique": {
-			personnePhysique.setPromoteur(promoteur);
-			personnePhysique.setCodePromoteur(promoteur.getCodePromoteur());
-			iservice.addObject(personnePhysique);
-			break;
-		}
-		
-		case "ong": {
-			ong.setPromoteur(promoteur);
-			ong.setCodePromoteur(promoteur.getCodePromoteur());
-			iservice.addObject(ong);
-			break;
-		}
-		
-		case "programme": {
-			programme.setPromoteur(promoteur);
-			programme.setCodePromoteur(promoteur.getCodePromoteur());
-			iservice.addObject(programme);
-			break;
-		}
-		
-		
-		case "ministere": {
-			ministere.setPromoteur(promoteur);
-			ministere.setCodePromoteur(promoteur.getCodePromoteur());
-			iservice.addObject(ministere);
-			break;
-		}
-		
-		}
-
-		centre.setPromoteur(promoteur);
-		iservice.addObject(this.centre);
+			//Gestion de l'animateur
+			animateur.setGenre((Genre)iservice.getObjectById(idGenre, "Genre"));
+			animateur.setNiveauAnimateur((NiveauAnimateur) iservice.getObjectById(idNiveau, "NiveauAnimateur"));
+			iservice.addObject(animateur);
+			
+			//Gestion de la profession
+			profession.setActivite((Activite) iservice.getObjectById(idActivitePrimaire, "Activite"));
+			profession.setTypeActivite((TypeActivite) iservice.getObjectById(1, "TypeActivite"));
+			profession.setAnimateur(animateur);
+			iservice.addObject(profession);
+			if ((activiteSecondaire.getNomActivite()!= null) && (typeActiviteSecondaire.getLibelleTypeactivite() != null)) {
+			profession.setActivite((Activite) iservice.getObjectById(getIdActiviteSecondaire(), "Activite"));
+			profession.setTypeActivite((TypeActivite) iservice.getObjectById(2, "TypeActivite"));
+			profession.setAnimateur(animateur);
+			iservice.addObject(profession);
+			}
+			
+			
+			//Gestion de la table Enseigner
+			enseigner.setCampagne(campagneEnCours);
+			if (value1 !="") {
+				enseigner.setNiveauFormation((NiveauFormation) iservice.getObjectById(1, "NiveauFormation"));
+				enseigner.setAnimateur(animateur);
+				enseigner.setCampagne(campagneEnCours);
+				enseigner.setCentre(centre);
+				iservice.addObject(enseigner);
+			}
+			
+			if (value2 !="") {
+				enseigner.setNiveauFormation((NiveauFormation) iservice.getObjectById(2, "NiveauFormation"));
+				enseigner.setAnimateur(animateur);
+				enseigner.setCampagne(campagneEnCours);
+				enseigner.setCentre(centre);
+				iservice.addObject(enseigner);
+			}
+			
+			if (value3 !="") {
+				enseigner.setNiveauFormation((NiveauFormation) iservice.getObjectById(3, "NiveauFormation"));
+				enseigner.setAnimateur(animateur);
+				enseigner.setCampagne(campagneEnCours);
+				enseigner.setCentre(centre);
+				iservice.addObject(enseigner);
+			}
+			
 		annuler();
+		genererCodePromoteur();
+		genererCodeAnimateur();;
 		info("Enregistrement effectué");
 	}
 	
@@ -159,18 +250,48 @@ public class centreControllers {
 	}
 	
 	public void annuler() {
-		centre.setCodeCentre(null);
+		//Personne Physique
+		personnePhysique.setNomPersonne(null);
+		personnePhysique.setPrenomsPersonne(null);
+		personnePhysique.setTelephonePersonne(null);
+		personnePhysique.setMailPersonne(null);
+		//ONG
+		ong.setNomOng(null);
+		ong.setTelephoneOng(null);
+		ong.setMailOng(null);
+		//Ministère
+		ministere.setNomMinistere(null);
+		ministere.setTelephoneMinistere(null);
+		//Centre
+		centre.setNomCentre(null);
 		centre.setAbreviationNomCentre(null);
 		centre.setAdresseCentre(null);
+		centre.setTelephoneCentre(null);
+		centre.setMailCentre(null);
 		centre.setDroitOuvertureCentre(null);
-		centre.setIep(null);
+		//les combos
+		setIdDepartement(0);
+		setIdDrena(0);
+		setIdIep(0);
+		setIdLocalite(0);
+		setIdNatureProjet(0);
+		setIdNature(0);
+		setIdGenre(0);
+		setIdNiveau(0);
+		setIdActivitePrimaire(0);
+		setIdActiviteSecondaire(0);
+		//Animateur
+		animateur.setCodeAnimateur(null);
+		animateur.setNomAnimateur(null);
+		animateur.setPrenomAnimateur(null);
+		animateur.setAdresseAnimateur(null);
+		
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 	}
 	
 	
 	public void activiverChamp() {
-		System.out.println("===== Déclenchement de la méthode=====");
 		switch (type_promoteur) {
 		case "personne_physique": {
 			this.pGridOng.setRendered(false);
@@ -228,7 +349,7 @@ public class centreControllers {
 	
 
 	public List getListObject() {
-		return listObject = iservice.getObjects("NiveauAnimateur");
+		return listObject = iservice.getObjects("Centre");
 	}
 
 	public void setListObject(List listObject) {
@@ -468,8 +589,134 @@ public class centreControllers {
 	public void setAnimateur(Animateur animateur) {
 		this.animateur = animateur;
 	}
-	
-	
-	
-	
+
+
+	public List getListActivite() {
+		return listActivite = iservice.getObjects("Activite");
+	}
+
+
+	public void setListActivite(List listActivite) {
+		this.listActivite = listActivite;
+	}
+
+
+	public Activite getActiviteSecondaire() {
+		return activiteSecondaire;
+	}
+
+
+	public void setActiviteSecondaire(Activite activiteSecondaire) {
+		this.activiteSecondaire = activiteSecondaire;
+	}
+
+
+	public Activite getActivitePrimaire() {
+		return activitePrimaire;
+	}
+
+
+	public void setActivitePrimaire(Activite activitePrimaire) {
+		this.activitePrimaire = activitePrimaire;
+	}
+
+
+	public Genre getGenre() {
+		return genre;
+	}
+
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+
+
+	public List getListGenre() {
+		return listGenre = iservice.getObjects("Genre");
+	}
+
+
+	public void setListGenre(List listGenre) {
+		this.listGenre = listGenre;
+	}
+
+
+	public List getListNiveauAnimateur() {
+		return listNiveauAnimateur = iservice.getObjects("NiveauAnimateur");
+	}
+
+
+	public void setListNiveauAnimateur(List listNiveauAnimateur) {
+		this.listNiveauAnimateur = listNiveauAnimateur;
+	}
+
+
+	public int getIdNiveau() {
+		return idNiveau;
+	}
+
+
+	public void setIdNiveau(int idNiveau) {
+		this.idNiveau = idNiveau;
+	}
+
+
+	public int getIdActivitePrimaire() {
+		return idActivitePrimaire;
+	}
+
+
+	public void setIdActivitePrimaire(int idActivitePrimaire) {
+		this.idActivitePrimaire = idActivitePrimaire;
+	}
+
+
+	public int getIdActiviteSecondaire() {
+		return idActiviteSecondaire;
+	}
+
+
+	public void setIdActiviteSecondaire(int idActiviteSecondaire) {
+		this.idActiviteSecondaire = idActiviteSecondaire;
+	}
+
+
+	public int getIdGenre() {
+		return idGenre;
+	}
+
+
+	public void setIdGenre(int idGenre) {
+		this.idGenre = idGenre;
+	}
+
+
+	public String getValue1() {
+		return value1;
+	}
+
+
+	public void setValue1(String value1) {
+		this.value1 = value1;
+	}
+
+
+	public String getValue2() {
+		return value2;
+	}
+
+
+	public void setValue2(String value2) {
+		this.value2 = value2;
+	}
+
+
+	public String getValue3() {
+		return value3;
+	}
+
+
+	public void setValue3(String value3) {
+		this.value3 = value3;
+	}
 }

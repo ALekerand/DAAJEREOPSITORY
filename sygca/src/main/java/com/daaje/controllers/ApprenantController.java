@@ -1,6 +1,7 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,20 +14,28 @@ import org.springframework.stereotype.Component;
 
 import com.daaje.model.Activite;
 import com.daaje.model.Apprenant;
+import com.daaje.model.Campagne;
+import com.daaje.model.Centre;
 import com.daaje.model.Genre;
+import com.daaje.model.Inscription;
 import com.daaje.service.Iservice;
 
 @Component
 public class ApprenantController {
 	@Autowired
-	public Iservice iservice;
-	public int idGenre;
-	public int idActivite;
-	public Apprenant apprenant = new Apprenant();
-	public Apprenant selectedObject = new Apprenant();
-	public List listObject = new ArrayList();
-	public List<Activite> listActivite = new ArrayList<Activite>();
-	public List<Genre> listGenre = new ArrayList<Genre>();
+	private Iservice iservice;
+	private int idGenre;
+	private int idActivite;
+	private int idCentre;
+	private Apprenant apprenant = new Apprenant();
+	private Apprenant selectedObject = new Apprenant();
+	private Campagne campagne = new Campagne();
+	private Inscription inscription = new Inscription();
+	private List listObject = new ArrayList();
+	private List<Activite> listActivite = new ArrayList<Activite>();
+	private List<Genre> listGenre = new ArrayList<Genre>();
+	private List<Campagne> campagnes = new ArrayList<Campagne>();
+	private List<Centre> listCentre = new ArrayList<Centre>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -37,6 +46,16 @@ public class ApprenantController {
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
 		genererCode();
+		recupererCampagneEncours();
+	}
+	
+	public void recupererCampagneEncours() {
+		campagnes = iservice.getObjects("Campagne");
+		for (Campagne var : campagnes) {
+			if (var.getEtatCampagne()== false) {
+				campagne = var;
+			}
+		}
 	}
 	
 	public void genererCode() {
@@ -55,6 +74,13 @@ public class ApprenantController {
 		apprenant.setActivite((Activite) iservice.getObjectById(idActivite, "Activite"));
 		apprenant.setGenre((Genre) iservice.getObjectById(idGenre, "Genre"));
 		iservice.addObject(this.apprenant);
+		
+		inscription.setApprenant(apprenant);
+		inscription.setCampagne(campagne);
+		inscription.setCentre((Centre) iservice.getObjectById(idCentre, "Centre"));
+		inscription.setDateInscription(new Date());
+		iservice.addObject(this.inscription);
+		
 		annuler();
 		info("Enregistrement effectué");
 	}
@@ -170,6 +196,38 @@ public class ApprenantController {
 
 	public void setListGenre(List<Genre> listGenre) {
 		this.listGenre = listGenre;
+	}
+
+	public Campagne getCampagne() {
+		return campagne;
+	}
+
+	public void setCampagne(Campagne campagne) {
+		this.campagne = campagne;
+	}
+
+	public int getIdCentre() {
+		return idCentre;
+	}
+
+	public void setIdCentre(int idCentre) {
+		this.idCentre = idCentre;
+	}
+
+	public List<Centre> getListCentre() {
+		return listCentre = iservice.getObjects("Centre");
+	}
+
+	public void setListCentre(List<Centre> listCentre) {
+		this.listCentre = listCentre;
+	}
+
+	public Inscription getInscription() {
+		return inscription;
+	}
+
+	public void setInscription(Inscription inscription) {
+		this.inscription = inscription;
 	}
 
 }

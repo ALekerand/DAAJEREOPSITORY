@@ -65,7 +65,7 @@
 			
 			<p:outputLabel for="input_phone_min" value="Téléphone:"></p:outputLabel>
 			<p:inputText id="input_phone_min" ></p:inputText>
-	
+
 	    	</p:panelGrid>
 	    	
 	    </fieldset>
@@ -140,43 +140,85 @@
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listNature}" var="tata" itemLabel="#{tata.libelleNature}" itemValue="#{tata.idNature}"></f:selectItems>
 			</p:selectOneMenu>
+	    
 	    </h:panelGrid>
-	     
+	    
+	    	<h:panelGrid id="niveau_grid" columns="4" cellpadding="8">	
+	    	<h4>Niveau de formation:</h4>
+	       		<p:selectBooleanCheckbox value="#{centreControllers.value1}" itemLabel="Niveau 1"/>
+	       		<p:selectBooleanCheckbox value="#{centreControllers.value2}" itemLabel="Niveau 2"/>
+	       		<p:selectBooleanCheckbox value="#{centreControllers.value3}" itemLabel="Post Alphabétisation"/>
+	     	</h:panelGrid>
 	     </fieldset>
 	    
-	    
+	   
 	    </p:panel>
 			</p:tab>
 			
 			<p:tab id="animateur" title="Animateur">
+			<fieldset>
+			<legend> Informations sur l'animateur</legend>
+			<h:panelGrid id="info_animateur" columns="6" cellpadding="8">
+			<p:outputLabel for="input_code_anim" value="Code:"></p:outputLabel>
+			<p:inputText id="input_code_anim" value="#{centreControllers.animateur.codeAnimateur}" readonly="true"></p:inputText>
 			
-			<p:panelGrid id="info_animateur" columns="6" cellpadding="8">
 			<p:outputLabel for="input_nom_anim" value="Nom:"></p:outputLabel>
-			<p:inputText id="input_nom_anim" value="#{centreControllers.animateur.nomAnimateur}" ></p:inputText>
+			<p:inputText id="input_nom_anim" value="#{centreControllers.animateur.nomAnimateur}"></p:inputText>
 			
 			<p:outputLabel for="input_prenom_anim" value="Prenoms:"></p:outputLabel>
 			<p:inputText id="input_prenom_anim" value="#{centreControllers.animateur.prenomAnimateur}" ></p:inputText>
+				    
+		   	<p:outputLabel for="date_nais_anim" value="Date:"></p:outputLabel>
+			<p:calendar id="date_nais_anim" locale="fr" navigator="true" pattern="dd/MM/yyyy"/>
+			
+			<p:outputLabel for="input_telephone_anim" value="Téléphone:"></p:outputLabel>
+			<p:inputText id="input_telephone_anim" value="#{centreControllers.animateur.telephoneAnimateur}" ></p:inputText>
 			
 			<p:outputLabel for="input_adresse_anim" value="Adresse:"></p:outputLabel>
 			<p:inputText id="input_adresse_anim" value="#{centreControllers.animateur.adresseAnimateur}" ></p:inputText>
 			
+			<p:outputLabel for="cb_genre" value="Genre: "/>
+			<p:selectOneMenu id="cb_genre" required="true" value="#{centreControllers.idGenre}">
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+			<f:selectItems value="#{centreControllers.listGenre}" var="tata" itemLabel="#{tata.libelleGenre}" itemValue="#{tata.idGenre}"></f:selectItems>
+			</p:selectOneMenu>
 			
-			<p:outputLabel for="input_mail_anim" value="Mail:"></p:outputLabel>
-			<p:inputText id="input_mail_anim" value="#{centreControllers.animateur.mailAnimateur}"></p:inputText>
-	    	</p:panelGrid>
+			<p:outputLabel for="cb_niveau" value="Niveau:"/>
+			<p:selectOneMenu id="cb_niveau" required="true" value="#{centreControllers.idNiveau}">
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+			<f:selectItems value="#{centreControllers.listNiveauAnimateur}" var="tata" itemLabel="#{tata.nomNiveau}" itemValue="#{tata.idNiveau}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_activite_principale" value="Activité principale: "/>
+			<p:selectOneMenu id="cb_activite_principale" required="true" value="#{centreControllers.idActivitePrimaire}">
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+			<f:selectItems value="#{centreControllers.listActivite}" var="tata" itemLabel="#{tata.nomActivite}" itemValue="#{tata.idActivite}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_activite_secondaire" value="Activité secondaire: "/>
+			<p:selectOneMenu id="cb_activite_secondaire" value="#{centreControllers.idActiviteSecondaire}">
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+			<f:selectItems value="#{centreControllers.listActivite}" var="tata" itemLabel="#{tata.nomActivite}" itemValue="#{tata.idActivite}"></f:selectItems>
+			</p:selectOneMenu>
+	    	
+	    	</h:panelGrid>
+	    	</fieldset>
+	   
+	   	<br></br> 
+	    	
+	    	<p:toolbar >
+			<f:facet name="right">
+				<p:commandButton value="Enregistrer" actionListener="#{centreControllers.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{centreControllers.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{centreControllers.annuler}" update="form"></p:commandButton>
+			</f:facet>
+		</p:toolbar>
+	   
 			</p:tab>
 			
 		</p:wizard>
 		
-		
-	    
-	    <p:toolbar >
-			<f:facet name="left">
-				<p:commandButton value="Enregistrer" actionListener="#{centreControllers.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{centreControllers.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-				<h:commandButton value="Annuler" process="@this" actionListener="#{centreControllers.annuler}" update="form"></h:commandButton>
-			</f:facet>
-		</p:toolbar>
+		<br></br>
 	    
 	    <p:dataTable id="data" var="toto" value="#{centreControllers.listObject}" selectionMode="single" selection="#{centreControllers.selectedObject}" rowKey="#{toto.idCentre}"       
 	     rows="5" paginatorPosition="bottom" paginator="true"
@@ -198,14 +240,6 @@
 	    	
 	    	<p:column headerText="Téléphone">
 	    		<h:outputText value="#{toto.telephoneCentre}" />
-	    	</p:column>
-	    	
-	    	<p:column headerText="Département">
-	    		<h:outputText value="#{toto.departement.nomDepartement}" />
-	    	</p:column>
-	    	
-	    	<p:column headerText="Commune">
-	    		<h:outputText value="#{toto.commune.nomCommune}" />
 	    	</p:column>
 	    	
 	    	<p:column headerText="Localité">
