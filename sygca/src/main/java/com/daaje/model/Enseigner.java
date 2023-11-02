@@ -1,8 +1,6 @@
 package com.daaje.model;
-// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
+// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +9,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,28 +22,33 @@ public class Enseigner implements java.io.Serializable {
 	private Animateur animateur;
 	private Campagne campagne;
 	private Centre centre;
+	private Langue langue;
 	private NiveauFormation niveauFormation;
+	private TypeAlphabetisation typeAlphabetisation;
 	private String codeEnseigner;
-	private Set<Centre> centres = new HashSet<Centre>(0);
 
 	public Enseigner() {
 	}
 
-	public Enseigner(Animateur animateur, Campagne campagne, Centre centre, NiveauFormation niveauFormation) {
+	public Enseigner(Animateur animateur, Campagne campagne, Centre centre, Langue langue,
+			NiveauFormation niveauFormation, TypeAlphabetisation typeAlphabetisation) {
 		this.animateur = animateur;
 		this.campagne = campagne;
 		this.centre = centre;
+		this.langue = langue;
 		this.niveauFormation = niveauFormation;
+		this.typeAlphabetisation = typeAlphabetisation;
 	}
 
-	public Enseigner(Animateur animateur, Campagne campagne, Centre centre, NiveauFormation niveauFormation,
-			String codeEnseigner, Set<Centre> centres) {
+	public Enseigner(Animateur animateur, Campagne campagne, Centre centre, Langue langue,
+			NiveauFormation niveauFormation, TypeAlphabetisation typeAlphabetisation, String codeEnseigner) {
 		this.animateur = animateur;
 		this.campagne = campagne;
 		this.centre = centre;
+		this.langue = langue;
 		this.niveauFormation = niveauFormation;
+		this.typeAlphabetisation = typeAlphabetisation;
 		this.codeEnseigner = codeEnseigner;
-		this.centres = centres;
 	}
 
 	@Id
@@ -92,6 +94,16 @@ public class Enseigner implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_LANGUE", nullable = false)
+	public Langue getLangue() {
+		return this.langue;
+	}
+
+	public void setLangue(Langue langue) {
+		this.langue = langue;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_NIVEAU_FORMATION", nullable = false)
 	public NiveauFormation getNiveauFormation() {
 		return this.niveauFormation;
@@ -101,6 +113,16 @@ public class Enseigner implements java.io.Serializable {
 		this.niveauFormation = niveauFormation;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_TYPE_ALPHA", nullable = false)
+	public TypeAlphabetisation getTypeAlphabetisation() {
+		return this.typeAlphabetisation;
+	}
+
+	public void setTypeAlphabetisation(TypeAlphabetisation typeAlphabetisation) {
+		this.typeAlphabetisation = typeAlphabetisation;
+	}
+
 	@Column(name = "CODE_ENSEIGNER", length = 10)
 	public String getCodeEnseigner() {
 		return this.codeEnseigner;
@@ -108,15 +130,6 @@ public class Enseigner implements java.io.Serializable {
 
 	public void setCodeEnseigner(String codeEnseigner) {
 		this.codeEnseigner = codeEnseigner;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "enseigner")
-	public Set<Centre> getCentres() {
-		return this.centres;
-	}
-
-	public void setCentres(Set<Centre> centres) {
-		this.centres = centres;
 	}
 
 }

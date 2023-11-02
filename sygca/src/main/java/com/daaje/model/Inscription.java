@@ -1,9 +1,7 @@
 package com.daaje.model;
-// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
+// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +10,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,29 +28,24 @@ public class Inscription implements java.io.Serializable {
 	private NiveauFormation niveauFormation;
 	private String codeInscription;
 	private Date dateInscription;
-	private Boolean clotureInscription;
-	private Set<Centre> centres = new HashSet<Centre>(0);
 
 	public Inscription() {
 	}
 
-	public Inscription(Apprenant apprenant, Campagne campagne, Centre centre, NiveauFormation niveauFormation) {
+	public Inscription(Apprenant apprenant, Campagne campagne, Centre centre) {
 		this.apprenant = apprenant;
 		this.campagne = campagne;
 		this.centre = centre;
-		this.niveauFormation = niveauFormation;
 	}
 
 	public Inscription(Apprenant apprenant, Campagne campagne, Centre centre, NiveauFormation niveauFormation,
-			String codeInscription, Date dateInscription, Boolean clotureInscription, Set<Centre> centres) {
+			String codeInscription, Date dateInscription) {
 		this.apprenant = apprenant;
 		this.campagne = campagne;
 		this.centre = centre;
 		this.niveauFormation = niveauFormation;
 		this.codeInscription = codeInscription;
 		this.dateInscription = dateInscription;
-		this.clotureInscription = clotureInscription;
-		this.centres = centres;
 	}
 
 	@Id
@@ -99,7 +91,7 @@ public class Inscription implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_NIVEAU_FORMATION", nullable = false)
+	@JoinColumn(name = "ID_NIVEAU_FORMATION")
 	public NiveauFormation getNiveauFormation() {
 		return this.niveauFormation;
 	}
@@ -125,24 +117,6 @@ public class Inscription implements java.io.Serializable {
 
 	public void setDateInscription(Date dateInscription) {
 		this.dateInscription = dateInscription;
-	}
-
-	@Column(name = "CLOTURE_INSCRIPTION")
-	public Boolean getClotureInscription() {
-		return this.clotureInscription;
-	}
-
-	public void setClotureInscription(Boolean clotureInscription) {
-		this.clotureInscription = clotureInscription;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "inscription")
-	public Set<Centre> getCentres() {
-		return this.centres;
-	}
-
-	public void setCentres(Set<Centre> centres) {
-		this.centres = centres;
 	}
 
 }

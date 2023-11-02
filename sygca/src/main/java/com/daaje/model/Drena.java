@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
+// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,21 +24,21 @@ public class Drena implements java.io.Serializable {
 	private String nomDrena;
 	private String mailDrena;
 	private String telephone;
-	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
 	private Set<Iep> ieps = new HashSet<Iep>(0);
+	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
 	private Set<Departement> departements = new HashSet<Departement>(0);
 
 	public Drena() {
 	}
 
-	public Drena(String codeDrena, String nomDrena, String mailDrena, String telephone,
-			Set<ServiceResponsable> serviceResponsables, Set<Iep> ieps, Set<Departement> departements) {
+	public Drena(String codeDrena, String nomDrena, String mailDrena, String telephone, Set<Iep> ieps,
+			Set<ServiceResponsable> serviceResponsables, Set<Departement> departements) {
 		this.codeDrena = codeDrena;
 		this.nomDrena = nomDrena;
 		this.mailDrena = mailDrena;
 		this.telephone = telephone;
-		this.serviceResponsables = serviceResponsables;
 		this.ieps = ieps;
+		this.serviceResponsables = serviceResponsables;
 		this.departements = departements;
 	}
 
@@ -91,21 +91,21 @@ public class Drena implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "drena")
-	public Set<ServiceResponsable> getServiceResponsables() {
-		return this.serviceResponsables;
-	}
-
-	public void setServiceResponsables(Set<ServiceResponsable> serviceResponsables) {
-		this.serviceResponsables = serviceResponsables;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "drena")
 	public Set<Iep> getIeps() {
 		return this.ieps;
 	}
 
 	public void setIeps(Set<Iep> ieps) {
 		this.ieps = ieps;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "drena")
+	public Set<ServiceResponsable> getServiceResponsables() {
+		return this.serviceResponsables;
+	}
+
+	public void setServiceResponsables(Set<ServiceResponsable> serviceResponsables) {
+		this.serviceResponsables = serviceResponsables;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "drena")

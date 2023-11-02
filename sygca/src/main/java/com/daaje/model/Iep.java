@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
+// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,8 +27,9 @@ public class Iep implements java.io.Serializable {
 	private String nomIep;
 	private String mailIep;
 	private String telephoneIep;
-	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
 	private Set<Centre> centres = new HashSet<Centre>(0);
+	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
+	private Set<Ecole> ecoles = new HashSet<Ecole>(0);
 
 	public Iep() {
 	}
@@ -37,15 +38,16 @@ public class Iep implements java.io.Serializable {
 		this.drena = drena;
 	}
 
-	public Iep(Drena drena, String codeIep, String nomIep, String mailIep, String telephoneIep,
-			Set<ServiceResponsable> serviceResponsables, Set<Centre> centres) {
+	public Iep(Drena drena, String codeIep, String nomIep, String mailIep, String telephoneIep, Set<Centre> centres,
+			Set<ServiceResponsable> serviceResponsables, Set<Ecole> ecoles) {
 		this.drena = drena;
 		this.codeIep = codeIep;
 		this.nomIep = nomIep;
 		this.mailIep = mailIep;
 		this.telephoneIep = telephoneIep;
-		this.serviceResponsables = serviceResponsables;
 		this.centres = centres;
+		this.serviceResponsables = serviceResponsables;
+		this.ecoles = ecoles;
 	}
 
 	@Id
@@ -107,6 +109,15 @@ public class Iep implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iep")
+	public Set<Centre> getCentres() {
+		return this.centres;
+	}
+
+	public void setCentres(Set<Centre> centres) {
+		this.centres = centres;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iep")
 	public Set<ServiceResponsable> getServiceResponsables() {
 		return this.serviceResponsables;
 	}
@@ -116,12 +127,12 @@ public class Iep implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iep")
-	public Set<Centre> getCentres() {
-		return this.centres;
+	public Set<Ecole> getEcoles() {
+		return this.ecoles;
 	}
 
-	public void setCentres(Set<Centre> centres) {
-		this.centres = centres;
+	public void setEcoles(Set<Ecole> ecoles) {
+		this.ecoles = ecoles;
 	}
 
 }

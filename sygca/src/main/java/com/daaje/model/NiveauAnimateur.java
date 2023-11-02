@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
+// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;

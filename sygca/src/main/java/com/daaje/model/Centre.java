@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 25 sept. 2023, 12:18:35 by Hibernate Tools 4.3.6.Final
+// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,9 +22,8 @@ import javax.persistence.Table;
 public class Centre implements java.io.Serializable {
 
 	private Integer idCentre;
-	private Enseigner enseigner;
+	private Ecole ecole;
 	private Iep iep;
-	private Inscription inscription;
 	private LocaliteDImplantation localiteDImplantation;
 	private Nature nature;
 	private NatureProjet natureProjet;
@@ -36,8 +35,9 @@ public class Centre implements java.io.Serializable {
 	private String adresseCentre;
 	private String mailCentre;
 	private String droitOuvertureCentre;
-	private Set<Inscription> inscriptions = new HashSet<Inscription>(0);
+	private Boolean permanent;
 	private Set<Enseigner> enseigners = new HashSet<Enseigner>(0);
+	private Set<Inscription> inscriptions = new HashSet<Inscription>(0);
 
 	public Centre() {
 	}
@@ -51,13 +51,12 @@ public class Centre implements java.io.Serializable {
 		this.promoteur = promoteur;
 	}
 
-	public Centre(Enseigner enseigner, Iep iep, Inscription inscription, LocaliteDImplantation localiteDImplantation,
-			Nature nature, NatureProjet natureProjet, Promoteur promoteur, String codeCentre, String nomCentre,
+	public Centre(Ecole ecole, Iep iep, LocaliteDImplantation localiteDImplantation, Nature nature,
+			NatureProjet natureProjet, Promoteur promoteur, String codeCentre, String nomCentre,
 			String abreviationNomCentre, String telephoneCentre, String adresseCentre, String mailCentre,
-			String droitOuvertureCentre, Set<Inscription> inscriptions, Set<Enseigner> enseigners) {
-		this.enseigner = enseigner;
+			String droitOuvertureCentre, Boolean permanent, Set<Enseigner> enseigners, Set<Inscription> inscriptions) {
+		this.ecole = ecole;
 		this.iep = iep;
-		this.inscription = inscription;
 		this.localiteDImplantation = localiteDImplantation;
 		this.nature = nature;
 		this.natureProjet = natureProjet;
@@ -69,8 +68,9 @@ public class Centre implements java.io.Serializable {
 		this.adresseCentre = adresseCentre;
 		this.mailCentre = mailCentre;
 		this.droitOuvertureCentre = droitOuvertureCentre;
-		this.inscriptions = inscriptions;
+		this.permanent = permanent;
 		this.enseigners = enseigners;
+		this.inscriptions = inscriptions;
 	}
 
 	@Id
@@ -86,13 +86,13 @@ public class Centre implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_ENSEIGNER")
-	public Enseigner getEnseigner() {
-		return this.enseigner;
+	@JoinColumn(name = "ID_ECOLE")
+	public Ecole getEcole() {
+		return this.ecole;
 	}
 
-	public void setEnseigner(Enseigner enseigner) {
-		this.enseigner = enseigner;
+	public void setEcole(Ecole ecole) {
+		this.ecole = ecole;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -106,16 +106,6 @@ public class Centre implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_INSCRIPTION")
-	public Inscription getInscription() {
-		return this.inscription;
-	}
-
-	public void setInscription(Inscription inscription) {
-		this.inscription = inscription;
-	}
-
-	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_LOCALITE", nullable = false)
 	public LocaliteDImplantation getLocaliteDImplantation() {
 		return this.localiteDImplantation;
@@ -125,7 +115,7 @@ public class Centre implements java.io.Serializable {
 		this.localiteDImplantation = localiteDImplantation;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_NATURE", nullable = false)
 	public Nature getNature() {
 		return this.nature;
@@ -135,7 +125,7 @@ public class Centre implements java.io.Serializable {
 		this.nature = nature;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_NATURE_PROJET", nullable = false)
 	public NatureProjet getNatureProjet() {
 		return this.natureProjet;
@@ -145,7 +135,7 @@ public class Centre implements java.io.Serializable {
 		this.natureProjet = natureProjet;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_PROMOTEUR", nullable = false)
 	public Promoteur getPromoteur() {
 		return this.promoteur;
@@ -218,13 +208,13 @@ public class Centre implements java.io.Serializable {
 		this.droitOuvertureCentre = droitOuvertureCentre;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "centre")
-	public Set<Inscription> getInscriptions() {
-		return this.inscriptions;
+	@Column(name = "PERMANENT")
+	public Boolean getPermanent() {
+		return this.permanent;
 	}
 
-	public void setInscriptions(Set<Inscription> inscriptions) {
-		this.inscriptions = inscriptions;
+	public void setPermanent(Boolean permanent) {
+		this.permanent = permanent;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "centre")
@@ -234,6 +224,15 @@ public class Centre implements java.io.Serializable {
 
 	public void setEnseigners(Set<Enseigner> enseigners) {
 		this.enseigners = enseigners;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "centre")
+	public Set<Inscription> getInscriptions() {
+		return this.inscriptions;
+	}
+
+	public void setInscriptions(Set<Inscription> inscriptions) {
+		this.inscriptions = inscriptions;
 	}
 
 }
