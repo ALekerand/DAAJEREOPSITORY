@@ -37,7 +37,8 @@ import com.daaje.model.NiveauFormation;
 import com.daaje.model.Ong;
 import com.daaje.model.PersonnePhysique;
 import com.daaje.model.Profession;
-import com.daaje.model.Progamme;
+import com.daaje.model.Programme;
+import com.daaje.model.Programme;
 import com.daaje.model.Promoteur;
 import com.daaje.model.TypeActivite;
 import com.daaje.service.Iservice;
@@ -74,7 +75,7 @@ public class centreControllers {
 	private Enseigner enseigner = new Enseigner();
 	private  Ong ong = new Ong();
 	private PersonnePhysique personnePhysique = new PersonnePhysique();
-	private Progamme programme = new Progamme();
+	private Programme programme = new Programme();
 	private Ministere ministere = new Ministere();
 	private String type_promoteur;
 	private List listObject = new ArrayList<>();
@@ -609,11 +610,11 @@ public class centreControllers {
 		this.ministere = ministere;
 	}
 
-	public Progamme getProgramme() {
+	public Programme getProgramme() {
 		return programme;
 	}
 
-	public void setProgramme(Progamme programme) {
+	public void setProgramme(Programme programme) {
 		this.programme = programme;
 	}
 

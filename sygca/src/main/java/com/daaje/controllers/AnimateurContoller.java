@@ -70,7 +70,7 @@ public class AnimateurContoller {
 		animateur.setCodeAnimateur(null);
 		animateur.setNomAnimateur(null);
 		animateur.setPrenomAnimateur(null);
-		animateur.setAgeAnimateur(null);
+		animateur.setDateNaisAnimateur(null);
 		animateur.setTelephoneAnimateur(null);
 		animateur.setAdresseAnimateur(null);
 		animateur.setMailAnimateur(null);
