@@ -11,15 +11,15 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.daaje.model.NiveauAnimateur;
+import com.daaje.model.TypeAlphabetisation;
 import com.daaje.service.Iservice;
 
 @Component
-public class NiveauAnimateurControllers {
+public class TypeAlphabetisationController {
 	@Autowired
 	public Iservice iservice;
-	public NiveauAnimateur niveauAnimateur = new NiveauAnimateur();
-	public NiveauAnimateur selectedObject = new NiveauAnimateur();
+	public TypeAlphabetisation typeAlphabetisation = new TypeAlphabetisation();
+	public TypeAlphabetisation selectedObject = new TypeAlphabetisation();
 	public List listObject = new ArrayList();
 	
 //Controle des composants
@@ -35,31 +35,31 @@ public class NiveauAnimateurControllers {
 	
 	public void genererCode() {
 		String prefix="";
-		int nbEnregistrement = this.iservice.getObjects("NiveauAnimateur").size();
+		int nbEnregistrement = this.iservice.getObjects("TypeAlphabetisation").size();
 		if(nbEnregistrement < 10)
-			prefix = "NIA00" ;
+			prefix = "ALPHA00" ;
 		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
-			prefix = "NIA0" ;
+			prefix = "ALPHA0" ;
 		if (nbEnregistrement > 100) 
-			prefix = "NIA" ;
-		this.niveauAnimateur.setCodeNiveau(prefix+(nbEnregistrement+1));
+			prefix = "ALPHA" ;
+		this.typeAlphabetisation.setCodeTypeAlpha(prefix+(nbEnregistrement+1));
 	}
 	
 	public void enregistrer(){
-		iservice.addObject(this.niveauAnimateur);
+		iservice.addObject(this.typeAlphabetisation);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(niveauAnimateur);
+		iservice.updateObject(typeAlphabetisation);
 		annuler();
 		info("Modification effectuée");
 	}
 	
 	public void annuler() {
-		niveauAnimateur.setCodeNiveau(null);
-		niveauAnimateur.setNomNiveau(null);
+		typeAlphabetisation.setCodeTypeAlpha(null);
+		typeAlphabetisation.setLibTypeAlpha(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		genererCode();
@@ -67,7 +67,7 @@ public class NiveauAnimateurControllers {
 	}
 	
 	public void selectionnerLigne() {
-		niveauAnimateur = selectedObject;
+		typeAlphabetisation = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
 	}
@@ -77,27 +77,27 @@ public class NiveauAnimateurControllers {
 	}
 		
 //Getters and setters
-	public NiveauAnimateur getNiveauAnimateur() {
-		return niveauAnimateur;
+	public TypeAlphabetisation getTypeAlphabetisation() {
+		return typeAlphabetisation;
 	}
 
-	public void setNiveauAnimateur(NiveauAnimateur niveauAnimateur) {
-		this.niveauAnimateur = niveauAnimateur;
+	public void setTypeAlphabetisation(TypeAlphabetisation typeAlphabetisation) {
+		this.typeAlphabetisation = typeAlphabetisation;
 	}
 
 	public List getListObject() {
-		return listObject = iservice.getObjects("NiveauAnimateur");
+		return listObject = iservice.getObjects("TypeAlphabetisation");
 	}
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
 	}
 
-	public NiveauAnimateur getSelectedObject() {
+	public TypeAlphabetisation getSelectedObject() {
 		return selectedObject;
 	}
 
-	public void setSelectedObject(NiveauAnimateur selectedObject) {
+	public void setSelectedObject(TypeAlphabetisation selectedObject) {
 		this.selectedObject = selectedObject;
 	}
 

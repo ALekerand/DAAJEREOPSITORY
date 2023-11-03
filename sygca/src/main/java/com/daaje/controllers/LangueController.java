@@ -11,15 +11,15 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.daaje.model.NiveauAnimateur;
+import com.daaje.model.Langue;
 import com.daaje.service.Iservice;
 
 @Component
-public class NiveauAnimateurControllers {
+public class LangueController {
 	@Autowired
 	public Iservice iservice;
-	public NiveauAnimateur niveauAnimateur = new NiveauAnimateur();
-	public NiveauAnimateur selectedObject = new NiveauAnimateur();
+	public Langue langue = new Langue();
+	public Langue selectedObject = new Langue();
 	public List listObject = new ArrayList();
 	
 //Controle des composants
@@ -35,31 +35,31 @@ public class NiveauAnimateurControllers {
 	
 	public void genererCode() {
 		String prefix="";
-		int nbEnregistrement = this.iservice.getObjects("NiveauAnimateur").size();
+		int nbEnregistrement = this.iservice.getObjects("Langue").size();
 		if(nbEnregistrement < 10)
-			prefix = "NIA00" ;
+			prefix = "LANG00" ;
 		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
-			prefix = "NIA0" ;
+			prefix = "LANG0" ;
 		if (nbEnregistrement > 100) 
-			prefix = "NIA" ;
-		this.niveauAnimateur.setCodeNiveau(prefix+(nbEnregistrement+1));
+			prefix = "LANG" ;
+		this.langue.setCodeLangue(prefix+(nbEnregistrement+1));
 	}
 	
 	public void enregistrer(){
-		iservice.addObject(this.niveauAnimateur);
+		iservice.addObject(this.langue);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(niveauAnimateur);
+		iservice.updateObject(langue);
 		annuler();
 		info("Modification effectuée");
 	}
 	
 	public void annuler() {
-		niveauAnimateur.setCodeNiveau(null);
-		niveauAnimateur.setNomNiveau(null);
+		langue.setCodeLangue(null);
+		langue.setLibLangue(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		genererCode();
@@ -67,7 +67,7 @@ public class NiveauAnimateurControllers {
 	}
 	
 	public void selectionnerLigne() {
-		niveauAnimateur = selectedObject;
+		langue = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
 	}
@@ -77,27 +77,27 @@ public class NiveauAnimateurControllers {
 	}
 		
 //Getters and setters
-	public NiveauAnimateur getNiveauAnimateur() {
-		return niveauAnimateur;
+	public Langue getLangue() {
+		return langue;
 	}
 
-	public void setNiveauAnimateur(NiveauAnimateur niveauAnimateur) {
-		this.niveauAnimateur = niveauAnimateur;
+	public void setLangue(Langue langue) {
+		this.langue = langue;
 	}
 
 	public List getListObject() {
-		return listObject = iservice.getObjects("NiveauAnimateur");
+		return listObject = iservice.getObjects("Langue");
 	}
 
 	public void setListObject(List listObject) {
 		this.listObject = listObject;
 	}
 
-	public NiveauAnimateur getSelectedObject() {
+	public Langue getSelectedObject() {
 		return selectedObject;
 	}
 
-	public void setSelectedObject(NiveauAnimateur selectedObject) {
+	public void setSelectedObject(Langue selectedObject) {
 		this.selectedObject = selectedObject;
 	}
 

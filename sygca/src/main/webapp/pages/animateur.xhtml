@@ -23,8 +23,8 @@
 			<p:outputLabel for="input_prenom" value="Prénom:"></p:outputLabel>
 			<p:inputText id="input_prenom" value="#{animateurContoller.animateur.prenomAnimateur}" required="true"></p:inputText>
 			
-			<p:outputLabel for="input_age" value="Age:"></p:outputLabel>
-			<p:inputText id="input_age" value="#{animateurContoller.animateur.ageAnimateur}" required="true"></p:inputText>
+			<p:outputLabel for="input_age" value="Date de naissance:"></p:outputLabel>
+			<p:calendar id="input_age" value="#{animateurContoller.animateur.dateNaisAnimateur}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_tel" value="Contact:"></p:outputLabel>
 			<p:inputText id="input_tel" value="#{animateurContoller.animateur.telephoneAnimateur}" required="true"></p:inputText>
@@ -89,8 +89,10 @@
 	    		<h:outputText value="#{toto.prenomAnimateur}" />	
 	    	</p:column>	
 	    	
-	    	<p:column headerText="Age">
-	    		<h:outputText value="#{toto.ageAnimateur}" />
+	    	<p:column headerText="Date de naissance">
+	    		<h:outputText value="#{toto.dateNaisAnimateur}" >
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    		</h:outputText>
 	    	</p:column>
 	    	
 	    	<p:column headerText="Téléphone">
