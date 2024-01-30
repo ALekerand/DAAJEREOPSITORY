@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
+// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +28,7 @@ public class Centre implements java.io.Serializable {
 	private Nature nature;
 	private NatureProjet natureProjet;
 	private Promoteur promoteur;
+	private Responsable responsable;
 	private String codeCentre;
 	private String nomCentre;
 	private String abreviationNomCentre;
@@ -43,24 +44,27 @@ public class Centre implements java.io.Serializable {
 	}
 
 	public Centre(Iep iep, LocaliteDImplantation localiteDImplantation, Nature nature, NatureProjet natureProjet,
-			Promoteur promoteur) {
+			Promoteur promoteur, Responsable responsable) {
 		this.iep = iep;
 		this.localiteDImplantation = localiteDImplantation;
 		this.nature = nature;
 		this.natureProjet = natureProjet;
 		this.promoteur = promoteur;
+		this.responsable = responsable;
 	}
 
 	public Centre(Ecole ecole, Iep iep, LocaliteDImplantation localiteDImplantation, Nature nature,
-			NatureProjet natureProjet, Promoteur promoteur, String codeCentre, String nomCentre,
-			String abreviationNomCentre, String telephoneCentre, String adresseCentre, String mailCentre,
-			String droitOuvertureCentre, Boolean permanent, Set<Enseigner> enseigners, Set<Inscription> inscriptions) {
+			NatureProjet natureProjet, Promoteur promoteur, Responsable responsable, String codeCentre,
+			String nomCentre, String abreviationNomCentre, String telephoneCentre, String adresseCentre,
+			String mailCentre, String droitOuvertureCentre, Boolean permanent, Set<Enseigner> enseigners,
+			Set<Inscription> inscriptions) {
 		this.ecole = ecole;
 		this.iep = iep;
 		this.localiteDImplantation = localiteDImplantation;
 		this.nature = nature;
 		this.natureProjet = natureProjet;
 		this.promoteur = promoteur;
+		this.responsable = responsable;
 		this.codeCentre = codeCentre;
 		this.nomCentre = nomCentre;
 		this.abreviationNomCentre = abreviationNomCentre;
@@ -143,6 +147,16 @@ public class Centre implements java.io.Serializable {
 
 	public void setPromoteur(Promoteur promoteur) {
 		this.promoteur = promoteur;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ID_RESPONSABLE", nullable = false)
+	public Responsable getResponsable() {
+		return this.responsable;
+	}
+
+	public void setResponsable(Responsable responsable) {
+		this.responsable = responsable;
 	}
 
 	@Column(name = "CODE_CENTRE", length = 10)

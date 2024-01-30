@@ -30,6 +30,7 @@
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_drena" value="DRENA:" />
+			<p:ajax listener="#{serviceResponsableController.chargerIep}" event="change" update="cb_iep" process="@this"></p:ajax>
             <p:selectOneMenu id="cb_drena" value="#{serviceResponsableController.idDrena}">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{serviceResponsableController.listDrena}" var="toto" itemLabel="#{toto.nomDrena}" itemValue="#{toto.idDrena}" />

@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
+// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -26,6 +26,7 @@ public class Responsable implements java.io.Serializable {
 
 	private Integer idResponsable;
 	private Fonction fonction;
+	private UserAuthentication userAuthentication;
 	private String matriculeResponsable;
 	private String nomResponsable;
 	private String prenomResponsable;
@@ -35,19 +36,26 @@ public class Responsable implements java.io.Serializable {
 	private Date dateRetraite;
 	private Date dateNaissance;
 	private String mailResponsable;
+	private Boolean membreDc;
 	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
+	private Set<UserAuthentication> userAuthentications = new HashSet<UserAuthentication>(0);
+	private Set<Centre> centres = new HashSet<Centre>(0);
 
 	public Responsable() {
 	}
 
-	public Responsable(Fonction fonction) {
+	public Responsable(Fonction fonction, UserAuthentication userAuthentication) {
 		this.fonction = fonction;
+		this.userAuthentication = userAuthentication;
 	}
 
-	public Responsable(Fonction fonction, String matriculeResponsable, String nomResponsable, String prenomResponsable,
-			String telephoneResponsable, String adresseResponsable, Date datePriseService, Date dateRetraite,
-			Date dateNaissance, String mailResponsable, Set<ServiceResponsable> serviceResponsables) {
+	public Responsable(Fonction fonction, UserAuthentication userAuthentication, String matriculeResponsable,
+			String nomResponsable, String prenomResponsable, String telephoneResponsable, String adresseResponsable,
+			Date datePriseService, Date dateRetraite, Date dateNaissance, String mailResponsable, Boolean membreDc,
+			Set<ServiceResponsable> serviceResponsables, Set<UserAuthentication> userAuthentications,
+			Set<Centre> centres) {
 		this.fonction = fonction;
+		this.userAuthentication = userAuthentication;
 		this.matriculeResponsable = matriculeResponsable;
 		this.nomResponsable = nomResponsable;
 		this.prenomResponsable = prenomResponsable;
@@ -57,7 +65,10 @@ public class Responsable implements java.io.Serializable {
 		this.dateRetraite = dateRetraite;
 		this.dateNaissance = dateNaissance;
 		this.mailResponsable = mailResponsable;
+		this.membreDc = membreDc;
 		this.serviceResponsables = serviceResponsables;
+		this.userAuthentications = userAuthentications;
+		this.centres = centres;
 	}
 
 	@Id
@@ -80,6 +91,16 @@ public class Responsable implements java.io.Serializable {
 
 	public void setFonction(Fonction fonction) {
 		this.fonction = fonction;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER_ID", nullable = false)
+	public UserAuthentication getUserAuthentication() {
+		return this.userAuthentication;
+	}
+
+	public void setUserAuthentication(UserAuthentication userAuthentication) {
+		this.userAuthentication = userAuthentication;
 	}
 
 	@Column(name = "MATRICULE_RESPONSABLE", length = 10)
@@ -166,6 +187,15 @@ public class Responsable implements java.io.Serializable {
 		this.mailResponsable = mailResponsable;
 	}
 
+	@Column(name = "MEMBRE_DC")
+	public Boolean getMembreDc() {
+		return this.membreDc;
+	}
+
+	public void setMembreDc(Boolean membreDc) {
+		this.membreDc = membreDc;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "responsable")
 	public Set<ServiceResponsable> getServiceResponsables() {
 		return this.serviceResponsables;
@@ -173,6 +203,24 @@ public class Responsable implements java.io.Serializable {
 
 	public void setServiceResponsables(Set<ServiceResponsable> serviceResponsables) {
 		this.serviceResponsables = serviceResponsables;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "responsable")
+	public Set<UserAuthentication> getUserAuthentications() {
+		return this.userAuthentications;
+	}
+
+	public void setUserAuthentications(Set<UserAuthentication> userAuthentications) {
+		this.userAuthentications = userAuthentications;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "responsable")
+	public Set<Centre> getCentres() {
+		return this.centres;
+	}
+
+	public void setCentres(Set<Centre> centres) {
+		this.centres = centres;
 	}
 
 }

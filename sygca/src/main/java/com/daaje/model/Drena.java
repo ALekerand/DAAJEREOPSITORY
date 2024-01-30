@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
+// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,23 +23,23 @@ public class Drena implements java.io.Serializable {
 	private String codeDrena;
 	private String nomDrena;
 	private String mailDrena;
-	private String telephone;
+	private String telephoneDrena;
 	private Set<Iep> ieps = new HashSet<Iep>(0);
 	private Set<ServiceResponsable> serviceResponsables = new HashSet<ServiceResponsable>(0);
-	private Set<Departement> departements = new HashSet<Departement>(0);
+	private Set<DrenaDepartement> drenaDepartements = new HashSet<DrenaDepartement>(0);
 
 	public Drena() {
 	}
 
-	public Drena(String codeDrena, String nomDrena, String mailDrena, String telephone, Set<Iep> ieps,
-			Set<ServiceResponsable> serviceResponsables, Set<Departement> departements) {
+	public Drena(String codeDrena, String nomDrena, String mailDrena, String telephoneDrena, Set<Iep> ieps,
+			Set<ServiceResponsable> serviceResponsables, Set<DrenaDepartement> drenaDepartements) {
 		this.codeDrena = codeDrena;
 		this.nomDrena = nomDrena;
 		this.mailDrena = mailDrena;
-		this.telephone = telephone;
+		this.telephoneDrena = telephoneDrena;
 		this.ieps = ieps;
 		this.serviceResponsables = serviceResponsables;
-		this.departements = departements;
+		this.drenaDepartements = drenaDepartements;
 	}
 
 	@Id
@@ -81,13 +81,13 @@ public class Drena implements java.io.Serializable {
 		this.mailDrena = mailDrena;
 	}
 
-	@Column(name = "TELEPHONE", length = 15)
-	public String getTelephone() {
-		return this.telephone;
+	@Column(name = "TELEPHONE_DRENA", length = 15)
+	public String getTelephoneDrena() {
+		return this.telephoneDrena;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setTelephoneDrena(String telephoneDrena) {
+		this.telephoneDrena = telephoneDrena;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "drena")
@@ -109,12 +109,12 @@ public class Drena implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "drena")
-	public Set<Departement> getDepartements() {
-		return this.departements;
+	public Set<DrenaDepartement> getDrenaDepartements() {
+		return this.drenaDepartements;
 	}
 
-	public void setDepartements(Set<Departement> departements) {
-		this.departements = departements;
+	public void setDrenaDepartements(Set<DrenaDepartement> drenaDepartements) {
+		this.drenaDepartements = drenaDepartements;
 	}
 
 }

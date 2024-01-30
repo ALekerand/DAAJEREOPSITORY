@@ -29,14 +29,14 @@
 			<p:outputLabel for="input_adresse" value="Adresse:"></p:outputLabel>
 			<p:inputText id="input_adresse" value="#{responsableController.responsable.adresseResponsable}" required="true"></p:inputText>
 			
+			<p:outputLabel for="input_naissance" value="Date naissance:"></p:outputLabel>
+			<p:calendar id="input_naissance" value="#{responsableController.responsable.dateNaissance}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+			
 			<p:outputLabel for="input_dservice" value="Date prise de service:"></p:outputLabel>
 			<p:calendar id="input_dservice" value="#{responsableController.responsable.datePriseService}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_dretraite" value="Date retraite:"></p:outputLabel>
 			<p:calendar id="input_dretraite" value="#{responsableController.responsable.dateRetraite}" required="true" pattern="dd/MM/yyyy"></p:calendar>
-			
-			<p:outputLabel for="input_naissance" value="Date naissance:"></p:outputLabel>
-			<p:calendar id="input_naissance" value="#{responsableController.responsable.dateNaissance}" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
 			<p:inputText id="input_mail" value="#{responsableController.responsable.mailResponsable}" required="true"></p:inputText>																				
@@ -47,8 +47,35 @@
             <f:selectItems value="#{responsableController.listFonction}" var="toto" itemLabel="#{toto.libelleFonction}" itemValue="#{toto.idFonction}" />
 			</p:selectOneMenu>
 			
+			
+			<p:outputLabel for="mbr_dc" value="Membre DC:"></p:outputLabel>																				
+        	<p:selectBooleanCheckbox id="mbr_dc" value="#{responsableController.responsable.membreDc}"/>
+			
 	    </h:panelGrid>
 	    </fieldset>
+	 
+	    <br />
+	    
+	    <fieldset>
+ 	<legend>DETAILS DES DROITS</legend>		
+	<h:panelGrid columns="4" cellpadding="10">
+
+	<p:outputLabel for="input_login" value="Login:"></p:outputLabel>
+	<p:inputText id="input_login" value="#{responsableController.userAuthentication.username}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+	
+	
+	<p:outputLabel for="input_mdp" value="Password:"></p:outputLabel>
+	<p:inputText id="input_mdp" value="#{responsableController.userAuthentication.password}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+	
+	
+	<p:outputLabel value="Profil utilisateur:"/>					
+	<p:selectOneRadio id="rd1" value="#{responsableController.userRole}" layout="grid" columns="4" unselectable="false" >
+		<f:selectItem itemLabel="Adminitrateur" itemValue="ROLE_ADMIN"></f:selectItem>
+		<f:selectItem itemLabel="Utilistaeur standard" itemValue="ROLE_UTILISATAEUR"></f:selectItem>
+	</p:selectOneRadio>
+</h:panelGrid>
+</fieldset>
+	    
 	    </p:panel>
 	    
 	    <br />
@@ -71,7 +98,7 @@
 	    
 	    <p:ajax event="rowSelect" process="@this" listener="#{responsableController.selectionnerLigne}" update="form"></p:ajax>
 	    	<f:facet name="header">
-                Liste des responsables
+                Liste des acteurs (Utilisateurs)
             </f:facet>	
 	    	<p:column headerText="Matricule">
 	    		<h:outputText value="#{toto.matriculeResponsable}" />

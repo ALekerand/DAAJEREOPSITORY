@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
+// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import javax.persistence.Column;

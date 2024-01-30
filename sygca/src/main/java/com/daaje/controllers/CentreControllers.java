@@ -25,6 +25,7 @@ import com.daaje.model.Animateur;
 import com.daaje.model.Campagne;
 import com.daaje.model.Centre;
 import com.daaje.model.Drena;
+import com.daaje.model.Ecole;
 import com.daaje.model.Enseigner;
 import com.daaje.model.Genre;
 import com.daaje.model.Iep;
@@ -41,12 +42,15 @@ import com.daaje.model.Programme;
 import com.daaje.model.Programme;
 import com.daaje.model.Promoteur;
 import com.daaje.model.TypeActivite;
+import com.daaje.requetes.RequeteEcole;
 import com.daaje.service.Iservice;
 
 @Component
-public class centreControllers {
+public class CentreControllers {
 	@Autowired
 	private Iservice iservice;
+	@Autowired
+	RequeteEcole requeteEcole;
 
 	public Centre centre = new Centre();
 	private int idLocalite;
@@ -57,6 +61,7 @@ public class centreControllers {
 	private int idDrena;
 	private int idNiveau;
 	private int idGenre;
+	private int idEcole;
 	private int idActivitePrimaire;
 	private int idActiviteSecondaire;
 	private String value1, value2, value3;
@@ -88,8 +93,10 @@ public class centreControllers {
 	private List listActivite = new ArrayList<>();
 	private List listGenre = new ArrayList<>();
 	private List listNiveauAnimateur = new ArrayList<>();
+	private List listEcole = new ArrayList<>();
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
 	private boolean skip;
+	private String etatPermanence;
 	
 	private UploadedFile fichier;
 	private String chemin = "C:\\SYGCA\\AUTORISATION";
@@ -104,7 +111,7 @@ public class centreControllers {
 	private PanelGrid pGridMini = new PanelGrid();
 	private PanelGrid pGridProg = new PanelGrid();
 		
-//Methodes
+	//Methodes
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
@@ -238,6 +245,14 @@ public class centreControllers {
 			centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
 			centre.setPromoteur(promoteur);
 			centre.setDroitOuvertureCentre(chemin);
+			
+				//Gestion de la permanence du centre
+			if (etatPermanence.equals("OUI")) {
+				centre.setPermanent(true);
+			}else {
+				centre.setPermanent(false);
+			}
+			
 			upload();
 			iservice.addObject(this.centre);
 		
@@ -257,7 +272,6 @@ public class centreControllers {
 			profession.setAnimateur(animateur);
 			iservice.addObject(profession);
 			}
-			
 			
 			//Gestion de la table Enseigner
 			enseigner.setCampagne(campagneEnCours);
@@ -774,5 +788,29 @@ public class centreControllers {
 
 	public void setFichier(UploadedFile fichier) {
 		this.fichier = fichier;
+	}
+
+	public String getEtatPermanence() {
+		return etatPermanence;
+	}
+
+	public void setEtatPermanence(String etatPermanence) {
+		this.etatPermanence = etatPermanence;
+	}
+
+	public List getListEcole() {
+		return listEcole = requeteEcole.recupEcoleParIEP(idIep); 
+	}
+
+	public void setListEcole(List listEcole) {
+		this.listEcole = listEcole;
+	}
+
+	public int getIdEcole() {
+		return idEcole;
+	}
+
+	public void setIdEcole(int idEcole) {
+		this.idEcole = idEcole;
 	}
 }

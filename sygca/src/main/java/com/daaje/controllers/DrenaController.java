@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,16 +13,21 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Departement;
 import com.daaje.model.Drena;
+import com.daaje.model.DrenaDepartement;
 import com.daaje.service.Iservice;
+import com.daaje.service.Service;
 
 @Component
 public class DrenaController {
 	@Autowired
-	public Iservice iservice;
-	public Drena drena = new Drena();
-	public Drena selectedObject = new Drena();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+	private Drena drena = new Drena();
+	private Drena selectedObject = new Drena();
+	private List listObject = new ArrayList();
+	private List<Departement> listeDepartement;
+	private List<Departement> selectedDepartements;
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -47,6 +54,13 @@ public class DrenaController {
 	
 	public void enregistrer(){
 		iservice.addObject(this.drena);
+		for (Object obDepartement : selectedDepartements) {
+			DrenaDepartement drenaDepartement = new DrenaDepartement();
+			drenaDepartement.setDrena(drena);
+			drenaDepartement.setDepartement((Departement) obDepartement);
+			iservice.addObject(drenaDepartement);
+		}
+		selectedDepartements.clear();
 		annuler();
 		info("Enregistrement effectué");
 	}
@@ -61,6 +75,7 @@ public class DrenaController {
 		drena.setCodeDrena(null);
 		drena.setNomDrena(null);
 		drena.setMailDrena(null);
+		drena.setTelephoneDrena(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		genererCode();
@@ -111,6 +126,30 @@ public class DrenaController {
 		}
 		public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 			this.cmdBEnregistrer = cmdBEnregistrer;
+		}
+
+		public List<Departement> getSelectedDepartements() {
+			return selectedDepartements;
+		}
+
+		public void setSelectedDepartements(List<Departement> selectedDepartements) {
+			this.selectedDepartements = selectedDepartements;
+		}
+
+		public List<Departement> getListeDepartement() {
+			listeDepartement = iservice.getObjects("Departement");
+			Collections.sort(listeDepartement, new Comparator<Departement>() {
+		        @Override
+		        public int compare(Departement ob1, Departement ob2){
+		 
+		            return  ob1.getNomDepartement().compareTo(ob2.getNomDepartement());
+		        }
+		    });
+			return listeDepartement;
+		}
+
+		public void setListeDepartement(List<Departement> listeDepartement) {
+			this.listeDepartement = listeDepartement;
 		}
 
 }

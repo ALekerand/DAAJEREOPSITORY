@@ -1,4 +1,7 @@
-	* Le champs date_retour a été retiré de la table RETOUR puis remise dans celle de DEMANDE 
+
+ - Attribut code_responsable est ajouté dans la table esponsable
+ - membre_dc 
+ 
 	
 	
 	

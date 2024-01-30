@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>SYGESTOCK</title>
+		<title>SYGCA</title>
 		
 		<link rel="stylesheet" type="text/css" href="resource/static/css/bootstrap.css"></link>
 		<link rel="stylesheet" type="text/css" href="resource/static/css/app.css"></link>
@@ -21,7 +21,7 @@
 					<div class="login-form">
 						<!-- <c:url var="loginUrl" value="/login" /> -->
 						<form action="j_spring_security_check" method="post" class="form-horizontal">
-							<div class="form-actions" align="center" style="color: blue" ><h2>SYGESTOCK</h2></div>
+							<div class="form-actions" align="center" style="color: blue" ><h2>SYGCA</h2></div>
 							<div class="input-group input-sm">
 								<label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
 								<input type="text" class="form-control" id="username" name='j_username' placeholder="Entrer le login" required>

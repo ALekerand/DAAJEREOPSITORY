@@ -60,7 +60,7 @@ public class NiveauFormationController {
 	public void annuler() {
 		niveauFormation.setCodeNiveauFormation(null);
 		niveauFormation.setLibelleNiveauFormation(null);
-		niveauFormation.setTrimestre(null);
+	//	niveauFormation.setTrimestre(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		genererCode();		

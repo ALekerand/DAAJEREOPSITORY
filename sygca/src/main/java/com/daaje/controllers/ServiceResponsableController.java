@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.daaje.model.Departement;
 import com.daaje.model.Drena;
 import com.daaje.model.ServiceResponsable;
+import com.daaje.requetes.RequeteIEP;
 import com.daaje.model.Iep;
 import com.daaje.model.Responsable;
 import com.daaje.service.Iservice;
@@ -21,16 +22,21 @@ import com.daaje.service.Iservice;
 @Component
 public class ServiceResponsableController {
 	@Autowired
-	public Iservice iservice;
-	public int idResponsable;
-	public int idDrena;
-	public int idIep;
-	public ServiceResponsable serviceResponsable = new ServiceResponsable();
-	public ServiceResponsable selectedObject = new ServiceResponsable();
-	public List listObject = new ArrayList();
-	public List<Responsable> listResponsable = new ArrayList<Responsable>();
-	public List<Drena> listDrena = new ArrayList<Drena>();
-	public List<Iep> listIep = new ArrayList<Iep>();
+	private Iservice iservice;
+	
+	@Autowired
+	private RequeteIEP requeteIEP;
+	
+	
+	private int idResponsable;
+	private int idDrena;
+	private int idIep;
+	private ServiceResponsable serviceResponsable = new ServiceResponsable();
+	private ServiceResponsable selectedObject = new ServiceResponsable();
+	private List listObject = new ArrayList();
+	private List<Responsable> listResponsable = new ArrayList<Responsable>();
+	private List<Drena> listDrena = new ArrayList<Drena>();
+	private List<Iep> listIep = new ArrayList<Iep>();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -83,6 +89,11 @@ public class ServiceResponsableController {
 		serviceResponsable = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
+	}
+	
+	
+	public void chargerIep(){
+		listIep = requeteIEP.recupEcoleParIEP(idDrena);
 	}
 	
 	public void info(String message){
@@ -184,7 +195,7 @@ public class ServiceResponsableController {
 
 
 	public List<Iep> getListIep() {
-		return listIep = iservice.getObjects("Iep");
+		return listIep;
 	}
 
 

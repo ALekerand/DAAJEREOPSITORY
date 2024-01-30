@@ -27,7 +27,7 @@
         </p:selectOneRadio>
         
         
-			<p:panelGrid id="info_ong" columns="6" cellpadding="8" binding="#{centreControllers.pGridOng}">
+			<p:panelGrid id="info_ong" columns="6" cellpadding="8" binding="#{centreControllers.pGridOng}" >
 			<p:outputLabel for="input_nom_ong" value="Nom ONG:"></p:outputLabel>
 			<p:inputText id="input_nom_ong" value="#{centreControllers.ong.nomOng}" ></p:inputText>
 			
@@ -71,8 +71,6 @@
 	    </fieldset>
 		
 		
-		
-	    
 	    </p:panel>
 			</p:tab>
 			
@@ -137,6 +135,19 @@
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listNature}" var="tata" itemLabel="#{tata.libelleNature}" itemValue="#{tata.idNature}"></f:selectItems>
 			</p:selectOneMenu>
+			
+			<h5 class="mt-0">Centre permanent:</h5>
+        	<p:selectOneRadio id="perm" value="#{centreControllers.etatPermanence}">
+            <f:selectItem itemLabel="Non" itemValue="NON"/>
+            <f:selectItem itemLabel="Oui" itemValue="OUI"/>
+            </p:selectOneRadio>
+            
+            
+            <p:outputLabel for="cb_ecole" value="Ecole:"/>
+			<p:selectOneMenu id="cb_ecole" required="true" value="#{centreControllers.idEcole}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listEcole}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
+			</p:selectOneMenu>
 	    
 	    </h:panelGrid>
 	    
@@ -145,6 +156,13 @@
 	       		<p:selectBooleanCheckbox value="#{centreControllers.value1}" itemLabel="Niveau 1"/>
 	       		<p:selectBooleanCheckbox value="#{centreControllers.value2}" itemLabel="Niveau 2"/>
 	       		<p:selectBooleanCheckbox value="#{centreControllers.value3}" itemLabel="Post Alphabétisation"/>
+	       		
+	       		<p:outputLabel for="cb_perm_centre" value="Permanent:"/>
+	       		<p:selectOneMenu id="cb_perm_centre" required="true" value="#{centreControllers.idNature}">
+				<f:selectItem itemLabel="Selectionnez" itemValue="" />
+				<f:selectItems value="#{centreControllers.listNature}" var="tata" itemLabel="#{tata.libelleNature}" itemValue="#{tata.idNature}"></f:selectItems>
+				</p:selectOneMenu>
+	       		
 	     	</h:panelGrid>
 	     	
 	     	<h:panelGrid columns="2" cellpadding="5">
@@ -157,6 +175,11 @@
 	   
 	    </p:panel>
 			</p:tab>
+			
+				<p:tab id="promoteur1" title="Promoteur">
+            		<p:panel header="NIVEAUX ALPHABETISATION">
+            		</p:panel>
+            	</p:tab>
 			
 			<p:tab id="animateur" title="Animateur">
 			<fieldset>

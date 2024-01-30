@@ -19,7 +19,8 @@ import com.daaje.service.Iservice;
 public class DepartementControllers {
 	@Autowired
 	public Iservice iservice;
-	public int idDrena;
+	
+	//public int idDrena;
 	public Departement departement = new Departement();
 	public Departement selectedObject = new Departement();
 	public List listObject = new ArrayList();
@@ -49,10 +50,10 @@ public class DepartementControllers {
 	}
 		
 	public void enregistrer(){
-		departement.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
+		//departement.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
 		iservice.addObject(this.departement);
 		annuler();
-			info("Enregistrement effectué");
+		info("Enregistrement effectué");
 	}
 		
 	public void modifier() {
@@ -105,13 +106,11 @@ public class DepartementControllers {
 		this.departement = departement;
 	}
 
-	public int getIdDrena() {
-		return idDrena;
-	}
-
-	public void setIdDrena(int idDrena) {
-		this.idDrena = idDrena;
-	}
+	/*
+	 * public int getIdDrena() { return idDrena; }
+	 * 
+	 * public void setIdDrena(int idDrena) { this.idDrena = idDrena; }
+	 */
 
 	public List<Drena> getListDrena() {
 		return listDrena = iservice.getObjects("Drena");

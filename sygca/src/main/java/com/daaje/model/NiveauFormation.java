@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
+// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,18 +22,16 @@ public class NiveauFormation implements java.io.Serializable {
 	private Integer idNiveauFormation;
 	private String codeNiveauFormation;
 	private String libelleNiveauFormation;
-	private String trimestre;
 	private Set<Inscription> inscriptions = new HashSet<Inscription>(0);
 	private Set<Enseigner> enseigners = new HashSet<Enseigner>(0);
 
 	public NiveauFormation() {
 	}
 
-	public NiveauFormation(String codeNiveauFormation, String libelleNiveauFormation, String trimestre,
-			Set<Inscription> inscriptions, Set<Enseigner> enseigners) {
+	public NiveauFormation(String codeNiveauFormation, String libelleNiveauFormation, Set<Inscription> inscriptions,
+			Set<Enseigner> enseigners) {
 		this.codeNiveauFormation = codeNiveauFormation;
 		this.libelleNiveauFormation = libelleNiveauFormation;
-		this.trimestre = trimestre;
 		this.inscriptions = inscriptions;
 		this.enseigners = enseigners;
 	}
@@ -66,15 +64,6 @@ public class NiveauFormation implements java.io.Serializable {
 
 	public void setLibelleNiveauFormation(String libelleNiveauFormation) {
 		this.libelleNiveauFormation = libelleNiveauFormation;
-	}
-
-	@Column(name = "TRIMESTRE", length = 15)
-	public String getTrimestre() {
-		return this.trimestre;
-	}
-
-	public void setTrimestre(String trimestre) {
-		this.trimestre = trimestre;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "niveauFormation")

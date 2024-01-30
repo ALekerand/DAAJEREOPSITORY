@@ -13,17 +13,24 @@ import org.springframework.stereotype.Component;
 
 import com.daaje.model.Fonction;
 import com.daaje.model.Responsable;
+import com.daaje.model.UserAuthentication;
+import com.daaje.model.UserAuthorization;
 import com.daaje.service.Iservice;
 
 @Component
 public class ResponsableController {
 	@Autowired
-	public Iservice iservice;
-	public int idFonction;
-	public Responsable responsable = new Responsable();
-	public Responsable selectedObject = new Responsable();
-	public List listObject = new ArrayList();
-	public List<Fonction> listFonction = new ArrayList<Fonction>();
+	private Iservice iservice;
+	private int idFonction;
+	private Responsable responsable = new Responsable();
+	private Responsable selectedObject = new Responsable();
+	private List listObject = new ArrayList();
+	private List<Fonction> listFonction = new ArrayList<Fonction>();
+	private UserAuthentication userAuthentication = new UserAuthentication();
+	private UserAuthorization userAuthorization = new UserAuthorization() ;
+	private String userRole;
+	//private	boolean valueDC;
+	
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -37,7 +44,22 @@ public class ResponsableController {
 		
 	public void enregistrer(){
 		responsable.setFonction((Fonction) iservice.getObjectById(idFonction, "Fonction"));
+		
+		//Enregistrer les parametres de connection
+		this.userAuthorization.setRole(this.userRole);
+		this.iservice.addObject(this.userAuthorization);
+		
+		this.iservice.addObject(this.userAuthentication);
+		
+		this.userAuthorization.setUserAuthentication(userAuthentication);
+		this.iservice.updateObject(this.userAuthorization);
+		
+		this.responsable.setUserAuthentication(this.userAuthentication);
 		iservice.addObject(this.responsable);
+		
+		this.userAuthentication.setResponsable(responsable);
+		this.iservice.updateObject(userAuthentication);
+		
 		annuler();
 		info("Enregistrement effectué");
 	}
@@ -59,8 +81,8 @@ public class ResponsableController {
 		responsable.setDateNaissance(null);
 		responsable.setMailResponsable(null);		
 		cmdBEnregistrer.setDisabled(false);
+		setIdFonction(0);
 		cmdBModifier.setDisabled(true);
-		
 	}
 	
 	public void selectionnerLigne() {
@@ -134,4 +156,33 @@ public class ResponsableController {
 		this.idFonction = idFonction;
 	}
 
+	public UserAuthentication getUserAuthentication() {
+		return userAuthentication;
+	}
+
+	public void setUserAuthentication(UserAuthentication userAuthentication) {
+		this.userAuthentication = userAuthentication;
+	}
+
+	public String getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+	
+	public UserAuthorization getUserAuthorization() {
+		return userAuthorization;
+	}
+
+	public void setUserAuthorization(UserAuthorization userAuthorization) {
+		this.userAuthorization = userAuthorization;
+	}
+
+	/*
+	 * public boolean isValueDC() { return valueDC; }
+	 * 
+	 * public void setValueDC(boolean valueDC) { this.valueDC = valueDC; }
+	 */
 }

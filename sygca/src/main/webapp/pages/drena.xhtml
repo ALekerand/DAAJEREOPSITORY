@@ -13,17 +13,37 @@
 		<p:panel header="Enregistrement des DRENA">
 		<fieldset>
 		<legend>Informations du DRENA</legend>
-		<h:panelGrid columns="6" cellpadding="8">		
-			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{drenaController.drena.codeDrena}" readonly="true"></p:inputText>
-			
-			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
-			<p:inputText id="input_nom" value="#{drenaController.drena.nomDrena}" required="true"></p:inputText>
-			
-			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
-			<p:inputText id="input_mail" value="#{drenaController.drena.mailDrena}" required="true"></p:inputText>
-				
-	    </h:panelGrid>
+		
+	    <table>
+			<tr>
+				<td width="70%">
+					<h:panelGrid columns="4" cellpadding="8">		
+					<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+					<p:inputText id="input_code" value="#{drenaController.drena.codeDrena}" readonly="true"></p:inputText>
+					
+					<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
+					<p:inputText id="input_nom" value="#{drenaController.drena.nomDrena}" required="true"></p:inputText>
+		
+					<p:outputLabel for="input_tel" value="Telephone:"></p:outputLabel>
+					<p:inputText id="input_tel" value="#{drenaController.drena.telephoneDrena}" required="true"></p:inputText>
+		
+					<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
+					<p:inputText id="input_mail" value="#{drenaController.drena.mailDrena}" required="true"></p:inputText>
+		  			</h:panelGrid>
+				</td>
+							
+				<td width="30%">
+        <p:dataTable id="checkboxDT" var="var" value="#{drenaController.listeDepartement}"
+                     selection="#{drenaController.selectedDepartements}" rowKey="#{var.idDepartement}"
+                     style="margin-bottom:0" paginator="true" rows="10" paginatorPosition="bottom" selectionPageOnly="false" rowSelectMode="none">
+            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+            <p:column headerText="Liste des départements">
+                <h:outputText value="#{var.nomDepartement}"/>
+            </p:column>
+        </p:dataTable>
+				</td>
+			</tr>
+		</table>
 	    </fieldset>
 	    </p:panel>
 	    

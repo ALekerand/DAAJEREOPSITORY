@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 2 nov. 2023, 15:04:15 by Hibernate Tools 4.3.6.Final
+// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,8 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,24 +20,20 @@ import javax.persistence.Table;
 public class Departement implements java.io.Serializable {
 
 	private Integer idDepartement;
-	private Drena drena;
 	private String codeDepartement;
 	private String nomDepartement;
 	private Set<SousPrefecture> sousPrefectures = new HashSet<SousPrefecture>(0);
+	private Set<DrenaDepartement> drenaDepartements = new HashSet<DrenaDepartement>(0);
 
 	public Departement() {
 	}
 
-	public Departement(Drena drena) {
-		this.drena = drena;
-	}
-
-	public Departement(Drena drena, String codeDepartement, String nomDepartement,
-			Set<SousPrefecture> sousPrefectures) {
-		this.drena = drena;
+	public Departement(String codeDepartement, String nomDepartement, Set<SousPrefecture> sousPrefectures,
+			Set<DrenaDepartement> drenaDepartements) {
 		this.codeDepartement = codeDepartement;
 		this.nomDepartement = nomDepartement;
 		this.sousPrefectures = sousPrefectures;
+		this.drenaDepartements = drenaDepartements;
 	}
 
 	@Id
@@ -52,16 +46,6 @@ public class Departement implements java.io.Serializable {
 
 	public void setIdDepartement(Integer idDepartement) {
 		this.idDepartement = idDepartement;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_DRENA", nullable = false)
-	public Drena getDrena() {
-		return this.drena;
-	}
-
-	public void setDrena(Drena drena) {
-		this.drena = drena;
 	}
 
 	@Column(name = "CODE_DEPARTEMENT", length = 10)
@@ -89,6 +73,15 @@ public class Departement implements java.io.Serializable {
 
 	public void setSousPrefectures(Set<SousPrefecture> sousPrefectures) {
 		this.sousPrefectures = sousPrefectures;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "departement")
+	public Set<DrenaDepartement> getDrenaDepartements() {
+		return this.drenaDepartements;
+	}
+
+	public void setDrenaDepartements(Set<DrenaDepartement> drenaDepartements) {
+		this.drenaDepartements = drenaDepartements;
 	}
 
 }
