@@ -150,6 +150,12 @@
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listEcole}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
 			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_type_alpha" value="Type Alphabétisation:"/>
+			<p:selectOneMenu id="cb_type_alpha" required="true" value="#{centreControllers.idTypeAlpha}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listTypeAlpha}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
+			</p:selectOneMenu>
 	    
 	    </h:panelGrid>
 	    

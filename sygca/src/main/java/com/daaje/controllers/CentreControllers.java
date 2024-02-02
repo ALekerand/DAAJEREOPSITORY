@@ -46,6 +46,7 @@ import com.daaje.model.Programme;
 import com.daaje.model.Promoteur;
 import com.daaje.model.Responsable;
 import com.daaje.model.TypeActivite;
+import com.daaje.model.TypeAlphabetisation;
 import com.daaje.model.UserAuthentication;
 import com.daaje.requetes.ReqUtilisateur;
 import com.daaje.requetes.RequeteEcole;
@@ -62,7 +63,7 @@ public class CentreControllers {
 	@Autowired
 	ReqUtilisateur reqUtilisateur;
 
-	public Centre centre = new Centre();
+	private Centre centre = new Centre();
 	private int idLocalite;
 	private int idIep;
 	private int idNature;
@@ -74,6 +75,7 @@ public class CentreControllers {
 	private int idEcole;
 	private int idActivitePrimaire;
 	private int idActiviteSecondaire;
+	private int idTypeAlpha;
 	private String value1, value2, value3;
 	private boolean skip;
 	private String etatPermanence;
@@ -108,6 +110,7 @@ public class CentreControllers {
 	private List listNiveauAnimateur = new ArrayList<>();
 	private List listEcole = new ArrayList<>();
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
+	private List<TypeAlphabetisation> listTypeAlpha = new ArrayList<TypeAlphabetisation>(); 
 	
 	
 	private UploadedFile fichier;
@@ -293,6 +296,7 @@ public class CentreControllers {
 			
 			//Gestion de la table Enseigner
 			enseigner.setCampagne(campagneEnCours);
+			enseigner.setTypeAlphabetisation((TypeAlphabetisation) iservice.getObjectById(idTypeAlpha, "TypeAlphabetisation"));
 			if (value1 !="") {
 				enseigner.setNiveauFormation((NiveauFormation) iservice.getObjectById(1, "NiveauFormation"));
 				enseigner.setAnimateur(animateur);
@@ -846,5 +850,25 @@ public class CentreControllers {
 
 	public void setIdEcole(int idEcole) {
 		this.idEcole = idEcole;
+	}
+
+
+	public int getIdTypeAlpha() {
+		return idTypeAlpha;
+	}
+
+
+	public void setIdTypeAlpha(int idTypeAlpha) {
+		this.idTypeAlpha = idTypeAlpha;
+	}
+
+
+	public List<TypeAlphabetisation> getListTypeAlpha() {
+		return listTypeAlpha;
+	}
+
+
+	public void setListTypeAlpha(List<TypeAlphabetisation> listTypeAlpha) {
+		this.listTypeAlpha = listTypeAlpha;
 	}
 }
