@@ -26,6 +26,7 @@
           <f:selectItem itemLabel="Ministère" itemValue="ministere"/>
         </p:selectOneRadio>
         
+        <br />
         
 			<p:panelGrid id="info_ong" columns="6" cellpadding="8" binding="#{centreControllers.pGridOng}" >
 			<p:outputLabel for="input_nom_ong" value="Nom ONG:"></p:outputLabel>
@@ -81,16 +82,16 @@
 		<legend> Informations sur le centre</legend>
 		<h:panelGrid id="centre_grid" columns="6" cellpadding="8">		
 			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{centreControllers.centre.codeCentre}" ></p:inputText>
+			<p:inputText id="input_code" value="#{centreControllers.centre.codeCentre}" required="true" ></p:inputText>
 			
 			<p:outputLabel for="input_nom" value="Nom du centre:"></p:outputLabel>
 			<p:inputText id="input_nom" value="#{centreControllers.centre.nomCentre}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_abrev" value="Abréviation nom:"></p:outputLabel>
-			<p:inputText id="input_abrev" value="#{centreControllers.centre.abreviationNomCentre}" required="true"></p:inputText>
+			<p:inputText id="input_abrev" value="#{centreControllers.centre.abreviationNomCentre}" ></p:inputText>
 			
 			<p:outputLabel for="input_adr" value="Adresse:"></p:outputLabel>
-			<p:inputText id="input_adr" value="#{centreControllers.centre.adresseCentre}" required="true"></p:inputText>
+			<p:inputText id="input_adr" value="#{centreControllers.centre.adresseCentre}" ></p:inputText>
 			
 			<p:outputLabel for="input_tel" value="Téléphone:"></p:outputLabel>
 			<p:inputText id="input_tel" value="#{centreControllers.centre.telephoneCentre}"></p:inputText>
@@ -100,7 +101,7 @@
 			
 			<p:outputLabel for="cb_departement" value="Département:"/>
 			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
-			<p:ajax listener="#{centreControllers.chargerDrena}" event="change" process="@this"  update="cb_iep"></p:ajax>
+			<p:ajax listener="#{centreControllers.chargerDrena}" event="change" process="@this"  update="cb_drena"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listDepartement}" var="tata" itemLabel="#{tata.nomDepartement}" itemValue="#{tata.idDepartement}"></f:selectItems>
 			</p:selectOneMenu>
@@ -114,6 +115,7 @@
 			
 			<p:outputLabel for="cb_iep" value="IEP:"/>
 			<p:selectOneMenu id="cb_iep" required="true" value="#{centreControllers.idIep}">
+			<p:ajax listener="#{centreControllers.chargerEcole}" event="change" process="@this"  update="cb_ecole"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listIep}" var="tata" itemLabel="#{tata.nomIep}" itemValue="#{tata.idIep}"></f:selectItems>
 			</p:selectOneMenu>
@@ -148,6 +150,12 @@
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listEcole}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
 			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_type_alpha" value="Type Alphabétisation:"/>
+			<p:selectOneMenu id="cb_type_alpha" required="true" value="#{centreControllers.idTypeAlpha}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listTypeAlpha}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
+			</p:selectOneMenu>
 	    
 	    </h:panelGrid>
 	    
@@ -156,12 +164,6 @@
 	       		<p:selectBooleanCheckbox value="#{centreControllers.value1}" itemLabel="Niveau 1"/>
 	       		<p:selectBooleanCheckbox value="#{centreControllers.value2}" itemLabel="Niveau 2"/>
 	       		<p:selectBooleanCheckbox value="#{centreControllers.value3}" itemLabel="Post Alphabétisation"/>
-	       		
-	       		<p:outputLabel for="cb_perm_centre" value="Permanent:"/>
-	       		<p:selectOneMenu id="cb_perm_centre" required="true" value="#{centreControllers.idNature}">
-				<f:selectItem itemLabel="Selectionnez" itemValue="" />
-				<f:selectItems value="#{centreControllers.listNature}" var="tata" itemLabel="#{tata.libelleNature}" itemValue="#{tata.idNature}"></f:selectItems>
-				</p:selectOneMenu>
 	       		
 	     	</h:panelGrid>
 	     	
@@ -175,11 +177,6 @@
 	   
 	    </p:panel>
 			</p:tab>
-			
-				<p:tab id="promoteur1" title="Promoteur">
-            		<p:panel header="NIVEAUX ALPHABETISATION">
-            		</p:panel>
-            	</p:tab>
 			
 			<p:tab id="animateur" title="Animateur">
 			<fieldset>

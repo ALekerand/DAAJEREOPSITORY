@@ -20,16 +20,23 @@
 			<p:outputLabel for="input_localite" value="Localité:"></p:outputLabel>
 			<p:inputText id="input_localite" value="#{localiteDImplantationController.localiteDImplantation.nomLocalite}" required="true"></p:inputText>
 			
-			<p:outputLabel for="cb_commune" value="Commune:" />
-            <p:selectOneMenu id="cb_commune" value="#{localiteDImplantationController.idCommune}">
+			<p:outputLabel for="cb_departement" value="Département:" />
+            <p:selectOneMenu id="cb_departement" value="#{localiteDImplantationController.idDepartement}" required="true">
+            <p:ajax listener="#{localiteDImplantationController.chargerSousPrefecture}" event="change" update="cb_sousPrefecture" process="@this"/>
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
-            <f:selectItems value="#{localiteDImplantationController.listCommune}" var="toto" itemLabel="#{toto.nomCommune}" itemValue="#{toto.idCommune}" />
+            <f:selectItems value="#{localiteDImplantationController.listDepartement}" var="toto" itemLabel="#{toto.nomDepartement}" itemValue="#{toto.idDepartement}" />
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_sousPrefecture" value="Sous Prefecture:" />
             <p:selectOneMenu id="cb_sousPrefecture" value="#{localiteDImplantationController.idSousPrefecture}">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{localiteDImplantationController.listSousPrefecture}" var="toto" itemLabel="#{toto.nomSousPrefecture}" itemValue="#{toto.idSousPrefecture}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_commune" value="Commune:" />
+            <p:selectOneMenu id="cb_commune" value="#{localiteDImplantationController.idCommune}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{localiteDImplantationController.listCommune}" var="toto" itemLabel="#{toto.nomCommune}" itemValue="#{toto.idCommune}" />
 			</p:selectOneMenu>
 			
 	    </h:panelGrid>
@@ -62,8 +69,20 @@
 	    		<h:outputText value="#{toto.codeLocalite}" />
 	    	</p:column>
 	    	
-	    	<p:column headerText="Niveau">
+	    	<p:column headerText="Localité">
 	    		<h:outputText value="#{toto.nomLocalite}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Departement">
+	    		<h:outputText value="#{toto.nomLocalite}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Sous Préfecture">
+	    		<h:outputText value="#{toto.sousPrefecture.nomSousPrefecture}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Commune">
+	    		<h:outputText value="#{toto.commune.nomCommune}" />
 	    	</p:column>
 	    
 	    </p:dataTable>

@@ -66,7 +66,7 @@ public class Departement implements java.io.Serializable {
 		this.nomDepartement = nomDepartement;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "departement")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "departement")
 	public Set<SousPrefecture> getSousPrefectures() {
 		return this.sousPrefectures;
 	}
@@ -75,7 +75,7 @@ public class Departement implements java.io.Serializable {
 		this.sousPrefectures = sousPrefectures;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "departement")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "departement")
 	public Set<DrenaDepartement> getDrenaDepartements() {
 		return this.drenaDepartements;
 	}

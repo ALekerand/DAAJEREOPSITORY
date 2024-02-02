@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -21,14 +23,14 @@ public class DepartementControllers {
 	public Iservice iservice;
 	
 	//public int idDrena;
-	private Departement departement = new Departement();
-	private Departement selectedObject = new Departement();
-	private List listObject = new ArrayList();
-	private List<Drena> listDrena = new ArrayList<Drena>();
+	public Departement departement = new Departement();
+	public Departement selectedObject = new Departement();
+	public List<Departement> listObject = new ArrayList<Departement>();
+	public List<Drena> listDrena = new ArrayList<Drena>();
 
 //Controle des composants
-	private CommandButton cmdBModifier = new CommandButton();
-	private CommandButton cmdBEnregistrer = new CommandButton();	
+	public CommandButton cmdBModifier = new CommandButton();
+	public CommandButton cmdBEnregistrer = new CommandButton();	
 	
 //Methodes
 @PostConstruct
@@ -81,8 +83,21 @@ public class DepartementControllers {
 		}
 			
 //Getters and setters
-	public List getListObject() {
-		return listObject = iservice.getObjects("Departement");
+	public List<Departement> getListObject() {
+		listObject = iservice.getObjects("Departement");
+		
+		//=======Pour le rangement par ordre alphabétique======
+				Collections.sort(listObject, new Comparator<Departement>() {
+			        @Override
+			        public int compare(Departement ob1, Departement ob2)
+			        {
+			 
+			            return  ob1.getNomDepartement().compareTo(ob2.getNomDepartement());
+			        }
+			    });
+				//========================  Fin  =======================
+		
+		return listObject;
 	}
 	
 	public void setListObject(List listObject) {
@@ -106,12 +121,7 @@ public class DepartementControllers {
 		this.departement = departement;
 	}
 
-	/*
-	 * public int getIdDrena() { return idDrena; }
-	 * 
-	 * public void setIdDrena(int idDrena) { this.idDrena = idDrena; }
-	 */
-
+	
 	public List<Drena> getListDrena() {
 		return listDrena = iservice.getObjects("Drena");
 		}

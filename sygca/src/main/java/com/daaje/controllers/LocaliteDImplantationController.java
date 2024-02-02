@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Commune;
+import com.daaje.model.Departement;
 import com.daaje.model.LocaliteDImplantation;
 import com.daaje.model.SousPrefecture;
 import com.daaje.service.Iservice;
@@ -19,14 +22,17 @@ import com.daaje.service.Iservice;
 @Component
 public class LocaliteDImplantationController {
 	@Autowired
-	public Iservice iservice;
-	public int idCommune;
-	public int idSousPrefecture;
-	public LocaliteDImplantation localiteDImplantation = new LocaliteDImplantation();
-	public LocaliteDImplantation selectedObject = new LocaliteDImplantation();
-	public List listObject = new ArrayList();
-	public List<Commune> listCommune = new ArrayList<Commune>();
-	public List<SousPrefecture> listSousPrefecture = new ArrayList<SousPrefecture>();
+	private Iservice iservice;
+	private int idCommune;
+	private int idSousPrefecture;
+	private int idDepartement;
+	private Departement departement = new Departement();
+	private LocaliteDImplantation localiteDImplantation = new LocaliteDImplantation();
+	private LocaliteDImplantation selectedObject = new LocaliteDImplantation();
+	private List listObject = new ArrayList();
+	private List<Commune> listCommune = new ArrayList<Commune>();
+	private List<SousPrefecture> listSousPrefecture = new ArrayList<SousPrefecture>();
+	private List<Departement> listDepartement = new ArrayList<Departement>();
 	
 	
 //Controle des composants
@@ -60,6 +66,26 @@ public class LocaliteDImplantationController {
 		info("Enregistrement effectué");
 	}
 	
+	
+	public void chargerSousPrefecture() {
+		listSousPrefecture.clear();
+		departement = (Departement) iservice.getObjectById(idDepartement, "Departement");
+		for (SousPrefecture var : departement.getSousPrefectures()) {
+			listSousPrefecture.add(var);
+		}
+		
+		//=======Pour le rangement par ordre alphabétique======
+				Collections.sort(listSousPrefecture, new Comparator<SousPrefecture>() {
+			        @Override
+			        public int compare(SousPrefecture ob1, SousPrefecture ob2)
+			        {
+			 
+			            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
+			        }
+			    });
+				//========================  Fin  =======================
+	}
+	
 	public void modifier() {
 		iservice.updateObject(localiteDImplantation);
 		annuler();
@@ -69,6 +95,9 @@ public class LocaliteDImplantationController {
 	public void annuler() {
 		localiteDImplantation.setCodeLocalite(null);
 		localiteDImplantation.setNomLocalite(null);
+		setIdCommune(0);
+		setIdSousPrefecture(0);
+		setIdDepartement(0);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
 		genererCode();
@@ -158,12 +187,40 @@ public class LocaliteDImplantationController {
 
 
 	public List<SousPrefecture> getListSousPrefecture() {
-		return listSousPrefecture = iservice.getObjects("SousPrefecture");
+		return listSousPrefecture;
 	}
 
 
 	public void setListSousPrefecture(List<SousPrefecture> listSousPrefecture) {
 		this.listSousPrefecture = listSousPrefecture;
+	}
+
+	public List<Departement> getListDepartement() {
+		listDepartement = iservice.getObjects("Departement");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listDepartement, new Comparator<Departement>() {
+	        @Override
+	        public int compare(Departement ob1, Departement ob2)
+	        {
+	 
+	            return  ob1.getNomDepartement().compareTo(ob2.getNomDepartement());
+	        }
+	    });
+		//========================  Fin  =======================
+		return listDepartement;
+	}
+
+	public void setListDepartement(List<Departement> listDepartement) {
+		this.listDepartement = listDepartement;
+	}
+
+	public int getIdDepartement() {
+		return idDepartement;
+	}
+
+	public void setIdDepartement(int idDepartement) {
+		this.idDepartement = idDepartement;
 	}
 
 }
