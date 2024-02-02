@@ -68,8 +68,8 @@
 	<p:inputText id="input_mdp" value="#{responsableController.userAuthentication.password}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
 	
 	
-	<p:outputLabel value="Profil utilisateur:"/>					
-	<p:selectOneRadio id="rd1" value="#{responsableController.userRole}" layout="grid" columns="4" unselectable="false" >
+	<p:outputLabel for="rd1" value="Profil utilisateur:"/>					
+	<p:selectOneRadio id="rd1" value="#{responsableController.userRole}" layout="grid" columns="4" required="true" >
 		<f:selectItem itemLabel="Adminitrateur" itemValue="ROLE_ADMIN"></f:selectItem>
 		<f:selectItem itemLabel="Utilistaeur standard" itemValue="ROLE_UTILISATAEUR"></f:selectItem>
 	</p:selectOneRadio>

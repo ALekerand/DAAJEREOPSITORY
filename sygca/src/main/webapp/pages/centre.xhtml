@@ -126,16 +126,17 @@
 			<f:selectItems value="#{centreControllers.listLocalite}" var="tata" itemLabel="#{tata.nomLocalite}" itemValue="#{tata.idLocalite}"></f:selectItems>
 			</p:selectOneMenu>
 			
-			<p:outputLabel for="cb_natureP" value="Nature du projet:"/>
-			<p:selectOneMenu id="cb_natureP" required="true" value="#{centreControllers.idNatureProjet}">
-			<f:selectItem itemLabel="Selectionnez" itemValue="" />
-			<f:selectItems value="#{centreControllers.listNatureProjet}" var="tata" itemLabel="#{tata.libelleNatureProjet}" itemValue="#{tata.idNatureProjet}"></f:selectItems>
-			</p:selectOneMenu>
-			
 			<p:outputLabel for="cb_nature_centre" value="Nature du centre:"/>
 			<p:selectOneMenu id="cb_nature_centre" required="true" value="#{centreControllers.idNature}">
+			<p:ajax listener="#{centreControllers.chargerNatureProjet}" event="change" process="@this"  update="cb_natureP"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listNature}" var="tata" itemLabel="#{tata.libelleNature}" itemValue="#{tata.idNature}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_natureP" value="Nature du projet:"/>
+			<p:selectOneMenu id="cb_natureP" required="true" value="#{centreControllers.idNatureProjet}" binding="#{centreControllers.natureProOneMenu}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listNatureProjet}" var="tata" itemLabel="#{tata.libelleNatureProjet}" itemValue="#{tata.idNatureProjet}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			<h5 class="mt-0">Centre permanent:</h5>
@@ -146,7 +147,7 @@
             
             
             <p:outputLabel for="cb_ecole" value="Ecole:"/>
-			<p:selectOneMenu id="cb_ecole" required="true" value="#{centreControllers.idEcole}">
+			<p:selectOneMenu id="cb_ecole" value="#{centreControllers.idEcole}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listEcole}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
 			</p:selectOneMenu>
@@ -154,7 +155,7 @@
 			<p:outputLabel for="cb_type_alpha" value="Type Alphabétisation:"/>
 			<p:selectOneMenu id="cb_type_alpha" required="true" value="#{centreControllers.idTypeAlpha}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
-			<f:selectItems value="#{centreControllers.listTypeAlpha}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
+			<f:selectItems value="#{centreControllers.listTypeAlpha}" var="tata" itemLabel="#{tata.libTypeAlpha}" itemValue="#{tata.idTypeAlpha}"></f:selectItems>
 			</p:selectOneMenu>
 	    
 	    </h:panelGrid>

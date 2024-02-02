@@ -15,6 +15,7 @@ import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.panelgrid.PanelGrid;
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.model.UploadedFile;
@@ -121,6 +122,7 @@ public class CentreControllers {
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
 	private SelectOneRadio radio_promo = new SelectOneRadio();
+	private SelectOneMenu natureProOneMenu = new SelectOneMenu();
 	private PanelGrid pGridOng = new PanelGrid();
 	private PanelGrid pGridPh = new PanelGrid();
 	private PanelGrid pGridMini = new PanelGrid();
@@ -134,6 +136,7 @@ public class CentreControllers {
 		this.pGridMini.setRendered(false);
 		this.pGridPh.setRendered(false);
 		this.pGridProg.setRendered(false);
+		this.natureProOneMenu.setDisabled(true);
 		recupererCampagneEncours();
 		genererCodePromoteur();
 		genererCodeAnimateur();
@@ -372,6 +375,7 @@ public class CentreControllers {
 		
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		natureProOneMenu.setDisabled(true);
 	}
 	
 	
@@ -436,6 +440,10 @@ public class CentreControllers {
 		}
 	}
 	
+	
+	public void chargerNatureProjet() {
+		natureProOneMenu.setDisabled(false);
+	}
 	
 	public void chargerEcole() {
 		listEcole = requeteEcole.recupEcoleParIEP(idIep);
@@ -864,11 +872,21 @@ public class CentreControllers {
 
 
 	public List<TypeAlphabetisation> getListTypeAlpha() {
-		return listTypeAlpha;
+		return listTypeAlpha = iservice.getObjects("TypeAlphabetisation");
 	}
 
 
 	public void setListTypeAlpha(List<TypeAlphabetisation> listTypeAlpha) {
 		this.listTypeAlpha = listTypeAlpha;
+	}
+
+
+	public SelectOneMenu getNatureProOneMenu() {
+		return natureProOneMenu;
+	}
+
+
+	public void setNatureProOneMenu(SelectOneMenu natureProOneMenu) {
+		this.natureProOneMenu = natureProOneMenu;
 	}
 }

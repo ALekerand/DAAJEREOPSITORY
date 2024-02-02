@@ -1,6 +1,9 @@
 
- - Attribut code_responsable est ajouté dans la table esponsable
- - membre_dc 
+ 02/02/2024
+ 
+ 
+ 	- numCNI ajouté à Personne Physique
+ 	- Table Personne Morale créée
  
 	
 	
