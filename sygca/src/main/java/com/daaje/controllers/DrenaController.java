@@ -101,7 +101,20 @@ public class DrenaController {
 	}
 
 	public List getListObject() {
-		return listObject = iservice.getObjects("Drena");
+		listObject = iservice.getObjects("Drena");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<Drena>() {
+	        @Override
+	        public int compare(Drena ob1, Drena ob2)
+	        {
+	 
+	            return  ob1.getNomDrena().compareTo(ob2.getNomDrena());
+	        }
+	    });
+		//========================  Fin  =======================
+
+         return listObject;
 	}
 
 	public void setListObject(List listObject) {

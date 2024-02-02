@@ -81,7 +81,7 @@ public void genererCode() {
 	}
 		
 //Getters and setters
-	public List getListObject() {
+	public List<Iep> getListObject() {
 		return listObject = iservice.getObjects("Iep");
 	}
 
