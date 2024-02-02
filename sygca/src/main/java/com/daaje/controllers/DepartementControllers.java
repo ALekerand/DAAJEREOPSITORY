@@ -21,14 +21,14 @@ public class DepartementControllers {
 	public Iservice iservice;
 	
 	//public int idDrena;
-	public Departement departement = new Departement();
-	public Departement selectedObject = new Departement();
-	public List listObject = new ArrayList();
-	public List<Drena> listDrena = new ArrayList<Drena>();
+	private Departement departement = new Departement();
+	private Departement selectedObject = new Departement();
+	private List listObject = new ArrayList();
+	private List<Drena> listDrena = new ArrayList<Drena>();
 
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();	
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();	
 	
 //Methodes
 @PostConstruct

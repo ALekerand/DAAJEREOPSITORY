@@ -17,14 +17,14 @@ import com.daaje.service.Iservice;
 @Component
 public class TypeAlphabetisationController {
 	@Autowired
-	public Iservice iservice;
-	public TypeAlphabetisation typeAlphabetisation = new TypeAlphabetisation();
-	public TypeAlphabetisation selectedObject = new TypeAlphabetisation();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+	private TypeAlphabetisation typeAlphabetisation = new TypeAlphabetisation();
+	private TypeAlphabetisation selectedObject = new TypeAlphabetisation();
+	private List listObject = new ArrayList();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 	@PostConstruct
