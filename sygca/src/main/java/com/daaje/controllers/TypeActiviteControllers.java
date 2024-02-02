@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,20 +13,21 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Departement;
 import com.daaje.model.TypeActivite;
 import com.daaje.service.Iservice;
 
 @Component
 public class TypeActiviteControllers {
 @Autowired
-	public Iservice iservice;
-	public TypeActivite typeActivite =  new TypeActivite();
-	public TypeActivite selectedObject = new TypeActivite();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+    private TypeActivite typeActivite =  new TypeActivite();
+    private TypeActivite selectedObject = new TypeActivite();
+    private List listObject = new ArrayList();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+    private CommandButton cmdBModifier = new CommandButton();
+    private CommandButton cmdBEnregistrer = new CommandButton();
 	
 //Methodes
 @PostConstruct
@@ -84,8 +87,22 @@ public void genererCode() {
 		this.typeActivite = typeActivite;
 	}
 
-	public List getListObject() {
-		return listObject = iservice.getObjects("TypeActivite");
+	public List<TypeActivite> getListObject() {
+		listObject = iservice.getObjects("TypeActivite");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<TypeActivite>() {
+	        @Override
+	        public int compare(TypeActivite ob1, TypeActivite ob2)
+	        {
+	 
+	            return  ob1.getLibelleTypeactivite().compareTo(ob2.getLibelleTypeactivite());
+	        }
+	    });
+		//========================  Fin  =======================
+
+return listObject;
+
 	}
 
 	public void setListObject(List listObject) {

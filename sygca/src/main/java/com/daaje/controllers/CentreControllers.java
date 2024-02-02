@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -455,8 +457,22 @@ public class CentreControllers {
 		
 //Getters and setters
 	
-	public List getListObject() {
-		return listObject = iservice.getObjects("Centre");
+	public List<Centre> getListObject() {
+		listObject = iservice.getObjects("Centre");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<Centre>() {
+	        @Override
+	        public int compare(Centre ob1, Centre ob2)
+	        {
+	 
+	            return  ob1.getNomCentre().compareTo(ob2.getNomCentre());
+	        }
+	    });
+		//========================  Fin  =======================
+
+return listObject;
+
 	}
 
 	public void setListObject(List listObject) {

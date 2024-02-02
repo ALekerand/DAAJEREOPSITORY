@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,20 +13,21 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Departement;
 import com.daaje.model.Fonction;
 import com.daaje.service.Iservice;
 
 @Component
 public class FonctionControllers {
 	@Autowired
-	public Iservice iservice;
-	public Fonction fonction = new Fonction();
-	public Fonction selectedObject = new Fonction();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+	private Fonction fonction = new Fonction();
+	private Fonction selectedObject = new Fonction();
+	private List listObject = new ArrayList();
 
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 	
 //Methodes
 	@PostConstruct
@@ -82,8 +85,22 @@ public class FonctionControllers {
 		this.fonction = fonction;
 	}
 
-	public List getListObject() {
-		return listObject = iservice.getObjects("Fonction");
+	public List<Fonction> getListObject() {
+		listObject = iservice.getObjects("Fonction");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<Fonction>() {
+	        @Override
+	        public int compare(Fonction ob1, Fonction ob2)
+	        {
+	 
+	            return  ob1.getLibelleFonction().compareTo(ob2.getLibelleFonction());
+	        }
+	    });
+		//========================  Fin  =======================
+
+return listObject;
+
 	}
 
 	public void setListObject(List listObject) {
