@@ -11,6 +11,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.panelgrid.PanelGrid;
@@ -24,7 +25,9 @@ import com.daaje.model.Activite;
 import com.daaje.model.Animateur;
 import com.daaje.model.Campagne;
 import com.daaje.model.Centre;
+import com.daaje.model.Departement;
 import com.daaje.model.Drena;
+import com.daaje.model.DrenaDepartement;
 import com.daaje.model.Ecole;
 import com.daaje.model.Enseigner;
 import com.daaje.model.Genre;
@@ -41,7 +44,10 @@ import com.daaje.model.Profession;
 import com.daaje.model.Programme;
 import com.daaje.model.Programme;
 import com.daaje.model.Promoteur;
+import com.daaje.model.Responsable;
 import com.daaje.model.TypeActivite;
+import com.daaje.model.UserAuthentication;
+import com.daaje.requetes.ReqUtilisateur;
 import com.daaje.requetes.RequeteEcole;
 import com.daaje.service.Iservice;
 
@@ -49,8 +55,12 @@ import com.daaje.service.Iservice;
 public class CentreControllers {
 	@Autowired
 	private Iservice iservice;
+	
 	@Autowired
 	RequeteEcole requeteEcole;
+	
+	@Autowired
+	ReqUtilisateur reqUtilisateur;
 
 	public Centre centre = new Centre();
 	private int idLocalite;
@@ -65,8 +75,11 @@ public class CentreControllers {
 	private int idActivitePrimaire;
 	private int idActiviteSecondaire;
 	private String value1, value2, value3;
+	private boolean skip;
+	private String etatPermanence;
+	private UserAuthentication userAuthentication;
 	private Animateur animateur = new Animateur();
-	private Drena choosedDepartement = new Drena();
+	private Departement choosedDepartement = new Departement();
 	private Drena choosedDrena = new Drena();
 	private Centre selectedObject = new Centre();
 	private Promoteur promoteur = new Promoteur();
@@ -86,7 +99,7 @@ public class CentreControllers {
 	private List listObject = new ArrayList<>();
 	private List listLocalite = new ArrayList<>();
 	private List listIep = new ArrayList<>();
-	private List listDrena = new ArrayList<>();
+	private List<Drena> listDrena = new ArrayList<Drena>();
 	private List listDepartement = new ArrayList<>();
 	private List listNatureProjet = new ArrayList<>();
 	private List listNature = new ArrayList<>();
@@ -95,8 +108,7 @@ public class CentreControllers {
 	private List listNiveauAnimateur = new ArrayList<>();
 	private List listEcole = new ArrayList<>();
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
-	private boolean skip;
-	private String etatPermanence;
+	
 	
 	private UploadedFile fichier;
 	private String chemin = "C:\\SYGCA\\AUTORISATION";
@@ -124,6 +136,12 @@ public class CentreControllers {
 		genererCodeAnimateur();
 	}
 	
+	
+	public Responsable recupererResponsable() {
+		userAuthentication = reqUtilisateur.RecupererUtilisateurCourrant();
+		return null;
+	}
+	
 	public void recupererCampagneEncours() {
 		campagnes = iservice.getObjects("Campagne");
 		for (Campagne var : campagnes) {
@@ -132,7 +150,6 @@ public class CentreControllers {
 			}
 		}
 	}
-	
 	
 	public void upload() {
 		String extValidate;
@@ -254,6 +271,7 @@ public class CentreControllers {
 			}
 			
 			upload();
+			centre.setResponsable(userAuthentication.getResponsable());
 			iservice.addObject(this.centre);
 		
 			//Gestion de l'animateur
@@ -398,9 +416,25 @@ public class CentreControllers {
 	}
 	
 	public void chargerDrena() {
-		choosedDepartement = (Drena) iservice.getObjectById(idDepartement,"Departement");
-		//listDrena = choosedDepartement.getdr
+		choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
+		listDrena.clear();
 		
+		choosedDepartement = (Departement) iservice.getObjectById(idDepartement,"Departement");
+		for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
+			listDrena.add(var.getDrena());
+		}
+	}
+	
+	
+	public void chargerIep() {
+		for (Iep var : choosedDrena.getIeps()) {
+			listIep.add(var);
+		}
+	}
+	
+	
+	public void chargerEcole() {
+		listEcole = requeteEcole.recupEcoleParIEP(idIep);
 	}
 	
 	public void info(String message){
@@ -409,7 +443,6 @@ public class CentreControllers {
 		
 //Getters and setters
 	
-
 	public List getListObject() {
 		return listObject = iservice.getObjects("Centre");
 	}
@@ -575,7 +608,7 @@ public class CentreControllers {
 	}
 
 	public List getListDrena() {
-		return listDrena = iservice.getObjects("Drena");
+		return listDrena;
 	}
 
 	public void setListDrena(List listDrena) {
@@ -799,7 +832,8 @@ public class CentreControllers {
 	}
 
 	public List getListEcole() {
-		return listEcole = requeteEcole.recupEcoleParIEP(idIep); 
+		//return listEcole = iservice.getObjects("Ecole"); 
+		return listEcole; 
 	}
 
 	public void setListEcole(List listEcole) {

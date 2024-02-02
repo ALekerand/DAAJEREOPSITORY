@@ -52,7 +52,7 @@ public class DrenaDepartement implements java.io.Serializable {
 		this.departement = departement;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_DRENA", nullable = false)
 	public Drena getDrena() {
 		return this.drena;

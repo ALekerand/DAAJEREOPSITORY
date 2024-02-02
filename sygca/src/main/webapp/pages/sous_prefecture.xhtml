@@ -21,7 +21,7 @@
 			<p:inputText id="input_sous_prefecture" value="#{sousPrefectureController.sousPrefecture.nomSousPrefecture}" required="true"></p:inputText>
 			
 		<p:outputLabel for="cb_departement" value="Département:" />
-            <p:selectOneMenu id="cb_departement" value="#{sousPrefectureController.idDepartement}">
+            <p:selectOneMenu id="cb_departement" value="#{sousPrefectureController.idDepartement}" required="true">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{sousPrefectureController.listDepartement}" var="toto" itemLabel="#{toto.nomDepartement}" itemValue="#{toto.idDepartement}" />
 			</p:selectOneMenu>
