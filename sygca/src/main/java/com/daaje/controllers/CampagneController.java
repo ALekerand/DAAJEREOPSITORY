@@ -17,14 +17,14 @@ import com.daaje.service.Iservice;
 @Component
 public class CampagneController {
 	@Autowired
-	public Iservice iservice;
-	public Campagne campagne = new Campagne();
-	public Campagne selectedObject = new Campagne();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+	private Campagne campagne = new Campagne();
+	private Campagne selectedObject = new Campagne();
+	private List listObject = new ArrayList();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 	@PostConstruct

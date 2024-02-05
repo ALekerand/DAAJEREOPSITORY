@@ -21,22 +21,22 @@ import com.daaje.service.Iservice;
 @Component
 public class InscriptionContoller {
 	@Autowired
-	public Iservice iservice;
-	public int idApprenant;
-	public int idCampagne;
-	public int idCentre;
-	public int idNiveauFormation;	
-	public Inscription inscription = new Inscription();
-	public Inscription selectedObject = new Inscription();
-	public List listObject = new ArrayList();
-	public List<Apprenant> listApprenant = new ArrayList<Apprenant>();
-	public List<Campagne> listCampagne = new ArrayList<Campagne>();
-	public List<Centre> listCentre = new ArrayList<Centre>();
-	public List<NiveauFormation> listNiveauFormation = new ArrayList<NiveauFormation>();
+	private Iservice iservice;
+	private int idApprenant;
+	private int idCampagne;
+	private int idCentre;
+	private int idNiveauFormation;	
+	private Inscription inscription = new Inscription();
+	private Inscription selectedObject = new Inscription();
+	private List listObject = new ArrayList();
+	private List<Apprenant> listApprenant = new ArrayList<Apprenant>();
+	private List<Campagne> listCampagne = new ArrayList<Campagne>();
+	private List<Centre> listCentre = new ArrayList<Centre>();
+	private List<NiveauFormation> listNiveauFormation = new ArrayList<NiveauFormation>();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 	@PostConstruct

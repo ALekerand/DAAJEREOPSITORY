@@ -36,8 +36,8 @@ public class ResponsableController {
 	
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 	@PostConstruct
