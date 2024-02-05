@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -89,8 +91,22 @@ public class SousPrefectureController {
 		this.sousPrefecture = sousPrefecture;
 	}
 
-	public List getListObject() {
-		return listObject = iservice.getObjects("SousPrefecture");
+	public List<SousPrefecture> getListObject() {
+		listObject = iservice.getObjects("SousPrefecture");
+
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<SousPrefecture>() {
+	        @Override
+	        public int compare(SousPrefecture ob1, SousPrefecture ob2)
+	        {
+	 
+	            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
+	        }
+	    });
+		//========================  Fin  =======================
+
+return listObject;
+
 	}
 
 	public void setListObject(List listObject) {

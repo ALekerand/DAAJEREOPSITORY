@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,6 +13,7 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Departement;
 import com.daaje.model.Fonction;
 import com.daaje.model.Responsable;
 import com.daaje.model.UserAuthentication;
@@ -105,8 +108,22 @@ public class ResponsableController {
 		this.responsable = responsable;
 	}
 	
-	public List getListObject() {
-		return listObject = iservice.getObjects("Responsable");
+	public List<Responsable> getListObject() {
+		listObject = iservice.getObjects("Responsable");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<Responsable>() {
+	        @Override
+	        public int compare(Responsable ob1, Responsable ob2)
+	        {
+	 
+	            return  ob1.getNomResponsable().compareTo(ob2.getNomResponsable());
+	        }
+	    });
+		//========================  Fin  =======================
+
+return listObject;
+
 	}
 
 	public void setListObject(List listObject) {

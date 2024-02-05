@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,16 +13,17 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Departement;
 import com.daaje.model.NiveauAnimateur;
 import com.daaje.service.Iservice;
 
 @Component
 public class NiveauAnimateurControllers {
 	@Autowired
-	public Iservice iservice;
-	public NiveauAnimateur niveauAnimateur = new NiveauAnimateur();
-	public NiveauAnimateur selectedObject = new NiveauAnimateur();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+	private NiveauAnimateur niveauAnimateur = new NiveauAnimateur();
+	private NiveauAnimateur selectedObject = new NiveauAnimateur();
+	private List listObject = new ArrayList();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -85,8 +88,22 @@ public class NiveauAnimateurControllers {
 		this.niveauAnimateur = niveauAnimateur;
 	}
 
-	public List getListObject() {
-		return listObject = iservice.getObjects("NiveauAnimateur");
+	public List<NiveauAnimateur> getListObject() {
+		listObject = iservice.getObjects("NiveauAnimateur");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<NiveauAnimateur>() {
+	        @Override
+	        public int compare(NiveauAnimateur ob1, NiveauAnimateur ob2)
+	        {
+	 
+	            return  ob1.getNomNiveau().compareTo(ob2.getNomNiveau());
+	        }
+	    });
+		//========================  Fin  =======================
+
+return listObject;
+
 	}
 
 	public void setListObject(List listObject) {

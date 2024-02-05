@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,20 +13,22 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.beust.ah.A;
 import com.daaje.model.Activite;
+import com.daaje.model.Departement;
 import com.daaje.service.Iservice;
 
 @Component
 public class ActiviteController {
 @Autowired
-	public Iservice iservice;
-	public Activite activite = new Activite();
-	public Activite selectedObject = new Activite();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+    private Activite activite = new Activite();
+    private Activite selectedObject = new Activite();
+    private List listObject = new ArrayList();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+    private CommandButton cmdBModifier = new CommandButton();
+    private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 @PostConstruct
@@ -86,8 +90,22 @@ public void genererCode() {
 		this.activite = activite;
 	}
 
-	public List getListObject() {
-		return listObject = iservice.getObjects("Activite");
+	public List<Activite> getListObject() {
+		listObject = iservice.getObjects("Activite");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<Activite>() {
+	        @Override
+	        public int compare(Activite ob1, Activite ob2)
+	        {
+	 
+	            return  ob1.getNomActivite().compareTo(ob2.getNomActivite());
+	        }
+	    });
+		//========================  Fin  =======================
+
+return listObject;
+
 	}
 
 	public void setListObject(List listObject) {

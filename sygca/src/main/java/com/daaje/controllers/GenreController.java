@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,16 +13,17 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.daaje.model.Departement;
 import com.daaje.model.Genre;
 import com.daaje.service.Iservice;
 
 @Component
 public class GenreController {
 	@Autowired
-	public Iservice iservice;
-	public Genre genre = new Genre();
-	public Genre selectedObject = new Genre();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+	private Genre genre = new Genre();
+	private Genre selectedObject = new Genre();
+	private List listObject = new ArrayList();
 	
 //Controle des composants
 	public CommandButton cmdBModifier = new CommandButton();
@@ -86,8 +89,22 @@ public class GenreController {
 		this.genre = genre;
 	}
 
-	public List getListObject() {
-		return listObject = iservice.getObjects("Genre");
+	public List<Genre> getListObject() {
+		listObject = iservice.getObjects("Genre");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<Genre>() {
+	        @Override
+	        public int compare(Genre ob1, Genre ob2)
+	        {
+	 
+	            return  ob1.getLibelleGenre().compareTo(ob2.getLibelleGenre());
+	        }
+	    });
+		//========================  Fin  =======================
+
+return listObject;
+
 	}
 
 	public void setListObject(List listObject) {

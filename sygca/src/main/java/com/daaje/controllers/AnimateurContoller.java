@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 
 import com.daaje.model.Animateur;
+import com.daaje.model.Departement;
 import com.daaje.model.Genre;
 import com.daaje.model.NiveauAnimateur;
 import com.daaje.service.Iservice;
@@ -20,18 +23,18 @@ import com.daaje.service.Iservice;
 @Component
 public class AnimateurContoller {
 	@Autowired
-	public Iservice iservice;
-	public int idGenre;
-	public int idNiveau;
-	public Animateur animateur = new Animateur();
-	public Animateur selectedObject = new Animateur();
-	public List listObject = new ArrayList();
-	public List<NiveauAnimateur> listNiveauAnimateur = new ArrayList<NiveauAnimateur>();
-	public List<Genre> listGenre = new ArrayList<Genre>();
+	private Iservice iservice;
+	private int idGenre;
+	private int idNiveau;
+	private Animateur animateur = new Animateur();
+	private Animateur selectedObject = new Animateur();
+	private List listObject = new ArrayList();
+	private List<NiveauAnimateur> listNiveauAnimateur = new ArrayList<NiveauAnimateur>();
+	private List<Genre> listGenre = new ArrayList<Genre>();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 	@PostConstruct
@@ -91,8 +94,22 @@ public class AnimateurContoller {
 	}
 		
 //Getters and setters
-	public List getListObject() {
-		return listObject = iservice.getObjects("Animateur");
+	public List<Animateur> getListObject() {
+		listObject = iservice.getObjects("Animateur");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<Animateur>() {
+	        @Override
+	        public int compare(Animateur ob1, Animateur ob2)
+	        {
+	 
+	            return  ob1.getNomAnimateur().compareTo(ob2.getNomAnimateur());
+	        }
+	    });
+		//========================  Fin  =======================
+
+return listObject;
+
 	}
 
 	public void setListObject(List listObject) {
