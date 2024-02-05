@@ -58,6 +58,7 @@ public class ResponsableController {
 		iservice.addObject(this.responsable);
 		
 		this.userAuthentication.setResponsable(responsable);
+		this.userAuthentication.setEnabled(true);
 		this.iservice.updateObject(userAuthentication);
 		
 		annuler();

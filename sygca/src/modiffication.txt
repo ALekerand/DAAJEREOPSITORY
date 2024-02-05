@@ -4,6 +4,7 @@
  
  	- numCNI ajouté à Personne Physique
  	- Table Personne Morale créée
+ 	- Taille adresse_responsable de RESPONSABLE mise à 30 caractères
  
 	
 	

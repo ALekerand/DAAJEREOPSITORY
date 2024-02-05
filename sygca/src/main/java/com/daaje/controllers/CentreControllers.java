@@ -11,7 +11,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.panelgrid.PanelGrid;
@@ -29,7 +28,6 @@ import com.daaje.model.Centre;
 import com.daaje.model.Departement;
 import com.daaje.model.Drena;
 import com.daaje.model.DrenaDepartement;
-import com.daaje.model.Ecole;
 import com.daaje.model.Enseigner;
 import com.daaje.model.Genre;
 import com.daaje.model.Iep;
@@ -42,7 +40,6 @@ import com.daaje.model.NiveauFormation;
 import com.daaje.model.Ong;
 import com.daaje.model.PersonnePhysique;
 import com.daaje.model.Profession;
-import com.daaje.model.Programme;
 import com.daaje.model.Programme;
 import com.daaje.model.Promoteur;
 import com.daaje.model.Responsable;
@@ -80,7 +77,7 @@ public class CentreControllers {
 	private String value1, value2, value3;
 	private boolean skip;
 	private String etatPermanence;
-	private UserAuthentication userAuthentication;
+	private UserAuthentication userAuthentication = new UserAuthentication();
 	private Animateur animateur = new Animateur();
 	private Departement choosedDepartement = new Departement();
 	private Drena choosedDrena = new Drena();
@@ -140,6 +137,7 @@ public class CentreControllers {
 		recupererCampagneEncours();
 		genererCodePromoteur();
 		genererCodeAnimateur();
+		recupererResponsable();
 	}
 	
 	
@@ -277,6 +275,7 @@ public class CentreControllers {
 			}
 			
 			upload();
+			System.out.println("========= User: ======"+userAuthentication.getUsername());
 			centre.setResponsable(userAuthentication.getResponsable());
 			iservice.addObject(this.centre);
 		
