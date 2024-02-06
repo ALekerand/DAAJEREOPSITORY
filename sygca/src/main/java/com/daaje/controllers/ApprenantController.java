@@ -55,6 +55,7 @@ public class ApprenantController {
 		for (Campagne var : campagnes) {
 			if (var.getEtatCampagne()== false) {
 				campagne = var;
+				break;
 			}
 		}
 	}

@@ -4,6 +4,8 @@
  
  	- numCNI ajouté à Personne Physique
  	- Table Personne Morale créée
+ 	- Adresse centre,Ecole,Responsable passé à 30
+ 	- le nom de la table LocaliteImplementation a changé
  
 	
 	
