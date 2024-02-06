@@ -54,7 +54,7 @@ public class UserAuthentication implements java.io.Serializable {
 		this.userId = userId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_RESPONSABLE")
 	public Responsable getResponsable() {
 		return this.responsable;

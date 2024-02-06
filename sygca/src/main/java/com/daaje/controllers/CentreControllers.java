@@ -33,6 +33,7 @@ import com.daaje.model.DrenaDepartement;
 import com.daaje.model.Enseigner;
 import com.daaje.model.Genre;
 import com.daaje.model.Iep;
+import com.daaje.model.Langue;
 import com.daaje.model.LocaliteDImplantation;
 import com.daaje.model.Ministere;
 import com.daaje.model.Nature;
@@ -44,12 +45,11 @@ import com.daaje.model.PersonnePhysique;
 import com.daaje.model.Profession;
 import com.daaje.model.Programme;
 import com.daaje.model.Promoteur;
-import com.daaje.model.Responsable;
 import com.daaje.model.TypeActivite;
 import com.daaje.model.TypeAlphabetisation;
 import com.daaje.model.UserAuthentication;
-import com.daaje.requetes.ReqUtilisateur;
 import com.daaje.requetes.RequeteEcole;
+import com.daaje.requetes.RequeteUtilisateur;
 import com.daaje.service.Iservice;
 
 @Component
@@ -61,7 +61,7 @@ public class CentreControllers {
 	RequeteEcole requeteEcole;
 	
 	@Autowired
-	ReqUtilisateur reqUtilisateur;
+	RequeteUtilisateur requeteUtilisateur;
 
 	private Centre centre = new Centre();
 	private int idLocalite;
@@ -76,11 +76,13 @@ public class CentreControllers {
 	private int idActivitePrimaire;
 	private int idActiviteSecondaire;
 	private int idTypeAlpha;
+	private int idLangue;
 	private String value1, value2, value3;
 	private boolean skip;
 	private String etatPermanence;
 	private UserAuthentication userAuthentication = new UserAuthentication();
 	private Animateur animateur = new Animateur();
+	private Nature natureCentre = new Nature();
 	private Departement choosedDepartement = new Departement();
 	private Drena choosedDrena = new Drena();
 	private Centre selectedObject = new Centre();
@@ -95,6 +97,7 @@ public class CentreControllers {
 	private Enseigner enseigner = new Enseigner();
 	private  Ong ong = new Ong();
 	private PersonnePhysique personnePhysique = new PersonnePhysique();
+	//private PersonnePhysique personnePhysique = new PersonnePhysique();
 	private Programme programme = new Programme();
 	private Ministere ministere = new Ministere();
 	private String type_promoteur;
@@ -110,6 +113,7 @@ public class CentreControllers {
 	private List listNiveauAnimateur = new ArrayList<>();
 	private List listEcole = new ArrayList<>();
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
+	private List<Langue> listLangue = new ArrayList<Langue>();
 	private List<TypeAlphabetisation> listTypeAlpha = new ArrayList<TypeAlphabetisation>(); 
 	
 	
@@ -126,6 +130,7 @@ public class CentreControllers {
 	private PanelGrid pGridPh = new PanelGrid();
 	private PanelGrid pGridMini = new PanelGrid();
 	private PanelGrid pGridProg = new PanelGrid();
+	private PanelGrid pGridEntrep = new PanelGrid();
 		
 	//Methodes
 	@PostConstruct
@@ -135,18 +140,19 @@ public class CentreControllers {
 		this.pGridMini.setRendered(false);
 		this.pGridPh.setRendered(false);
 		this.pGridProg.setRendered(false);
+		this.pGridEntrep.setRendered(false);
 		this.natureProOneMenu.setDisabled(true);
 		recupererCampagneEncours();
 		genererCodePromoteur();
 		genererCodeAnimateur();
-		recupererResponsable();
 	}
 	
 	
-	public Responsable recupererResponsable() {
-		userAuthentication = reqUtilisateur.RecupererUtilisateurCourrant();
-		return null;
+	public UserAuthentication chagerUtilisateur() {
+		return userAuthentication = requeteUtilisateur.recuperUser();
 	}
+	
+	
 	
 	public void recupererCampagneEncours() {
 		campagnes = iservice.getObjects("Campagne");
@@ -232,12 +238,21 @@ public class CentreControllers {
 		 iservice.addObject(this.promoteur);
 		 
 			switch (type_promoteur){
+			
 			case "personne_physique": {
 				personnePhysique.setPromoteur(promoteur);
 				personnePhysique.setCodePromoteur(promoteur.getCodePromoteur());
 				iservice.addObject(personnePhysique);
 				break;
 			}
+			
+			case "personne_morale": {
+				personnePhysique.setPromoteur(promoteur);
+				personnePhysique.setCodePromoteur(promoteur.getCodePromoteur());
+				iservice.addObject(personnePhysique);
+				break;
+			}
+			
 			
 			case "ong": {
 				ong.setPromoteur(promoteur);
@@ -277,7 +292,7 @@ public class CentreControllers {
 			}
 			
 			upload();
-			System.out.println("========= User: ======"+userAuthentication.getUsername());
+			chagerUtilisateur();
 			centre.setResponsable(userAuthentication.getResponsable());
 			iservice.addObject(this.centre);
 		
@@ -301,6 +316,7 @@ public class CentreControllers {
 			//Gestion de la table Enseigner
 			enseigner.setCampagne(campagneEnCours);
 			enseigner.setTypeAlphabetisation((TypeAlphabetisation) iservice.getObjectById(idTypeAlpha, "TypeAlphabetisation"));
+			enseigner.setLangue((Langue) iservice.getObjectById(idLangue, "Langue"));
 			if (value1 !="") {
 				enseigner.setNiveauFormation((NiveauFormation) iservice.getObjectById(1, "NiveauFormation"));
 				enseigner.setAnimateur(animateur);
@@ -383,10 +399,21 @@ public class CentreControllers {
 	public void activiverChamp() {
 		switch (type_promoteur) {
 		case "personne_physique": {
+			this.pGridPh.setRendered(true);
+			this.pGridOng.setRendered(false);
+			this.pGridMini.setRendered(false);
+			this.pGridProg.setRendered(false);
+			this.pGridEntrep.setRendered(false);
+			break;
+		}
+		
+		case "personne_morale": {
 			this.pGridOng.setRendered(false);
 			this.pGridMini.setRendered(false);
 			this.pGridPh.setRendered(true);
 			this.pGridProg.setRendered(false);
+			this.pGridEntrep.setRendered(true);
+			this.pGridEntrep.setRendered(false);
 			break;
 		}
 		
@@ -395,6 +422,7 @@ public class CentreControllers {
 			this.pGridMini.setRendered(false);
 			this.pGridPh.setRendered(false);
 			this.pGridProg.setRendered(false);
+			this.pGridEntrep.setRendered(false);
 			break;
 		}
 		
@@ -403,6 +431,7 @@ public class CentreControllers {
 			this.pGridMini.setRendered(false);
 			this.pGridPh.setRendered(false);
 			this.pGridProg.setRendered(true);
+			this.pGridEntrep.setRendered(false);
 			break;
 		}
 		
@@ -443,8 +472,14 @@ public class CentreControllers {
 	
 	
 	public void chargerNatureProjet() {
-		natureProOneMenu.setDisabled(false);
+		natureCentre = (Nature) iservice.getObjectById(idNature, "Nature");
+		if (natureCentre.getLibelleNature().equalsIgnoreCase("Projet")) {
+			natureProOneMenu.setDisabled(false);
+		}else {
+			natureProOneMenu.setDisabled(false);
+		}
 	}
+	
 	
 	public void chargerEcole() {
 		listEcole = requeteEcole.recupEcoleParIEP(idIep);
@@ -903,5 +938,35 @@ return listObject;
 
 	public void setNatureProOneMenu(SelectOneMenu natureProOneMenu) {
 		this.natureProOneMenu = natureProOneMenu;
+	}
+
+
+	public List<Langue> getListLangue() {
+		return listLangue = iservice.getObjects("Langue");
+	}
+
+
+	public void setListLangue(List<Langue> listLangue) {
+		this.listLangue = listLangue;
+	}
+
+
+	public int getIdLangue() {
+		return idLangue;
+	}
+
+
+	public void setIdLangue(int idLangue) {
+		this.idLangue = idLangue;
+	}
+
+
+	public PanelGrid getpGridEntrep() {
+		return pGridEntrep;
+	}
+
+
+	public void setpGridEntrep(PanelGrid pGridEntrep) {
+		this.pGridEntrep = pGridEntrep;
 	}
 }

@@ -11,7 +11,7 @@
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:wizard flowListener="#{centreControllers.onFlowProcess}">
-            <p:tab id="promoteur" title="Promoteur">
+         <p:tab id="promoteur" title="Promoteur">
             	<p:panel header="Enregistrement du promoteur">
 		
 		<fieldset>
@@ -21,6 +21,7 @@
         <p:selectOneRadio id="promo_rodio" value="#{centreControllers.type_promoteur}" binding="#{centreControllers.radio_promo}">
           <p:ajax partialSubmit="true" process="@this"  update="form" listener="#{centreControllers.activiverChamp}"/> 
           <f:selectItem itemLabel="Personne physique" itemValue="personne_physique"/>
+           <f:selectItem itemLabel="Personne morale" itemValue="personne_morale"/>
           <f:selectItem itemLabel="ONG" itemValue="ong"/>
           <f:selectItem itemLabel="Programme" itemValue="programme"/>
           <f:selectItem itemLabel="Ministère" itemValue="ministere"/>
@@ -46,6 +47,9 @@
 			<p:outputLabel for="input_prenom_ph" value="Prénoms:"></p:outputLabel>
 			<p:inputText id="input_prenom_ph" value="#{centreControllers.personnePhysique.prenomsPersonne}"></p:inputText>
 			
+			<p:outputLabel for="input_cni_ph" value="Numéro CNI:"></p:outputLabel>
+			<p:inputText id="input_cni_ph" ></p:inputText>
+			
 			<p:outputLabel for="input_phone_ph" value="Téléphone:"></p:outputLabel>
 			<p:inputText id="input_phone_ph" value="#{centreControllers.personnePhysique.telephonePersonne}" ></p:inputText>
 			
@@ -67,6 +71,17 @@
 			<p:outputLabel for="input_phone_min" value="Téléphone:"></p:outputLabel>
 			<p:inputText id="input_phone_min" ></p:inputText>
 
+	    	</p:panelGrid>
+	    	
+	    	<p:panelGrid id="info_entrep" columns="6" cellpadding="8" binding="#{centreControllers.pGridEntrep}">
+				<p:outputLabel for="input_raison_soc" value="Nom :"></p:outputLabel>
+				<p:inputText id="input_raison_soc" ></p:inputText>
+				
+				<p:outputLabel for="input_email_entrep" value="Téléphone:"></p:outputLabel>
+				<p:inputText id="input_email_entrep" ></p:inputText>
+				
+				<p:outputLabel for="input_phone_entrep" value="Téléphone:"></p:outputLabel>
+				<p:inputText id="input_phone_entrep" ></p:inputText>
 	    	</p:panelGrid>
 	    	
 	    </fieldset>
@@ -157,6 +172,12 @@
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listTypeAlpha}" var="tata" itemLabel="#{tata.libTypeAlpha}" itemValue="#{tata.idTypeAlpha}"></f:selectItems>
 			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_langue" value="Langue:"/>
+			<p:selectOneMenu id="cb_langue" required="true" value="#{centreControllers.idLangue}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listLangue}" var="tata" itemLabel="#{tata.libLangue}" itemValue="#{tata.idLangue}"></f:selectItems>
+			</p:selectOneMenu>
 	    
 	    </h:panelGrid>
 	    
@@ -180,6 +201,7 @@
 			</p:tab>
 			
 			<p:tab id="animateur" title="Animateur">
+			<p:panel header="Enregistrement de l'animateur">
 			<fieldset>
 			<legend> Informations sur l'animateur</legend>
 			<h:panelGrid id="info_animateur" columns="6" cellpadding="8">
@@ -230,15 +252,35 @@
 	   
 	   	<br></br> 
 	    	
-	    	<p:toolbar >
+	    	
+	    </p:panel>
+			</p:tab>
+			
+		<p:tab id="recap" title="Confirmation">
+			<p:panel header="Recapitulatif">
+			
+
+             <h:panelGrid columns="2" columnClasses="label, value">
+              <h:outputText value="Firstname: "/>
+              <h:outputText value="#{centreControllers.centre.nomCentre}" styleClass="outputLabel"/>
+
+              <h:outputText value="Lastname: "/>
+              <h:outputText value="#{centreControllers.centre.abreviationNomCentre}" styleClass="outputLabel"/>
+
+              <h:outputText value="Age: "/>
+              <h:outputText value="#{centreControllers.centre.adresseCentre}" styleClass="outputLabel"/>
+       		 </h:panelGrid>
+
+			
+			<p:toolbar >
 			<f:facet name="right">
 				<p:commandButton value="Enregistrer" actionListener="#{centreControllers.enregistrer}" update=":form" ><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
 				<p:commandButton value="Modifier" actionListener="#{centreControllers.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 				<p:commandButton value="Annuler" process="@this" actionListener="#{centreControllers.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>
-	   
-			</p:tab>
+		</p:panel>
+		</p:tab>
 			
 		</p:wizard>
 		

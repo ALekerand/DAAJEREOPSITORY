@@ -13,7 +13,14 @@ Table ETATDEMANDE
  DRENA DEPARTEMENT ========> Drena
  
  SOUPREFECTURE ========> DEPARTEMENT
+ 
  LocaliteImplementation ========> Commune
  LocaliteImplementation ========> SousPrefecture
+ 
+ USERAUTHENTIFICATION ========> RESPONSABLE
+ 
+ CENTRE ========> LocaliteImplementation
+ CENTRE ========> NATURE
+ CENTRE ========> PROMOTEUR
  
  

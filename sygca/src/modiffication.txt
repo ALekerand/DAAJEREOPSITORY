@@ -4,7 +4,8 @@
  
  	- numCNI ajouté à Personne Physique
  	- Table Personne Morale créée
- 	- Taille adresse_responsable de RESPONSABLE mise à 30 caractères
+ 	- Adresse centre,Ecole,Responsable passé à 30
+ 	- le nom de la table LocaliteImplementation a changé
  
 	
 	
