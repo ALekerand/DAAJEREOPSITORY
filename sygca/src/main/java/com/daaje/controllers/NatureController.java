@@ -17,14 +17,14 @@ import com.daaje.service.Iservice;
 @Component
 public class NatureController {
 	@Autowired
-	public Iservice iservice;
-	public Nature nature = new Nature();
-	public Nature selectedObject = new Nature();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+	private Nature nature = new Nature();
+	private Nature selectedObject = new Nature();
+	private List listObject = new ArrayList();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 	@PostConstruct

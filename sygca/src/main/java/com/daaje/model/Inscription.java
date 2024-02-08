@@ -60,7 +60,7 @@ public class Inscription implements java.io.Serializable {
 		this.idInscription = idInscription;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_APPRENANT", nullable = false)
 	public Apprenant getApprenant() {
 		return this.apprenant;

@@ -20,16 +20,16 @@ import com.daaje.service.Iservice;
 @Component
 public class SousPrefectureController {
 	@Autowired
-	public Iservice iservice;
-	public int idDepartement;
-	public SousPrefecture sousPrefecture = new SousPrefecture();
-	public SousPrefecture selectedObject = new SousPrefecture();
-	public List listObject = new ArrayList();
-	public List<Departement> listDepartement = new ArrayList<Departement>();
+	private Iservice iservice;
+	private int idDepartement;
+	private SousPrefecture sousPrefecture = new SousPrefecture();
+	private SousPrefecture selectedObject = new SousPrefecture();
+	private List listObject = new ArrayList();
+	private List<Departement> listDepartement = new ArrayList<Departement>();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 	@PostConstruct

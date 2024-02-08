@@ -17,14 +17,14 @@ import com.daaje.service.Iservice;
 @Component
 public class LangueController {
 	@Autowired
-	public Iservice iservice;
-	public Langue langue = new Langue();
-	public Langue selectedObject = new Langue();
-	public List listObject = new ArrayList();
+	private Iservice iservice;
+	private Langue langue = new Langue();
+	private Langue selectedObject = new Langue();
+	private List listObject = new ArrayList();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 	@PostConstruct

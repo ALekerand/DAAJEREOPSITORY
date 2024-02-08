@@ -18,16 +18,16 @@ import com.daaje.service.Iservice;
 @Component
 public class EcoleController {
 	@Autowired
-	public Iservice iservice;
-	public int idIep;
-	public Ecole ecole = new Ecole();
-	public Ecole selectedObject = new Ecole();
-	public List listObject = new ArrayList();
-	public List<Iep> listIep = new ArrayList<Iep>();
+	private Iservice iservice;
+	private int idIep;
+	private Ecole ecole = new Ecole();
+	private Ecole selectedObject = new Ecole();
+	private List listObject = new ArrayList();
+	private List<Iep> listIep = new ArrayList<Iep>();
 
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();	
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();	
 	
 //Methodes
 @PostConstruct

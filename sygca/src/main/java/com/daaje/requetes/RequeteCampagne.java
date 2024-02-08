@@ -24,6 +24,12 @@ public class RequeteCampagne {
 	return listeIep;
 	}
 	
+	public Campagne recupLastCampagne(){
+	String query = "SELECT `campagne`.*FROM `campagne`WHERE `campagne`.`ETAT_CAMPAGNE` = '0'";
+	Campagne campagne = (Campagne) getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Campagne.class).uniqueResult();
+	return campagne;
+	}
+	
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}

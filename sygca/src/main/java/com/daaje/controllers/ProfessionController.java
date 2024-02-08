@@ -20,20 +20,20 @@ import com.daaje.service.Iservice;
 @Component
 public class ProfessionController {
 	@Autowired
-	public Iservice iservice;
-	public int idAnimateur;
-	public int idActivite;
-	public int idTypeactivite;
-	public Profession profession = new Profession();
-	public Profession selectedObject = new Profession();
-	public List listObject = new ArrayList();
-	public List<Animateur> listAnimateur = new ArrayList<Animateur>();
-	public List<Activite> listActivite = new ArrayList<Activite>();
-	public List<TypeActivite> listTypeActivite = new ArrayList<TypeActivite>();
+	private Iservice iservice;
+	private int idAnimateur;
+	private int idActivite;
+	private int idTypeactivite;
+	private Profession profession = new Profession();
+	private Profession selectedObject = new Profession();
+	private List listObject = new ArrayList();
+	private List<Animateur> listAnimateur = new ArrayList<Animateur>();
+	private List<Activite> listActivite = new ArrayList<Activite>();
+	private List<TypeActivite> listTypeActivite = new ArrayList<TypeActivite>();
 	
 //Controle des composants
-	public CommandButton cmdBModifier = new CommandButton();
-	public CommandButton cmdBEnregistrer = new CommandButton();
+	private CommandButton cmdBModifier = new CommandButton();
+	private CommandButton cmdBEnregistrer = new CommandButton();
 		
 //Methodes
 	@PostConstruct
