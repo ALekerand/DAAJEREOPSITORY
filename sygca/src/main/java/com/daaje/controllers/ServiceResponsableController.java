@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,12 +13,11 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.daaje.model.Departement;
 import com.daaje.model.Drena;
-import com.daaje.model.ServiceResponsable;
-import com.daaje.requetes.RequeteIEP;
 import com.daaje.model.Iep;
 import com.daaje.model.Responsable;
+import com.daaje.model.ServiceResponsable;
+import com.daaje.requetes.RequeteIEP;
 import com.daaje.service.Iservice;
 
 @Component
@@ -33,6 +34,7 @@ public class ServiceResponsableController {
 	private int idIep;
 	private ServiceResponsable serviceResponsable = new ServiceResponsable();
 	private ServiceResponsable selectedObject = new ServiceResponsable();
+	private Drena choosedDrena = new Drena();
 	private List listObject = new ArrayList();
 	private List<Responsable> listResponsable = new ArrayList<Responsable>();
 	private List<Drena> listDrena = new ArrayList<Drena>();
@@ -91,10 +93,25 @@ public class ServiceResponsableController {
 		cmdBModifier.setDisabled(false);
 	}
 	
-	
-	public void chargerIep(){
-		listIep = requeteIEP.recupEcoleParIEP(idDrena);
+	public void chargerIep() {
+		listIep.clear();
+		choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
+		for (Iep var : choosedDrena.getIeps()) {
+			listIep.add(var);
+		}
+		//=======Pour le rangement par ordre alphabétique======
+				Collections.sort(listIep, new Comparator<Iep>() {
+			        @Override
+			        public int compare(Iep ob1, Iep ob2)
+			        {
+			 
+			            return  ob1.getNomIep().compareTo(ob2.getNomIep());
+			        }
+			    });
+				//========================  Fin  =======================
 	}
+	
+	
 	
 	public void info(String message){
 	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
@@ -175,6 +192,19 @@ public class ServiceResponsableController {
 
 
 	public List<Responsable> getListResponsable() {
+		listResponsable = iservice.getObjects("Responsable");
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listResponsable, new Comparator<Responsable>() {
+	        @Override
+	        public int compare(Responsable ob1, Responsable ob2)
+	        {
+	 
+	            return  ob1.getNomResponsable().compareTo(ob2.getNomResponsable());
+	        }
+	    });
+		//========================  Fin  =======================
+		
 		return listResponsable = iservice.getObjects("Responsable");
 	}
 

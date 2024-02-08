@@ -167,6 +167,13 @@
 			<f:selectItems value="#{centreControllers.listEcole}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
 			</p:selectOneMenu>
 			
+			<p:outputLabel for="input_lat" value="Latitude:"></p:outputLabel>
+			<p:inputText id="input_lat"></p:inputText>
+			
+			<p:outputLabel for="input_long" value="Longitude:"></p:outputLabel>
+			<p:inputText id="input_l"></p:inputText>
+			
+			
 			<p:outputLabel for="cb_type_alpha" value="Type Alphabétisation:"/>
 			<p:selectOneMenu id="cb_type_alpha" required="true" value="#{centreControllers.idTypeAlpha}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
@@ -259,7 +266,27 @@
 		<p:tab id="recap" title="Confirmation">
 			<p:panel header="Recapitulatif">
 			
+<h2>Promoteur</h2>
+		<h:outputText value="Type promoteur: "/>
+        <h:outputText value="" styleClass="outputLabel"/>
+        
+        <h:outputText value="Nom: "/>
+        <h:outputText value="" styleClass="outputLabel"/>
+        
+        <h:outputText value="Prenoms: "/>
+        <h:outputText value="" styleClass="outputLabel"/>
+        
+        <h:outputText value="Numéro CNI: "/>
+        <h:outputText value="" styleClass="outputLabel"/>
+        
+        <h:outputText value="Type promoteur: "/>
+        <h:outputText value="" styleClass="outputLabel"/>
+        
+        <h:outputText value="Type promoteur: "/>
+        <h:outputText value="" styleClass="outputLabel"/>
 
+
+<h2>Centre</h2>
              <h:panelGrid columns="2" columnClasses="label, value">
               <h:outputText value="Firstname: "/>
               <h:outputText value="#{centreControllers.centre.nomCentre}" styleClass="outputLabel"/>

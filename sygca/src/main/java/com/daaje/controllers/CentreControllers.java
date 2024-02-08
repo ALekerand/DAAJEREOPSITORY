@@ -410,10 +410,9 @@ public class CentreControllers {
 		case "personne_morale": {
 			this.pGridOng.setRendered(false);
 			this.pGridMini.setRendered(false);
-			this.pGridPh.setRendered(true);
+			this.pGridPh.setRendered(false);
 			this.pGridProg.setRendered(false);
 			this.pGridEntrep.setRendered(true);
-			this.pGridEntrep.setRendered(false);
 			break;
 		}
 		

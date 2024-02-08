@@ -33,15 +33,12 @@
 			<p:outputLabel for="cb_responsable" value="Responsable:" />
             <p:selectOneMenu id="cb_responsable" value="#{serviceResponsableController.idResponsable}">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
-            <f:selectItems value="#{serviceResponsableController.listResponsable}" var="toto" itemLabel="#{toto.nomResponsable}" itemValue="#{toto.idResponsable}" />
+            <f:selectItems value="#{serviceResponsableController.listResponsable}" var="toto" itemLabel="#{toto.nomResponsable} #{toto.prenomResponsable}" itemValue="#{toto.idResponsable}" />
 			</p:selectOneMenu>
 			
-			<p:outputLabel for="input_nom" value="Date Arrivée:"></p:outputLabel>
-			<p:calendar id="input_nom" value="#{serviceResponsableController.serviceResponsable.dateArrivee}" required="true" pattern="dd/MM/yyyy"></p:calendar>
-			
-			<p:outputLabel for="input_prenom" value="Date Départ:"></p:outputLabel>
-			<p:calendar id="input_prenom" value="#{serviceResponsableController.serviceResponsable.dateDepart}" required="true" pattern="dd/MM/yyyy"></p:calendar>						
-										
+			<p:outputLabel for="input_arriv" value="Date Arrivée:"></p:outputLabel>
+			<p:calendar id="input_arriv" value="#{serviceResponsableController.serviceResponsable.dateArrivee}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+				
 		</h:panelGrid>	
 		</fieldset>    	    
 	    </p:panel>
