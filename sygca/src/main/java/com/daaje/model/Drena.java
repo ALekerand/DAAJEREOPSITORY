@@ -90,7 +90,7 @@ public class Drena implements java.io.Serializable {
 		this.telephoneDrena = telephoneDrena;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "drena")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "drena")
 	public Set<Iep> getIeps() {
 		return this.ieps;
 	}
