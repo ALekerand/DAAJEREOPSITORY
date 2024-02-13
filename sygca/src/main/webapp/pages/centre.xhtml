@@ -258,56 +258,18 @@
 	    	</fieldset>
 	   
 	   	<br></br> 
-	    	
-	    	
-	    </p:panel>
-			</p:tab>
-			
-		<p:tab id="recap" title="Confirmation">
-			<p:panel header="Recapitulatif">
-			
-<h2>Promoteur</h2>
-		<h:outputText value="Type promoteur: "/>
-        <h:outputText value="" styleClass="outputLabel"/>
-        
-        <h:outputText value="Nom: "/>
-        <h:outputText value="" styleClass="outputLabel"/>
-        
-        <h:outputText value="Prenoms: "/>
-        <h:outputText value="" styleClass="outputLabel"/>
-        
-        <h:outputText value="Numéro CNI: "/>
-        <h:outputText value="" styleClass="outputLabel"/>
-        
-        <h:outputText value="Type promoteur: "/>
-        <h:outputText value="" styleClass="outputLabel"/>
-        
-        <h:outputText value="Type promoteur: "/>
-        <h:outputText value="" styleClass="outputLabel"/>
-
-
-<h2>Centre</h2>
-             <h:panelGrid columns="2" columnClasses="label, value">
-              <h:outputText value="Firstname: "/>
-              <h:outputText value="#{centreControllers.centre.nomCentre}" styleClass="outputLabel"/>
-
-              <h:outputText value="Lastname: "/>
-              <h:outputText value="#{centreControllers.centre.abreviationNomCentre}" styleClass="outputLabel"/>
-
-              <h:outputText value="Age: "/>
-              <h:outputText value="#{centreControllers.centre.adresseCentre}" styleClass="outputLabel"/>
-       		 </h:panelGrid>
-
-			
-			<p:toolbar >
+	    	<p:toolbar >
 			<f:facet name="right">
 				<p:commandButton value="Enregistrer" actionListener="#{centreControllers.enregistrer}" update=":form" ><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
 				<p:commandButton value="Modifier" actionListener="#{centreControllers.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 				<p:commandButton value="Annuler" process="@this" actionListener="#{centreControllers.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>
-		</p:panel>
-		</p:tab>
+	    	
+	    </p:panel>
+			</p:tab>
+			
+		
 			
 		</p:wizard>
 		

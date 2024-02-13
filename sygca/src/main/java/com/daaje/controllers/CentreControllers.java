@@ -85,6 +85,7 @@ public class CentreControllers {
 	private Nature natureCentre = new Nature();
 	private Departement choosedDepartement = new Departement();
 	private Drena choosedDrena = new Drena();
+	private Iep choosedIep = new Iep();
 	private Centre selectedObject = new Centre();
 	private Promoteur promoteur = new Promoteur();
 	private Campagne campagneEnCours = new Campagne();
@@ -277,7 +278,8 @@ public class CentreControllers {
 			}
 			
 			//Enregistrer le centre
-			centre.setIep((Iep) iservice.getObjectById(idIep, "Iep"));
+			choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
+			centre.setIep(choosedIep);
 			centre.setLocaliteDImplantation((LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation"));
 			centre.setNature((Nature) iservice.getObjectById(idNature, "Nature"));
 			centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
@@ -967,5 +969,35 @@ return listObject;
 
 	public void setpGridEntrep(PanelGrid pGridEntrep) {
 		this.pGridEntrep = pGridEntrep;
+	}
+
+
+	public Departement getChoosedDepartement() {
+		return choosedDepartement;
+	}
+
+
+	public void setChoosedDepartement(Departement choosedDepartement) {
+		this.choosedDepartement = choosedDepartement;
+	}
+
+
+	public Drena getChoosedDrena() {
+		return choosedDrena;
+	}
+
+
+	public void setChoosedDrena(Drena choosedDrena) {
+		this.choosedDrena = choosedDrena;
+	}
+
+
+	public Iep getChoosedIep() {
+		return choosedIep;
+	}
+
+
+	public void setChoosedIep(Iep choosedIep) {
+		this.choosedIep = choosedIep;
 	}
 }
