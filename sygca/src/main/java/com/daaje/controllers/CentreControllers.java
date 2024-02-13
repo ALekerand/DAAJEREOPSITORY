@@ -153,8 +153,6 @@ public class CentreControllers {
 		return userAuthentication = requeteUtilisateur.recuperUser();
 	}
 	
-	
-	
 	public void recupererCampagneEncours() {
 		campagnes = iservice.getObjects("Campagne");
 		for (Campagne var : campagnes) {

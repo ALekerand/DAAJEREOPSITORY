@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
+// Generated 13 f�vr. 2024, 11:13:45 by Hibernate Tools 4.3.6.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +26,7 @@ public class PersonnePhysique implements java.io.Serializable {
 	private String prenomsPersonne;
 	private String telephonePersonne;
 	private String mailPersonne;
+	private String numCni;
 
 	public PersonnePhysique() {
 	}
@@ -35,13 +36,14 @@ public class PersonnePhysique implements java.io.Serializable {
 	}
 
 	public PersonnePhysique(Promoteur promoteur, String codePromoteur, String nomPersonne, String prenomsPersonne,
-			String telephonePersonne, String mailPersonne) {
+			String telephonePersonne, String mailPersonne, String numCni) {
 		this.promoteur = promoteur;
 		this.codePromoteur = codePromoteur;
 		this.nomPersonne = nomPersonne;
 		this.prenomsPersonne = prenomsPersonne;
 		this.telephonePersonne = telephonePersonne;
 		this.mailPersonne = mailPersonne;
+		this.numCni = numCni;
 	}
 
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "promoteur"))
@@ -110,6 +112,15 @@ public class PersonnePhysique implements java.io.Serializable {
 
 	public void setMailPersonne(String mailPersonne) {
 		this.mailPersonne = mailPersonne;
+	}
+
+	@Column(name = "NUM_CNI", length = 25)
+	public String getNumCni() {
+		return this.numCni;
+	}
+
+	public void setNumCni(String numCni) {
+		this.numCni = numCni;
 	}
 
 }

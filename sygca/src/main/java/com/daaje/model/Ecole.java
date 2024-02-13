@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
+// Generated 13 f�vr. 2024, 11:13:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -86,7 +86,7 @@ public class Ecole implements java.io.Serializable {
 		this.nomEcole = nomEcole;
 	}
 
-	@Column(name = "ADRESSE_ECOLE", length = 15)
+	@Column(name = "ADRESSE_ECOLE", length = 30)
 	public String getAdresseEcole() {
 		return this.adresseEcole;
 	}

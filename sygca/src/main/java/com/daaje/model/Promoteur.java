@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
+// Generated 13 f�vr. 2024, 11:13:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +24,7 @@ public class Promoteur implements java.io.Serializable {
 	private String codePromoteur;
 	private Ong ong;
 	private Ministere ministere;
+	private PersonneMorale personneMorale;
 	private Programme programme;
 	private PersonnePhysique personnePhysique;
 	private Set<Centre> centres = new HashSet<Centre>(0);
@@ -31,11 +32,12 @@ public class Promoteur implements java.io.Serializable {
 	public Promoteur() {
 	}
 
-	public Promoteur(String codePromoteur, Ong ong, Ministere ministere, Programme programme,
-			PersonnePhysique personnePhysique, Set<Centre> centres) {
+	public Promoteur(String codePromoteur, Ong ong, Ministere ministere, PersonneMorale personneMorale,
+			Programme programme, PersonnePhysique personnePhysique, Set<Centre> centres) {
 		this.codePromoteur = codePromoteur;
 		this.ong = ong;
 		this.ministere = ministere;
+		this.personneMorale = personneMorale;
 		this.programme = programme;
 		this.personnePhysique = personnePhysique;
 		this.centres = centres;
@@ -78,6 +80,15 @@ public class Promoteur implements java.io.Serializable {
 
 	public void setMinistere(Ministere ministere) {
 		this.ministere = ministere;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "promoteur")
+	public PersonneMorale getPersonneMorale() {
+		return this.personneMorale;
+	}
+
+	public void setPersonneMorale(PersonneMorale personneMorale) {
+		this.personneMorale = personneMorale;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "promoteur")

@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
+// Generated 13 f�vr. 2024, 11:13:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -56,7 +56,7 @@ public class LocaliteDImplantation implements java.io.Serializable {
 		this.idLocalite = idLocalite;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_COMMUNE")
 	public Commune getCommune() {
 		return this.commune;
@@ -66,7 +66,7 @@ public class LocaliteDImplantation implements java.io.Serializable {
 		this.commune = commune;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_SOUS_PREFECTURE", nullable = false)
 	public SousPrefecture getSousPrefecture() {
 		return this.sousPrefecture;

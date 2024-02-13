@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
+// Generated 13 f�vr. 2024, 11:13:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,12 +43,11 @@ public class Centre implements java.io.Serializable {
 	public Centre() {
 	}
 
-	public Centre(Iep iep, LocaliteDImplantation localiteDImplantation, Nature nature, NatureProjet natureProjet,
-			Promoteur promoteur, Responsable responsable) {
+	public Centre(Iep iep, LocaliteDImplantation localiteDImplantation, Nature nature, Promoteur promoteur,
+			Responsable responsable) {
 		this.iep = iep;
 		this.localiteDImplantation = localiteDImplantation;
 		this.nature = nature;
-		this.natureProjet = natureProjet;
 		this.promoteur = promoteur;
 		this.responsable = responsable;
 	}
@@ -109,7 +108,7 @@ public class Centre implements java.io.Serializable {
 		this.iep = iep;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_LOCALITE", nullable = false)
 	public LocaliteDImplantation getLocaliteDImplantation() {
 		return this.localiteDImplantation;
@@ -119,7 +118,7 @@ public class Centre implements java.io.Serializable {
 		this.localiteDImplantation = localiteDImplantation;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_NATURE", nullable = false)
 	public Nature getNature() {
 		return this.nature;
@@ -130,7 +129,7 @@ public class Centre implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_NATURE_PROJET", nullable = false)
+	@JoinColumn(name = "ID_NATURE_PROJET")
 	public NatureProjet getNatureProjet() {
 		return this.natureProjet;
 	}
@@ -139,7 +138,7 @@ public class Centre implements java.io.Serializable {
 		this.natureProjet = natureProjet;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_PROMOTEUR", nullable = false)
 	public Promoteur getPromoteur() {
 		return this.promoteur;
@@ -195,7 +194,7 @@ public class Centre implements java.io.Serializable {
 		this.telephoneCentre = telephoneCentre;
 	}
 
-	@Column(name = "ADRESSE_CENTRE", length = 20)
+	@Column(name = "ADRESSE_CENTRE", length = 30)
 	public String getAdresseCentre() {
 		return this.adresseCentre;
 	}

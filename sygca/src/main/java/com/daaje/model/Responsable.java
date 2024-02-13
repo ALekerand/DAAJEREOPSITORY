@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 10 janv. 2024, 16:03:56 by Hibernate Tools 4.3.6.Final
+// Generated 13 f�vr. 2024, 11:13:45 by Hibernate Tools 4.3.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,6 +27,7 @@ public class Responsable implements java.io.Serializable {
 	private Integer idResponsable;
 	private Fonction fonction;
 	private UserAuthentication userAuthentication;
+	private String codeResponsable;
 	private String matriculeResponsable;
 	private String nomResponsable;
 	private String prenomResponsable;
@@ -49,13 +50,14 @@ public class Responsable implements java.io.Serializable {
 		this.userAuthentication = userAuthentication;
 	}
 
-	public Responsable(Fonction fonction, UserAuthentication userAuthentication, String matriculeResponsable,
-			String nomResponsable, String prenomResponsable, String telephoneResponsable, String adresseResponsable,
-			Date datePriseService, Date dateRetraite, Date dateNaissance, String mailResponsable, Boolean membreDc,
-			Set<ServiceResponsable> serviceResponsables, Set<UserAuthentication> userAuthentications,
-			Set<Centre> centres) {
+	public Responsable(Fonction fonction, UserAuthentication userAuthentication, String codeResponsable,
+			String matriculeResponsable, String nomResponsable, String prenomResponsable, String telephoneResponsable,
+			String adresseResponsable, Date datePriseService, Date dateRetraite, Date dateNaissance,
+			String mailResponsable, Boolean membreDc, Set<ServiceResponsable> serviceResponsables,
+			Set<UserAuthentication> userAuthentications, Set<Centre> centres) {
 		this.fonction = fonction;
 		this.userAuthentication = userAuthentication;
+		this.codeResponsable = codeResponsable;
 		this.matriculeResponsable = matriculeResponsable;
 		this.nomResponsable = nomResponsable;
 		this.prenomResponsable = prenomResponsable;
@@ -103,6 +105,15 @@ public class Responsable implements java.io.Serializable {
 		this.userAuthentication = userAuthentication;
 	}
 
+	@Column(name = "CODE_RESPONSABLE", length = 10)
+	public String getCodeResponsable() {
+		return this.codeResponsable;
+	}
+
+	public void setCodeResponsable(String codeResponsable) {
+		this.codeResponsable = codeResponsable;
+	}
+
 	@Column(name = "MATRICULE_RESPONSABLE", length = 10)
 	public String getMatriculeResponsable() {
 		return this.matriculeResponsable;
@@ -139,7 +150,7 @@ public class Responsable implements java.io.Serializable {
 		this.telephoneResponsable = telephoneResponsable;
 	}
 
-	@Column(name = "ADRESSE_RESPONSABLE", length = 20)
+	@Column(name = "ADRESSE_RESPONSABLE", length = 30)
 	public String getAdresseResponsable() {
 		return this.adresseResponsable;
 	}
