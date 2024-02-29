@@ -108,7 +108,7 @@ public class Centre implements java.io.Serializable {
 		this.iep = iep;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_LOCALITE", nullable = false)
 	public LocaliteDImplantation getLocaliteDImplantation() {
 		return this.localiteDImplantation;
@@ -118,7 +118,7 @@ public class Centre implements java.io.Serializable {
 		this.localiteDImplantation = localiteDImplantation;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_NATURE", nullable = false)
 	public Nature getNature() {
 		return this.nature;
@@ -138,7 +138,7 @@ public class Centre implements java.io.Serializable {
 		this.natureProjet = natureProjet;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_PROMOTEUR", nullable = false)
 	public Promoteur getPromoteur() {
 		return this.promoteur;

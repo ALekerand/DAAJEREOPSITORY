@@ -23,6 +23,9 @@
 			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
 			<p:inputText id="input_mail" value="#{iepController.iep.mailIep}" required="true"></p:inputText>
 			
+			<p:outputLabel for="input_phone" value="Téléphone:"></p:outputLabel>
+			<p:inputText id="input_phone" value="#{iepController.iep.telephoneIep}" ></p:inputText>
+			
 			<p:outputLabel for="cb_drena" value="DRENA:" />
             <p:selectOneMenu id="cb_drena" value="#{iepController.idDrena}" required="true">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
@@ -61,6 +64,10 @@
 	    	
 	    	<p:column headerText="IEP">
 	    		<h:outputText value="#{toto.nomIep}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="DRENA de rattachement">
+	    		<h:outputText value="#{toto.drena.nomDrena}" />
 	    	</p:column>
 	    	
 	    	<p:column headerText="Mail">

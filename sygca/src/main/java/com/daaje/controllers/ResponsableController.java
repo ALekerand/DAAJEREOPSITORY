@@ -32,7 +32,6 @@ public class ResponsableController {
 	private UserAuthentication userAuthentication = new UserAuthentication();
 	private UserAuthorization userAuthorization = new UserAuthorization() ;
 	private String userRole;
-	//private	boolean valueDC;
 	
 	
 //Controle des composants
@@ -43,6 +42,19 @@ public class ResponsableController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
+	}
+	
+	
+	public void genererCodeResponsable() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Responsable").size();
+		if(nbEnregistrement < 10)
+			prefix = "RP00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "RP0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "RP" ;
+		this.responsable.setCodeResponsable(prefix+(nbEnregistrement+1));
 	}
 		
 	public void enregistrer(){
@@ -66,6 +78,7 @@ public class ResponsableController {
 		
 		annuler();
 		info("Enregistrement effectué");
+		genererCodeResponsable();
 	}
 	
 	public void modifier() {
@@ -75,18 +88,22 @@ public class ResponsableController {
 	}
 	
 	public void annuler() {
-		responsable.setMatriculeResponsable(null);
-		responsable.setNomResponsable(null);
-		responsable.setPrenomResponsable(null);
-		responsable.setTelephoneResponsable(null);
-		responsable.setAdresseResponsable(null);
-		responsable.setDatePriseService(null);
-		responsable.setDateRetraite(null);
-		responsable.setDateNaissance(null);
-		responsable.setMailResponsable(null);		
-		cmdBEnregistrer.setDisabled(false);
+		this.responsable.setCodeResponsable(null);
+		this.responsable.setMatriculeResponsable(null);
+		this.responsable.setNomResponsable(null);
+		this.responsable.setPrenomResponsable(null);
+		this.responsable.setTelephoneResponsable(null);
+		this.responsable.setAdresseResponsable(null);
+		this.responsable.setDatePriseService(null);
+		this.responsable.setDateRetraite(null);
+		this.responsable.setDateNaissance(null);
+		this.responsable.setMailResponsable(null);		
 		setIdFonction(0);
-		cmdBModifier.setDisabled(true);
+		genererCodeResponsable();
+		
+		this.cmdBEnregistrer.setDisabled(false);
+		this.cmdBModifier.setDisabled(true);
+		
 	}
 	
 	public void selectionnerLigne() {
@@ -197,10 +214,4 @@ return listObject;
 	public void setUserAuthorization(UserAuthorization userAuthorization) {
 		this.userAuthorization = userAuthorization;
 	}
-
-	/*
-	 * public boolean isValueDC() { return valueDC; }
-	 * 
-	 * public void setValueDC(boolean valueDC) { this.valueDC = valueDC; }
-	 */
 }

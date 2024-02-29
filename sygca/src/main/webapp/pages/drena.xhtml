@@ -19,13 +19,13 @@
 				<td width="70%">
 					<h:panelGrid columns="4" cellpadding="8">		
 					<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-					<p:inputText id="input_code" value="#{drenaController.drena.codeDrena}" readonly="true"></p:inputText>
+					<p:inputText id="input_code" value="#{drenaController.drena.codeDrena}" required="true"></p:inputText>
 					
 					<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
 					<p:inputText id="input_nom" value="#{drenaController.drena.nomDrena}" required="true"></p:inputText>
 		
 					<p:outputLabel for="input_tel" value="Telephone:"></p:outputLabel>
-					<p:inputText id="input_tel" value="#{drenaController.drena.telephoneDrena}" required="true"></p:inputText>
+					<p:inputText id="input_tel" value="#{drenaController.drena.telephoneDrena}"></p:inputText>
 		
 					<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
 					<p:inputText id="input_mail" value="#{drenaController.drena.mailDrena}" required="true"></p:inputText>

@@ -77,13 +77,11 @@ public class LocaliteDImplantationController {
 		//=======Pour le rangement par ordre alphabétique======
 				Collections.sort(listSousPrefecture, new Comparator<SousPrefecture>() {
 			        @Override
-			        public int compare(SousPrefecture ob1, SousPrefecture ob2)
-			        {
-			 
+			        public int compare(SousPrefecture ob1, SousPrefecture ob2){
 			            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
 			        }
 			    });
-				//========================  Fin  =======================
+		//========================  Fin  =======================
 	}
 	
 	public void modifier() {

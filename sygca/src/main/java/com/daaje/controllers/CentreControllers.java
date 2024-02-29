@@ -41,10 +41,12 @@ import com.daaje.model.NatureProjet;
 import com.daaje.model.NiveauAnimateur;
 import com.daaje.model.NiveauFormation;
 import com.daaje.model.Ong;
+import com.daaje.model.PersonneMorale;
 import com.daaje.model.PersonnePhysique;
 import com.daaje.model.Profession;
 import com.daaje.model.Programme;
 import com.daaje.model.Promoteur;
+import com.daaje.model.SousPrefecture;
 import com.daaje.model.TypeActivite;
 import com.daaje.model.TypeAlphabetisation;
 import com.daaje.model.UserAuthentication;
@@ -69,6 +71,7 @@ public class CentreControllers {
 	private int idNature;
 	private int idNatureProjet;
 	private int idDepartement;
+	private int idSousPrefecture;
 	private int idDrena;
 	private int idNiveau;
 	private int idGenre;
@@ -78,14 +81,18 @@ public class CentreControllers {
 	private int idTypeAlpha;
 	private int idLangue;
 	private String value1, value2, value3;
+	private String lieu;
 	private boolean skip;
 	private String etatPermanence;
+	private String etatLieu;
 	private UserAuthentication userAuthentication = new UserAuthentication();
 	private Animateur animateur = new Animateur();
 	private Nature natureCentre = new Nature();
 	private Departement choosedDepartement = new Departement();
+	private SousPrefecture choosedSousPrefecture = new SousPrefecture();
 	private Drena choosedDrena = new Drena();
 	private Iep choosedIep = new Iep();
+	private LocaliteDImplantation choosedLocalite = new LocaliteDImplantation();
 	private Centre selectedObject = new Centre();
 	private Promoteur promoteur = new Promoteur();
 	private Campagne campagneEnCours = new Campagne();
@@ -98,7 +105,7 @@ public class CentreControllers {
 	private Enseigner enseigner = new Enseigner();
 	private  Ong ong = new Ong();
 	private PersonnePhysique personnePhysique = new PersonnePhysique();
-	//private PersonnePhysique personnePhysique = new PersonnePhysique();
+	private PersonneMorale personneMorale = new PersonneMorale();
 	private Programme programme = new Programme();
 	private Ministere ministere = new Ministere();
 	private String type_promoteur;
@@ -107,6 +114,7 @@ public class CentreControllers {
 	private List listIep = new ArrayList<>();
 	private List<Drena> listDrena = new ArrayList<Drena>();
 	private List listDepartement = new ArrayList<>();
+	private List<SousPrefecture> listSousPrefecture = new ArrayList<SousPrefecture>();
 	private List listNatureProjet = new ArrayList<>();
 	private List listNature = new ArrayList<>();
 	private List listActivite = new ArrayList<>();
@@ -280,7 +288,9 @@ public class CentreControllers {
 			centre.setIep(choosedIep);
 			centre.setLocaliteDImplantation((LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation"));
 			centre.setNature((Nature) iservice.getObjectById(idNature, "Nature"));
-			centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
+			if (idNatureProjet!=0) {
+				centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
+			}
 			centre.setPromoteur(promoteur);
 			centre.setDroitOuvertureCentre(chemin);
 			
@@ -389,6 +399,8 @@ public class CentreControllers {
 		animateur.setNomAnimateur(null);
 		animateur.setPrenomAnimateur(null);
 		animateur.setAdresseAnimateur(null);
+		animateur.setDateNaisAnimateur(null);
+		animateur.setTelephoneAnimateur(null);
 		
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
@@ -446,17 +458,63 @@ public class CentreControllers {
 		}
 	}
 	
+	
+		public void chargerLocalite() {
+		choosedSousPrefecture = (SousPrefecture) iservice.getObjectById(idSousPrefecture, "SousPrefecture");
+		for ( LocaliteDImplantation var : choosedSousPrefecture.getLocaliteDImplantations()) {
+			listLocalite.add(var);
+			}
+			System.out.println(listSousPrefecture.size());
+			
+			//=======Pour le rangement par ordre alphabétique======
+					Collections.sort(listLocalite, new Comparator<LocaliteDImplantation>() {
+				        @Override
+				        public int compare(LocaliteDImplantation ob1, LocaliteDImplantation ob2)
+				        {
+				            return  ob1.getNomLocalite().compareTo(ob2.getNomLocalite());
+				        }
+				    });
+					//========================  Fin  =======================
+		}
+	
 	public void selectionnerLigne() {
 		centre = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
 	}
 	
-	public void chargerDrena() {
-		choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
-		listDrena.clear();
-		
+	public void chargerCombos() {
 		choosedDepartement = (Departement) iservice.getObjectById(idDepartement,"Departement");
+		System.out.println("Département selectionné:"+choosedDepartement.getNomDepartement());
+		// Charger les sous-préfectures
+		listSousPrefecture.clear();
+		listDrena.clear();
+		listIep.clear();
+		listLocalite.clear();
+		for ( SousPrefecture var : choosedDepartement.getSousPrefectures()) {
+			listSousPrefecture.add(var);
+		}
+		System.out.println(listSousPrefecture.size());
+		
+		
+			
+		//=======Pour le rangement par ordre alphabétique======
+				Collections.sort(listSousPrefecture, new Comparator<SousPrefecture>() {
+			        @Override
+			        public int compare(SousPrefecture ob1, SousPrefecture ob2)
+			        {
+			 
+			            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
+			        }
+			    });
+				//========================  Fin  =======================
+
+	
+		
+		
+		//Charger les DRENA
+		choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
+
 		for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
 			listDrena.add(var.getDrena());
 		}
@@ -475,7 +533,8 @@ public class CentreControllers {
 		if (natureCentre.getLibelleNature().equalsIgnoreCase("Projet")) {
 			natureProOneMenu.setDisabled(false);
 		}else {
-			natureProOneMenu.setDisabled(false);
+			natureProOneMenu.setDisabled(true);
+			setIdNatureProjet(0);
 		}
 	}
 	
@@ -941,7 +1000,18 @@ return listObject;
 
 
 	public List<Langue> getListLangue() {
-		return listLangue = iservice.getObjects("Langue");
+		listLangue = iservice.getObjects("Langue");
+		//=======Pour le rangement par ordre alphabétique======
+				Collections.sort(listLangue, new Comparator<Langue>() {
+			        @Override
+			        public int compare(Langue ob1, Langue ob2)
+			        {
+			            return  ob1.getLibLangue().compareTo(ob2.getLibLangue());
+			        }
+			    });
+				//========================  Fin  =======================
+		
+		return listLangue;
 	}
 
 
@@ -997,5 +1067,45 @@ return listObject;
 
 	public void setChoosedIep(Iep choosedIep) {
 		this.choosedIep = choosedIep;
+	}
+
+
+	public List<SousPrefecture> getListSousPrefecture() {
+		return listSousPrefecture;
+	}
+
+
+	public void setListSousPrefecture(List<SousPrefecture> listSousPrefecture) {
+		this.listSousPrefecture = listSousPrefecture;
+	}
+
+
+	public String getLieu() {
+		return lieu;
+	}
+
+
+	public void setLieu(String lieu) {
+		this.lieu = lieu;
+	}
+
+
+	public int getIdSousPrefecture() {
+		return idSousPrefecture;
+	}
+
+
+	public void setIdSousPrefecture(int idSousPrefecture) {
+		this.idSousPrefecture = idSousPrefecture;
+	}
+
+
+	public String getEtatLieu() {
+		return etatLieu;
+	}
+
+
+	public void setEtatLieu(String etatLieu) {
+		this.etatLieu = etatLieu;
 	}
 }

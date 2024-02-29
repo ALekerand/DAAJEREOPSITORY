@@ -37,10 +37,10 @@ public class DrenaController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
-		genererCode();
+		//genererCode();
 	}
 	
-	public void genererCode() {
+/*	public void genererCode() {
 		String prefix="";
 		int nbEnregistrement = this.iservice.getObjects("Drena").size();
 		if(nbEnregistrement < 10)
@@ -50,7 +50,7 @@ public class DrenaController {
 		if (nbEnregistrement > 100) 
 			prefix = "DR" ;
 		this.drena.setCodeDrena(prefix+(nbEnregistrement+1));
-	}
+	}*/
 	
 	public void enregistrer(){
 		iservice.addObject(this.drena);
@@ -78,7 +78,7 @@ public class DrenaController {
 		drena.setTelephoneDrena(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
-		genererCode();
+	//	genererCode();
 	}
 		
 	public void selectionnerLigne() {

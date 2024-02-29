@@ -1,11 +1,7 @@
 ===================== CONFIGURATION ====================
 
-Table ETATDEMANDE
- 1 : EN ATTENTE
- 2 : REJETE
- 3 : LIVRE
- 
- 
+
+
  =============== LAZY =====================
  DEPARTEMENT ========> SOUSPREFECTURE
  DEPARTEMENT ========> DRENADEPARTEMENT
@@ -22,5 +18,7 @@ Table ETATDEMANDE
  CENTRE ========> LocaliteImplementation
  CENTRE ========> NATURE
  CENTRE ========> PROMOTEUR
+ 
+ IEP ========> DRENA
  
  

@@ -4,14 +4,14 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 
 
 <!-- <context:annotation-config /> -->
-	<context:component-scan base-package="com.daaje" />
+	<context:component-scan base-package="com.daaje"/>
  
  
 <!-- definition de la datasource -->
@@ -20,7 +20,7 @@
 		<property name="url" value="jdbc:mysql://127.0.0.1/sygca_bd?zeroDateTimeBehavior=convertToNull"/>
 		<property name="username" value="root" />
 		<property name="password" value="" />
-	</bean>
+</bean>
  
    <!-- configuration de la sessionfactory d'hibernate -->
 	<bean id="sessionFactory"

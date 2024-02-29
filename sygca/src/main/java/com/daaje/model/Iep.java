@@ -62,7 +62,7 @@ public class Iep implements java.io.Serializable {
 		this.idIep = idIep;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_DRENA", nullable = false)
 	public Drena getDrena() {
 		return this.drena;

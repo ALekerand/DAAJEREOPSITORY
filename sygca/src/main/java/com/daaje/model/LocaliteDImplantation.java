@@ -56,7 +56,7 @@ public class LocaliteDImplantation implements java.io.Serializable {
 		this.idLocalite = idLocalite;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_COMMUNE")
 	public Commune getCommune() {
 		return this.commune;
@@ -66,7 +66,7 @@ public class LocaliteDImplantation implements java.io.Serializable {
 		this.commune = commune;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_SOUS_PREFECTURE", nullable = false)
 	public SousPrefecture getSousPrefecture() {
 		return this.sousPrefecture;

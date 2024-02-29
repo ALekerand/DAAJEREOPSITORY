@@ -27,7 +27,6 @@
         </p:selectOneRadio>
         
         <br />
-        
 			<p:panelGrid id="info_ong" columns="6" cellpadding="8" binding="#{centreControllers.pGridOng}" >
 			<p:outputLabel for="input_nom_ong" value="Nom ONG:"></p:outputLabel>
 			<p:inputText id="input_nom_ong" value="#{centreControllers.ong.nomOng}" ></p:inputText>
@@ -47,7 +46,7 @@
 			<p:inputText id="input_prenom_ph" value="#{centreControllers.personnePhysique.prenomsPersonne}"></p:inputText>
 			
 			<p:outputLabel for="input_cni_ph" value="Numéro CNI:"></p:outputLabel>
-			<p:inputText id="input_cni_ph" ></p:inputText>
+			<p:inputText id="input_cni_ph" value="#{centreControllers.personnePhysique.numCni}" ></p:inputText>
 			
 			<p:outputLabel for="input_phone_ph" value="Téléphone:"></p:outputLabel>
 			<p:inputText id="input_phone_ph" value="#{centreControllers.personnePhysique.telephonePersonne}" ></p:inputText>
@@ -59,9 +58,7 @@
 	    	<p:panelGrid id="info_prog" columns="6" cellpadding="8" binding="#{centreControllers.pGridProg}">
 			<p:outputLabel for="input_lib_prog" value="Nom programme:"></p:outputLabel>
 			<p:inputText id="input_lib_prog" value="#{centreControllers.programme.libelleProgramme}"></p:inputText>
-	    	
 	    	</p:panelGrid>
-	    	
 	    	
 	    	<p:panelGrid id="info_mini" columns="6" cellpadding="8" binding="#{centreControllers.pGridMini}">
 			<p:outputLabel for="input_nom_min" value="Nom :"></p:outputLabel>
@@ -76,7 +73,7 @@
 				<p:outputLabel for="input_raison_soc" value="Nom :"></p:outputLabel>
 				<p:inputText id="input_raison_soc" ></p:inputText>
 				
-				<p:outputLabel for="input_email_entrep" value="Téléphone:"></p:outputLabel>
+				<p:outputLabel for="input_email_entrep" value="Raison sociale:"></p:outputLabel>
 				<p:inputText id="input_email_entrep" ></p:inputText>
 				
 				<p:outputLabel for="input_phone_entrep" value="Téléphone:"></p:outputLabel>
@@ -115,9 +112,16 @@
 			
 			<p:outputLabel for="cb_departement" value="Département:"/>
 			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
-			<p:ajax listener="#{centreControllers.chargerDrena}" event="change" process="@this"  update="cb_drena"></p:ajax>
+			<p:ajax listener="#{centreControllers.chargerCombos}" event="change" process="@this"  update="cb_drena, cb_sp"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listDepartement}" var="tata" itemLabel="#{tata.nomDepartement}" itemValue="#{tata.idDepartement}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_sp" value="Sous-Préfecture:"/>
+			<p:selectOneMenu id="cb_sp" required="true" value="#{centreControllers.idSousPrefecture}">
+			<p:ajax listener="#{centreControllers.chargerLocalite}" event="change" process="@this"  update="cb_localite"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listSousPrefecture}" var="tata" itemLabel="#{tata.nomSousPrefecture}" itemValue="#{tata.idSousPrefecture}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_drena" value="DRENA:"/>
@@ -153,18 +157,27 @@
 			<f:selectItems value="#{centreControllers.listNatureProjet}" var="tata" itemLabel="#{tata.libelleNatureProjet}" itemValue="#{tata.idNatureProjet}"></f:selectItems>
 			</p:selectOneMenu>
 			
-			<h5 class="mt-0">Centre permanent:</h5>
+			<p:outputLabel for="perm" value="Permanent:"/>
         	<p:selectOneRadio id="perm" value="#{centreControllers.etatPermanence}">
             <f:selectItem itemLabel="Non" itemValue="NON"/>
             <f:selectItem itemLabel="Oui" itemValue="OUI"/>
             </p:selectOneRadio>
             
+            <p:outputLabel for="lieu" value="Nature lieu:"/>
+        	<p:selectOneRadio id="lieu" value="#{centreControllers.etatLieu}">
+            <f:selectItem itemLabel="Ecole" itemValue="ecole"/>
+            <f:selectItem itemLabel="Autre" itemValue="autre"/>
+            </p:selectOneRadio>
             
             <p:outputLabel for="cb_ecole" value="Ecole:"/>
 			<p:selectOneMenu id="cb_ecole" value="#{centreControllers.idEcole}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listEcole}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
 			</p:selectOneMenu>
+			
+			<p:outputLabel for="input_lieu" value="Lieu:"></p:outputLabel>
+			<p:inputText id="input_lieu"></p:inputText>
+			
 			
 			<p:outputLabel for="input_lat" value="Latitude:"></p:outputLabel>
 			<p:inputText id="input_lat"></p:inputText>
@@ -202,12 +215,10 @@
 	     	
 	     </fieldset>
 	    
-	   
 	    </p:panel>
 			</p:tab>
-			
-			<p:tab id="animateur" title="Animateur">
-			<p:panel header="Enregistrement de l'animateur">
+			<p:tab id="alphabetiseur" title="Alphabetiseur">
+			<p:panel header="Enregistrement de l'Alphabétiseur">
 			<fieldset>
 			<legend> Informations sur l'animateur</legend>
 			<h:panelGrid id="info_animateur" columns="6" cellpadding="8">
@@ -220,7 +231,7 @@
 			<p:outputLabel for="input_prenom_anim" value="Prenoms:"></p:outputLabel>
 			<p:inputText id="input_prenom_anim" value="#{centreControllers.animateur.prenomAnimateur}" ></p:inputText>
 				    
-		   	<p:outputLabel for="date_nais_anim" value="Date:"></p:outputLabel>
+		   	<p:outputLabel for="date_nais_anim" value="Date naisance:"></p:outputLabel>
 			<p:calendar id="date_nais_anim" locale="fr" navigator="true" pattern="dd/MM/yyyy"/>
 			
 			<p:outputLabel for="input_telephone_anim" value="Téléphone:"></p:outputLabel>

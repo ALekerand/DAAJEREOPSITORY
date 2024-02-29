@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Langue;
+import com.daaje.model.LocaliteDImplantation;
 import com.daaje.service.Iservice;
 
 @Component
@@ -86,7 +89,17 @@ public class LangueController {
 	}
 
 	public List getListObject() {
-		return listObject = iservice.getObjects("Langue");
+		listObject = iservice.getObjects("Langue");
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listObject, new Comparator<Langue>() {
+	        @Override
+	        public int compare(Langue ob1, Langue ob2)
+	        {
+	            return  ob1.getLibLangue().compareTo(ob2.getLibLangue());
+	        }
+	    });
+		//========================  Fin  =======================
+		return listObject;
 	}
 
 	public void setListObject(List listObject) {
