@@ -82,7 +82,7 @@ public class SousPrefecture implements java.io.Serializable {
 		this.nomSousPrefecture = nomSousPrefecture;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sousPrefecture")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "sousPrefecture")
 	public Set<LocaliteDImplantation> getLocaliteDImplantations() {
 		return this.localiteDImplantations;
 	}

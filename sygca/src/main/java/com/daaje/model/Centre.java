@@ -98,7 +98,7 @@ public class Centre implements java.io.Serializable {
 		this.ecole = ecole;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_IEP", nullable = false)
 	public Iep getIep() {
 		return this.iep;

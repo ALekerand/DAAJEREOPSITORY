@@ -18,6 +18,9 @@
  CENTRE ========> LocaliteImplementation
  CENTRE ========> NATURE
  CENTRE ========> PROMOTEUR
+ CENTRE ========> IEP
+ 
+ LocaliteImplementation  ========> SOUS PREFECTURE (set)
  
  IEP ========> DRENA
  

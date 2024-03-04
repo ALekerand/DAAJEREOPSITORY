@@ -483,7 +483,7 @@ public class CentreControllers {
 		cmdBModifier.setDisabled(false);
 	}
 	
-	public void chargerCombos() {
+	public void chargerSouprefecture() {
 		choosedDepartement = (Departement) iservice.getObjectById(idDepartement,"Departement");
 		System.out.println("Département selectionné:"+choosedDepartement.getNomDepartement());
 		// Charger les sous-préfectures
@@ -496,35 +496,26 @@ public class CentreControllers {
 		}
 		System.out.println(listSousPrefecture.size());
 		
-		
-			
 		//=======Pour le rangement par ordre alphabétique======
 				Collections.sort(listSousPrefecture, new Comparator<SousPrefecture>() {
 			        @Override
 			        public int compare(SousPrefecture ob1, SousPrefecture ob2)
 			        {
-			 
 			            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
 			        }
 			    });
 				//========================  Fin  =======================
-
-	
-		
-		
-		//Charger les DRENA
-		choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
-
-		for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
-			listDrena.add(var.getDrena());
-		}
 	}
 	
 	
 	public void chargerIep() {
-		for (Iep var : choosedDrena.getIeps()) {
-			listIep.add(var);
-		}
+			listIep.clear();
+			listEcole.clear();
+			
+			choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
+			for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
+				listDrena.add(var.getDrena());
+			}
 	}
 	
 	
@@ -540,6 +531,7 @@ public class CentreControllers {
 	
 	
 	public void chargerEcole() {
+		listEcole.clear();
 		listEcole = requeteEcole.recupEcoleParIEP(idIep);
 	}
 	

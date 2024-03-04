@@ -112,7 +112,7 @@
 			
 			<p:outputLabel for="cb_departement" value="Département:"/>
 			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
-			<p:ajax listener="#{centreControllers.chargerCombos}" event="change" process="@this"  update="cb_drena, cb_sp"></p:ajax>
+			<p:ajax listener="#{centreControllers.chargerSouprefecture}" event="change" process="@this"  update="cb_drena, cb_sp"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listDepartement}" var="tata" itemLabel="#{tata.nomDepartement}" itemValue="#{tata.idDepartement}"></f:selectItems>
 			</p:selectOneMenu>
@@ -126,7 +126,7 @@
 			
 			<p:outputLabel for="cb_drena" value="DRENA:"/>
 			<p:selectOneMenu id="cb_drena" required="true" value="#{centreControllers.idDrena}">
-			<p:ajax listener="#{centreControllers.chargerIep}" event="change" process="@this"  update="cb_iep"></p:ajax>
+			<p:ajax listener="#{centreControllers.chargerIep}" event="change" process="@this"  update="cb_iep,cb_ecole"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listDrena}" var="tata" itemLabel="#{tata.nomDrena}" itemValue="#{tata.idDrena}"></f:selectItems>
 			</p:selectOneMenu>
@@ -312,12 +312,12 @@
 	    		<h:outputText value="#{toto.promoteur.codePromoteur}" />
 	    	</p:column>
 	    
-	    	<p:column headerText="Nature">
+	    	<p:column headerText="Nature centre">
 	    		<h:outputText value="#{toto.nature.libelleNature}" />
 	    	</p:column>
 	    	
-	    	<p:column headerText="">
-	    		<h:outputText/>
+	    	<p:column headerText="Lieu implantation">
+	    		<h:outputText value="#{toto.localiteDImplantation.nomLocalite}" />
 	    	</p:column>
 	    
 	    </p:dataTable>

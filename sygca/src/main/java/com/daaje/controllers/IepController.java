@@ -36,10 +36,10 @@ public class IepController {
 @PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
-		genererCode();
+		//genererCode();
 	}
 
-public void genererCode() {
+/*public void genererCode() {
 	String prefix="";
 	int nbEnregistrement = this.iservice.getObjects("Iep").size();
 	if(nbEnregistrement < 10)
@@ -49,7 +49,7 @@ public void genererCode() {
 	if (nbEnregistrement > 100) 
 		prefix = "IEP" ;
 	this.iep.setCodeIep(prefix+(nbEnregistrement+1));
-}
+}*/
 		
 	public void enregistrer(){
 		iep.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
@@ -70,7 +70,7 @@ public void genererCode() {
 		iep.setMailIep(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
-		genererCode();
+		//genererCode();
 	}
 	
 	public void selectionnerLigne() {
