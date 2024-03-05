@@ -52,7 +52,7 @@
 	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                 rowsPerPageTemplate="5,10,15">
+                 rowsPerPageTemplate="5,10,15"  filteredValue="#{iepController.iepsfilted}">
 	    
 	    <p:ajax event="rowSelect" process="@this" listener="#{iepController.selectionnerLigne}" update="form"></p:ajax>
 	    	<f:facet name="header">
@@ -66,7 +66,7 @@
 	    		<h:outputText value="#{toto.nomIep}" />
 	    	</p:column>
 	    	
-	    	<p:column headerText="DRENA de rattachement" sortBy="{toto.drena.nomDrena}"  >
+	    	<p:column headerText="DRENA de rattachement" sortBy="#{toto.drena.nomDrena}" filterBy="#{toto.drena.nomDrena}" filterMatchMode="contains" >
 	    		<h:outputText value="#{toto.drena.nomDrena}" />
 	    	</p:column>
 	    	

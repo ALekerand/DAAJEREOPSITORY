@@ -26,6 +26,7 @@ public class IepController {
 	private Iep iep = new Iep();
 	private Iep selectedObject = new Iep();
 	private List listObject = new ArrayList();
+	private List <Iep> iepsfilted = new ArrayList<Iep>();
 	private List<Drena> listDrena = new ArrayList<Drena>();
 	
 //Controle des composants
@@ -158,6 +159,14 @@ return listObject;
 
 	public void setIdDrena(int idDrena) {
 		this.idDrena = idDrena;
+	}
+
+	public List <Iep> getIepsfilted() {
+		return iepsfilted;
+	}
+
+	public void setIepsfilted(List <Iep> iepsfilted) {
+		this.iepsfilted = iepsfilted;
 	}
 
 }
