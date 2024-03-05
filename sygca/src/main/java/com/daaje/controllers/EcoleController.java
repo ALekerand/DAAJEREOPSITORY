@@ -33,20 +33,16 @@ public class EcoleController {
 @PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
-		genererCode();
+		//genererCode();
 	}
 		
-	public void genererCode() {
-		String prefix="";
-		int nbEnregistrement = this.iservice.getObjects("Ecole").size();
-		if(nbEnregistrement < 10)
-			prefix = "ECOLE00" ;
-		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
-			prefix = "ECOLE0" ;
-		if (nbEnregistrement > 100) 
-			prefix = "ECOLE" ;
-		this.ecole.setCodeEcole(prefix+(nbEnregistrement+1));
-	}
+	/*
+	 * public void genererCode() { String prefix=""; int nbEnregistrement =
+	 * this.iservice.getObjects("Ecole").size(); if(nbEnregistrement < 10) prefix =
+	 * "ECOLE00" ; if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) prefix
+	 * = "ECOLE0" ; if (nbEnregistrement > 100) prefix = "ECOLE" ;
+	 * this.ecole.setCodeEcole(prefix+(nbEnregistrement+1)); }
+	 */
 		
 	public void enregistrer(){
 		ecole.setIep((Iep) iservice.getObjectById(idIep, "Iep"));
@@ -68,7 +64,7 @@ public class EcoleController {
 		ecole.setTelphoneEcole(null);
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
-		genererCode();
+		//genererCode();
 	}
 		
 	public void selectionnerLigne() {
