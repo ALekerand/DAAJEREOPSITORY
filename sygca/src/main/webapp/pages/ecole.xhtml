@@ -28,7 +28,7 @@
 			
 			
 			<p:outputLabel for="cb_iep" value="IEP:" />
-            <p:selectOneMenu id="cb_iep" value="#{ecoleController.idIep}">
+            <p:selectOneMenu id="cb_iep" value="#{ecoleController.idIep}" required="true">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{ecoleController.listIep}" var="toto" itemLabel="#{toto.nomIep}" itemValue="#{toto.idIep}" />
 			</p:selectOneMenu>
@@ -58,7 +58,7 @@
 	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                 rowsPerPageTemplate="5,10,15">
+                 rowsPerPageTemplate="5,10,15" filteredValue="#{ecoleController.ecolesfilted}">
 	    
 	    <p:ajax event="rowSelect" process="@this" listener="#{ecoleController.selectionnerLigne}" update="form"></p:ajax>
 	    	<f:facet name="header">
@@ -70,6 +70,10 @@
 	    	
 	    	<p:column headerText="Nom">
 	    		<h:outputText value="#{toto.nomEcole}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="IEP de rattachement" filterBy="#{toto.iep.nomIep}" filterMatchMode="contains" >
+	    		<h:outputText value="#{toto.iep.nomIep}" />
 	    	</p:column>
 	    	
 	    	<p:column headerText="Adresse">

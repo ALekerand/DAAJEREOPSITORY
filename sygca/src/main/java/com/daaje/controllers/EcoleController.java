@@ -23,10 +23,20 @@ public class EcoleController {
 	private Ecole ecole = new Ecole();
 	private Ecole selectedObject = new Ecole();
 	private List listObject = new ArrayList();
+	private List <Ecole> ecolesfilted = new ArrayList<Ecole>();
 	private List<Iep> listIep = new ArrayList<Iep>();
 
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
+	public List<Ecole> getEcolesfilted() {
+		return ecolesfilted;
+	}
+
+	public void setEcolesfilted(List<Ecole> ecolesfilted) {
+		this.ecolesfilted = ecolesfilted;
+	}
+
+
 	private CommandButton cmdBEnregistrer = new CommandButton();	
 	
 //Methodes
