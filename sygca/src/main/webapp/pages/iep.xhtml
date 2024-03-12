@@ -52,7 +52,7 @@
 	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                 rowsPerPageTemplate="5,10,15"  filteredValue="#{iepController.iepsfilted}">
+                 rowsPerPageTemplate="5,10,15" filteredValue="#{iepController.iepsfilted}">
 	    
 	    <p:ajax event="rowSelect" process="@this" listener="#{iepController.selectionnerLigne}" update="form"></p:ajax>
 	    	<f:facet name="header">
