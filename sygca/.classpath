@@ -80,6 +80,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-security-web-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-security-web-4.1.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-tx-4.1.6.RELEASE.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-web-4.1.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-web-4.1.7.RELEASE.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

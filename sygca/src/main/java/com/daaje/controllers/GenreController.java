@@ -56,6 +56,10 @@ public class GenreController {
 	}
 	
 	public void modifier() {
+		System.out.println(genre.getIdGenre());
+		System.out.println(genre.getCodeGenre());
+		System.out.println(genre.getLibelleGenre());
+		
 		iservice.updateObject(genre);
 		annuler();
 		info("Modification effectuée");
