@@ -28,10 +28,10 @@
 	    
 	    <br />
 	   
-	    <p:toolbar >
+	    <p:toolbar id="toob">
 			<f:facet name="left">
-				<p:commandButton value="Enregistrer" actionListener="#{natureController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{natureController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Enregistrer" actionListener="#{natureController.enregistrer}" update="form" disabled="#{natureController.enregistrerDisabled}"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{natureController.modifier}" update="info_grid, data, toob" disabled="#{natureController.cmdBModifier.disabled}"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 				<p:commandButton value="Annuler" process="@this" actionListener="#{natureController.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>

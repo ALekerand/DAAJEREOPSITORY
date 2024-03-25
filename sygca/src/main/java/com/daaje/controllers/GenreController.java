@@ -28,12 +28,21 @@ public class GenreController {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
+	private boolean enregistrerDisabled = false;
 		
 //Methodes
 	@PostConstruct
-	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
-		genererCode();
+	
+	public void init() {
+		initialisation();
+	}
+	
+	public boolean isEnregistrerDisabled() {
+	    return enregistrerDisabled;
+	}
+
+	public void setEnregistrerDisabled(boolean enregistrerDisabled) {
+	    this.enregistrerDisabled = enregistrerDisabled;
 	}
 	
 	public void genererCode() {
@@ -48,36 +57,40 @@ public class GenreController {
 		this.genre.setCodeGenre(prefix+(nbEnregistrement+1));
 	}
 	
+	public void initialisation(){
+		cmdBModifier.setDisabled(true);
+		cmdBEnregistrer.setDisabled(true);
+		genererCode();
+	}
 	
 	public void enregistrer(){
 		iservice.addObject(this.genre);
+		cmdBEnregistrer.setDisabled(true);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		System.out.println(genre.getIdGenre());
-		System.out.println(genre.getCodeGenre());
-		System.out.println(genre.getLibelleGenre());
-		
-		iservice.updateObject(genre);
+		iservice.updateObject(this.genre);
 		annuler();
 		info("Modification effectuée");
+		selectedObject = null;
 	}
 	
 	public void annuler() {
 		genre.setCodeGenre(null);
 		genre.setLibelleGenre(null);
-		cmdBEnregistrer.setDisabled(false);
+		setEnregistrerDisabled(false);//Réactivez le bouton Enregistrer
 		cmdBModifier.setDisabled(true);
 		genererCode();
-		
+		selectedObject = null;// Réinitialiser l'élément sélectionner
 	}
 	
 	public void selectionnerLigne() {
 		genre = selectedObject;
-		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
+		setEnregistrerDisabled(true);
+		
 	}
 	
 	public void info(String message){

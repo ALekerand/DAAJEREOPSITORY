@@ -25,12 +25,21 @@ public class NiveauFormationController {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
+	private boolean enregistrerDisabled = false;
 		
 //Methodes
 	@PostConstruct
-	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
-		genererCode();
+	
+	public void init() {
+		initialisation();
+	}
+	
+	public boolean isEnregistrerDisabled() {
+	    return enregistrerDisabled;
+	}
+
+	public void setEnregistrerDisabled(boolean enregistrerDisabled) {
+	    this.enregistrerDisabled = enregistrerDisabled;
 	}
 	
 	public void genererCode() {
@@ -45,31 +54,40 @@ public class NiveauFormationController {
 		this.niveauFormation.setCodeNiveauFormation(prefix+(nbEnregistrement+1));
 	}
 	
+	public void initialisation(){
+		cmdBModifier.setDisabled(true);
+		cmdBEnregistrer.setDisabled(true);
+		genererCode();
+	}
+	
 	public void enregistrer(){
 		iservice.addObject(this.niveauFormation);
+		cmdBEnregistrer.setDisabled(true);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(niveauFormation);
+		iservice.updateObject(this.niveauFormation);
 		annuler();
 		info("Modification effectuée");
+		selectedObject = null;
 	}
 	
 	public void annuler() {
 		niveauFormation.setCodeNiveauFormation(null);
 		niveauFormation.setLibelleNiveauFormation(null);
-	//	niveauFormation.setTrimestre(null);
-		cmdBEnregistrer.setDisabled(false);
+		setEnregistrerDisabled(false);//Réactivez le bouton Enregistrer
 		cmdBModifier.setDisabled(true);
-		genererCode();		
+		genererCode();
+		selectedObject = null;// Réinitialiser l'élément sélectionner
 	}
 	
 	public void selectionnerLigne() {
 		niveauFormation = selectedObject;
-		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
+		setEnregistrerDisabled(true);
+		
 	}
 	
 	public void info(String message){

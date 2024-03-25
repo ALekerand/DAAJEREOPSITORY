@@ -28,12 +28,21 @@ public class LangueController {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
+	private boolean enregistrerDisabled = false;
 		
 //Methodes
 	@PostConstruct
-	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
-		genererCode();
+	
+	public void init() {
+		initialisation();
+	}
+	
+	public boolean isEnregistrerDisabled() {
+	    return enregistrerDisabled;
+	}
+
+	public void setEnregistrerDisabled(boolean enregistrerDisabled) {
+	    this.enregistrerDisabled = enregistrerDisabled;
 	}
 	
 	public void genererCode() {
@@ -48,31 +57,39 @@ public class LangueController {
 		this.langue.setCodeLangue(prefix+(nbEnregistrement+1));
 	}
 	
+	public void initialisation(){
+		cmdBModifier.setDisabled(true);
+		cmdBEnregistrer.setDisabled(true);
+		genererCode();
+	}
+	
 	public void enregistrer(){
 		iservice.addObject(this.langue);
+		cmdBEnregistrer.setDisabled(true);
 		annuler();
 		info("Enregistrement effectué");
 	}
 	
 	public void modifier() {
-		iservice.updateObject(langue);
+		iservice.updateObject(this.langue);
 		annuler();
 		info("Modification effectuée");
+		selectedObject = null;
 	}
 	
 	public void annuler() {
 		langue.setCodeLangue(null);
 		langue.setLibLangue(null);
-		cmdBEnregistrer.setDisabled(false);
+		setEnregistrerDisabled(false);//Réactivez le bouton Enregistrer
 		cmdBModifier.setDisabled(true);
 		genererCode();
-		
+		selectedObject = null;// Réinitialiser l'élément sélectionner	
 	}
 	
 	public void selectionnerLigne() {
 		langue = selectedObject;
-		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
+		setEnregistrerDisabled(true);
 	}
 	
 	public void info(String message){
@@ -88,8 +105,10 @@ public class LangueController {
 		this.langue = langue;
 	}
 
-	public List getListObject() {
+	public List<Langue> getListObject() {
 		listObject = iservice.getObjects("Langue");
+		
+		
 		//=======Pour le rangement par ordre alphabétique======
 		Collections.sort(listObject, new Comparator<Langue>() {
 	        @Override

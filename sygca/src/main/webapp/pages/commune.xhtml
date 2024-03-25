@@ -27,17 +27,17 @@
 	    
 	    <br />
 	    
-	    <p:toolbar>
+	    <p:toolbar id="toob">
 	    	<f:facet name="left">
-	    		<p:commandButton value="Enregistrer" actionListener="#{communeController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{communeController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+	    		<p:commandButton value="Enregistrer" actionListener="#{communeController.enregistrer}" update="form" disabled="#{communeController.enregistrerDisabled}"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" action="#{communeController.modifier}" update="info_grid, data, toob" disabled="#{communeController.cmdBModifier.disabled}"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 	    		<p:commandButton value="Annuler" process="@this" actionListener="#{communeController.annuler}" update="form"></p:commandButton>
 	    	</f:facet>
 	    </p:toolbar>
 	    
 	    <br />
 	    
-	    <p:dataTable var="toto" value="#{communeController.listObject}" selectionMode="single" selection="#{communeController.selectedObject}" rowKey="#{toto.idCommune}"       
+	    <p:dataTable id="data" var="toto" value="#{communeController.listObject}" selectionMode="single" selection="#{communeController.selectedObject}" rowKey="#{toto.idCommune}"       
 	     rows="10" paginatorPosition="bottom" paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
