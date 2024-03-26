@@ -44,11 +44,13 @@ public class CampagneController {
 		info("Enregistrement effectué");
 	}
 	
+	
 	public void modifier() {
 		iservice.updateObject(this.campagne);
 		annuler();
 		info("Modification effectuée");
         selectedObject = null;
+	
 	}
 	
 	public void annuler() {
