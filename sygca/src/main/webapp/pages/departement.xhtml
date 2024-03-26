@@ -31,8 +31,8 @@
 	    
 	    <p:toolbar id="toob">
 	    	<f:facet name="left">
-	    		<p:commandButton value="Enregistrer" actionListener="#{departementControllers.enregistrer}" update="form" disabled="#{departementControllers.enregistrerDisabled}"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{departementControllers.modifier}" update="info_grid, data, toob" disabled="#{departementControllers.cmdBModifier.disabled}"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+	    		<p:commandButton value="Enregistrer" actionListener="#{departementControllers.enregistrer}" update="form" disabled="#{departementControllers.etatBtnEnregistrer}"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{departementControllers.modifier}" update="info_grid, data, toob" disabled="#{departementControllers.etatBtnModifier}"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 	    		<p:commandButton value="Annuler" process="@this" actionListener="#{departementControllers.annuler}" update="form"></p:commandButton>
 	    	</f:facet>
 	    

@@ -29,21 +29,44 @@ public class ActiviteController {
 //Controle des composants
     private CommandButton cmdBModifier = new CommandButton();
     private CommandButton cmdBEnregistrer = new CommandButton();
-    private boolean enregistrerDisabled = false;
+    private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 		
 //Methodes
 @PostConstruct
 	
-	public void init() {
-		initialisation();
+	public void initialisation(){
+		setEtatBtnModifier(true);
+		genererCode();
 	}
 	
-	public boolean isEnregistrerDisabled() {
-	    return enregistrerDisabled;
+	public void enregistrer(){
+		iservice.addObject(this.activite);
+		annuler();
+		info("Enregistrement effectué");
 	}
 	
-	public void setEnregistrerDisabled(boolean enregistrerDisabled) {
-	    this.enregistrerDisabled = enregistrerDisabled;
+	public void modifier() {
+		iservice.updateObject(this.activite);
+		annuler();
+		info("Modification effectuée");
+	    selectedObject = null;
+	}
+	
+	public void annuler() {
+		activite.setCodeActivite(null);
+		activite.setNomActivite(null);
+		setEtatBtnEnregistrer(false);
+		setEtatBtnModifier(true);
+		genererCode();
+		selectedObject = null;// Réinitialiser l'élément sélectionner
+	}
+	
+	public void selectionnerLigne() {
+		activite = selectedObject;
+		setEtatBtnEnregistrer(true);
+		setEtatBtnModifier(false);
+		
 	}	
 
 	public void genererCode() {
@@ -56,43 +79,6 @@ public class ActiviteController {
 		if (nbEnregistrement > 100) 
 			prefix = "ACT" ;
 		this.activite.setCodeActivite(prefix+(nbEnregistrement+1));
-	}
-
-	public void initialisation(){
-		cmdBModifier.setDisabled(true);
-		cmdBEnregistrer.setDisabled(true);
-		genererCode();
-	}
-		
-	public void enregistrer(){
-		iservice.addObject(this.activite);
-		cmdBEnregistrer.setDisabled(true);
-		annuler();
-		info("Enregistrement effectué");
-		
-	}
-	
-	public void modifier() {
-		iservice.updateObject(activite);
-		annuler();
-		info("Modification effectuée");
-		selectedObject = null;
-	}
-	
-	public void annuler() {
-		activite.setCodeActivite(null);
-		activite.setNomActivite(null);
-		setEnregistrerDisabled(false);//Réactivez le bouton Enregistrer
-		cmdBModifier.setDisabled(true);
-		genererCode();
-		selectedObject = null;// Réinitialiser l'élément sélectionner
-		
-	}
-	
-	public void selectionnerLigne() {
-		activite = selectedObject;
-		cmdBModifier.setDisabled(false);
-		setEnregistrerDisabled(true);
 	}
 	
 	public void info(String message){
@@ -152,6 +138,22 @@ return listObject;
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+	public boolean isEtatBtnEnregistrer() {
+		return etatBtnEnregistrer;
+	}
+
+	public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+		this.etatBtnEnregistrer = etatBtnEnregistrer;
+	}
+
+	public boolean isEtatBtnModifier() {
+		return etatBtnModifier;
+	}
+
+	public void setEtatBtnModifier(boolean etatBtnModifier) {
+		this.etatBtnModifier = etatBtnModifier;
 	}
 
 }

@@ -28,44 +28,19 @@ public class TypeActiviteControllers {
 //Controle des composants
     private CommandButton cmdBModifier = new CommandButton();
     private CommandButton cmdBEnregistrer = new CommandButton();
-    private boolean enregistrerDisabled = false;
+    private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 	
 //Methodes
 @PostConstruct
 
-	public void init() {
-		initialisation();
-	}
-	
-	public boolean isEnregistrerDisabled() {
-	    return enregistrerDisabled;
-	}
-	
-	public void setEnregistrerDisabled(boolean enregistrerDisabled) {
-	    this.enregistrerDisabled = enregistrerDisabled;
-	}
-	
-public void genererCode() {
-	String prefix="";
-	int nbEnregistrement = this.iservice.getObjects("TypeActivite").size();
-	if(nbEnregistrement < 10)
-		prefix = "TA00" ;
-	if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
-		prefix = "TA0" ;
-	if (nbEnregistrement > 100) 
-		prefix = "TA" ;
-	this.typeActivite.setCodeTypeactivite(prefix+(nbEnregistrement+1));
-}
-
 	public void initialisation(){
-		cmdBModifier.setDisabled(true);
-		cmdBEnregistrer.setDisabled(true);
+		etatBtnModifier = true;
 		genererCode();
 	}
 	
 	public void enregistrer(){
 		iservice.addObject(this.typeActivite);
-		cmdBEnregistrer.setDisabled(true);
 		annuler();
 		info("Enregistrement effectué");
 	}
@@ -74,24 +49,36 @@ public void genererCode() {
 		iservice.updateObject(this.typeActivite);
 		annuler();
 		info("Modification effectuée");
-		selectedObject = null;
+	    selectedObject = null;
 	}
 	
 	public void annuler() {
 		typeActivite.setCodeTypeactivite(null);
 		typeActivite.setLibelleTypeactivite(null);
-		setEnregistrerDisabled(false);//Réactivez le bouton Enregistrer
-		cmdBModifier.setDisabled(true);
+		etatBtnEnregistrer = false;
+		etatBtnModifier = true;
 		genererCode();
 		selectedObject = null;// Réinitialiser l'élément sélectionner
 	}
 	
 	public void selectionnerLigne() {
 		typeActivite = selectedObject;
-		cmdBModifier.setDisabled(false);
-		setEnregistrerDisabled(true);
+		etatBtnEnregistrer = true;
+		etatBtnModifier = false;
 		
 	}
+	
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("TypeActivite").size();
+		if(nbEnregistrement < 10)
+			prefix = "TA00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "TA0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "TA" ;
+		this.typeActivite.setCodeTypeactivite(prefix+(nbEnregistrement+1));	
+	}	
 	
 	public void info(String message){
 	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
@@ -150,6 +137,22 @@ return listObject;
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+	public boolean isEtatBtnEnregistrer() {
+		return etatBtnEnregistrer;
+	}
+
+	public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+		this.etatBtnEnregistrer = etatBtnEnregistrer;
+	}
+
+	public boolean isEtatBtnModifier() {
+		return etatBtnModifier;
+	}
+
+	public void setEtatBtnModifier(boolean etatBtnModifier) {
+		this.etatBtnModifier = etatBtnModifier;
 	}
 		
 }

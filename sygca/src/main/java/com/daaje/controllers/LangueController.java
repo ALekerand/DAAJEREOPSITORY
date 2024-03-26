@@ -28,21 +28,44 @@ public class LangueController {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
-	private boolean enregistrerDisabled = false;
+	private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 		
 //Methodes
 	@PostConstruct
 	
-	public void init() {
-		initialisation();
+	public void initialisation(){
+		etatBtnModifier = true;
+		genererCode();
 	}
 	
-	public boolean isEnregistrerDisabled() {
-	    return enregistrerDisabled;
+	public void enregistrer(){
+		iservice.addObject(this.langue);
+		annuler();
+		info("Enregistrement effectué");
 	}
-
-	public void setEnregistrerDisabled(boolean enregistrerDisabled) {
-	    this.enregistrerDisabled = enregistrerDisabled;
+	
+	public void modifier() {
+		iservice.updateObject(this.langue);
+		annuler();
+		info("Modification effectuée");
+        selectedObject = null;
+	}
+	
+	public void annuler() {
+		langue.setCodeLangue(null);
+		langue.setLibLangue(null);
+		etatBtnEnregistrer = false;
+		etatBtnModifier = true;
+		genererCode();
+		selectedObject = null;// Réinitialiser l'élément sélectionner
+	}
+	
+	public void selectionnerLigne() {
+		langue = selectedObject;
+		etatBtnEnregistrer = true;
+		etatBtnModifier = false;
+		
 	}
 	
 	public void genererCode() {
@@ -55,41 +78,6 @@ public class LangueController {
 		if (nbEnregistrement > 100) 
 			prefix = "LANG" ;
 		this.langue.setCodeLangue(prefix+(nbEnregistrement+1));
-	}
-	
-	public void initialisation(){
-		cmdBModifier.setDisabled(true);
-		cmdBEnregistrer.setDisabled(true);
-		genererCode();
-	}
-	
-	public void enregistrer(){
-		iservice.addObject(this.langue);
-		cmdBEnregistrer.setDisabled(true);
-		annuler();
-		info("Enregistrement effectué");
-	}
-	
-	public void modifier() {
-		iservice.updateObject(this.langue);
-		annuler();
-		info("Modification effectuée");
-		selectedObject = null;
-	}
-	
-	public void annuler() {
-		langue.setCodeLangue(null);
-		langue.setLibLangue(null);
-		setEnregistrerDisabled(false);//Réactivez le bouton Enregistrer
-		cmdBModifier.setDisabled(true);
-		genererCode();
-		selectedObject = null;// Réinitialiser l'élément sélectionner	
-	}
-	
-	public void selectionnerLigne() {
-		langue = selectedObject;
-		cmdBModifier.setDisabled(false);
-		setEnregistrerDisabled(true);
 	}
 	
 	public void info(String message){
@@ -147,6 +135,22 @@ public class LangueController {
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+	public boolean isEtatBtnEnregistrer() {
+		return etatBtnEnregistrer;
+	}
+
+	public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+		this.etatBtnEnregistrer = etatBtnEnregistrer;
+	}
+
+	public boolean isEtatBtnModifier() {
+		return etatBtnModifier;
+	}
+
+	public void setEtatBtnModifier(boolean etatBtnModifier) {
+		this.etatBtnModifier = etatBtnModifier;
 	}
 
 }
