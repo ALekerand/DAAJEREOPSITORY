@@ -29,52 +29,56 @@ public class ActiviteController {
 //Controle des composants
     private CommandButton cmdBModifier = new CommandButton();
     private CommandButton cmdBEnregistrer = new CommandButton();
+    private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 		
 //Methodes
 @PostConstruct
+	
 	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
+		setEtatBtnModifier(true);
 		genererCode();
 	}
-
-public void genererCode() {
-	String prefix="";
-	int nbEnregistrement = this.iservice.getObjects("Activite").size();
-	if(nbEnregistrement < 10)
-		prefix = "ACT00" ;
-	if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
-		prefix = "ACT0" ;
-	if (nbEnregistrement > 100) 
-		prefix = "ACT" ;
-	this.activite.setCodeActivite(prefix+(nbEnregistrement+1));
-}
-		
+	
 	public void enregistrer(){
 		iservice.addObject(this.activite);
 		annuler();
 		info("Enregistrement effectué");
-		
 	}
 	
 	public void modifier() {
-		iservice.updateObject(activite);
+		iservice.updateObject(this.activite);
 		annuler();
 		info("Modification effectuée");
+	    selectedObject = null;
 	}
 	
 	public void annuler() {
 		activite.setCodeActivite(null);
 		activite.setNomActivite(null);
-		cmdBEnregistrer.setDisabled(false);
-		cmdBModifier.setDisabled(true);
+		setEtatBtnEnregistrer(false);
+		setEtatBtnModifier(true);
 		genererCode();
-		
+		selectedObject = null;// Réinitialiser l'élément sélectionner
 	}
 	
 	public void selectionnerLigne() {
 		activite = selectedObject;
-		cmdBEnregistrer.setDisabled(true);
-		cmdBModifier.setDisabled(false);
+		setEtatBtnEnregistrer(true);
+		setEtatBtnModifier(false);
+		
+	}	
+
+	public void genererCode() {
+		String prefix="";
+		int nbEnregistrement = this.iservice.getObjects("Activite").size();
+		if(nbEnregistrement < 10)
+			prefix = "ACT00" ;
+		if ((nbEnregistrement >= 10) && (nbEnregistrement < 100)) 
+			prefix = "ACT0" ;
+		if (nbEnregistrement > 100) 
+			prefix = "ACT" ;
+		this.activite.setCodeActivite(prefix+(nbEnregistrement+1));
 	}
 	
 	public void info(String message){
@@ -134,6 +138,22 @@ return listObject;
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+	public boolean isEtatBtnEnregistrer() {
+		return etatBtnEnregistrer;
+	}
+
+	public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+		this.etatBtnEnregistrer = etatBtnEnregistrer;
+	}
+
+	public boolean isEtatBtnModifier() {
+		return etatBtnModifier;
+	}
+
+	public void setEtatBtnModifier(boolean etatBtnModifier) {
+		this.etatBtnModifier = etatBtnModifier;
 	}
 
 }

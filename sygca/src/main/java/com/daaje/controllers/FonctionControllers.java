@@ -28,13 +28,45 @@ public class FonctionControllers {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
+	private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 	
 //Methodes
 	@PostConstruct
 	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
+		etatBtnModifier = true;
 		genererCode();
 	}
+	
+	public void enregistrer(){
+		iservice.addObject(this.fonction);
+		annuler();
+		info("Enregistrement effectué");
+	}
+	
+	public void modifier() {
+		iservice.updateObject(this.fonction);
+		annuler();
+		info("Modification effectuée");
+	    selectedObject = null;
+	}
+	
+	public void annuler() {
+		fonction.setCodeFonction(null);
+		fonction.setLibelleFonction(null);
+		etatBtnEnregistrer = false;
+		etatBtnModifier = true;
+		selectedObject = null;
+		genererCode();
+	}
+	
+	public void selectionnerLigne() {
+		fonction = selectedObject;
+		etatBtnEnregistrer = true;
+		etatBtnModifier = false;
+		
+	}
+	
 	
 	public void genererCode() {
 		String prefix="";
@@ -48,29 +80,7 @@ public class FonctionControllers {
 		this.fonction.setCodeFonction(prefix+(nbEnregistrement+1));
 	}
 	
-	public void enregistrer(){
-		iservice.addObject(fonction);
-		annuler();
-		info("Enregistrement effectué");
-	}
-		
-	public void modifier() {
-		iservice.updateObject(fonction);
-		annuler();
-		info("Modification effectuée");
-	}
-		
-	public void annuler() {
-		fonction.setCodeFonction(null);
-		fonction.setLibelleFonction(null);
-		cmdBEnregistrer.setDisabled(false);
-		cmdBModifier.setDisabled(true);
-		genererCode();
-	}
-		
-	public void selectionnerLigne() {
-		fonction = selectedObject;
-	}
+	
 		
 	public void info(String message){
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message,null));	
@@ -129,5 +139,29 @@ return listObject;
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+
+
+	public boolean isEtatBtnEnregistrer() {
+		return etatBtnEnregistrer;
+	}
+
+
+
+	public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+		this.etatBtnEnregistrer = etatBtnEnregistrer;
+	}
+
+
+
+	public boolean isEtatBtnModifier() {
+		return etatBtnModifier;
+	}
+
+
+
+	public void setEtatBtnModifier(boolean etatBtnModifier) {
+		this.etatBtnModifier = etatBtnModifier;
 	}		
 }

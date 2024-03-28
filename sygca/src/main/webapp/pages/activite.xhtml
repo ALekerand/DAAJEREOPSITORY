@@ -27,10 +27,10 @@
 	    
 	    <br />
 	    
-	    <p:toolbar >
+	    <p:toolbar id="toob">
 			<f:facet name="left">
-				<p:commandButton value="Enregistrer" actionListener="#{activiteController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{activiteController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Enregistrer" actionListener="#{activiteController.enregistrer}" disabled="#{activiteController.etatBtnEnregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" action="#{activiteController.modifier}" disabled="#{activiteController.etatBtnModifier}" update="info_grid, data, toob"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 				<p:commandButton value="Annuler" process="@this" actionListener="#{activiteController.annuler}" update="form"></p:commandButton>
 			</f:facet>
 		</p:toolbar>

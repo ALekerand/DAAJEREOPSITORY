@@ -25,12 +25,44 @@ public class NatureProjetController {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
+	private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 		
 //Methodes
 	@PostConstruct
+	
 	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
+		etatBtnModifier = true;
 		genererCode();
+	}
+	
+	public void enregistrer(){
+		iservice.addObject(this.natureProjet);
+		annuler();
+		info("Enregistrement effectué");
+	}
+	
+	public void modifier() {
+		iservice.updateObject(this.natureProjet);
+		annuler();
+		info("Modification effectuée");
+        selectedObject = null;
+	}
+	
+	public void annuler() {
+		natureProjet.setCodeNatureProjet(null);
+		natureProjet.setLibelleNatureProjet(null);
+		etatBtnEnregistrer = false;
+		etatBtnModifier = true;
+		genererCode();
+		selectedObject = null;// Réinitialiser l'élément sélectionner
+	}
+	
+	public void selectionnerLigne() {
+		natureProjet = selectedObject;
+		etatBtnEnregistrer = true;
+		etatBtnModifier = false;
+		
 	}
 	
 	public void genererCode() {
@@ -43,33 +75,6 @@ public class NatureProjetController {
 		if (nbEnregistrement > 100) 
 			prefix = "NP" ;
 		this.natureProjet.setCodeNatureProjet(prefix+(nbEnregistrement+1));
-	}
-	
-	public void enregistrer(){
-		iservice.addObject(this.natureProjet);
-		annuler();
-		info("Enregistrement effectué");
-	}
-	
-	public void modifier() {
-		iservice.updateObject(natureProjet);
-		annuler();
-		info("Modification effectuée");
-	}
-	
-	public void annuler() {
-		natureProjet.setCodeNatureProjet(null);
-		natureProjet.setLibelleNatureProjet(null);
-		cmdBEnregistrer.setDisabled(false);
-		cmdBModifier.setDisabled(true);
-		genererCode();
-		
-	}
-	
-	public void selectionnerLigne() {
-		natureProjet = selectedObject;
-		cmdBEnregistrer.setDisabled(true);
-		cmdBModifier.setDisabled(false);
 	}
 	
 	public void info(String message){
@@ -115,6 +120,22 @@ public class NatureProjetController {
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+	public boolean isEtatBtnEnregistrer() {
+		return etatBtnEnregistrer;
+	}
+
+	public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+		this.etatBtnEnregistrer = etatBtnEnregistrer;
+	}
+
+	public boolean isEtatBtnModifier() {
+		return etatBtnModifier;
+	}
+
+	public void setEtatBtnModifier(boolean etatBtnModifier) {
+		this.etatBtnModifier = etatBtnModifier;
 	}
 
 }

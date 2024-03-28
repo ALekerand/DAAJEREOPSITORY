@@ -28,12 +28,47 @@ public class GenreController {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
+	private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 		
 //Methodes
 	@PostConstruct
 	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
+		etatBtnModifier = true;
 		genererCode();
+	}
+	
+	public void enregistrer(){
+		iservice.addObject(this.genre);
+		annuler();
+		info("Enregistrement effectué");
+	}
+	
+	public void modifier() {
+		iservice.updateObject(this.genre);
+		annuler();
+		info("Modification effectuée");
+        selectedObject = null;
+	}
+	
+	public void annuler() {
+		genre.setCodeGenre(null);
+		genre.setLibelleGenre(null);
+		etatBtnEnregistrer = false;
+		etatBtnModifier = true;
+		genererCode();
+		selectedObject = null;// Réinitialiser l'élément sélectionner
+	}
+	
+	public void selectionnerLigne() {
+		genre = selectedObject;
+		etatBtnEnregistrer = true;
+		etatBtnModifier = false;
+		
+	}
+	
+	public void info(String message){
+	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
 	}
 	
 	public void genererCode() {
@@ -46,42 +81,6 @@ public class GenreController {
 		if (nbEnregistrement > 100) 
 			prefix = "GN" ;
 		this.genre.setCodeGenre(prefix+(nbEnregistrement+1));
-	}
-	
-	
-	public void enregistrer(){
-		iservice.addObject(this.genre);
-		annuler();
-		info("Enregistrement effectué");
-	}
-	
-	public void modifier() {
-		System.out.println(genre.getIdGenre());
-		System.out.println(genre.getCodeGenre());
-		System.out.println(genre.getLibelleGenre());
-		
-		iservice.updateObject(genre);
-		annuler();
-		info("Modification effectuée");
-	}
-	
-	public void annuler() {
-		genre.setCodeGenre(null);
-		genre.setLibelleGenre(null);
-		cmdBEnregistrer.setDisabled(false);
-		cmdBModifier.setDisabled(true);
-		genererCode();
-		
-	}
-	
-	public void selectionnerLigne() {
-		genre = selectedObject;
-		cmdBEnregistrer.setDisabled(true);
-		cmdBModifier.setDisabled(false);
-	}
-	
-	public void info(String message){
-	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
 	}
 		
 //Getters and setters
@@ -137,6 +136,22 @@ return listObject;
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+	public boolean isEtatBtnModifier() {
+		return etatBtnModifier;
+	}
+
+	public void setEtatBtnModifier(boolean etatBtnModifier) {
+		this.etatBtnModifier = etatBtnModifier;
+	}
+
+	public boolean isEtatBtnEnregistrer() {
+		return etatBtnEnregistrer;
+	}
+
+	public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+		this.etatBtnEnregistrer = etatBtnEnregistrer;
 	}
 
 }

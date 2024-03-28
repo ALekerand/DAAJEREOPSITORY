@@ -27,12 +27,48 @@ public class CampagneController {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
+	private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 		
 //Methodes
 	@PostConstruct
+	
 	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
+		etatBtnModifier = true;
 		genererCode();
+	}
+	
+	public void enregistrer(){
+		iservice.addObject(this.campagne);
+		annuler();
+		info("Enregistrement effectué");
+	}
+	
+	
+	public void modifier() {
+		iservice.updateObject(this.campagne);
+		annuler();
+		info("Modification effectuée");
+        selectedObject = null;
+	
+	}
+	
+	public void annuler() {
+		campagne.setCodeCampagne(null);
+		campagne.setLibelleCampagne(null);
+		campagne.setDebutCampagne(null);
+		campagne.setFinCampagne(null);
+		etatBtnEnregistrer = false;
+		etatBtnModifier = true;
+		genererCode();
+		selectedObject = null;// Réinitialiser l'élément sélectionner
+	}
+	
+	public void selectionnerLigne() {
+		campagne = selectedObject;
+		etatBtnEnregistrer = true;
+		etatBtnModifier = false;
+		
 	}
 	
 	public void genererCode() {
@@ -47,36 +83,7 @@ public class CampagneController {
 		this.campagne.setCodeCampagne(prefix+(nbEnregistrement+1));
 	}
 		
-	public void enregistrer(){
-		campagne.setEtatCampagne(false);
-		iservice.addObject(this.campagne);
-		annuler();
-		info("Enregistrement effectué");
-	}
 	
-	public void modifier() {
-		iservice.updateObject(campagne);
-		annuler();
-		info("Modification effectuée");
-	}
-	
-	public void annuler() {
-		campagne.setCodeCampagne(null);
-		campagne.setDebutCampagne(null);
-		campagne.setFinCampagne(null);
-		campagne.setLibelleCampagne(null);
-		campagne.setEtatCampagne(null);
-		cmdBEnregistrer.setDisabled(false);
-		cmdBModifier.setDisabled(true);
-		genererCode();
-		
-	}
-	
-	public void selectionnerLigne() {
-		campagne = selectedObject;
-		cmdBEnregistrer.setDisabled(true);
-		cmdBModifier.setDisabled(false);
-	}
 	
 	public void info(String message){
 	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
@@ -121,6 +128,22 @@ public class CampagneController {
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+	public boolean isEtatBtnEnregistrer() {
+		return etatBtnEnregistrer;
+	}
+
+	public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+		this.etatBtnEnregistrer = etatBtnEnregistrer;
+	}
+
+	public boolean isEtatBtnModifier() {
+		return etatBtnModifier;
+	}
+
+	public void setEtatBtnModifier(boolean etatBtnModifier) {
+		this.etatBtnModifier = etatBtnModifier;
 	}
 
 }

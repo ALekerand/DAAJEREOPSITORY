@@ -28,12 +28,44 @@ public class LangueController {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
+	private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 		
 //Methodes
 	@PostConstruct
+	
 	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
+		etatBtnModifier = true;
 		genererCode();
+	}
+	
+	public void enregistrer(){
+		iservice.addObject(this.langue);
+		annuler();
+		info("Enregistrement effectué");
+	}
+	
+	public void modifier() {
+		iservice.updateObject(this.langue);
+		annuler();
+		info("Modification effectuée");
+        selectedObject = null;
+	}
+	
+	public void annuler() {
+		langue.setCodeLangue(null);
+		langue.setLibLangue(null);
+		etatBtnEnregistrer = false;
+		etatBtnModifier = true;
+		genererCode();
+		selectedObject = null;// Réinitialiser l'élément sélectionner
+	}
+	
+	public void selectionnerLigne() {
+		langue = selectedObject;
+		etatBtnEnregistrer = true;
+		etatBtnModifier = false;
+		
 	}
 	
 	public void genererCode() {
@@ -46,33 +78,6 @@ public class LangueController {
 		if (nbEnregistrement > 100) 
 			prefix = "LANG" ;
 		this.langue.setCodeLangue(prefix+(nbEnregistrement+1));
-	}
-	
-	public void enregistrer(){
-		iservice.addObject(this.langue);
-		annuler();
-		info("Enregistrement effectué");
-	}
-	
-	public void modifier() {
-		iservice.updateObject(langue);
-		annuler();
-		info("Modification effectuée");
-	}
-	
-	public void annuler() {
-		langue.setCodeLangue(null);
-		langue.setLibLangue(null);
-		cmdBEnregistrer.setDisabled(false);
-		cmdBModifier.setDisabled(true);
-		genererCode();
-		
-	}
-	
-	public void selectionnerLigne() {
-		langue = selectedObject;
-		cmdBEnregistrer.setDisabled(true);
-		cmdBModifier.setDisabled(false);
 	}
 	
 	public void info(String message){
@@ -88,8 +93,10 @@ public class LangueController {
 		this.langue = langue;
 	}
 
-	public List getListObject() {
+	public List<Langue> getListObject() {
 		listObject = iservice.getObjects("Langue");
+		
+		
 		//=======Pour le rangement par ordre alphabétique======
 		Collections.sort(listObject, new Comparator<Langue>() {
 	        @Override
@@ -128,6 +135,22 @@ public class LangueController {
 
 	public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 		this.cmdBEnregistrer = cmdBEnregistrer;
+	}
+
+	public boolean isEtatBtnEnregistrer() {
+		return etatBtnEnregistrer;
+	}
+
+	public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+		this.etatBtnEnregistrer = etatBtnEnregistrer;
+	}
+
+	public boolean isEtatBtnModifier() {
+		return etatBtnModifier;
+	}
+
+	public void setEtatBtnModifier(boolean etatBtnModifier) {
+		this.etatBtnModifier = etatBtnModifier;
 	}
 
 }

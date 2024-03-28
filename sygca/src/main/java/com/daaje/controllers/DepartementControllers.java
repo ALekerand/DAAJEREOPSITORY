@@ -31,14 +31,46 @@ public class DepartementControllers {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();	
+	private boolean etatBtnEnregistrer = false;
+	private boolean etatBtnModifier = false;
 	
 //Methodes
 @PostConstruct
+	
 	public void initialisation(){
-		this.cmdBModifier.setDisabled(true);
+		etatBtnModifier = true;
 		genererCode();
 	}
+	
+	public void enregistrer(){
+		iservice.addObject(this.departement);
+		annuler();
+		info("Enregistrement effectué");
+	}
+	
+	public void modifier() {
+		iservice.updateObject(this.departement);
+		annuler();
+		info("Modification effectuée");
+	    selectedObject = null;
+	}
+	
+	public void annuler() {
+		departement.setCodeDepartement(null);
+		departement.setNomDepartement(null);
+		etatBtnEnregistrer = false;
+		etatBtnModifier = true;
+		genererCode();
+		selectedObject = null;// Réinitialiser l'élément sélectionner
+	}
+	
+	public void selectionnerLigne() {
+		departement = selectedObject;
+		etatBtnEnregistrer = true;
+		etatBtnModifier = false;
 		
+	}
+
 	public void genererCode() {
 		String prefix="";
 		int nbEnregistrement = this.iservice.getObjects("Departement").size();
@@ -49,33 +81,6 @@ public class DepartementControllers {
 		if (nbEnregistrement > 100) 
 			prefix = "DEP" ;
 		this.departement.setCodeDepartement(prefix+(nbEnregistrement+1));
-	}
-		
-	public void enregistrer(){
-		//departement.setDrena((Drena) iservice.getObjectById(idDrena, "Drena"));
-		iservice.addObject(this.departement);
-		annuler();
-		info("Enregistrement effectué");
-	}
-		
-	public void modifier() {
-		iservice.updateObject(departement);
-		annuler();
-		info("Modification effectuée");
-	}
-		
-	public void annuler() {
-		departement.setCodeDepartement(null);
-		departement.setNomDepartement(null);
-		cmdBEnregistrer.setDisabled(false);
-		cmdBModifier.setDisabled(true);
-		genererCode();
-	}
-		
-	public void selectionnerLigne() {
-		departement = selectedObject;
-		cmdBEnregistrer.setDisabled(true);
-		cmdBModifier.setDisabled(false);
 	}
 		
 	public void info(String message){
@@ -149,6 +154,22 @@ public class DepartementControllers {
 
 		public void setCmdBEnregistrer(CommandButton cmdBEnregistrer) {
 			this.cmdBEnregistrer = cmdBEnregistrer;
+		}
+
+		public boolean isEtatBtnEnregistrer() {
+			return etatBtnEnregistrer;
+		}
+
+		public void setEtatBtnEnregistrer(boolean etatBtnEnregistrer) {
+			this.etatBtnEnregistrer = etatBtnEnregistrer;
+		}
+
+		public boolean isEtatBtnModifier() {
+			return etatBtnModifier;
+		}
+
+		public void setEtatBtnModifier(boolean etatBtnModifier) {
+			this.etatBtnModifier = etatBtnModifier;
 		}	
 
 }
