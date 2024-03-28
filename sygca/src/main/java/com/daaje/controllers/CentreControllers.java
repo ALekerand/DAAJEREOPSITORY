@@ -1,6 +1,8 @@
 package com.daaje.controllers;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +20,10 @@ import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.panelgrid.PanelGrid;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -82,10 +87,12 @@ public class CentreControllers {
 	private int idLangue;
 	private String value1, value2, value3;
 	private String lieu;
+	private String cheminFinal ="";
 	private boolean skip;
 	private String etatPermanence;
 	private String etatLieu;
 	private UserAuthentication userAuthentication = new UserAuthentication();
+	private	StreamedContent content = new DefaultStreamedContent();
 	private Animateur animateur = new Animateur();
 	private Nature natureCentre = new Nature();
 	private Departement choosedDepartement = new Departement();
@@ -124,7 +131,7 @@ public class CentreControllers {
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
 	private List<Langue> listLangue = new ArrayList<Langue>();
 	private List<TypeAlphabetisation> listTypeAlpha = new ArrayList<TypeAlphabetisation>(); 
-	
+	private String destination = "C:/photo/";
 	
 	private UploadedFile fichier;
 	private String chemin = "C:\\SYGCA\\AUTORISATION";
@@ -135,21 +142,27 @@ public class CentreControllers {
 	private CommandButton cmdBEnregistrer = new CommandButton();
 	private SelectOneRadio radio_promo = new SelectOneRadio();
 	private SelectOneMenu natureProOneMenu = new SelectOneMenu();
-	private PanelGrid pGridOng = new PanelGrid();
-	private PanelGrid pGridPh = new PanelGrid();
-	private PanelGrid pGridMini = new PanelGrid();
-	private PanelGrid pGridProg = new PanelGrid();
-	private PanelGrid pGridEntrep = new PanelGrid();
+	//private PanelGrid pGridOng = new PanelGrid();
+	//private PanelGrid pGridPh = new PanelGrid();
+	//private PanelGrid pGridMini = new PanelGrid();
+	//private PanelGrid pGridProg = new PanelGrid();
+	//private PanelGrid pGridEntrep = new PanelGrid();
+	
+	private boolean pGridOng;
+	private boolean pGridPh;
+	private boolean pGridMini;
+	private boolean pGridProg;
+	private boolean pGridEntrep;
 		
 	//Methodes
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
-		this.pGridOng.setRendered(false);
-		this.pGridMini.setRendered(false);
-		this.pGridPh.setRendered(false);
-		this.pGridProg.setRendered(false);
-		this.pGridEntrep.setRendered(false);
+		this.setpGridOng(false);
+		this.setpGridMini(false);
+		this.setpGridPh(false);
+		this.setpGridProg(false);
+		this.setpGridEntrep(false);
 		this.natureProOneMenu.setDisabled(true);
 		recupererCampagneEncours();
 		genererCodePromoteur();
@@ -411,47 +424,47 @@ public class CentreControllers {
 	public void activiverChamp() {
 		switch (type_promoteur) {
 		case "personne_physique": {
-			this.pGridPh.setRendered(true);
-			this.pGridOng.setRendered(false);
-			this.pGridMini.setRendered(false);
-			this.pGridProg.setRendered(false);
-			this.pGridEntrep.setRendered(false);
+			this.setpGridPh(true);
+			this.setpGridOng(false);
+			this.setpGridMini(false);
+			this.setpGridProg(false);
+			this.setpGridEntrep(false);
 			break;
 		}
 		
 		case "personne_morale": {
-			this.pGridOng.setRendered(false);
-			this.pGridMini.setRendered(false);
-			this.pGridPh.setRendered(false);
-			this.pGridProg.setRendered(false);
-			this.pGridEntrep.setRendered(true);
+			this.setpGridOng(false);
+			this.setpGridMini(false);
+			this.setpGridPh(false);
+			this.setpGridProg(false);
+			this.setpGridEntrep(true);
 			break;
 		}
 		
 		case "ong": {
-			this.pGridOng.setRendered(true);
-			this.pGridMini.setRendered(false);
-			this.pGridPh.setRendered(false);
-			this.pGridProg.setRendered(false);
-			this.pGridEntrep.setRendered(false);
+			this.setpGridOng(true);
+			this.setpGridMini(false);
+			this.setpGridPh(false);
+			this.setpGridProg(false);
+			this.setpGridEntrep(false);
 			break;
 		}
 		
 		case "programme": {
-			this.pGridOng.setRendered(false);
-			this.pGridMini.setRendered(false);
-			this.pGridPh.setRendered(false);
-			this.pGridProg.setRendered(true);
-			this.pGridEntrep.setRendered(false);
+			this.setpGridOng(false);
+			this.setpGridMini(false);
+			this.setpGridPh(false);
+			this.setpGridProg(true);
+			this.setpGridEntrep(false);
 			break;
 		}
 		
 		
 		case "ministere": {
-			this.pGridOng.setRendered(false);
-			this.pGridMini.setRendered(true);
-			this.pGridPh.setRendered(false);
-			this.pGridProg.setRendered(false);
+			this.setpGridOng(false);
+			this.setpGridMini(true);
+			this.setpGridPh(false);
+			this.setpGridProg(false);
 			break;
 		}
 		
@@ -538,6 +551,53 @@ public class CentreControllers {
 	public void info(String message){
 	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
 	}
+	
+	
+	//************************Pour le traitement de la photo
+	
+		public void upload(FileUploadEvent event) {
+	        FacesMessage msg = new FacesMessage("Photo validée!");
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	        // Do what you want with the file
+	        try {
+	            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	 
+	    }
+		
+		
+		public void copyFile(String fileName, InputStream in) {
+	        try {
+	        //lE CHEMIN
+	        	setCheminFinal(destination + fileName);
+	            OutputStream out = new FileOutputStream(new File(destination + fileName));
+	 
+	            int read = 0;
+	            byte[] bytes = new byte[1024];
+	 
+	            while ((read = in.read(bytes)) != -1) {
+	                out.write(bytes, 0, read);
+	            }
+	 
+	            in.close();
+	            out.flush();
+	            out.close();
+	            
+	 // Charger le fichier dans le graphique image
+	            getContent();
+	            System.out.println("New file created!");
+	        } catch (IOException e) {
+	            System.out.println(e.getMessage());
+	        }
+	        
+	       
+	    }
+	
+	
+	
+	
 		
 //Getters and setters
 	
@@ -659,37 +719,7 @@ return listObject;
 		this.listNature = listNature;
 	}
 
-	public PanelGrid getpGridOng() {
-		return pGridOng;
-	}
-
-	public void setpGridOng(PanelGrid pGridOng) {
-		this.pGridOng = pGridOng;
-	}
-
-	public PanelGrid getpGridPh() {
-		return pGridPh;
-	}
-
-	public void setpGridPh(PanelGrid pGridPh) {
-		this.pGridPh = pGridPh;
-	}
-
-	public PanelGrid getpGridMini() {
-		return pGridMini;
-	}
-
-	public void setpGridMini(PanelGrid pGridMini) {
-		this.pGridMini = pGridMini;
-	}
-
-	public PanelGrid getpGridProg() {
-		return pGridProg;
-	}
-
-	public void setpGridPhProg(PanelGrid pGridProg) {
-		this.pGridProg = pGridProg;
-	}
+	
 
 	public String getType_promoteur() {
 		return type_promoteur;
@@ -713,10 +743,6 @@ return listObject;
 
 	public void setListDepartement(List listDepartement) {
 		this.listDepartement = listDepartement;
-	}
-
-	public void setpGridProg(PanelGrid pGridProg) {
-		this.pGridProg = pGridProg;
 	}
 
 	public List getListDrena() {
@@ -1021,17 +1047,6 @@ return listObject;
 		this.idLangue = idLangue;
 	}
 
-
-	public PanelGrid getpGridEntrep() {
-		return pGridEntrep;
-	}
-
-
-	public void setpGridEntrep(PanelGrid pGridEntrep) {
-		this.pGridEntrep = pGridEntrep;
-	}
-
-
 	public Departement getChoosedDepartement() {
 		return choosedDepartement;
 	}
@@ -1099,5 +1114,92 @@ return listObject;
 
 	public void setEtatLieu(String etatLieu) {
 		this.etatLieu = etatLieu;
+	}
+
+
+	public String getCheminFinal() {
+		return cheminFinal;
+	}
+
+
+	public void setCheminFinal(String cheminFinal) {
+		this.cheminFinal = cheminFinal;
+	}
+
+
+	public StreamedContent getContent() {
+		if ((cheminFinal.equals(""))) {
+    		setCheminFinal(destination + "avatar.jpg");
+    	}
+    	
+    	try {
+			 
+ 			InputStream is = new FileInputStream(cheminFinal);
+ 			//is.close();  
+ 			content	= new DefaultStreamedContent(is);
+ 			
+ 		} catch (FileNotFoundException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+		  return content;
+	}
+
+
+	public void setContent(StreamedContent content) {
+		this.content = content;
+	}
+
+
+	public boolean ispGridOng() {
+		return pGridOng;
+	}
+
+
+	public void setpGridOng(boolean pGridOng) {
+		this.pGridOng = pGridOng;
+	}
+
+
+	public boolean ispGridPh() {
+		return pGridPh;
+	}
+
+
+	public void setpGridPh(boolean pGridPh) {
+		this.pGridPh = pGridPh;
+	}
+
+
+	public boolean ispGridMini() {
+		return pGridMini;
+	}
+
+
+	public void setpGridMini(boolean pGridMini) {
+		this.pGridMini = pGridMini;
+	}
+
+
+	public boolean ispGridProg() {
+		return pGridProg;
+	}
+
+
+	public void setpGridProg(boolean pGridProg) {
+		this.pGridProg = pGridProg;
+	}
+
+
+	public boolean ispGridEntrep() {
+		return pGridEntrep;
+	}
+
+
+	public void setpGridEntrep(boolean pGridEntrep) {
+		this.pGridEntrep = pGridEntrep;
 	}
 }
