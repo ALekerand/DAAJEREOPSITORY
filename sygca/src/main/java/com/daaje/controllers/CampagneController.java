@@ -19,7 +19,7 @@ import com.daaje.service.Iservice;
 @Component
 public class CampagneController {
 	@Autowired
-	private Iservice iservice;
+	private Iservice iservice; 
 	private Campagne campagne = new Campagne();
 	private Campagne selectedObject = new Campagne();
 	private List listObject = new ArrayList();
