@@ -17,7 +17,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
-import org.primefaces.component.panelgrid.PanelGrid;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
 import org.primefaces.event.FileUploadEvent;
@@ -87,12 +86,10 @@ public class CentreControllers {
 	private int idLangue;
 	private String value1, value2, value3;
 	private String lieu;
-	private String cheminFinal ="";
 	private boolean skip;
 	private String etatPermanence;
 	private String etatLieu;
 	private UserAuthentication userAuthentication = new UserAuthentication();
-	private	StreamedContent content = new DefaultStreamedContent();
 	private Animateur animateur = new Animateur();
 	private Nature natureCentre = new Nature();
 	private Departement choosedDepartement = new Departement();
@@ -131,10 +128,14 @@ public class CentreControllers {
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
 	private List<Langue> listLangue = new ArrayList<Langue>();
 	private List<TypeAlphabetisation> listTypeAlpha = new ArrayList<TypeAlphabetisation>(); 
-	private String destination = "C:/photo/";
 	
 	private UploadedFile fichier;
 	private String chemin = "C:\\SYGCA\\AUTORISATION";
+	
+	// Pour l'upload
+		private String destination = "C:/photo/";
+		private String cheminFinal ="";
+		private	StreamedContent content = new DefaultStreamedContent();
 	
 	
 //Controle des composants
@@ -142,6 +143,8 @@ public class CentreControllers {
 	private CommandButton cmdBEnregistrer = new CommandButton();
 	private SelectOneRadio radio_promo = new SelectOneRadio();
 	private SelectOneMenu natureProOneMenu = new SelectOneMenu();
+	private boolean etatGraphicImage;
+	private boolean etatFileUpload;
 	//private PanelGrid pGridOng = new PanelGrid();
 	//private PanelGrid pGridPh = new PanelGrid();
 	//private PanelGrid pGridMini = new PanelGrid();
@@ -164,6 +167,8 @@ public class CentreControllers {
 		this.setpGridProg(false);
 		this.setpGridEntrep(false);
 		this.natureProOneMenu.setDisabled(true);
+		this.setEtatFileUpload(false);
+		this.setEtatGraphicImage(false);
 		recupererCampagneEncours();
 		genererCodePromoteur();
 		genererCodeAnimateur();
@@ -182,6 +187,20 @@ public class CentreControllers {
 			}
 		}
 	}
+	
+	
+	public void uploadPhoto(FileUploadEvent event) {
+        FacesMessage msg = new FacesMessage("Photo validée!");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        // Do what you want with the file
+        try {
+            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
+	
 	
 	public void upload() {
 		String extValidate;
@@ -267,7 +286,8 @@ public class CentreControllers {
 			}
 			
 			case "personne_morale": {
-				personnePhysique.setPromoteur(promoteur);
+				personneMorale.setPromoteur(promoteur);
+				personneMorale.setRaisonSociale(chemin);
 				personnePhysique.setCodePromoteur(promoteur.getCodePromoteur());
 				iservice.addObject(personnePhysique);
 				break;
@@ -316,7 +336,10 @@ public class CentreControllers {
 			
 			upload();
 			chagerUtilisateur();
-			centre.setResponsable(userAuthentication.getResponsable());
+			
+			//L'enregistreur du centre
+			centre.setResponsableByIdResponsable(userAuthentication.getResponsable());
+			//centre.setResponsable(userAuthentication.getResponsable());
 			iservice.addObject(this.centre);
 		
 			//Gestion de l'animateur
@@ -425,6 +448,8 @@ public class CentreControllers {
 		switch (type_promoteur) {
 		case "personne_physique": {
 			this.setpGridPh(true);
+			this.setEtatFileUpload(true);
+			this.setEtatGraphicImage(true);
 			this.setpGridOng(false);
 			this.setpGridMini(false);
 			this.setpGridProg(false);
@@ -436,6 +461,8 @@ public class CentreControllers {
 			this.setpGridOng(false);
 			this.setpGridMini(false);
 			this.setpGridPh(false);
+			this.setEtatFileUpload(false);
+			this.setEtatGraphicImage(false);
 			this.setpGridProg(false);
 			this.setpGridEntrep(true);
 			break;
@@ -445,6 +472,8 @@ public class CentreControllers {
 			this.setpGridOng(true);
 			this.setpGridMini(false);
 			this.setpGridPh(false);
+			this.setEtatFileUpload(false);
+			this.setEtatGraphicImage(false);
 			this.setpGridProg(false);
 			this.setpGridEntrep(false);
 			break;
@@ -454,6 +483,8 @@ public class CentreControllers {
 			this.setpGridOng(false);
 			this.setpGridMini(false);
 			this.setpGridPh(false);
+			this.setEtatFileUpload(false);
+			this.setEtatGraphicImage(false);
 			this.setpGridProg(true);
 			this.setpGridEntrep(false);
 			break;
@@ -464,6 +495,8 @@ public class CentreControllers {
 			this.setpGridOng(false);
 			this.setpGridMini(true);
 			this.setpGridPh(false);
+			this.setEtatFileUpload(false);
+			this.setEtatGraphicImage(false);
 			this.setpGridProg(false);
 			break;
 		}
@@ -496,14 +529,20 @@ public class CentreControllers {
 		cmdBModifier.setDisabled(false);
 	}
 	
-	public void chargerSouprefecture() {
+	
+	public void chargerdrena() {
+		
+	}
+	
+	public void chargerCombo() {
 		choosedDepartement = (Departement) iservice.getObjectById(idDepartement,"Departement");
-		System.out.println("Département selectionné:"+choosedDepartement.getNomDepartement());
 		// Charger les sous-préfectures
 		listSousPrefecture.clear();
 		listDrena.clear();
 		listIep.clear();
 		listLocalite.clear();
+		
+		//Charger la liste des Sous-Préfecture
 		for ( SousPrefecture var : choosedDepartement.getSousPrefectures()) {
 			listSousPrefecture.add(var);
 		}
@@ -517,8 +556,31 @@ public class CentreControllers {
 			            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
 			        }
 			    });
-				//========================  Fin  =======================
+				//========================  Fin  =======================	
+				
+		//Charger les DRENA
+		choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
+		listDrena.clear();
+		for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
+			listDrena.add(var.getDrena());
+		}
+		
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listDrena, new Comparator<Drena>() {
+	        @Override
+	        public int compare(Drena ob1, Drena ob2)
+	        {
+	            return  ob1.getNomDrena().compareTo(ob2.getNomDrena());
+	        }
+	    });
+		//========================  Fin  =======================	
+		
+				
 	}
+	
+	
+	
 	
 	
 	public void chargerIep() {
@@ -571,7 +633,7 @@ public class CentreControllers {
 		public void copyFile(String fileName, InputStream in) {
 	        try {
 	        //lE CHEMIN
-	        	setCheminFinal(destination + fileName);
+	        	cheminFinal = destination + fileName;
 	            OutputStream out = new FileOutputStream(new File(destination + fileName));
 	 
 	            int read = 0;
@@ -1201,5 +1263,35 @@ return listObject;
 
 	public void setpGridEntrep(boolean pGridEntrep) {
 		this.pGridEntrep = pGridEntrep;
+	}
+
+
+	public boolean isEtatGraphicImage() {
+		return etatGraphicImage;
+	}
+
+
+	public void setEtatGraphicImage(boolean etatGraphicImage) {
+		this.etatGraphicImage = etatGraphicImage;
+	}
+
+
+	public boolean isEtatFileUpload() {
+		return etatFileUpload;
+	}
+
+
+	public void setEtatFileUpload(boolean etatFileUpload) {
+		this.etatFileUpload = etatFileUpload;
+	}
+
+
+	public PersonneMorale getPersonneMorale() {
+		return personneMorale;
+	}
+
+
+	public void setPersonneMorale(PersonneMorale personneMorale) {
+		this.personneMorale = personneMorale;
 	}
 }

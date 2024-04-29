@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 13 f�vr. 2024, 11:13:45 by Hibernate Tools 4.3.6.Final
+// Generated 8 avr. 2024, 14:52:14 by Hibernate Tools 4.3.6.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -94,7 +94,7 @@ public class LocaliteDImplantation implements java.io.Serializable {
 		this.nomLocalite = nomLocalite;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "localiteDImplantation")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "localiteDImplantation")
 	public Set<Centre> getCentres() {
 		return this.centres;
 	}

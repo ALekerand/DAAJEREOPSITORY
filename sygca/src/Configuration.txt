@@ -6,12 +6,16 @@
  DEPARTEMENT ========> SOUSPREFECTURE
  DEPARTEMENT ========> DRENADEPARTEMENT
  
- DRENA DEPARTEMENT ========> Drena
+ 
+ DRENADEPARTEMENT ========> DRENA
+ 
  
  SOUPREFECTURE ========> DEPARTEMENT
+ SOUPREFECTURE ========> LOCALITEDIMPLEMENTATION
  
  LocaliteImplementation ========> Commune
  LocaliteImplementation ========> SousPrefecture
+ LocaliteImplementation  ========> CENTRE (Set)
  
  USERAUTHENTIFICATION ========> RESPONSABLE
  
@@ -19,8 +23,9 @@
  CENTRE ========> NATURE
  CENTRE ========> PROMOTEUR
  CENTRE ========> IEP
+ CENTRE ========> ECOLE
  
- LocaliteImplementation  ========> SOUS PREFECTURE (set)
+ 
  
  IEP ========> DRENA
  

@@ -28,19 +28,15 @@
 	    <br />
 	    
 	    <p:toolbar id="toob">
-<<<<<<< HEAD
 		<f:facet name="left">
-			<p:commandButton  value="Enregistrer" actionListener="#{genreController.enregistrer}" disabled="#{genreController.etatBtnEnregister}" update="info_grid, data"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-			<p:commandButton value="Modifier" action="#{genreController.modifier}" disabled="#{genreController.etatBtnModifier}" update="info_grid, data, toob"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-			<p:commandButton value="Annuler" process="@this" actionListener="#{genreController.annuler}" update="info_grid, data"></p:commandButton>
+			<p:commandButton  value="Enregistrer" actionListener="#{genreController.enregistrer}" disabled="#{genreController.etatBtnEnregistrer}" update="info_grid, data">
+				<p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm>
+				</p:commandButton>
+			<p:commandButton value="Modifier" action="#{genreController.modifier}" disabled="#{genreController.etatBtnModifier}" update="info_grid, data, toob">
+				<p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm>
+			</p:commandButton>
+			<p:commandButton value="Annuler" process="@this" actionListener="#{genreController.annuler}" update="info_grid, data, toob"></p:commandButton>
 		</f:facet>
-=======
-			<f:facet name="left">
-				<p:commandButton value="Enregistrer"  actionListener="#{genreController.enregistrer}" update="form"   disabled="#{genreController.etatBtnEnregistrer}"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
-				<p:commandButton value="Modifier" actionListener="#{genreController.modifier}" update="info_grid, data, toob" disabled="#{genreController.etatBtnModifier}"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
-				<p:commandButton value="Annuler" process="@this" actionListener="#{genreController.annuler}" update="form"></p:commandButton>
-			</f:facet>
->>>>>>> refs/remotes/origin/master
 		</p:toolbar>
 	    
 	    <br />

@@ -58,48 +58,45 @@
 					<p:inputText id="input_mail_ph" value="#{centreControllers.personnePhysique.mailPersonne}" ></p:inputText>
 			    	</h:panelGrid>
 			    	
-					<h:panelGrid id="info_prog" columns="6" cellpadding="8" rendered="#{centreControllers.pGridProg}">
-					<p:outputLabel for="input_lib_prog" value="Nom programme:"></p:outputLabel>
-					<p:inputText id="input_lib_prog" value="#{centreControllers.programme.libelleProgramme}"></p:inputText>
-			    	</h:panelGrid>
-			    	
-			    	
-					<p:fileUpload fileUploadListener="#{centreControllers.upload}" mode="advanced" dragDropSupport="false" cancelLabel="Annuler"
-					uploadLabel="Valider" label="Jouindre une photo" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpg?g|png)$/" update="graphIm" />
-					<p:graphicImage id="graphIm" value="#{centreControllers.content}" height="110" width="110"></p:graphicImage>	
-			    	
-			    	
+			    	<p:fileUpload fileUploadListener="#{centreControllers.uploadPhoto}" mode="advanced" dragDropSupport="false" cancelLabel="Annuler"
+					uploadLabel="Valider" label="photo" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpg|png)$/" update="graphIm" rendered ="#{centreControllers.etatFileUpload}"/>
+				
         		</td>
-        		<td>
+        		
+        			
+        		<td align="right">
+					<p:graphicImage id="graphIm" value="#{centreControllers.content}" height="110" width="110" rendered="#{centreControllers.etatGraphicImage}"></p:graphicImage>	
+			    	
         		</td>
         	</tr>
         
         </table>
-        
-	    	
-	    	
-	    	
+        	
+	    	<h:panelGrid id="info_prog" columns="6" cellpadding="8" rendered="#{centreControllers.pGridProg}">
+					<p:outputLabel for="input_lib_prog" value="Nom programme:"></p:outputLabel>
+					<p:inputText id="input_lib_prog" value="#{centreControllers.programme.libelleProgramme}"></p:inputText>
+			    	</h:panelGrid>
 	    	
 	    	
 	    	
 	    	
 	    	<h:panelGrid id="info_mini" columns="6" cellpadding="8" rendered="#{centreControllers.pGridMini}">
-			<p:outputLabel for="input_nom_min" value="Nom :"></p:outputLabel>
-			<p:inputText id="input_nom_min" ></p:inputText>
+			<p:outputLabel for="input_nom_min" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom_min" value="#{centreControllers.ministere.nomMinistere}" ></p:inputText>
 			
 			<p:outputLabel for="input_phone_min" value="Téléphone:"></p:outputLabel>
-			<p:inputText id="input_phone_min" ></p:inputText>
+			<p:inputText id="input_phone_min" value="#{centreControllers.ministere.telephoneMinistere}"></p:inputText>
 	    	</h:panelGrid>
 	    	
 	    	<p:panelGrid id="info_entrep" columns="6" cellpadding="8" rendered="#{centreControllers.pGridEntrep}">
 				<p:outputLabel for="input_raison_soc" value="Nom :"></p:outputLabel>
-				<p:inputText id="input_raison_soc" ></p:inputText>
+				<p:inputText id="input_raison_soc" value="#{centreControllers.personneMorale.raisonSociale}"></p:inputText>
 				
 				<p:outputLabel for="input_email_entrep" value="Raison sociale:"></p:outputLabel>
-				<p:inputText id="input_email_entrep" ></p:inputText>
+				<p:inputText id="input_email_entrep" value="#{centreControllers.personneMorale.emailPersMorale}"></p:inputText>
 				
 				<p:outputLabel for="input_phone_entrep" value="Téléphone:"></p:outputLabel>
-				<p:inputText id="input_phone_entrep" ></p:inputText>
+				<p:inputText id="input_phone_entrep" value="#{centreControllers.personneMorale.telephonePersMorale}"></p:inputText>
 	    	</p:panelGrid>
 	    	
 	    </fieldset>
@@ -134,7 +131,7 @@
 			
 			<p:outputLabel for="cb_departement" value="Département:"/>
 			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
-			<p:ajax listener="#{centreControllers.chargerSouprefecture}" event="change" process="@this"  update="cb_drena, cb_sp"></p:ajax>
+			<p:ajax listener="#{centreControllers.chargerCombo}" event="change" process="@this"  update="cb_drena, cb_sp"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listDepartement}" var="tata" itemLabel="#{tata.nomDepartement}" itemValue="#{tata.idDepartement}"></f:selectItems>
 			</p:selectOneMenu>
@@ -202,10 +199,10 @@
 			
 			
 			<p:outputLabel for="input_lat" value="Latitude:"></p:outputLabel>
-			<p:inputText id="input_lat"></p:inputText>
+			<p:inputText id="input_lat" value="#{centreControllers.centre.latitude}"></p:inputText>
 			
 			<p:outputLabel for="input_long" value="Longitude:"></p:outputLabel>
-			<p:inputText id="input_long"></p:inputText>
+			<p:inputText id="input_long" value="#{centreControllers.centre.longitude}"></p:inputText>
 			
 			
 			<p:outputLabel for="cb_type_alpha" value="Type Alphabétisation:"/>

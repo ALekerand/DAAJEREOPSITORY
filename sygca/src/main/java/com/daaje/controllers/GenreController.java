@@ -28,8 +28,8 @@ public class GenreController {
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
 	private CommandButton cmdBEnregistrer = new CommandButton();
-	private boolean etatBtnEnregistrer = false;
-	private boolean etatBtnModifier = false;
+	private boolean etatBtnEnregistrer;
+	private boolean etatBtnModifier;
 		
 //Methodes
 	@PostConstruct
