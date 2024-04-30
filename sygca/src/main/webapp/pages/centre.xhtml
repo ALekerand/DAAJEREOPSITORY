@@ -111,25 +111,8 @@
 		<fieldset>
 		<legend> Informations sur le centre</legend>
 		<h:panelGrid id="centre_grid" columns="6" cellpadding="8">		
-			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{centreControllers.centre.codeCentre}" required="true" ></p:inputText>
 			
-			<p:outputLabel for="input_nom" value="Nom centre:"></p:outputLabel>
-			<p:inputText id="input_nom" value="#{centreControllers.centre.nomCentre}" required="true"></p:inputText>
-			
-			<p:outputLabel for="input_abrev" value="Abréviation:"></p:outputLabel>
-			<p:inputText id="input_abrev" value="#{centreControllers.centre.abreviationNomCentre}" ></p:inputText>
-			
-			<p:outputLabel for="input_adr" value="Adresse:"></p:outputLabel>
-			<p:inputText id="input_adr" value="#{centreControllers.centre.adresseCentre}" ></p:inputText>
-			
-			<p:outputLabel for="input_tel" value="Téléphone:"></p:outputLabel>
-			<p:inputText id="input_tel" value="#{centreControllers.centre.telephoneCentre}"></p:inputText>
-			
-			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
-			<p:inputText id="input_mail" value="#{centreControllers.centre.mailCentre}" required="true"></p:inputText>
-			
-			<p:outputLabel for="cb_departement" value="Département:"/>
+						<p:outputLabel for="cb_departement" value="Département:"/>
 			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
 			<p:ajax listener="#{centreControllers.chargerCombo}" event="change" process="@this"  update="cb_drena, cb_sp"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
@@ -162,6 +145,29 @@
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listLocalite}" var="tata" itemLabel="#{tata.nomLocalite}" itemValue="#{tata.idLocalite}"></f:selectItems>
 			</p:selectOneMenu>
+			
+			<p:outputLabel/>
+			<p:outputLabel/>
+			
+			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+			<p:inputText id="input_code" value="#{centreControllers.centre.codeCentre}" required="true" readonly="true" ></p:inputText>
+			
+			<p:outputLabel for="input_nom" value="Nom centre:"></p:outputLabel>
+			<p:inputText id="input_nom" value="#{centreControllers.centre.nomCentre}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_abrev" value="Abréviation:"></p:outputLabel>
+			<p:inputText id="input_abrev" value="#{centreControllers.centre.abreviationNomCentre}" ></p:inputText>
+			
+			<p:outputLabel for="input_adr" value="Adresse:"></p:outputLabel>
+			<p:inputText id="input_adr" value="#{centreControllers.centre.adresseCentre}" ></p:inputText>
+			
+			<p:outputLabel for="input_tel" value="Téléphone:"></p:outputLabel>
+			<p:inputText id="input_tel" value="#{centreControllers.centre.telephoneCentre}"></p:inputText>
+			
+			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_mail" value="#{centreControllers.centre.mailCentre}" required="true"></p:inputText>
+			
+
 			
 			<p:outputLabel for="cb_nature_centre" value="Nature centre:"/>
 			<p:selectOneMenu id="cb_nature_centre" required="true" value="#{centreControllers.idNature}">

@@ -54,7 +54,7 @@ public class SousPrefecture implements java.io.Serializable {
 		this.idSousPrefecture = idSousPrefecture;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_DEPARTEMENT", nullable = false)
 	public Departement getDepartement() {
 		return this.departement;
