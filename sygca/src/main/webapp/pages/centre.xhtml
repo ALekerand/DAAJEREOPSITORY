@@ -112,9 +112,9 @@
 		<legend> Informations sur le centre</legend>
 		<h:panelGrid id="centre_grid" columns="6" cellpadding="8">		
 			
-						<p:outputLabel for="cb_departement" value="Département:"/>
+			<p:outputLabel for="cb_departement" value="Département:"/>
 			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
-			<p:ajax listener="#{centreControllers.chargerCombo}" event="change" process="@this"  update="cb_drena, cb_sp"></p:ajax>
+			<p:ajax listener="#{centreControllers.chargerCombo}" event="change" process="@this"  update="cb_drena, cb_sp, cb_iep, cb_localite"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listDepartement}" var="tata" itemLabel="#{tata.nomDepartement}" itemValue="#{tata.idDepartement}"></f:selectItems>
 			</p:selectOneMenu>
@@ -188,20 +188,20 @@
             <f:selectItem itemLabel="Oui" itemValue="OUI"/>
             </p:selectOneRadio>
             
-            <p:outputLabel for="lieu" value="Nature lieu:"/>
-        	<p:selectOneRadio id="lieu" value="#{centreControllers.etatLieu}">
+            <p:outputLabel for="nature_lieu" value="Nature lieu:"/>
+        	<p:selectOneRadio id="nature_lieu" value="#{centreControllers.etatLieu}">
             <f:selectItem itemLabel="Ecole" itemValue="ecole"/>
             <f:selectItem itemLabel="Autre" itemValue="autre"/>
             </p:selectOneRadio>
             
             <p:outputLabel for="cb_ecole" value="Ecole:"/>
-			<p:selectOneMenu id="cb_ecole" value="#{centreControllers.idEcole}">
+			<p:selectOneMenu id="cb_ecole" value="#{centreControllers.idEcole}" binding="#{centreControllers.oneMenuEcole}">
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listEcole}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="input_lieu" value="Lieu:"></p:outputLabel>
-			<p:inputText id="input_lieu"></p:inputText>
+			<p:inputText id="input_lieu" binding="#{centreControllers.inputLieu}"></p:inputText>
 			
 			
 			<p:outputLabel for="input_lat" value="Latitude:"></p:outputLabel>

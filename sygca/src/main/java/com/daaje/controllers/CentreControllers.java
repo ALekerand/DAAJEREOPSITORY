@@ -17,6 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
 import org.primefaces.event.FileUploadEvent;
@@ -107,7 +108,7 @@ public class CentreControllers {
 	private Activite activitePrimaire = new Activite();
 	private Activite activiteSecondaire = new Activite();
 	private Enseigner enseigner = new Enseigner();
-	private  Ong ong = new Ong();
+	private Ong ong = new Ong();
 	private PersonnePhysique personnePhysique = new PersonnePhysique();
 	private PersonneMorale personneMorale = new PersonneMorale();
 	private Programme programme = new Programme();
@@ -145,6 +146,8 @@ public class CentreControllers {
 	private SelectOneMenu natureProOneMenu = new SelectOneMenu();
 	private boolean etatGraphicImage;
 	private boolean etatFileUpload;
+	private SelectOneMenu oneMenuEcole = new SelectOneMenu();
+	private InputText inputLieu = new InputText();
 	//private PanelGrid pGridOng = new PanelGrid();
 	//private PanelGrid pGridPh = new PanelGrid();
 	//private PanelGrid pGridMini = new PanelGrid();
@@ -541,29 +544,31 @@ public class CentreControllers {
 		listDrena.clear();
 		listIep.clear();
 		listLocalite.clear();
+		listEcole.clear();
 		
 		//Charger la liste des Sous-Préfecture
 		for ( SousPrefecture var : choosedDepartement.getSousPrefectures()) {
 			listSousPrefecture.add(var);
 		}
-		System.out.println(listSousPrefecture.size());
 		
-		//=======Pour le rangement par ordre alphabétique======
-				Collections.sort(listSousPrefecture, new Comparator<SousPrefecture>() {
-			        @Override
-			        public int compare(SousPrefecture ob1, SousPrefecture ob2)
-			        {
-			            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
-			        }
-			    });
-				//========================  Fin  =======================	
-				
 		//Charger les DRENA
 		choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
 		listDrena.clear();
 		for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
 			listDrena.add(var.getDrena());
 		}
+		
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listSousPrefecture, new Comparator<SousPrefecture>() {
+	        @Override
+	        public int compare(SousPrefecture ob1, SousPrefecture ob2)
+	        {
+	            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
+	        }
+	    });
+		
+		//========================  Fin  =======================	
 		
 		
 		//=======Pour le rangement par ordre alphabétique======
@@ -575,8 +580,7 @@ public class CentreControllers {
 	        }
 	    });
 		//========================  Fin  =======================	
-		
-				
+			
 	}
 	
 	
@@ -586,10 +590,15 @@ public class CentreControllers {
 	public void chargerIep() {
 			listIep.clear();
 			listEcole.clear();
-			
 			choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
-			for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
-				listDrena.add(var.getDrena());
+			
+			/*
+			 * for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
+			 * listDrena.add(var.getDrena()); }
+			 */
+			
+			for (Iep varIep : choosedDrena.getIeps()) {
+				listIep.add(varIep);
 			}
 	}
 	
@@ -742,7 +751,8 @@ return listObject;
 	}
 
 	public List getListIep() {
-		return listIep = iservice.getObjects("Iep");
+		//listIep = iservice.getObjects("Iep");
+		return listIep;
 	}
 
 	public void setListIep(List listIep) {
@@ -1293,5 +1303,25 @@ return listObject;
 
 	public void setPersonneMorale(PersonneMorale personneMorale) {
 		this.personneMorale = personneMorale;
+	}
+
+
+	public SelectOneMenu getOneMenuEcole() {
+		return oneMenuEcole;
+	}
+
+
+	public void setOneMenuEcole(SelectOneMenu oneMenuEcole) {
+		this.oneMenuEcole = oneMenuEcole;
+	}
+
+
+	public InputText getInputLieu() {
+		return inputLieu;
+	}
+
+
+	public void setInputLieu(InputText inputLieu) {
+		this.inputLieu = inputLieu;
 	}
 }
