@@ -7,7 +7,7 @@
            
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
-		<h:form id="form">
+		<h:form id="form" enctype = "multipart/form-data">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
 		
 		<p:wizard flowListener="#{centreControllers.onFlowProcess}">
@@ -58,12 +58,10 @@
 					<p:inputText id="input_mail_ph" value="#{centreControllers.personnePhysique.mailPersonne}" ></p:inputText>
 			    	</h:panelGrid>
 			    	
-			    	<p:fileUpload fileUploadListener="#{centreControllers.uploadPhoto}" mode="advanced" dragDropSupport="false" cancelLabel="Annuler"
-					uploadLabel="Valider" label="photo" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpg|png)$/" update="graphIm" rendered ="#{centreControllers.etatFileUpload}"/>
-				
+			    	<p:fileUpload id="File_up" fileUploadListener ="#{centreControllers.upload}" mode="advanced" auto="true" dragDropSupport="false" cancelLabel="Annuler"
+								  label="Photo" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="graphIm" rendered ="#{centreControllers.etatFileUpload}"/>
         		</td>
         		
-        			
         		<td align="right">
 					<p:graphicImage id="graphIm" value="#{centreControllers.content}" height="110" width="110" rendered="#{centreControllers.etatGraphicImage}"></p:graphicImage>	
 			    	
@@ -135,8 +133,8 @@
 			
 			<p:outputLabel for="cb_iep" value="IEP:"/>
 			<p:selectOneMenu id="cb_iep" required="true" value="#{centreControllers.idIep}">
-			<p:ajax listener="#{centreControllers.chargerEcole}" event="change" process="@this"  update="cb_ecole"></p:ajax>
-			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<p:ajax listener="#{centreControllers.chargerEcole}" event="change" process="@this" update="cb_ecole,input_code"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
 			<f:selectItems value="#{centreControllers.listIep}" var="tata" itemLabel="#{tata.nomIep}" itemValue="#{tata.idIep}"></f:selectItems>
 			</p:selectOneMenu>
 			
@@ -189,7 +187,8 @@
             </p:selectOneRadio>
             
             <p:outputLabel for="nature_lieu" value="Nature lieu:"/>
-        	<p:selectOneRadio id="nature_lieu" value="#{centreControllers.etatLieu}">
+        	<p:selectOneRadio id="nature_lieu" value="#{centreControllers.etatLieu}" binding="#{centreControllers.oneRadioNatureLieu}">
+        	<p:ajax event="valueChange" process="@this" listener="#{centreControllers.actualiserLieu}" update="cb_ecole, input_lieu"/>
             <f:selectItem itemLabel="Ecole" itemValue="ecole"/>
             <f:selectItem itemLabel="Autre" itemValue="autre"/>
             </p:selectOneRadio>
@@ -201,7 +200,7 @@
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="input_lieu" value="Lieu:"></p:outputLabel>
-			<p:inputText id="input_lieu" binding="#{centreControllers.inputLieu}"></p:inputText>
+			<p:inputText id="input_lieu" binding="#{centreControllers.inputLieu}" ></p:inputText>
 			
 			
 			<p:outputLabel for="input_lat" value="Latitude:"></p:outputLabel>
@@ -257,13 +256,16 @@
 			<p:inputText id="input_prenom_anim" value="#{centreControllers.animateur.prenomAnimateur}" ></p:inputText>
 				    
 		   	<p:outputLabel for="date_nais_anim" value="Date naisance:"></p:outputLabel>
-			<p:calendar id="date_nais_anim" locale="fr" navigator="true" pattern="dd/MM/yyyy"/>
+			<p:calendar id="date_nais_anim" value="#{centreControllers.animateur.dateNaisAnimateur}" locale="fr" navigator="true" pattern="dd/MM/yyyy"/>
 			
 			<p:outputLabel for="input_telephone_anim" value="Téléphone:"></p:outputLabel>
 			<p:inputText id="input_telephone_anim" value="#{centreControllers.animateur.telephoneAnimateur}" ></p:inputText>
 			
 			<p:outputLabel for="input_adresse_anim" value="Adresse:"></p:outputLabel>
 			<p:inputText id="input_adresse_anim" value="#{centreControllers.animateur.adresseAnimateur}" ></p:inputText>
+			
+			<p:outputLabel for="input_mail" value="Adresse:"></p:outputLabel>
+			<p:inputText id="input_mail" value="#{centreControllers.animateur.mailAnimateur}"></p:inputText>
 			
 			<p:outputLabel for="cb_genre" value="Genre: "/>
 			<p:selectOneMenu id="cb_genre" required="true" value="#{centreControllers.idGenre}">
@@ -346,8 +348,9 @@
 	    	</p:column>
 	    
 	    </p:dataTable>
+	    
 		<br />
-
+		
 	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 	   <p:commandButton value="Oui" type="button"
 	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >

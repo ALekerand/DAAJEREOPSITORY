@@ -24,7 +24,6 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -130,13 +129,12 @@ public class CentreControllers {
 	private List<Langue> listLangue = new ArrayList<Langue>();
 	private List<TypeAlphabetisation> listTypeAlpha = new ArrayList<TypeAlphabetisation>(); 
 	
-	private UploadedFile fichier;
+	//private UploadedFile fichier;
 	private String chemin = "C:\\SYGCA\\AUTORISATION";
 	
-	// Pour l'upload
-		private String destination = "C:/photo/";
-		private String cheminFinal ="";
-		private	StreamedContent content = new DefaultStreamedContent();
+	private	StreamedContent content = new DefaultStreamedContent();
+	private String cheminFinal ="";
+	private String destination = "C:/SYGCA/";
 	
 	
 //Controle des composants
@@ -148,12 +146,18 @@ public class CentreControllers {
 	private boolean etatFileUpload;
 	private SelectOneMenu oneMenuEcole = new SelectOneMenu();
 	private InputText inputLieu = new InputText();
-	//private PanelGrid pGridOng = new PanelGrid();
-	//private PanelGrid pGridPh = new PanelGrid();
-	//private PanelGrid pGridMini = new PanelGrid();
-	//private PanelGrid pGridProg = new PanelGrid();
-	//private PanelGrid pGridEntrep = new PanelGrid();
+	private SelectOneRadio oneRadioNatureLieu = new SelectOneRadio();
 	
+	public SelectOneRadio getOneRadioNatureLieu() {
+		return oneRadioNatureLieu;
+	}
+
+
+	public void setOneRadioNatureLieu(SelectOneRadio oneRadioNatureLieu) {
+		this.oneRadioNatureLieu = oneRadioNatureLieu;
+	}
+
+
 	private boolean pGridOng;
 	private boolean pGridPh;
 	private boolean pGridMini;
@@ -170,11 +174,26 @@ public class CentreControllers {
 		this.setpGridProg(false);
 		this.setpGridEntrep(false);
 		this.natureProOneMenu.setDisabled(true);
+		this.oneMenuEcole.setDisabled(true);
 		this.setEtatFileUpload(false);
 		this.setEtatGraphicImage(false);
+		this.inputLieu.setDisabled(true);
 		recupererCampagneEncours();
 		genererCodePromoteur();
 		genererCodeAnimateur();
+	}
+	
+	
+	public void genererCodeEnseigner() {
+		// A terminer
+	}
+	
+	
+	public void genererCodeCentre() {
+		int nbEnregistrement = this.iservice.getObjects("Centre").size()+1;
+		choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
+		String code = "D"+choosedDrena.getCodeDrena().substring(4, 6)+"I"+choosedIep.getCodeIep().substring(3, 6)+"-"+nbEnregistrement;
+		centre.setCodeCentre(code);
 	}
 	
 	
@@ -191,54 +210,6 @@ public class CentreControllers {
 		}
 	}
 	
-	
-	public void uploadPhoto(FileUploadEvent event) {
-        FacesMessage msg = new FacesMessage("Photo validée!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        // Do what you want with the file
-        try {
-            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
- 
-    }
-	
-	
-	public void upload() {
-		String extValidate;
-		if(getFichier() != null) {
-			String ext = getFichier().getFileName();
-			if(ext != null) {
-				extValidate = ext.substring(ext.indexOf(".")+1);
-			}else {
-				extValidate = "null";
-			}
-			if(extValidate.equals("docx") || extValidate.equals("pdf") || extValidate.equals("pptx") || extValidate.equals("xlsx")) {
-				try {
-					transfererFile(getFichier().getFileName(), getFichier().getInputstream());
-				}catch (IOException ex) {
-					System.out.println(ex);
-				}
-			}
-		}
-	}
-	
-	public void transfererFile(String fileName, InputStream in) {
-		try {
-			OutputStream out = new FileOutputStream(new File(chemin + fileName));
-			int reader = 0;
-			byte[] bytes = new byte[(int)getFichier().getSize()];
-			while ((reader = in.read(bytes))!= -1) {
-				out.write(bytes,0,reader);
-			}
-			in.close();
-			out.flush();
-			out.close();
-		}catch (IOException e) {
-			System.out.println(e);
-		}
-	}
 	
 	public String onFlowProcess(FlowEvent event) {
         if (skip) {
@@ -290,7 +261,7 @@ public class CentreControllers {
 			
 			case "personne_morale": {
 				personneMorale.setPromoteur(promoteur);
-				personneMorale.setRaisonSociale(chemin);
+				//personneMorale.setRaisonSociale(chemin);
 				personnePhysique.setCodePromoteur(promoteur.getCodePromoteur());
 				iservice.addObject(personnePhysique);
 				break;
@@ -320,7 +291,7 @@ public class CentreControllers {
 			}
 			
 			//Enregistrer le centre
-			choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
+			//choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
 			centre.setIep(choosedIep);
 			centre.setLocaliteDImplantation((LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation"));
 			centre.setNature((Nature) iservice.getObjectById(idNature, "Nature"));
@@ -337,10 +308,11 @@ public class CentreControllers {
 				centre.setPermanent(false);
 			}
 			
-			upload();
+			//upload();
 			chagerUtilisateur();
 			
 			//L'enregistreur du centre
+	
 			centre.setResponsableByIdResponsable(userAuthentication.getResponsable());
 			//centre.setResponsable(userAuthentication.getResponsable());
 			iservice.addObject(this.centre);
@@ -392,7 +364,7 @@ public class CentreControllers {
 			
 		annuler();
 		genererCodePromoteur();
-		genererCodeAnimateur();;
+		genererCodeAnimateur();
 		info("Enregistrement effectué");
 	}
 	
@@ -408,6 +380,7 @@ public class CentreControllers {
 		personnePhysique.setPrenomsPersonne(null);
 		personnePhysique.setTelephonePersonne(null);
 		personnePhysique.setMailPersonne(null);
+		personnePhysique.setNumCni(null);
 		//ONG
 		ong.setNomOng(null);
 		ong.setTelephoneOng(null);
@@ -416,14 +389,18 @@ public class CentreControllers {
 		ministere.setNomMinistere(null);
 		ministere.setTelephoneMinistere(null);
 		//Centre
+		centre.setCodeCentre(null);
 		centre.setNomCentre(null);
 		centre.setAbreviationNomCentre(null);
 		centre.setAdresseCentre(null);
 		centre.setTelephoneCentre(null);
 		centre.setMailCentre(null);
 		centre.setDroitOuvertureCentre(null);
+		centre.setLongitude(null);
+		centre.setLatitude(null);
 		//les combos
 		setIdDepartement(0);
+		setIdSousPrefecture(0);
 		setIdDrena(0);
 		setIdIep(0);
 		setIdLocalite(0);
@@ -433,6 +410,8 @@ public class CentreControllers {
 		setIdNiveau(0);
 		setIdActivitePrimaire(0);
 		setIdActiviteSecondaire(0);
+		setIdLangue(0);
+		setIdTypeAlpha(0);
 		//Animateur
 		animateur.setCodeAnimateur(null);
 		animateur.setNomAnimateur(null);
@@ -533,6 +512,20 @@ public class CentreControllers {
 	}
 	
 	
+	public void actualiserLieu() {
+		System.out.println("===== Methode de lieu appelée=====");
+		if (oneRadioNatureLieu.getValue().equals("ecole")) {
+			oneMenuEcole.setDisabled(false);
+			inputLieu.setDisabled(true);
+		}
+		
+		if (oneRadioNatureLieu.getValue().equals("autre")) {
+			oneMenuEcole.setDisabled(true);
+			inputLieu.setDisabled(false);
+		}
+	}
+	
+	
 	public void chargerdrena() {
 		
 	}
@@ -591,15 +584,14 @@ public class CentreControllers {
 			listIep.clear();
 			listEcole.clear();
 			choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
-			
-			/*
-			 * for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
-			 * listDrena.add(var.getDrena()); }
-			 */
+			System.out.println("===== DRENA selectionné:"+choosedDrena.getNomDrena()); //Clear after;
 			
 			for (Iep varIep : choosedDrena.getIeps()) {
 				listIep.add(varIep);
 			}
+			
+			System.out.println("===== Taille liste IEP:"+listIep.size()); //Clear after;
+
 	}
 	
 	
@@ -617,6 +609,8 @@ public class CentreControllers {
 	public void chargerEcole() {
 		listEcole.clear();
 		listEcole = requeteEcole.recupEcoleParIEP(idIep);
+		// Générer le code du centre
+		genererCodeCentre();
 	}
 	
 	public void info(String message){
@@ -624,47 +618,49 @@ public class CentreControllers {
 	}
 	
 	
-	//************************Pour le traitement de la photo
 	
-		public void upload(FileUploadEvent event) {
-	        FacesMessage msg = new FacesMessage("Photo validée!");
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-	        // Do what you want with the file
-	        try {
-	            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	 
-	    }
-		
-		
-		public void copyFile(String fileName, InputStream in) {
-	        try {
-	        //lE CHEMIN
-	        	cheminFinal = destination + fileName;
-	            OutputStream out = new FileOutputStream(new File(destination + fileName));
-	 
-	            int read = 0;
-	            byte[] bytes = new byte[1024];
-	 
-	            while ((read = in.read(bytes)) != -1) {
-	                out.write(bytes, 0, read);
-	            }
-	 
-	            in.close();
-	            out.flush();
-	            out.close();
-	            
-	 // Charger le fichier dans le graphique image
-	            getContent();
-	            System.out.println("New file created!");
-	        } catch (IOException e) {
-	            System.out.println(e.getMessage());
-	        }
-	        
-	       
-	    }
+	
+	public void upload(FileUploadEvent event) {
+		System.out.println("======= Upload lancée");//clean after
+        FacesMessage msg = new FacesMessage("Photo validée!");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        // Do what you want with the file
+        try {
+            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
+	
+	public void copyFile(String fileName, InputStream in){
+        try {
+        //lE CHEMIN
+        	cheminFinal = destination + fileName;
+            OutputStream out = new FileOutputStream(new File(destination + fileName));
+ 
+            //int read = 0;
+            int byteValue;
+            //byte[] bytes = new byte[1024];
+ 
+            while ((byteValue = in.read()) != -1) {
+                out.write(byteValue);
+            }
+ 
+            in.close();
+            out.flush();
+            out.close();
+            System.out.println("======= Fin copie image");//clean after
+            
+ // Charger le fichier dans le graphique image
+            getContent();
+            System.out.println("New file created!");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        
+       
+    }
 	
 	
 	
@@ -1025,14 +1021,13 @@ return listObject;
 		this.value3 = value3;
 	}
 
-	public UploadedFile getFichier() {
-		return fichier;
-	}
+	/*
+	 * public UploadedFile getFichier() { return fichier; }
+	 */
 
-	public void setFichier(UploadedFile fichier) {
-		this.fichier = fichier;
-	}
-
+	/*
+	 * public void setFichier(UploadedFile fichier) { this.fichier = fichier; }
+	 */
 	public String getEtatPermanence() {
 		return etatPermanence;
 	}
@@ -1189,41 +1184,34 @@ return listObject;
 	}
 
 
-	public String getCheminFinal() {
-		return cheminFinal;
-	}
+	/*
+	 * public String getCheminFinal() { return cheminFinal; }
+	 */
+
+	/*
+	 * public void setCheminFinal(String cheminFinal) { this.cheminFinal =
+	 * cheminFinal; }
+	 */
 
 
-	public void setCheminFinal(String cheminFinal) {
-		this.cheminFinal = cheminFinal;
-	}
+	/*
+	 * public StreamedContent getContent() { if ((cheminFinal.equals(""))) {
+	 * setCheminFinal(destination + "avatar.jpg"); }
+	 * 
+	 * try {
+	 * 
+	 * InputStream is = new FileInputStream(cheminFinal); //is.close(); content =
+	 * new DefaultStreamedContent(is);
+	 * 
+	 * } catch (FileNotFoundException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated catch
+	 * block e.printStackTrace(); } return content; }
+	 */
 
 
-	public StreamedContent getContent() {
-		if ((cheminFinal.equals(""))) {
-    		setCheminFinal(destination + "avatar.jpg");
-    	}
-    	
-    	try {
-			 
- 			InputStream is = new FileInputStream(cheminFinal);
- 			//is.close();  
- 			content	= new DefaultStreamedContent(is);
- 			
- 		} catch (FileNotFoundException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 		} catch (IOException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 		}
-		  return content;
-	}
-
-
-	public void setContent(StreamedContent content) {
-		this.content = content;
-	}
+	/*
+	 * public void setContent(StreamedContent content) { this.content = content; }
+	 */
 
 
 	public boolean ispGridOng() {
@@ -1323,5 +1311,42 @@ return listObject;
 
 	public void setInputLieu(InputText inputLieu) {
 		this.inputLieu = inputLieu;
+	}
+
+
+	public StreamedContent getContent() {
+		if ((cheminFinal.equals(""))) {
+    		setCheminFinal(destination + "avatar.jpg");
+    	}
+    	
+    	try {
+			 
+ 			InputStream is = new FileInputStream(cheminFinal);
+ 			//is.close();  
+ 			content	= new DefaultStreamedContent(is);
+ 			
+ 		} catch (FileNotFoundException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+		return content;
+	}
+
+
+	public void setContent(StreamedContent content) {
+		this.content = content;
+	}
+
+
+	public String getCheminFinal() {
+		return cheminFinal;
+	}
+
+
+	public void setCheminFinal(String cheminFinal) {
+		this.cheminFinal = cheminFinal;
 	}
 }

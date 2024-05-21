@@ -311,7 +311,7 @@ public class Centre implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATE_VALIDATION_IEP", nullable = false, length = 19)
+	@Column(name = "DATE_VALIDATION_IEP", nullable = true, length = 19)
 	public Date getDateValidationIep() {
 		return this.dateValidationIep;
 	}
@@ -321,7 +321,7 @@ public class Centre implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATE_VALIDATION_DRENA", nullable = false, length = 19)
+	@Column(name = "DATE_VALIDATION_DRENA", nullable = true, length = 19)
 	public Date getDateValidationDrena() {
 		return this.dateValidationDrena;
 	}
