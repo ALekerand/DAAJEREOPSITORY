@@ -261,9 +261,8 @@ public class CentreControllers {
 			
 			case "personne_morale": {
 				personneMorale.setPromoteur(promoteur);
-				//personneMorale.setRaisonSociale(chemin);
-				personnePhysique.setCodePromoteur(promoteur.getCodePromoteur());
-				iservice.addObject(personnePhysique);
+				personneMorale.setCodePromoteur(promoteur.getCodePromoteur());
+				iservice.addObject(personneMorale);
 				break;
 			}
 			
@@ -419,6 +418,7 @@ public class CentreControllers {
 		animateur.setAdresseAnimateur(null);
 		animateur.setDateNaisAnimateur(null);
 		animateur.setTelephoneAnimateur(null);
+		animateur.setMailAnimateur(null);
 		
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);

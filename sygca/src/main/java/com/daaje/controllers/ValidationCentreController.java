@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -26,6 +27,8 @@ public class ValidationCentreController {
 	
 	@Autowired
 	private RequeteCentre requeteCentre;
+	
+	
 	private List<Centre> listeCentre = new ArrayList<Centre>();
 	private Centre centre = new Centre();
 	private Centre selectedObject = new Centre();
@@ -39,9 +42,9 @@ public class ValidationCentreController {
 	private boolean etatBtnModifier;
 		
 
-	
-	public void enregistrer(){
-		
+
+	public UserAuthentication chagerUtilisateur() {
+		return userAuthentication = requeteUtilisateur.recuperUser();
 	}
 	
 	public void modifier() {
@@ -57,7 +60,9 @@ public class ValidationCentreController {
 	}
 	
 	public void validerCentre() {
+		chagerUtilisateur();
 		selectedObject.setResponsableByResIdResponsable(userAuthentication.getResponsable());
+		System.out.println("=====user :"+ userAuthentication.getResponsable().getNomResponsable());
 		selectedObject.setEtatValidationIep(true);
 		selectedObject.setDateValidationIep(new Date());
 		service.updateObject(selectedObject);
@@ -125,14 +130,6 @@ public class ValidationCentreController {
 
 	public void setSelectedObject(Centre selectedObject) {
 		this.selectedObject = selectedObject;
-	}
-
-	public UserAuthentication getUserAuthentication() {
-		return userAuthentication = requeteUtilisateur.recuperUser();
-	}
-
-	public void setUserAuthentication(UserAuthentication userAuthentication) {
-		this.userAuthentication = userAuthentication;
 	}
 
 }

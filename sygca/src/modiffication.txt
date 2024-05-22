@@ -9,7 +9,10 @@
  	- Régler la photo (Centre)
  	- Régler Code Enseigner (Enseigner)
  	- Code Responsable à créer
- 	- Actualiser le responsable validation en IEP
+ 	- Actualiser le responsable validation en IEP 
+ 	
+ 22/05/2024
+ 	- Champ lieu a été ajouté à la table Centre (Refaire le maping)
  	
  	
  

@@ -54,7 +54,7 @@
 					<p:outputLabel for="input_phone_ph" value="Téléphone:"></p:outputLabel>
 					<p:inputText id="input_phone_ph" value="#{centreControllers.personnePhysique.telephonePersonne}" ></p:inputText>
 					
-					<p:outputLabel for="input_mail_ph" value="Mail:"></p:outputLabel>
+					<p:outputLabel for="input_mail_ph" value="E-Mail:"></p:outputLabel>
 					<p:inputText id="input_mail_ph" value="#{centreControllers.personnePhysique.mailPersonne}" ></p:inputText>
 			    	</h:panelGrid>
 			    	
@@ -86,7 +86,7 @@
 			<p:inputText id="input_phone_min" value="#{centreControllers.ministere.telephoneMinistere}"></p:inputText>
 	    	</h:panelGrid>
 	    	
-	    	<p:panelGrid id="info_entrep" columns="6" cellpadding="8" rendered="#{centreControllers.pGridEntrep}">
+	    	<h:panelGrid id="info_entrep" columns="6" cellpadding="8" rendered="#{centreControllers.pGridEntrep}">
 				<p:outputLabel for="input_raison_soc" value="Nom :"></p:outputLabel>
 				<p:inputText id="input_raison_soc" value="#{centreControllers.personneMorale.raisonSociale}"></p:inputText>
 				
@@ -95,7 +95,7 @@
 				
 				<p:outputLabel for="input_phone_entrep" value="Téléphone:"></p:outputLabel>
 				<p:inputText id="input_phone_entrep" value="#{centreControllers.personneMorale.telephonePersMorale}"></p:inputText>
-	    	</p:panelGrid>
+	    	</h:panelGrid>
 	    	
 	    </fieldset>
 		
@@ -118,7 +118,7 @@
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_sp" value="Sous-Préfecture:"/>
-			<p:selectOneMenu id="cb_sp" required="true" value="#{centreControllers.idSousPrefecture}">
+			<p:selectOneMenu id="cb_sp"  value="#{centreControllers.idSousPrefecture}">
 			<p:ajax listener="#{centreControllers.chargerLocalite}" event="change" process="@this"  update="cb_localite"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listSousPrefecture}" var="tata" itemLabel="#{tata.nomSousPrefecture}" itemValue="#{tata.idSousPrefecture}"></f:selectItems>
@@ -264,8 +264,8 @@
 			<p:outputLabel for="input_adresse_anim" value="Adresse:"></p:outputLabel>
 			<p:inputText id="input_adresse_anim" value="#{centreControllers.animateur.adresseAnimateur}" ></p:inputText>
 			
-			<p:outputLabel for="input_mail" value="Adresse:"></p:outputLabel>
-			<p:inputText id="input_mail" value="#{centreControllers.animateur.mailAnimateur}"></p:inputText>
+			<p:outputLabel for="input_mail_anim" value="E-Mail:"></p:outputLabel>
+			<p:inputText id="input_mail_anim" value="#{centreControllers.animateur.mailAnimateur}"></p:inputText>
 			
 			<p:outputLabel for="cb_genre" value="Genre: "/>
 			<p:selectOneMenu id="cb_genre" required="true" value="#{centreControllers.idGenre}">
@@ -297,7 +297,7 @@
 	   	<br></br> 
 	    	<p:toolbar >
 			<f:facet name="right">
-				<p:commandButton value="Enregistrer" actionListener="#{centreControllers.enregistrer}" update=":form" ><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Enregistrer" actionListener="#{centreControllers.enregistrer}" immediate="true" update="@parent, :form" oncomplete="document.location.reload(false)" ajax="false"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?" ></p:confirm></p:commandButton>
 				<p:commandButton value="Modifier" actionListener="#{centreControllers.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
 				<p:commandButton value="Annuler" process="@this" actionListener="#{centreControllers.annuler}" update="form"></p:commandButton>
 			</f:facet>
