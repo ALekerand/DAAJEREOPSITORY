@@ -34,7 +34,19 @@
 	    	</p:column>
         
         <p:column headerText="DRENA">
-	    		<h:outputText value="#{var.iep.drena.nomDrena}"/>
+	    	<h:outputText value="#{var.iep.drena.nomDrena}"/>
+	    	</p:column>
+	   
+	    <p:column headerText="Date validation IEP">
+	    	<h:outputText value="#{var.dateValidationIep}">
+             <f:convertDateTime pattern="dd/MM/yyyy"/>
+            </h:outputText>
+	    </p:column>	
+	    	
+	    <p:column headerText="Date validation DRENA">
+	    	<h:outputText value="#{var.dateValidationDrena}">
+            <f:convertDateTime pattern="dd/MM/yyyy"/>
+            </h:outputText>
 	    	</p:column>
       	 </p:dataTable>
                 
@@ -61,6 +73,12 @@
         <p:column headerText="DRENA">
 	    		<h:outputText value="#{var.iep.drena.nomDrena}"/>
 	    	</p:column>	 
+	    	
+	    	<p:column headerText="Date validation IEP">
+	    	<h:outputText value="#{var.dateValidationIep}">
+             <f:convertDateTime pattern="dd/MM/yyyy"/>
+            </h:outputText>
+	    	</p:column>
 					
                        </p:dataTable>
                 

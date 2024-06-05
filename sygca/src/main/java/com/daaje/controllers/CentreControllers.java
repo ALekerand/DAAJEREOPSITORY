@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
+import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
 import org.primefaces.event.FileUploadEvent;
@@ -94,6 +95,15 @@ public class CentreControllers {
 	private Nature natureCentre = new Nature();
 	private Departement choosedDepartement = new Departement();
 	private SousPrefecture choosedSousPrefecture = new SousPrefecture();
+	public SousPrefecture getChoosedSousPrefecture() {
+		return choosedSousPrefecture;
+	}
+
+
+	public void setChoosedSousPrefecture(SousPrefecture choosedSousPrefecture) {
+		this.choosedSousPrefecture = choosedSousPrefecture;
+	}
+
 	private Drena choosedDrena = new Drena();
 	private Iep choosedIep = new Iep();
 	private LocaliteDImplantation choosedLocalite = new LocaliteDImplantation();
@@ -127,7 +137,8 @@ public class CentreControllers {
 	private List listEcole = new ArrayList<>();
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
 	private List<Langue> listLangue = new ArrayList<Langue>();
-	private List<TypeAlphabetisation> listTypeAlpha = new ArrayList<TypeAlphabetisation>(); 
+	private List<TypeAlphabetisation> listTypeAlpha = new ArrayList<TypeAlphabetisation>();
+	private String naturePromoteur;
 	
 	//private UploadedFile fichier;
 	private String chemin = "C:\\SYGCA\\AUTORISATION";
@@ -147,6 +158,10 @@ public class CentreControllers {
 	private SelectOneMenu oneMenuEcole = new SelectOneMenu();
 	private InputText inputLieu = new InputText();
 	private SelectOneRadio oneRadioNatureLieu = new SelectOneRadio();
+	private SelectBooleanCheckbox checkbox1 = new SelectBooleanCheckbox();
+	private SelectBooleanCheckbox checkbox2 = new SelectBooleanCheckbox();
+	private SelectBooleanCheckbox checkbox3 = new SelectBooleanCheckbox();
+	private SelectOneRadio oneRadioPermanent = new SelectOneRadio();
 	
 	public SelectOneRadio getOneRadioNatureLieu() {
 		return oneRadioNatureLieu;
@@ -157,12 +172,20 @@ public class CentreControllers {
 		this.oneRadioNatureLieu = oneRadioNatureLieu;
 	}
 
-
 	private boolean pGridOng;
 	private boolean pGridPh;
 	private boolean pGridMini;
 	private boolean pGridProg;
 	private boolean pGridEntrep;
+	
+	//Pour le recap
+	private boolean recap_grid_ph;
+	private boolean recap_grid_pm;
+	private boolean recap_grid_ong;
+	private boolean recap_grid_prog;
+	private boolean recap_grid_mini;
+	
+
 		
 	//Methodes
 	@PostConstruct
@@ -249,8 +272,11 @@ public class CentreControllers {
 		//Enregistrer le promoteur
 		 genererCodePromoteur();
 		 iservice.addObject(this.promoteur);
+		 System.out.println("=== Type promoteur:"+type_promoteur);
 		 
 			switch (type_promoteur){
+			
+			
 			
 			case "personne_physique": {
 				personnePhysique.setPromoteur(promoteur);
@@ -411,6 +437,7 @@ public class CentreControllers {
 		setIdActiviteSecondaire(0);
 		setIdLangue(0);
 		setIdTypeAlpha(0);
+		setIdEcole(0);
 		//Animateur
 		animateur.setCodeAnimateur(null);
 		animateur.setNomAnimateur(null);
@@ -420,9 +447,26 @@ public class CentreControllers {
 		animateur.setTelephoneAnimateur(null);
 		animateur.setMailAnimateur(null);
 		
+		//Deselectionner les composant
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		
 		natureProOneMenu.setDisabled(true);
+		
+		oneRadioPermanent.resetValue();
+		oneRadioNatureLieu.resetValue();
+		
+		
+		checkbox1.setSelected(false);
+		checkbox2.setSelected(false);
+		checkbox3.setSelected(false);
+		
+		//Vider les listes
+		listSousPrefecture.clear();
+		listDrena.clear();
+		listIep.clear();
+		listLocalite.clear();
+		listEcole.clear();
 	}
 	
 	
@@ -436,6 +480,15 @@ public class CentreControllers {
 			this.setpGridMini(false);
 			this.setpGridProg(false);
 			this.setpGridEntrep(false);
+			
+			//Pour le recap
+			this.naturePromoteur = "Personne physique";
+			
+			this.setRecap_grid_ph(true);
+			this.setRecap_grid_pm(false);
+			this.setRecap_grid_mini(false);
+			this.setRecap_grid_ong(false);
+			this.setRecap_grid_prog(false);
 			break;
 		}
 		
@@ -447,6 +500,15 @@ public class CentreControllers {
 			this.setEtatGraphicImage(false);
 			this.setpGridProg(false);
 			this.setpGridEntrep(true);
+			
+			//Pour le recap
+			this.naturePromoteur = "Prsonne morale";
+			
+			this.setRecap_grid_ph(false);
+			this.setRecap_grid_pm(true);
+			this.setRecap_grid_ong(false);
+			this.setRecap_grid_mini(false);
+			this.setRecap_grid_prog(false);
 			break;
 		}
 		
@@ -458,6 +520,16 @@ public class CentreControllers {
 			this.setEtatGraphicImage(false);
 			this.setpGridProg(false);
 			this.setpGridEntrep(false);
+			
+			//Pour le recap
+			this.naturePromoteur = "Ong";
+			
+			this.setRecap_grid_ph(false);
+			this.setRecap_grid_pm(false);
+			this.setRecap_grid_ong(true);
+			this.setRecap_grid_mini(false);
+			this.setRecap_grid_prog(false);
+			
 			break;
 		}
 		
@@ -469,6 +541,16 @@ public class CentreControllers {
 			this.setEtatGraphicImage(false);
 			this.setpGridProg(true);
 			this.setpGridEntrep(false);
+			
+			//Pour le recap
+			this.naturePromoteur = "Programme";
+			
+			this.setRecap_grid_ph(false);
+			this.setRecap_grid_pm(false);
+			this.setRecap_grid_ong(false);
+			this.setRecap_grid_mini(false);
+			this.setRecap_grid_prog(true);
+			
 			break;
 		}
 		
@@ -480,6 +562,16 @@ public class CentreControllers {
 			this.setEtatFileUpload(false);
 			this.setEtatGraphicImage(false);
 			this.setpGridProg(false);
+			
+			//Pour le recap
+			this.naturePromoteur = "Ministère";
+			
+			this.setRecap_grid_ph(false);
+			this.setRecap_grid_pm(false);
+			this.setRecap_grid_ong(false);
+			this.setRecap_grid_mini(true);
+			this.setRecap_grid_prog(false);
+			
 			break;
 		}
 		
@@ -1349,4 +1441,120 @@ return listObject;
 	public void setCheminFinal(String cheminFinal) {
 		this.cheminFinal = cheminFinal;
 	}
+
+
+	
+
+
+	public String getNaturePromoteur() {
+		return naturePromoteur;
+	}
+
+
+	public void setNaturePromoteur(String naturePromoteur) {
+		this.naturePromoteur = naturePromoteur;
+	}
+
+
+	public boolean isRecap_grid_ong() {
+		return recap_grid_ong;
+	}
+
+
+	public void setRecap_grid_ong(boolean recap_grid_ong) {
+		this.recap_grid_ong = recap_grid_ong;
+	}
+
+
+	public boolean isRecap_grid_mini() {
+		return recap_grid_mini;
+	}
+
+
+	public void setRecap_grid_mini(boolean recap_grid_mini) {
+		this.recap_grid_mini = recap_grid_mini;
+	}
+
+
+	public boolean isRecap_grid_prog() {
+		return recap_grid_prog;
+	}
+
+
+	public void setRecap_grid_prog(boolean recap_grid_prog) {
+		this.recap_grid_prog = recap_grid_prog;
+	}
+
+
+	public boolean isRecap_grid_pm() {
+		return recap_grid_pm;
+	}
+
+
+	public void setRecap_grid_pm(boolean recap_grid_pm) {
+		this.recap_grid_pm = recap_grid_pm;
+	}
+
+
+	public boolean isRecap_grid_ph() {
+		return recap_grid_ph;
+	}
+
+
+	public void setRecap_grid_ph(boolean recap_grid_ph) {
+		this.recap_grid_ph = recap_grid_ph;
+	}
+
+
+	public Nature getNatureCentre() {
+		return natureCentre;
+	}
+
+
+	public void setNatureCentre(Nature natureCentre) {
+		this.natureCentre = natureCentre;
+	}
+
+
+	public SelectBooleanCheckbox getCheckbox1() {
+		return checkbox1;
+	}
+
+
+	public void setCheckbox1(SelectBooleanCheckbox checkbox1) {
+		this.checkbox1 = checkbox1;
+	}
+
+
+	public SelectBooleanCheckbox getCheckbox2() {
+		return checkbox2;
+	}
+
+
+	public void setCheckbox2(SelectBooleanCheckbox checkbox2) {
+		this.checkbox2 = checkbox2;
+	}
+
+
+	public SelectBooleanCheckbox getCheckbox3() {
+		return checkbox3;
+	}
+
+
+	public void setCheckbox3(SelectBooleanCheckbox checkbox3) {
+		this.checkbox3 = checkbox3;
+	}
+
+
+	public SelectOneRadio getOneRadioPermanent() {
+		return oneRadioPermanent;
+	}
+
+
+	public void setOneRadioPermanent(SelectOneRadio oneRadioPermanent) {
+		this.oneRadioPermanent = oneRadioPermanent;
+	}
+
+
+	
 }

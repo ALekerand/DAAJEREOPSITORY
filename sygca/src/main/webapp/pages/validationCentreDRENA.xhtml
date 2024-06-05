@@ -13,7 +13,7 @@
 	   <p:panel header="VALIDATION DES CENTRES AU NIVEAU IEP">
 	   
 	    
-	<p:dataTable  var="var" value="#{validationCentreController.listeCentre}"  selection="#{validationCentreController.selectedObject}" rowKey="#{var.idCentre}" paginator="true" paginatorPosition="bottom" rows="5" rowsPerPageTemplate="5,10,15,{ShowAll|'All'}">
+	<p:dataTable  var="var" value="#{validationCentreController.listeCentreDRENA}"  selection="#{validationCentreController.selectedObject}" rowKey="#{var.idCentre}" paginator="true" paginatorPosition="bottom" rows="5" rowsPerPageTemplate="5,10,15,{ShowAll|'All'}">
  	<f:facet name="header">Liste des centres en attente de validation</f:facet>
      <p:ajax event="rowSelect" process="@this"  update="form" listener="#{validationCentreController.selectionnerLigne}"></p:ajax>
    		
@@ -36,7 +36,7 @@
 	    	</p:column>
 	    	
        		<p:column>
-                <p:commandButton value="Valider" actionListener="#{validationCentreController.validerCentreIEP}" update="form" >
+                <p:commandButton value="Valider" actionListener="#{validationCentreController.validerCentreDRENA}" update="form" >
                   <f:setPropertyActionListener value="#{variable}" target="#{validationCentreController.selectedObject}"/>
                 </p:commandButton>
             </p:column>

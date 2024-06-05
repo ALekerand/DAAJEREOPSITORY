@@ -30,6 +30,7 @@ public class ValidationCentreController {
 	
 	
 	private List<Centre> listeCentre = new ArrayList<Centre>();
+	private List<Centre> listeCentreDRENA = new ArrayList<Centre>();
 	private Centre centre = new Centre();
 	private Centre selectedObject = new Centre();
 	private UserAuthentication userAuthentication = new UserAuthentication();
@@ -59,14 +60,23 @@ public class ValidationCentreController {
 		this.centre = this.selectedObject;
 	}
 	
-	public void validerCentre() {
+	public void validerCentreIEP() {
 		chagerUtilisateur();
 		selectedObject.setResponsableByResIdResponsable(userAuthentication.getResponsable());
-		System.out.println("=====user :"+ userAuthentication.getResponsable().getNomResponsable());
 		selectedObject.setEtatValidationIep(true);
 		selectedObject.setDateValidationIep(new Date());
 		service.updateObject(selectedObject);
-		info("Centre validé");
+		info("Centre validé en IEP");
+		annuler();
+	}
+	
+	public void validerCentreDRENA() {
+		chagerUtilisateur();
+		selectedObject.setResponsableByResIdResponsable2(userAuthentication.getResponsable());
+		selectedObject.setEtatValidationDrena(true);
+		selectedObject.setDateValidationDrena(new Date());
+		service.updateObject(selectedObject);
+		info("Centre validé en DRENA");
 		annuler();
 	}
 
@@ -130,6 +140,14 @@ public class ValidationCentreController {
 
 	public void setSelectedObject(Centre selectedObject) {
 		this.selectedObject = selectedObject;
+	}
+
+	public List<Centre> getListeCentreDRENA() {
+		return listeCentreDRENA = requeteCentre.recupCentreNonValideDRENA();
+	}
+
+	public void setListeCentreDRENA(List<Centre> listeCentreDRENA) {
+		this.listeCentreDRENA = listeCentreDRENA;
 	}
 
 }
