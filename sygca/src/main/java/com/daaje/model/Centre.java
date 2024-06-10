@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 8 avr. 2024, 14:52:14 by Hibernate Tools 4.3.6.Final
+// Generated 5 juin 2024, 12:17:29 by Hibernate Tools 4.3.6.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -43,8 +43,10 @@ public class Centre implements java.io.Serializable {
 	private String mailCentre;
 	private String droitOuvertureCentre;
 	private Boolean permanent;
+	private String lieu;
 	private BigDecimal latitude;
 	private BigDecimal longitude;
+	private Date dateCreation;
 	private Boolean etatValidationIep;
 	private Boolean etatValidationDrena;
 	private Date dateValidationIep;
@@ -56,12 +58,14 @@ public class Centre implements java.io.Serializable {
 	}
 
 	public Centre(Iep iep, LocaliteDImplantation localiteDImplantation, Nature nature, Promoteur promoteur,
-			Responsable responsableByIdResponsable, Date dateValidationIep, Date dateValidationDrena) {
+			Responsable responsableByIdResponsable, Date dateCreation, Date dateValidationIep,
+			Date dateValidationDrena) {
 		this.iep = iep;
 		this.localiteDImplantation = localiteDImplantation;
 		this.nature = nature;
 		this.promoteur = promoteur;
 		this.responsableByIdResponsable = responsableByIdResponsable;
+		this.dateCreation = dateCreation;
 		this.dateValidationIep = dateValidationIep;
 		this.dateValidationDrena = dateValidationDrena;
 	}
@@ -70,9 +74,10 @@ public class Centre implements java.io.Serializable {
 			NatureProjet natureProjet, Promoteur promoteur, Responsable responsableByResIdResponsable2,
 			Responsable responsableByResIdResponsable, Responsable responsableByIdResponsable, String codeCentre,
 			String nomCentre, String abreviationNomCentre, String telephoneCentre, String adresseCentre,
-			String mailCentre, String droitOuvertureCentre, Boolean permanent, BigDecimal latitude,
-			BigDecimal longitude, Boolean etatValidationIep, Boolean etatValidationDrena, Date dateValidationIep,
-			Date dateValidationDrena, Set<Enseigner> enseigners, Set<Inscription> inscriptions) {
+			String mailCentre, String droitOuvertureCentre, Boolean permanent, String lieu, BigDecimal latitude,
+			BigDecimal longitude, Date dateCreation, Boolean etatValidationIep, Boolean etatValidationDrena,
+			Date dateValidationIep, Date dateValidationDrena, Set<Enseigner> enseigners,
+			Set<Inscription> inscriptions) {
 		this.ecole = ecole;
 		this.iep = iep;
 		this.localiteDImplantation = localiteDImplantation;
@@ -90,8 +95,10 @@ public class Centre implements java.io.Serializable {
 		this.mailCentre = mailCentre;
 		this.droitOuvertureCentre = droitOuvertureCentre;
 		this.permanent = permanent;
+		this.lieu = lieu;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.dateCreation = dateCreation;
 		this.etatValidationIep = etatValidationIep;
 		this.etatValidationDrena = etatValidationDrena;
 		this.dateValidationIep = dateValidationIep;
@@ -274,6 +281,15 @@ public class Centre implements java.io.Serializable {
 		this.permanent = permanent;
 	}
 
+	@Column(name = "LIEU", length = 200)
+	public String getLieu() {
+		return this.lieu;
+	}
+
+	public void setLieu(String lieu) {
+		this.lieu = lieu;
+	}
+
 	@Column(name = "LATITUDE", precision = 10, scale = 6)
 	public BigDecimal getLatitude() {
 		return this.latitude;
@@ -290,6 +306,16 @@ public class Centre implements java.io.Serializable {
 
 	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "DATE_CREATION", nullable = false, length = 19)
+	public Date getDateCreation() {
+		return this.dateCreation;
+	}
+
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
 	}
 
 	@Column(name = "ETAT_VALIDATION_IEP")
@@ -311,7 +337,7 @@ public class Centre implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATE_VALIDATION_IEP", nullable = true, length = 19)
+	@Column(name = "DATE_VALIDATION_IEP", nullable = false, length = 19)
 	public Date getDateValidationIep() {
 		return this.dateValidationIep;
 	}
@@ -321,7 +347,7 @@ public class Centre implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATE_VALIDATION_DRENA", nullable = true, length = 19)
+	@Column(name = "DATE_VALIDATION_DRENA", nullable = false, length = 19)
 	public Date getDateValidationDrena() {
 		return this.dateValidationDrena;
 	}
