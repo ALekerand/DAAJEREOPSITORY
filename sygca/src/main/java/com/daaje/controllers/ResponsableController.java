@@ -54,10 +54,12 @@ public class ResponsableController {
 			prefix = "RP0" ;
 		if (nbEnregistrement > 100) 
 			prefix = "RP" ;
+		
 		this.responsable.setCodeResponsable(prefix+(nbEnregistrement+1));
 	}
 		
 	public void enregistrer(){
+		genererCodeResponsable();
 		responsable.setFonction((Fonction) iservice.getObjectById(idFonction, "Fonction"));
 		
 		//Enregistrer les parametres de connection
