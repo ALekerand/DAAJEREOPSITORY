@@ -99,7 +99,11 @@ public class ResponsableController {
 		this.responsable.setDatePriseService(null);
 		this.responsable.setDateRetraite(null);
 		this.responsable.setDateNaissance(null);
-		this.responsable.setMailResponsable(null);		
+		this.responsable.setMailResponsable(null);
+		
+		userAuthentication.setUsername(null);
+		userAuthentication.setPassword(null);
+		
 		setIdFonction(0);
 		genererCodeResponsable();
 		

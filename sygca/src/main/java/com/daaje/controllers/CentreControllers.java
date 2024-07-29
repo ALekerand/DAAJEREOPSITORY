@@ -406,6 +406,12 @@ public class CentreControllers {
 		personnePhysique.setTelephonePersonne(null);
 		personnePhysique.setMailPersonne(null);
 		personnePhysique.setNumCni(null);
+		
+		personneMorale.setTelephonePersMorale(null);
+		personneMorale.setRaisonSociale(null);
+		personneMorale.setEmailPersMorale(null);
+		personneMorale.set
+		
 		//ONG
 		ong.setNomOng(null);
 		ong.setTelephoneOng(null);

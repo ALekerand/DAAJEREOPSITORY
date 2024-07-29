@@ -9,33 +9,43 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProfilController {
 	private String profil;
-	private String lien;
+	//private String lien;
 	private LinkButton linkButton = new LinkButton();
 	
 	public void router() {
-		lien ="";
+	//	lien ="";
 		
 		switch (profil) {
 		case "coodornateur_iep": {
-			linkButton.setOutcome("templateCoodonnateurIE.xhtml");
+			linkButton.setOutcome("/templates/templateCoodonnateurIE.xhtml");
+			System.out.println("======== lien :"+ linkButton.getOutcome());
+			break;
 		}
 		
 		case "superviseur_drena": {
-			linkButton.setOutcome("templateSuperperviseurDRENA.xhtml");
+			linkButton.setOutcome("/templates/templateSuperperviseurDRENA.xhtml");
+			System.out.println("======== lien :"+ linkButton.getOutcome());
+			break;
 		}
 		
 		
 		case "utilisateur_simple": {
-			linkButton.setOutcome("/templates/template.xhtml");
-
+			linkButton.setOutcome("/templates/templateUtilistaeurSimple.xhtml");
+			System.out.println("======== lien :"+ linkButton.getOutcome());
+			break;
 		}
 		
 	case "adminstrateur": {
 		linkButton.setOutcome("/templates/template.xhtml");
-			}
+		System.out.println("======== lien :"+ linkButton.getOutcome());
+		break;
+	
+	}
+	
 		
 		default:
 	}
+		
 	}
 	
 	
@@ -60,17 +70,14 @@ public class ProfilController {
 
 
 
-	public String getLien() {
-		return lien;
-	}
-
-
-
-
-	public void setLien(String lien) {
-		this.lien = lien;
-	}
-
+	/*
+	 * public String getLien() { return lien; }
+	 * 
+	 * 
+	 * 
+	 * 
+	 * public void setLien(String lien) { this.lien = lien; }
+	 */
 
 
 

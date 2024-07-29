@@ -8,7 +8,7 @@
  	- Régler le lien pour le stockage de l'autorisation (Centre)
  	- Régler la photo (Centre)
  	- Régler Code Enseigner (Enseigner)
- 	- Code Responsable à créer
+ 	- Code Responsable à créer OK
  	- Actualiser le responsable validation en IEP OK
  	
  22/05/2024
