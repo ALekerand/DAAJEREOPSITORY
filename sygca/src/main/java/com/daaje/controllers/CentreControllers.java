@@ -407,10 +407,11 @@ public class CentreControllers {
 		personnePhysique.setMailPersonne(null);
 		personnePhysique.setNumCni(null);
 		
+		//Personne Morale
 		personneMorale.setTelephonePersMorale(null);
 		personneMorale.setRaisonSociale(null);
 		personneMorale.setEmailPersMorale(null);
-		personneMorale.set
+
 		
 		//ONG
 		ong.setNomOng(null);
