@@ -44,6 +44,31 @@ public class RequeteCentre {
 		return listeCentre;
 		}
 	
+	
+	
+	//==================================================REQUETTE PERSONNALISEE==========================================================
+	
+	public List recupCentresvalidesParIEP(int id_iep){
+		String query = "SELECT `centre`.* FROM `centre` WHERE (`centre`.`ETAT_VALIDATION_IEP` IS NOT NULL) AND (ETAT_VALIDATION_DRENA IS NOT NULL) AND (`centre`.`ID_IEP` = '"+id_iep+"')";
+		List listeCentre = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Centre.class).list();
+		return listeCentre;
+		}
+	
+	
+	public List recupCentreNonValideDRENAParIEP(int id_iep){
+		String query = "SELECT `centre`.* FROM `centre` WHERE `centre`.`ETAT_VALIDATION_IEP` IS NOT NULL AND `centre`.`ETAT_VALIDATION_DRENA` IS NULL AND (`centre`.`ID_IEP` = '"+id_iep+"')";
+		List listeCentre = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Centre.class).list();
+		return listeCentre;
+		}
+	
+	
+	public List recupCentreNonValideIEPParIEP(int id_iep){
+		String query = "SELECT `centre`.* FROM `centre` WHERE `centre`.`ETAT_VALIDATION_IEP` IS NULL AND (`centre`.`ID_IEP` = '"+id_iep+"')";
+		List listeCentre = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Centre.class).list();
+		return listeCentre;
+		}
+
+	
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}

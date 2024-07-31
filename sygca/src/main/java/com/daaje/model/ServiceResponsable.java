@@ -54,7 +54,7 @@ public class ServiceResponsable implements java.io.Serializable {
 		this.idServiceDrena = idServiceDrena;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_DRENA")
 	public Drena getDrena() {
 		return this.drena;
@@ -64,7 +64,7 @@ public class ServiceResponsable implements java.io.Serializable {
 		this.drena = drena;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_IEP")
 	public Iep getIep() {
 		return this.iep;
@@ -74,7 +74,7 @@ public class ServiceResponsable implements java.io.Serializable {
 		this.iep = iep;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_RESPONSABLE")
 	public Responsable getResponsable() {
 		return this.responsable;

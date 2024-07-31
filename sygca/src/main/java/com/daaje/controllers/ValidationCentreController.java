@@ -10,26 +10,42 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Centre;
+import com.daaje.model.Drena;
+import com.daaje.model.Iep;
+import com.daaje.model.Responsable;
+import com.daaje.model.ServiceResponsable;
 import com.daaje.model.UserAuthentication;
 import com.daaje.requetes.RequeteCentre;
+import com.daaje.requetes.RequeteSeviceResponsable;
 import com.daaje.requetes.RequeteUtilisateur;
 import com.daaje.service.Iservice;
 
 @Component
+@Scope("session")
 public class ValidationCentreController {
 	@Autowired
 	private Iservice service;
 	@Autowired
 	RequeteUtilisateur requeteUtilisateur;
+	@Autowired 
+	private RequeteSeviceResponsable requeteSeviceResponsable;
 	
 	@Autowired
 	private RequeteCentre requeteCentre;
+	private Responsable responsable = new Responsable();
+	private ServiceResponsable serviceResponsable = new ServiceResponsable();
+	
+	
+	
 	
 	
 	private List<Centre> listeCentre = new ArrayList<Centre>();
+	private List<Centre> listeCentreIEP = new ArrayList<Centre>();
+	private List<Centre> listeCentreParDRENA = new ArrayList<Centre>();
 	private List<Centre> listeCentreDRENA = new ArrayList<Centre>();
 	private Centre centre = new Centre();
 	private Centre selectedObject = new Centre();
@@ -42,11 +58,22 @@ public class ValidationCentreController {
 	private boolean etatBtnEnregistrer;
 	private boolean etatBtnModifier;
 		
+	
+	//Recuperation du responsable
+			@PostConstruct
+			public void recuperationResponsable() {
+				userAuthentication = requeteUtilisateur.recuperUser();
+				responsable = userAuthentication.getResponsable();
+				System.out.println("======Responsable ===="+responsable.getNomResponsable() );
+				//Recuperation du service responsable
+				serviceResponsable = requeteSeviceResponsable.recupServiceRespoParRespo(responsable.getIdResponsable());
+			}
 
 
-	public UserAuthentication chagerUtilisateur() {
-		return userAuthentication = requeteUtilisateur.recuperUser();
-	}
+			/*
+			 * public UserAuthentication chagerUtilisateur() { return userAuthentication =
+			 * requeteUtilisateur.recuperUser(); }
+			 */
 	
 	public void modifier() {
 
@@ -61,7 +88,7 @@ public class ValidationCentreController {
 	}
 	
 	public void validerCentreIEP() {
-		chagerUtilisateur();
+		//chagerUtilisateur();
 		selectedObject.setResponsableByResIdResponsable(userAuthentication.getResponsable());
 		selectedObject.setEtatValidationIep(true);
 		selectedObject.setDateValidationIep(new Date());
@@ -71,7 +98,7 @@ public class ValidationCentreController {
 	}
 	
 	public void validerCentreDRENA() {
-		chagerUtilisateur();
+		//chagerUtilisateur();
 		selectedObject.setResponsableByResIdResponsable2(userAuthentication.getResponsable());
 		selectedObject.setEtatValidationDrena(true);
 		selectedObject.setDateValidationDrena(new Date());
@@ -148,6 +175,42 @@ public class ValidationCentreController {
 
 	public void setListeCentreDRENA(List<Centre> listeCentreDRENA) {
 		this.listeCentreDRENA = listeCentreDRENA;
+	}
+
+	public List<Centre> getListeCentreIEP() {
+		return listeCentreIEP = requeteCentre.recupCentreNonValideIEPParIEP(serviceResponsable.getIep().getIdIep());
+	}
+
+	public void setListeCentreIEP(List<Centre> listeCentreIEP) {
+		this.listeCentreIEP = listeCentreIEP;
+	}
+
+
+	public List<Centre> getListeCentreParDRENA() {
+		Drena drena = serviceResponsable.getDrena();
+		System.out.println("===== DRENA ===="+drena.getNomDrena());
+		List<Iep> listeIep = new ArrayList<Iep>();
+		List<Centre> listCentreDesIEP = new ArrayList<Centre>();
+		
+		for (Iep varIep : drena.getIeps()) {
+			//Charger les centres
+			for ( Centre varCentres : varIep.getCentres() ) {
+				listCentreDesIEP.add(varCentres);
+			}
+		}
+		
+		for (Centre varCentre : listCentreDesIEP) {
+			if (varCentre.getEtatValidationDrena()== null) {
+				listeCentreParDRENA.add(varCentre);
+			}
+		}
+		
+		return listeCentreParDRENA;
+	}
+
+
+	public void setListeCentreParDRENA(List<Centre> listeCentreParDRENA) {
+		this.listeCentreParDRENA = listeCentreParDRENA;
 	}
 
 }

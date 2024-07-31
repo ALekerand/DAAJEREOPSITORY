@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Langue;
@@ -18,6 +19,7 @@ import com.daaje.model.LocaliteDImplantation;
 import com.daaje.service.Iservice;
 
 @Component
+@Scope("session")
 public class LangueController {
 	@Autowired
 	private Iservice iservice;

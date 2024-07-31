@@ -3,6 +3,6 @@
  *Dans la table CENTRE
  	- responsableByIdResponsable : le responsable (Table RESPONSABLE) qui crée le centre 
  	- responsableByResIdResponsable : le responsable (Table RESPONSABLE) qui valider en IEP
- 	- responsableByResIdResponsable : le responsable (Table RESPONSABLE) qui valider en DRENA
+ 	- responsableByResIdResponsable2 : le responsable (Table RESPONSABLE) qui valider en DRENA
  	
  	

@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Activite;
@@ -22,6 +23,7 @@ import com.daaje.model.NiveauFormation;
 import com.daaje.service.Iservice;
 
 @Component
+@Scope("session")
 public class ApprenantController {
 	@Autowired
 	private Iservice iservice;
@@ -102,6 +104,10 @@ public class ApprenantController {
 		apprenant.setTelephoneApprenant(null);
 		apprenant.setAdresseApprenant(null);
 		apprenant.setMailApprenant(null);
+		
+		setIdGenre(0);
+		setIdCentre(0);
+		setIdActivite(0);
 		
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);

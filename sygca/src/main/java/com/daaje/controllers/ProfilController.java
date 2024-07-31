@@ -4,9 +4,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.linkbutton.LinkButton;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("session")
 public class ProfilController {
 	private String profil;
 	//private String lien;
@@ -16,8 +18,14 @@ public class ProfilController {
 	//	lien ="";
 		
 		switch (profil) {
+		
+		case "conseiller": {
+			linkButton.setOutcome("/templates/templateConseiller.xhtml");
+			System.out.println("======== lien :"+ linkButton.getOutcome());
+			break;
+		}
 		case "coodornateur_iep": {
-			linkButton.setOutcome("/templates/templateCoodonnateurIE.xhtml");
+			linkButton.setOutcome("/templates/templateCoodonnateurIEP.xhtml");
 			System.out.println("======== lien :"+ linkButton.getOutcome());
 			break;
 		}

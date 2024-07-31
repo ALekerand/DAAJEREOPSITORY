@@ -1,5 +1,5 @@
 package com.daaje.model;
-// Generated 5 juin 2024, 12:17:29 by Hibernate Tools 4.3.6.Final
+// Generated 30 juil. 2024, 05:40:37 by Hibernate Tools 4.3.6.Final
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -58,16 +58,13 @@ public class Centre implements java.io.Serializable {
 	}
 
 	public Centre(Iep iep, LocaliteDImplantation localiteDImplantation, Nature nature, Promoteur promoteur,
-			Responsable responsableByIdResponsable, Date dateCreation, Date dateValidationIep,
-			Date dateValidationDrena) {
+			Responsable responsableByIdResponsable, Date dateCreation) {
 		this.iep = iep;
 		this.localiteDImplantation = localiteDImplantation;
 		this.nature = nature;
 		this.promoteur = promoteur;
 		this.responsableByIdResponsable = responsableByIdResponsable;
 		this.dateCreation = dateCreation;
-		this.dateValidationIep = dateValidationIep;
-		this.dateValidationDrena = dateValidationDrena;
 	}
 
 	public Centre(Ecole ecole, Iep iep, LocaliteDImplantation localiteDImplantation, Nature nature,
@@ -337,7 +334,7 @@ public class Centre implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATE_VALIDATION_IEP", nullable = false, length = 19)
+	@Column(name = "DATE_VALIDATION_IEP", length = 19)
 	public Date getDateValidationIep() {
 		return this.dateValidationIep;
 	}
@@ -347,7 +344,7 @@ public class Centre implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DATE_VALIDATION_DRENA", nullable = false, length = 19)
+	@Column(name = "DATE_VALIDATION_DRENA", length = 19)
 	public Date getDateValidationDrena() {
 		return this.dateValidationDrena;
 	}

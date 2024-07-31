@@ -42,7 +42,7 @@
 			<p:inputText id="input_mail" value="#{responsableController.responsable.mailResponsable}" required="true"></p:inputText>																				
 						
 			<p:outputLabel for="cb_fonction" value="Fonction:" />
-            <p:selectOneMenu id="cb_fonction" value="#{responsableController.idFonction}">
+            <p:selectOneMenu  id="cb_fonction" value="#{responsableController.idFonction}" required="true">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{responsableController.listFonction}" var="toto" itemLabel="#{toto.libelleFonction}" itemValue="#{toto.idFonction}" />
 			</p:selectOneMenu>
@@ -72,13 +72,13 @@
 <h:panelGrid id="info_profil" columns="2" cellpadding="8">
 	<p:outputLabel for="rd1" value="Profil utilisateur:"/>					
 	<p:selectOneRadio id="rd1" value="#{responsableController.userRole}" layout="grid" columns="4" required="true" >
-		<f:selectItem itemLabel="Superviseur DRENA" itemValue="ROLE_SUPERVISEUR"></f:selectItem>
+		<f:selectItem itemLabel="Conseiller" itemValue="ROLE_CONSEILLER"></f:selectItem>
 		<f:selectItem itemLabel="Coordonnateur IEP" itemValue="ROLE_COORDONNATEUR"></f:selectItem>
+		<f:selectItem itemLabel="Superviseur DRENA" itemValue="ROLE_SUPERVISEUR"></f:selectItem>
 		<f:selectItem itemLabel="IEP" itemValue="ROLE_IEP"></f:selectItem>
 		<f:selectItem itemLabel="DRENA" itemValue="ROLE_DRENA"></f:selectItem>
 		<f:selectItem itemLabel="Utilistaeur standard" itemValue="ROLE_UTILISATAEUR"></f:selectItem>
 		<f:selectItem itemLabel="Adminitrateur" itemValue="ROLE_ADMIN"></f:selectItem>
-	
 	</p:selectOneRadio>
 	
 	</h:panelGrid>

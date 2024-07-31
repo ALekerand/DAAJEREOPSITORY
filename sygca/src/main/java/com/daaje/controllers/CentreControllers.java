@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -26,6 +27,7 @@ import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Activite;
@@ -60,6 +62,7 @@ import com.daaje.requetes.RequeteUtilisateur;
 import com.daaje.service.Iservice;
 
 @Component
+@Scope("session")
 public class CentreControllers {
 	@Autowired
 	private Iservice iservice;
@@ -339,7 +342,7 @@ public class CentreControllers {
 			//L'enregistreur du centre
 	
 			centre.setResponsableByIdResponsable(userAuthentication.getResponsable());
-			//centre.setResponsable(userAuthentication.getResponsable());
+			centre.setDateCreation(new Date());
 			iservice.addObject(this.centre);
 		
 			//Gestion de l'animateur
@@ -430,6 +433,7 @@ public class CentreControllers {
 		centre.setDroitOuvertureCentre(null);
 		centre.setLongitude(null);
 		centre.setLatitude(null);
+		
 		//les combos
 		setIdDepartement(0);
 		setIdSousPrefecture(0);
@@ -601,7 +605,7 @@ public class CentreControllers {
 				            return  ob1.getNomLocalite().compareTo(ob2.getNomLocalite());
 				        }
 				    });
-					//========================  Fin  =======================
+			//========================  Fin  =======================
 		}
 	
 	public void selectionnerLigne() {

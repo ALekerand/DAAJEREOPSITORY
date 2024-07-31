@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Ecole;
@@ -16,6 +17,7 @@ import com.daaje.model.Iep;
 import com.daaje.service.Iservice;
 
 @Component
+@Scope("session")
 public class EcoleController {
 	@Autowired
 	private Iservice iservice;
