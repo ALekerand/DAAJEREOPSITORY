@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 
 import com.daaje.model.Centre;
 import com.daaje.model.Departement;
+import com.daaje.model.Drena;
 import com.daaje.model.Genre;
+import com.daaje.model.Iep;
 import com.daaje.model.Responsable;
 import com.daaje.model.ServiceResponsable;
 import com.daaje.model.UserAuthentication;
@@ -37,7 +39,7 @@ public class ConsultationCentreDRENAController {
 	@Autowired 
 	private RequeteSeviceResponsable requeteSeviceResponsable;
 
-	private List<Centre> listeCentreValide = new ArrayList<Centre>();
+	private List<Centre> listeCentreValideDrena = new ArrayList<Centre>();
 	private List<Centre> listCentreAttenteDrena = new ArrayList<Centre>();
 	private List<Centre> listCentreAttenteIep = new ArrayList<Centre>();
 	private Responsable responsable = new Responsable();
@@ -51,33 +53,113 @@ public class ConsultationCentreDRENAController {
 		responsable = userAuthentication.getResponsable();
 		//Recuperation du service responsable
 		serviceResponsable = requeteSeviceResponsable.recupServiceRespoParRespo(responsable.getIdResponsable());
-		System.out.println("CODE IEP ===="+serviceResponsable.getIep().getIdIep() );
 	}
 	
 	
 	//Getter et Setters
-	public List<Centre> getListeCentreValide() {
-		return listeCentreValide = requeteCentre.recupCentresvalidesParIEP(serviceResponsable.getIep().getIdIep());
+	/*
+	 * public List<Centre> getListeCentreValide() { listeCentreValide.clear(); Drena
+	 * drena = serviceResponsable.getDrena();
+	 * System.out.println("===== DRENA ===="+drena.getNomDrena()); List<Iep>
+	 * listeIep = new ArrayList<Iep>(); List<Centre> listCentreDesIEP = new
+	 * ArrayList<Centre>();
+	 * 
+	 * for (Iep varIep : drena.getIeps()) { //Charger les centres for ( Centre
+	 * varCentres : varIep.getCentres() ) { listCentreDesIEP.add(varCentres); } }
+	 * 
+	 * for (Centre varCentre : listCentreDesIEP) { if
+	 * ((varCentre.getEtatValidationIep()!= null)&&
+	 * (varCentre.getEtatValidationDrena()!= null)){
+	 * listeCentreValide.add(varCentre); } }
+	 * 
+	 * 
+	 * return listeCentreValide; }
+	 * 
+	 * public void setListeCentreValide(List<Centre> listeCentreValide) {
+	 * this.listeCentreValide = listeCentreValide; }
+	 */
+
+	/*
+	 * public List<Centre> getListCentreAttenteDrena(){
+	 * 
+	 * listCentreAttenteDrena.clear(); Drena drena = serviceResponsable.getDrena();
+	 * System.out.println("===== DRENA ===="+drena.getNomDrena()); List<Iep>
+	 * listeIep = new ArrayList<Iep>(); List<Centre> listCentreDesIEP = new
+	 * ArrayList<Centre>();
+	 * 
+	 * for (Iep varIep : drena.getIeps()) { //Charger les centres for ( Centre
+	 * varCentres : varIep.getCentres() ) { listCentreDesIEP.add(varCentres); } }
+	 * 
+	 * for (Centre varCentre : listCentreDesIEP) { if
+	 * ((varCentre.getEtatValidationIep()!= null)&&
+	 * (varCentre.getEtatValidationDrena() == null)){
+	 * listeCentreValide.add(varCentre); } }
+	 * 
+	 * return listCentreAttenteDrena; }
+	 */
+
+//	public void setListCentreAttenteDrena(List<Centre> listCentreAttenteDrena) {
+//		this.listCentreAttenteDrena = listCentreAttenteDrena;
+//	}
+
+//	public List<Centre> getListCentreAttenteIep() {
+//		
+//		listCentreAttenteIep.clear();
+//		Drena drena = serviceResponsable.getDrena();
+//		System.out.println("===== DRENA ===="+drena.getNomDrena());
+//		List<Iep> listeIep = new ArrayList<Iep>();
+//		List<Centre> listCentreDesIEP = new ArrayList<Centre>();
+//		
+//		for (Iep varIep : drena.getIeps()) {
+//			//Charger les centres
+//			for ( Centre varCentres : varIep.getCentres() ) {
+//				listCentreDesIEP.add(varCentres);
+//			}
+//		}
+//		
+//		for (Centre varCentre : listCentreDesIEP) {
+//			if (varCentre.getEtatValidationDrena()!= null){
+//				listeCentreValide.add(varCentre);
+//			}
+//		}
+//		
+//		return listCentreAttenteIep;
+//	}
+
+	/*
+	 * public void setListCentreAttenteIep(List<Centre> listCentreAttenteIep) {
+	 * this.listCentreAttenteIep = listCentreAttenteIep; }
+	 */
+
+
+	public List<Centre> getListeCentreValideDrena() {
+		listeCentreValideDrena = requeteCentre.recupCentreValideParDRENA(serviceResponsable.getDrena().getIdDrena());
+		return listeCentreValideDrena;
 	}
 
-	public void setListeCentreValide(List<Centre> listeCentreValide) {
-		this.listeCentreValide = listeCentreValide;
+
+	public void setListeCentreValideDrena(List<Centre> listeCentreValideDrena) {
+		this.listeCentreValideDrena = listeCentreValideDrena;
 	}
+
 
 	public List<Centre> getListCentreAttenteDrena() {
-		
-		return listCentreAttenteDrena = requeteCentre.recupCentreNonValideDRENAParIEP(serviceResponsable.getIep().getIdIep());
+		listCentreAttenteDrena = requeteCentre.recupCentreValideIEPParDRENA(serviceResponsable.getDrena().getIdDrena());
+		return listCentreAttenteDrena;
 	}
+
 
 	public void setListCentreAttenteDrena(List<Centre> listCentreAttenteDrena) {
 		this.listCentreAttenteDrena = listCentreAttenteDrena;
 	}
 
+
 	public List<Centre> getListCentreAttenteIep() {
-		return listCentreAttenteIep = requeteCentre.recupCentreNonValideIEPParIEP(serviceResponsable.getIep().getIdIep());
+		listCentreAttenteIep = requeteCentre.recupCentreNonValideParDRENA(serviceResponsable.getDrena().getIdDrena());
+		return listCentreAttenteIep;
 	}
 
-	
+
 	public void setListCentreAttenteIep(List<Centre> listCentreAttenteIep) {
 		this.listCentreAttenteIep = listCentreAttenteIep;
 	}

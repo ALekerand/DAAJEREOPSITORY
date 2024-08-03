@@ -13,7 +13,7 @@
 	   <p:panel header="VALIDATION DES CENTRES AU NIVEAU DRENA">
 	   
 	    
-	<p:dataTable  var="var" value="#{validationCentreController.listeCentreParDRENA}"  selection="#{validationCentreController.selectedObject}" rowKey="#{var.idCentre}" paginator="true" paginatorPosition="bottom" rows="5" rowsPerPageTemplate="5,10,15,{ShowAll|'All'}">
+	<p:dataTable  var="var" value="#{validationCentreController.listeCentreParSuperDRENA}"  selection="#{validationCentreController.selectedObject}" rowKey="#{var.idCentre}" paginator="true" paginatorPosition="bottom" rows="5" rowsPerPageTemplate="5,10,15,{ShowAll|'All'}">
  	<f:facet name="header">Liste des centres en attente de validation</f:facet>
      <p:ajax event="rowSelect" process="@this"  update="form" listener="#{validationCentreController.selectionnerLigne}"></p:ajax>
    		

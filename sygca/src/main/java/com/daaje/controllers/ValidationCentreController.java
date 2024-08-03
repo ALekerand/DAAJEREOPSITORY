@@ -45,8 +45,9 @@ public class ValidationCentreController {
 	
 	private List<Centre> listeCentre = new ArrayList<Centre>();
 	private List<Centre> listeCentreIEP = new ArrayList<Centre>();
-	private List<Centre> listeCentreParDRENA = new ArrayList<Centre>();
+	private List<Centre> listeCentreValideParDRENA = new ArrayList<Centre>();
 	private List<Centre> listeCentreDRENA = new ArrayList<Centre>();
+	private List<Centre> listeCentreParSuperDRENA = new ArrayList<Centre>();
 	private Centre centre = new Centre();
 	private Centre selectedObject = new Centre();
 	private UserAuthentication userAuthentication = new UserAuthentication();
@@ -185,32 +186,25 @@ public class ValidationCentreController {
 		this.listeCentreIEP = listeCentreIEP;
 	}
 
-
-	public List<Centre> getListeCentreParDRENA() {
-		Drena drena = serviceResponsable.getDrena();
-		System.out.println("===== DRENA ===="+drena.getNomDrena());
-		List<Iep> listeIep = new ArrayList<Iep>();
-		List<Centre> listCentreDesIEP = new ArrayList<Centre>();
-		
-		for (Iep varIep : drena.getIeps()) {
-			//Charger les centres
-			for ( Centre varCentres : varIep.getCentres() ) {
-				listCentreDesIEP.add(varCentres);
-			}
-		}
-		
-		for (Centre varCentre : listCentreDesIEP) {
-			if (varCentre.getEtatValidationDrena()== null) {
-				listeCentreParDRENA.add(varCentre);
-			}
-		}
-		
-		return listeCentreParDRENA;
+	public List<Centre> getListeCentreValideParDRENA() {
+		listeCentreValideParDRENA = requeteCentre.recupCentreValideParDRENA(serviceResponsable.getDrena().getIdDrena());
+		return listeCentreValideParDRENA;
 	}
 
 
-	public void setListeCentreParDRENA(List<Centre> listeCentreParDRENA) {
-		this.listeCentreParDRENA = listeCentreParDRENA;
+	public void setListeCentreValideParDRENA(List<Centre> listeCentreValideParDRENA) {
+		this.listeCentreValideParDRENA = listeCentreValideParDRENA;
+	}
+
+
+	public List<Centre> getListeCentreParSuperDRENA() {
+		listeCentreParSuperDRENA = requeteCentre.recupCentreNonValideParDRENA(serviceResponsable.getDrena().getIdDrena());
+		return listeCentreParSuperDRENA;
+	}
+
+
+	public void setListeCentreParSuperDRENA(List<Centre> listeCentreParSuperDRENA) {
+		this.listeCentreParSuperDRENA = listeCentreParSuperDRENA;
 	}
 
 }
