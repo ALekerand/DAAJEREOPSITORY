@@ -56,84 +56,27 @@ public class ConsultationCentreDRENAController {
 	}
 	
 	
+	
+	public void info(String monMessage) {
+		FacesContext.getCurrentInstance().addMessage((String) null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, monMessage, null));
+	}
+
+	public void error() {
+		FacesContext.getCurrentInstance().addMessage((String) null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Contact admin."));
+	}
+	
+	
 	//Getter et Setters
-	/*
-	 * public List<Centre> getListeCentreValide() { listeCentreValide.clear(); Drena
-	 * drena = serviceResponsable.getDrena();
-	 * System.out.println("===== DRENA ===="+drena.getNomDrena()); List<Iep>
-	 * listeIep = new ArrayList<Iep>(); List<Centre> listCentreDesIEP = new
-	 * ArrayList<Centre>();
-	 * 
-	 * for (Iep varIep : drena.getIeps()) { //Charger les centres for ( Centre
-	 * varCentres : varIep.getCentres() ) { listCentreDesIEP.add(varCentres); } }
-	 * 
-	 * for (Centre varCentre : listCentreDesIEP) { if
-	 * ((varCentre.getEtatValidationIep()!= null)&&
-	 * (varCentre.getEtatValidationDrena()!= null)){
-	 * listeCentreValide.add(varCentre); } }
-	 * 
-	 * 
-	 * return listeCentreValide; }
-	 * 
-	 * public void setListeCentreValide(List<Centre> listeCentreValide) {
-	 * this.listeCentreValide = listeCentreValide; }
-	 */
-
-	/*
-	 * public List<Centre> getListCentreAttenteDrena(){
-	 * 
-	 * listCentreAttenteDrena.clear(); Drena drena = serviceResponsable.getDrena();
-	 * System.out.println("===== DRENA ===="+drena.getNomDrena()); List<Iep>
-	 * listeIep = new ArrayList<Iep>(); List<Centre> listCentreDesIEP = new
-	 * ArrayList<Centre>();
-	 * 
-	 * for (Iep varIep : drena.getIeps()) { //Charger les centres for ( Centre
-	 * varCentres : varIep.getCentres() ) { listCentreDesIEP.add(varCentres); } }
-	 * 
-	 * for (Centre varCentre : listCentreDesIEP) { if
-	 * ((varCentre.getEtatValidationIep()!= null)&&
-	 * (varCentre.getEtatValidationDrena() == null)){
-	 * listeCentreValide.add(varCentre); } }
-	 * 
-	 * return listCentreAttenteDrena; }
-	 */
-
-//	public void setListCentreAttenteDrena(List<Centre> listCentreAttenteDrena) {
-//		this.listCentreAttenteDrena = listCentreAttenteDrena;
-//	}
-
-//	public List<Centre> getListCentreAttenteIep() {
-//		
-//		listCentreAttenteIep.clear();
-//		Drena drena = serviceResponsable.getDrena();
-//		System.out.println("===== DRENA ===="+drena.getNomDrena());
-//		List<Iep> listeIep = new ArrayList<Iep>();
-//		List<Centre> listCentreDesIEP = new ArrayList<Centre>();
-//		
-//		for (Iep varIep : drena.getIeps()) {
-//			//Charger les centres
-//			for ( Centre varCentres : varIep.getCentres() ) {
-//				listCentreDesIEP.add(varCentres);
-//			}
-//		}
-//		
-//		for (Centre varCentre : listCentreDesIEP) {
-//			if (varCentre.getEtatValidationDrena()!= null){
-//				listeCentreValide.add(varCentre);
-//			}
-//		}
-//		
-//		return listCentreAttenteIep;
-//	}
-
-	/*
-	 * public void setListCentreAttenteIep(List<Centre> listCentreAttenteIep) {
-	 * this.listCentreAttenteIep = listCentreAttenteIep; }
-	 */
-
-
+	
 	public List<Centre> getListeCentreValideDrena() {
-		listeCentreValideDrena = requeteCentre.recupCentreValideParDRENA(serviceResponsable.getDrena().getIdDrena());
+		try {
+			listeCentreValideDrena = requeteCentre.recupCentreValideParDRENA(serviceResponsable.getDrena().getIdDrena());
+		} catch (java.lang.NullPointerException e) {
+			// TODO Auto-generated catch block
+			info("Ce compte n'est pas rattacher à une DRENA. Veuillez contacter l'administrateur");
+		}
 		return listeCentreValideDrena;
 	}
 
@@ -144,7 +87,12 @@ public class ConsultationCentreDRENAController {
 
 
 	public List<Centre> getListCentreAttenteDrena() {
-		listCentreAttenteDrena = requeteCentre.recupCentreValideIEPParDRENA(serviceResponsable.getDrena().getIdDrena());
+		try {
+			listCentreAttenteDrena = requeteCentre.recupCentreValideIEPParDRENA(serviceResponsable.getDrena().getIdDrena());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			info("Ce compte n'est pas rattacher à une DRENA. Veuillez contacter l'administrateur");
+		}
 		return listCentreAttenteDrena;
 	}
 
@@ -155,7 +103,13 @@ public class ConsultationCentreDRENAController {
 
 
 	public List<Centre> getListCentreAttenteIep() {
-		listCentreAttenteIep = requeteCentre.recupCentreNonValideParDRENA(serviceResponsable.getDrena().getIdDrena());
+		try {
+			listCentreAttenteIep = requeteCentre.recupCentreNonValideParDRENA(serviceResponsable.getDrena().getIdDrena());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("=======  Partie info reperée");
+			info("Ce compte n'est pas rattaché à une DRENA. Veuillez contacter l'administrateur");
+		}
 		return listCentreAttenteIep;
 	}
 
@@ -163,8 +117,5 @@ public class ConsultationCentreDRENAController {
 	public void setListCentreAttenteIep(List<Centre> listCentreAttenteIep) {
 		this.listCentreAttenteIep = listCentreAttenteIep;
 	}
-	
-
-	
 
 }
