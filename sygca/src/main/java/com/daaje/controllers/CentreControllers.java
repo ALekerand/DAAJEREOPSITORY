@@ -37,6 +37,7 @@ import com.daaje.model.Centre;
 import com.daaje.model.Departement;
 import com.daaje.model.Drena;
 import com.daaje.model.DrenaDepartement;
+import com.daaje.model.Ecole;
 import com.daaje.model.Enseigner;
 import com.daaje.model.Genre;
 import com.daaje.model.Iep;
@@ -53,11 +54,15 @@ import com.daaje.model.PersonnePhysique;
 import com.daaje.model.Profession;
 import com.daaje.model.Programme;
 import com.daaje.model.Promoteur;
+import com.daaje.model.Responsable;
+import com.daaje.model.ServiceResponsable;
 import com.daaje.model.SousPrefecture;
 import com.daaje.model.TypeActivite;
 import com.daaje.model.TypeAlphabetisation;
 import com.daaje.model.UserAuthentication;
+import com.daaje.requetes.RequeteCentre;
 import com.daaje.requetes.RequeteEcole;
+import com.daaje.requetes.RequeteSeviceResponsable;
 import com.daaje.requetes.RequeteUtilisateur;
 import com.daaje.service.Iservice;
 
@@ -66,13 +71,15 @@ import com.daaje.service.Iservice;
 public class CentreControllers {
 	@Autowired
 	private Iservice iservice;
-	
 	@Autowired
-	RequeteEcole requeteEcole;
-	
+	private RequeteEcole requeteEcole;
+	@Autowired 
+	private RequeteSeviceResponsable requeteSeviceResponsable;
 	@Autowired
-	RequeteUtilisateur requeteUtilisateur;
-
+	private RequeteCentre requeteCentre;
+	@Autowired
+	private RequeteUtilisateur requeteUtilisateur;
+	
 	private Centre centre = new Centre();
 	private int idLocalite;
 	private int idIep;
@@ -93,20 +100,18 @@ public class CentreControllers {
 	private boolean skip;
 	private String etatPermanence;
 	private String etatLieu;
+	private LocaliteDImplantation localite = new LocaliteDImplantation();
+	private TypeAlphabetisation typeAlphabetisation = new TypeAlphabetisation();
 	private UserAuthentication userAuthentication = new UserAuthentication();
 	private Animateur animateur = new Animateur();
 	private Nature natureCentre = new Nature();
+	private Langue langue = new Langue();
 	private Departement choosedDepartement = new Departement();
 	private SousPrefecture choosedSousPrefecture = new SousPrefecture();
-	public SousPrefecture getChoosedSousPrefecture() {
-		return choosedSousPrefecture;
-	}
-
-
-	public void setChoosedSousPrefecture(SousPrefecture choosedSousPrefecture) {
-		this.choosedSousPrefecture = choosedSousPrefecture;
-	}
-
+	private NatureProjet natureProjet = new NatureProjet();
+	private NiveauAnimateur niveauAnimateur = new NiveauAnimateur();
+	private ServiceResponsable serviceResponsable = new ServiceResponsable();
+	
 	private Drena choosedDrena = new Drena();
 	private Iep choosedIep = new Iep();
 	private LocaliteDImplantation choosedLocalite = new LocaliteDImplantation();
@@ -207,6 +212,12 @@ public class CentreControllers {
 		recupererCampagneEncours();
 		genererCodePromoteur();
 		genererCodeAnimateur();
+		recupererResponsable();
+	}
+	
+	public void recupererResponsable() {
+		userAuthentication = requeteUtilisateur.recuperUser();
+		serviceResponsable = requeteSeviceResponsable.recupServiceRespoParRespo(userAuthentication.getResponsable().getIdResponsable());
 	}
 	
 	
@@ -217,14 +228,14 @@ public class CentreControllers {
 	
 	public void genererCodeCentre() {
 		int nbEnregistrement = this.iservice.getObjects("Centre").size()+1;
-		choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
+		//choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
 		String code = "D"+choosedDrena.getCodeDrena().substring(4, 6)+"I"+choosedIep.getCodeIep().substring(3, 6)+"-"+nbEnregistrement;
 		centre.setCodeCentre(code);
 	}
 	
 	
 	public UserAuthentication chagerUtilisateur() {
-		return userAuthentication = requeteUtilisateur.recuperUser();
+		return userAuthentication;
 	}
 	
 	public void recupererCampagneEncours() {
@@ -237,6 +248,42 @@ public class CentreControllers {
 	}
 	
 	
+	
+	public void choisirLocalite() {
+		localite = (LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation");
+	}
+	
+	public void choisirNatureProjet() {
+		natureProjet = (NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet");
+	}
+	
+	
+	public void choisirTypeAlpha() {
+		typeAlphabetisation = (TypeAlphabetisation) iservice.getObjectById(idTypeAlpha, "TypeAlphabetisation");
+	}
+	
+	
+	public void choisirLangue() {
+		setLangue((Langue) iservice.getObjectById(idLangue, "Langue"));
+	}
+	
+	public void choisirNiveauFormateur() {
+		setNiveauAnimateur((NiveauAnimateur) iservice.getObjectById(idNiveau, "NiveauAnimateur"));
+		}
+	
+	public void choisirActivitePricipale() {
+		activitePrimaire = (Activite) iservice.getObjectById(idActivitePrimaire, "Activite");
+	}
+	
+	public void choisirActiviteSecondaire() {
+		activiteSecondaire = (Activite) iservice.getObjectById(getIdActiviteSecondaire(), "Activite");
+	}
+	
+	
+	
+	
+	
+		
 	public String onFlowProcess(FlowEvent event) {
         if (skip) {
             skip = false; //reset in case user goes back
@@ -275,7 +322,6 @@ public class CentreControllers {
 		//Enregistrer le promoteur
 		 genererCodePromoteur();
 		 iservice.addObject(this.promoteur);
-		 System.out.println("=== Type promoteur:"+type_promoteur);
 		 
 			switch (type_promoteur){
 			
@@ -321,10 +367,11 @@ public class CentreControllers {
 			//Enregistrer le centre
 			//choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
 			centre.setIep(choosedIep);
-			centre.setLocaliteDImplantation((LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation"));
+			//localite = (LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation");
+			centre.setLocaliteDImplantation(localite);
 			centre.setNature((Nature) iservice.getObjectById(idNature, "Nature"));
 			if (idNatureProjet!=0) {
-				centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
+				centre.setNatureProjet(natureProjet);
 			}
 			centre.setPromoteur(promoteur);
 			centre.setDroitOuvertureCentre(chemin);
@@ -343,20 +390,24 @@ public class CentreControllers {
 	
 			centre.setResponsableByIdResponsable(userAuthentication.getResponsable());
 			centre.setDateCreation(new Date());
+			genererCodeCentre();
 			iservice.addObject(this.centre);
 		
 			//Gestion de l'animateur
 			animateur.setGenre((Genre)iservice.getObjectById(idGenre, "Genre"));
-			animateur.setNiveauAnimateur((NiveauAnimateur) iservice.getObjectById(idNiveau, "NiveauAnimateur"));
+			//setNiveauAnimateur((NiveauAnimateur) iservice.getObjectById(idNiveau, "NiveauAnimateur"));
+			animateur.setNiveauAnimateur(niveauAnimateur);
 			iservice.addObject(animateur);
 			
 			//Gestion de la profession
-			profession.setActivite((Activite) iservice.getObjectById(idActivitePrimaire, "Activite"));
+		//	activitePrimaire = (Activite) iservice.getObjectById(idActivitePrimaire, "Activite");
+			profession.setActivite(activitePrimaire);
 			profession.setTypeActivite((TypeActivite) iservice.getObjectById(1, "TypeActivite"));
 			profession.setAnimateur(animateur);
 			iservice.addObject(profession);
 			if ((activiteSecondaire.getNomActivite()!= null) && (typeActiviteSecondaire.getLibelleTypeactivite() != null)) {
-			profession.setActivite((Activite) iservice.getObjectById(getIdActiviteSecondaire(), "Activite"));
+			//activiteSecondaire = (Activite) iservice.getObjectById(getIdActiviteSecondaire(), "Activite");
+			profession.setActivite(activiteSecondaire);
 			profession.setTypeActivite((TypeActivite) iservice.getObjectById(2, "TypeActivite"));
 			profession.setAnimateur(animateur);
 			iservice.addObject(profession);
@@ -364,8 +415,10 @@ public class CentreControllers {
 			
 			//Gestion de la table Enseigner
 			enseigner.setCampagne(campagneEnCours);
-			enseigner.setTypeAlphabetisation((TypeAlphabetisation) iservice.getObjectById(idTypeAlpha, "TypeAlphabetisation"));
-			enseigner.setLangue((Langue) iservice.getObjectById(idLangue, "Langue"));
+			//typeAlphabetisation = (TypeAlphabetisation) iservice.getObjectById(idTypeAlpha, "TypeAlphabetisation");
+			enseigner.setTypeAlphabetisation(typeAlphabetisation);
+			//setLangue((Langue) iservice.getObjectById(idLangue, "Langue"));
+			enseigner.setLangue(langue);
 			if (value1 !="") {
 				enseigner.setNiveauFormation((NiveauFormation) iservice.getObjectById(1, "NiveauFormation"));
 				enseigner.setAnimateur(animateur);
@@ -420,9 +473,14 @@ public class CentreControllers {
 		ong.setNomOng(null);
 		ong.setTelephoneOng(null);
 		ong.setMailOng(null);
+		
 		//Ministère
 		ministere.setNomMinistere(null);
 		ministere.setTelephoneMinistere(null);
+		
+		//Programme
+		programme.setLibelleProgramme(null);
+		
 		//Centre
 		centre.setCodeCentre(null);
 		centre.setNomCentre(null);
@@ -591,11 +649,11 @@ public class CentreControllers {
 	
 	
 		public void chargerLocalite() {
+			listLocalite.clear();
 		choosedSousPrefecture = (SousPrefecture) iservice.getObjectById(idSousPrefecture, "SousPrefecture");
 		for ( LocaliteDImplantation var : choosedSousPrefecture.getLocaliteDImplantations()) {
 			listLocalite.add(var);
 			}
-			System.out.println(listSousPrefecture.size());
 			
 			//=======Pour le rangement par ordre alphabétique======
 					Collections.sort(listLocalite, new Comparator<LocaliteDImplantation>() {
@@ -711,10 +769,17 @@ public class CentreControllers {
 	
 	public void chargerEcole() {
 		listEcole.clear();
+		choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
+		for (Ecole varecole : choosedIep.getEcoles()) {
+			listEcole.add(varecole);
+		}
 		listEcole = requeteEcole.recupEcoleParIEP(idIep);
-		// Générer le code du centre
-		genererCodeCentre();
 	}
+	
+	
+	
+	
+	
 	
 	public void info(String message){
 	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
@@ -772,7 +837,15 @@ public class CentreControllers {
 //Getters and setters
 	
 	public List<Centre> getListObject() {
-		listObject = iservice.getObjects("Centre");
+		
+		try {
+			listObject = requeteCentre.recupCentresParIEP(serviceResponsable.getIep().getIdIep());
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			listObject = iservice.getObjects("Centre");
+		}
+		
+		//listObject = iservice.getObjects("Centre");
 		
 		//=======Pour le rangement par ordre alphabétique======
 		Collections.sort(listObject, new Comparator<Centre>() {
@@ -842,7 +915,7 @@ return listObject;
 	}
 
 	public List getListLocalite() {
-		return listLocalite = iservice.getObjects("LocaliteDImplantation");
+		return listLocalite;
 	}
 
 	public void setListLocalite(List listLocalite) {
@@ -1566,6 +1639,64 @@ return listObject;
 		this.oneRadioPermanent = oneRadioPermanent;
 	}
 
+
+	public LocaliteDImplantation getLocalite() {
+		return localite;
+	}
+
+
+	public void setLocalite(LocaliteDImplantation localite) {
+		this.localite = localite;
+	}
+
+
+	public TypeAlphabetisation getTypeAlphabetisation() {
+		return typeAlphabetisation;
+	}
+
+
+	public void setTypeAlphabetisation(TypeAlphabetisation typeAlphabetisation) {
+		this.typeAlphabetisation = typeAlphabetisation;
+	}
+
+
+	public Langue getLangue() {
+		return langue;
+	}
+
+
+	public void setLangue(Langue langue) {
+		this.langue = langue;
+	}
+
+	public SousPrefecture getChoosedSousPrefecture() {
+		return choosedSousPrefecture;
+	}
+
+
+	public void setChoosedSousPrefecture(SousPrefecture choosedSousPrefecture) {
+		this.choosedSousPrefecture = choosedSousPrefecture;
+	}
+
+
+	public NatureProjet getNatureProjet() {
+		return natureProjet;
+	}
+
+
+	public void setNatureProjet(NatureProjet natureProjet) {
+		this.natureProjet = natureProjet;
+	}
+
+
+	public NiveauAnimateur getNiveauAnimateur() {
+		return niveauAnimateur;
+	}
+
+
+	public void setNiveauAnimateur(NiveauAnimateur niveauAnimateur) {
+		this.niveauAnimateur = niveauAnimateur;
+	}
 
 	
 }

@@ -51,7 +51,6 @@ public class ConsultationCentreIEPController {
 		responsable = userAuthentication.getResponsable();
 		//Recuperation du service responsable
 		serviceResponsable = requeteSeviceResponsable.recupServiceRespoParRespo(responsable.getIdResponsable());
-		System.out.println("CODE IEP ===="+serviceResponsable.getIep().getIdIep() );
 	}
 	
 	

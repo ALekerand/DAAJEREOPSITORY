@@ -32,6 +32,7 @@
         		<td>
 		        
 					<h:panelGrid id="info_ph" columns="6" cellpadding="8" rendered="#{centreControllers.pGridPh}">
+					
 					<p:outputLabel for="input_nom_ph" value="Nom :"></p:outputLabel>
 					<p:inputText id="input_nom_ph" value="#{centreControllers.personnePhysique.nomPersonne}"></p:inputText>
 					
@@ -46,6 +47,7 @@
 					
 					<p:outputLabel for="input_mail_ph" value="E-Mail:"></p:outputLabel>
 					<p:inputText id="input_mail_ph" value="#{centreControllers.personnePhysique.mailPersonne}" ></p:inputText>
+			    	
 			    	</h:panelGrid>
 			    	
 			    	<p:fileUpload id="File_up" fileUploadListener ="#{centreControllers.upload}" mode="advanced" auto="true" dragDropSupport="false" cancelLabel="Annuler"
@@ -71,7 +73,7 @@
 				<p:inputText id="input_phone_entrep" value="#{centreControllers.personneMorale.telephonePersMorale}"></p:inputText>
 	    		
 	    		<p:outputLabel for="input_email_entrep" value="E-mail:"></p:outputLabel>
-				<p:inputText id="input_email_entrep" ></p:inputText>
+				<p:inputText id="input_email_entrep"></p:inputText>
 	    		</h:panelGrid>
 	    		
        			<h:panelGrid id="info_ong" columns="6" cellpadding="8" rendered="#{centreControllers.pGridOng}" >
@@ -137,22 +139,20 @@
 			
 			<p:outputLabel for="cb_iep" value="IEP:"/>
 			<p:selectOneMenu id="cb_iep" required="true" value="#{centreControllers.idIep}">
-			<p:ajax listener="#{centreControllers.chargerEcole}" event="change" process="@this" update="cb_ecole,input_code"></p:ajax>
+			<p:ajax listener="#{centreControllers.chargerEcole}" event="change" process="@this" update="cb_ecole"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
 			<f:selectItems value="#{centreControllers.listIep}" var="tata" itemLabel="#{tata.nomIep}" itemValue="#{tata.idIep}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_localite" value="Localité:"/>
 			<p:selectOneMenu id="cb_localite" required="true" value="#{centreControllers.idLocalite}">
+			<p:ajax listener="#{centreControllers.choisirLocalite}" event="change" process="@this"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listLocalite}" var="tata" itemLabel="#{tata.nomLocalite}" itemValue="#{tata.idLocalite}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			<p:outputLabel/>
 			<p:outputLabel/>
-			
-			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{centreControllers.centre.codeCentre}" required="true" readonly="true" ></p:inputText>
 			
 			<p:outputLabel for="input_nom" value="Nom centre:"></p:outputLabel>
 			<p:inputText id="input_nom" value="#{centreControllers.centre.nomCentre}" required="true"></p:inputText>
@@ -180,6 +180,7 @@
 			
 			<p:outputLabel for="cb_natureP" value="Nature projet:"/>
 			<p:selectOneMenu id="cb_natureP" required="true" value="#{centreControllers.idNatureProjet}" binding="#{centreControllers.natureProOneMenu}">
+			<p:ajax listener="#{centreControllers.choisirNatureProjet}" event="change" process="@this"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listNatureProjet}" var="tata" itemLabel="#{tata.libelleNatureProjet}" itemValue="#{tata.idNatureProjet}"></f:selectItems>
 			</p:selectOneMenu>
@@ -207,20 +208,22 @@
 			<p:inputText id="input_lieu" binding="#{centreControllers.inputLieu}"></p:inputText>
 			
 			<p:outputLabel for="input_lat" value="Latitude:"></p:outputLabel>
-			<p:inputText id="input_lat" value="#{centreControllers.centre.latitude}"></p:inputText>
+			<p:inputText id="input_lat" value="#{centreControllers.centre.latitude}" style="width:25px"></p:inputText>
 			
 			<p:outputLabel for="input_long" value="Longitude:"></p:outputLabel>
-			<p:inputText id="input_long" value="#{centreControllers.centre.longitude}"></p:inputText>
+			<p:inputText id="input_long" value="#{centreControllers.centre.longitude}" style="width:25px"></p:inputText>
 			
 			
 			<p:outputLabel for="cb_type_alpha" value="Type Alphabétisation:"/>
 			<p:selectOneMenu id="cb_type_alpha" required="true" value="#{centreControllers.idTypeAlpha}">
+			<p:ajax listener="#{centreControllers.choisirTypeAlpha}" event="change" process="@this"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listTypeAlpha}" var="tata" itemLabel="#{tata.libTypeAlpha}" itemValue="#{tata.idTypeAlpha}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_langue" value="Langue:"/>
 			<p:selectOneMenu id="cb_langue" required="true" value="#{centreControllers.idLangue}">
+			<p:ajax listener="#{centreControllers.choisirLangue}" event="change" process="@this"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue="" />
 			<f:selectItems value="#{centreControllers.listLangue}" var="tata" itemLabel="#{tata.libLangue}" itemValue="#{tata.idLangue}"></f:selectItems>
 			</p:selectOneMenu>
@@ -249,8 +252,6 @@
 			<fieldset>
 			<legend> Informations sur l'animateur</legend>
 			<h:panelGrid id="info_animateur" columns="6" cellpadding="8">
-			<p:outputLabel for="input_code_anim" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code_anim" value="#{centreControllers.animateur.codeAnimateur}" readonly="true"></p:inputText>
 			
 			<p:outputLabel for="input_nom_anim" value="Nom:"></p:outputLabel>
 			<p:inputText id="input_nom_anim" value="#{centreControllers.animateur.nomAnimateur}"></p:inputText>
@@ -278,18 +279,21 @@
 			
 			<p:outputLabel for="cb_niveau" value="Niveau:"/>
 			<p:selectOneMenu id="cb_niveau" required="true" value="#{centreControllers.idNiveau}">
+			<p:ajax listener="#{centreControllers.choisirNiveauFormateur}" event="change" process="@this"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
 			<f:selectItems value="#{centreControllers.listNiveauAnimateur}" var="tata" itemLabel="#{tata.nomNiveau}" itemValue="#{tata.idNiveau}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_activite_principale" value="Activité principale: "/>
 			<p:selectOneMenu id="cb_activite_principale" required="true" value="#{centreControllers.idActivitePrimaire}">
+			<p:ajax listener="#{centreControllers.choisirActivitePricipale}" event="change" process="@this"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
 			<f:selectItems value="#{centreControllers.listActivite}" var="tata" itemLabel="#{tata.nomActivite}" itemValue="#{tata.idActivite}"></f:selectItems>
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_activite_secondaire" value="Activité secondaire: "/>
 			<p:selectOneMenu id="cb_activite_secondaire" value="#{centreControllers.idActiviteSecondaire}">
+			<p:ajax listener="#{centreControllers.choisirActiviteSecondaire}" event="change" process="@this"></p:ajax>
 			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
 			<f:selectItems value="#{centreControllers.listActivite}" var="tata" itemLabel="#{tata.nomActivite}" itemValue="#{tata.idActivite}"></f:selectItems>
 			</p:selectOneMenu>
@@ -385,13 +389,8 @@
 					<p:outputLabel value="#{centreControllers.choosedIep.nomIep}"/>
 					
 					<p:outputLabel value="Localité:"/>
-					<p:outputLabel value=""/>
+					<p:outputLabel value="#{centreControllers.localite.nomLocalite}"/>
 					
-					<p:outputLabel value="Nom centre:"/>
-					<p:outputLabel value="#{centreControllers.centre.nomCentre}"/>
-					
-					<p:outputLabel value="Code:"/>
-					<p:outputLabel value="#{centreControllers.centre.codeCentre}"/>
 					
 					<p:outputLabel value="Abréviation:"/>
 					<p:outputLabel value="#{centreControllers.centre.abreviationNomCentre}"/>
@@ -409,7 +408,7 @@
 					<p:outputLabel value="#{centreControllers.natureCentre.libelleNature}"/>
 					
 					<p:outputLabel value="Nature projet:"/>
-					<p:outputLabel value=""/>
+					<p:outputLabel value="#{centreControllers.natureProjet.libelleNatureProjet}"/>
 					
 					<p:outputLabel value="Permanent:"/>
 					<p:outputLabel value="#{centreControllers.etatPermanence}"/>
@@ -427,13 +426,13 @@
 					<p:outputLabel value="#{centreControllers.centre.longitude}"/>
 					
 					<p:outputLabel value="Type alphabétisation:"/>
-					<p:outputLabel value=""/>
+					<p:outputLabel value="#{centreControllers.typeAlphabetisation.libTypeAlpha}"/>
 					
 					<p:outputLabel value="Langue:"/>
-					<p:outputLabel value=""/>
+					<p:outputLabel value="#{centreControllers.langue.libLangue}"/>
 					
 					<p:outputLabel value="Niveau de formation:"/>
-					<p:outputLabel value=""/>
+					<p:outputLabel value="#{centreControllers.value1}, #{centreControllers.value2}, #{centreControllers.value3}"/>
 					
 					<p:outputLabel value="Autorisation:"/>
 					<p:outputLabel value=""/>
@@ -442,9 +441,6 @@
 					
 					<td>
 						<h:panelGrid id="recap_grid_alpha" columns="2" cellpadding="8">
-							<p:outputLabel value="Code:"/>
-							<p:outputLabel value="#{centreControllers.animateur.codeAnimateur}"/>
-							
 							<p:outputLabel value="Nom:"/>
 							<p:outputLabel value="#{centreControllers.animateur.nomAnimateur}"/>
 							
@@ -464,13 +460,13 @@
 							<p:outputLabel value="#{centreControllers.animateur.mailAnimateur}"/>
 							
 							<p:outputLabel value="Niveau:"/>
-							<p:outputLabel value=" "/>
+							<p:outputLabel value="#{centreControllers.niveauAnimateur.nomNiveau}"/>
 							
 							<p:outputLabel value="Activité principale:"/>
-							<p:outputLabel value=""/>
+							<p:outputLabel value="#{centreControllers.activitePrimaire.nomActivite}"/>
 							
 							<p:outputLabel value="Activité secondaire:"/>
-							<p:outputLabel value=""/>
+							<p:outputLabel value="#{centreControllers.activiteSecondaire.nomActivite}"/>
 						</h:panelGrid>
 						
 					</td>

@@ -14,11 +14,16 @@
 		<fieldset>
 		<legend>Informations sur le service du responsable</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
-			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{serviceResponsableController.serviceResponsable.codeService}" readonly="true"></p:inputText>
+			
+			
+			<p:outputLabel for="cb_responsable" value="Responsable:" />
+            <p:selectOneMenu id="cb_responsable" value="#{serviceResponsableController.idResponsable}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{serviceResponsableController.listResponsable}" var="toto" itemLabel="#{toto.nomResponsable} #{toto.prenomResponsable}" itemValue="#{toto.idResponsable}" />
+			</p:selectOneMenu>
 			
 			<p:outputLabel for="cb_drena" value="DRENA:" />
-            <p:selectOneMenu id="cb_drena" value="#{serviceResponsableController.idDrena}">
+            <p:selectOneMenu id="cb_drena" value="#{serviceResponsableController.idDrena}" required="true">
             <p:ajax listener="#{serviceResponsableController.chargerIep}" event="change" update="cb_iep" process="@this"></p:ajax>
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{serviceResponsableController.listDrena}" var="toto" itemLabel="#{toto.nomDrena}" itemValue="#{toto.idDrena}" />
@@ -30,11 +35,7 @@
             <f:selectItems value="#{serviceResponsableController.listIep}" var="toto" itemLabel="#{toto.nomIep}" itemValue="#{toto.idIep}" />
 			</p:selectOneMenu>
 			
-			<p:outputLabel for="cb_responsable" value="Responsable:" />
-            <p:selectOneMenu id="cb_responsable" value="#{serviceResponsableController.idResponsable}">
-            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
-            <f:selectItems value="#{serviceResponsableController.listResponsable}" var="toto" itemLabel="#{toto.nomResponsable} #{toto.prenomResponsable}" itemValue="#{toto.idResponsable}" />
-			</p:selectOneMenu>
+			
 			
 			<p:outputLabel for="input_arriv" value="Date Arrivée:"></p:outputLabel>
 			<p:calendar id="input_arriv" value="#{serviceResponsableController.serviceResponsable.dateArrivee}" required="true" pattern="dd/MM/yyyy"></p:calendar>

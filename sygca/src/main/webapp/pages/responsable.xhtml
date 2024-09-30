@@ -30,26 +30,54 @@
 			<p:inputText id="input_adresse" value="#{responsableController.responsable.adresseResponsable}"></p:inputText>
 			
 			<p:outputLabel for="input_naissance" value="Date naissance:"></p:outputLabel>
-			<p:calendar id="input_naissance" value="#{responsableController.responsable.dateNaissance}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+			<p:calendar id="input_naissance" value="#{responsableController.responsable.dateNaissance}" locale="fr" navigator="true" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_dservice" value="Date prise de service:"></p:outputLabel>
-			<p:calendar id="input_dservice" value="#{responsableController.responsable.datePriseService}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+			<p:calendar id="input_dservice" value="#{responsableController.responsable.datePriseService}" locale="fr" navigator="true" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_dretraite" value="Date retraite:"></p:outputLabel>
-			<p:calendar id="input_dretraite" value="#{responsableController.responsable.dateRetraite}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+			<p:calendar id="input_dretraite" value="#{responsableController.responsable.dateRetraite}" locale="fr" navigator="true" required="true" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
-			<p:inputText id="input_mail" value="#{responsableController.responsable.mailResponsable}" required="true"></p:inputText>																				
-						
+			<p:inputText id="input_mail" value="#{responsableController.responsable.mailResponsable}" required="true"></p:inputText>
+			
+			<p:outputLabel for="mbr_dc" value="Membre DC:"></p:outputLabel>																				
+        	<p:selectBooleanCheckbox id="mbr_dc" value="#{responsableController.responsable.membreDc}" binding="#{responsableController.checkboxMembre}">
+        		<p:ajax listener="#{responsableController.activerChamps}" event="change" update="info_profil, cb_drena, cb_iep" process="@this"></p:ajax>
+        	</p:selectBooleanCheckbox>
+        	
+        	
+        	<p:outputLabel></p:outputLabel>	
+        	<p:outputLabel></p:outputLabel>
+        	
+        	<p:outputLabel></p:outputLabel>
+        	<p:outputLabel></p:outputLabel>
+        																				
+				
 			<p:outputLabel for="cb_fonction" value="Fonction:" />
-            <p:selectOneMenu  id="cb_fonction" value="#{responsableController.idFonction}" required="true">
+            <p:selectOneMenu  id="cb_fonction" value="#{responsableController.idFonction}" required="true" binding="#{responsableController.oneMenuFonction}">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{responsableController.listFonction}" var="toto" itemLabel="#{toto.libelleFonction}" itemValue="#{toto.idFonction}" />
 			</p:selectOneMenu>
+				
+						
+			<p:outputLabel for="cb_drena" value="DRENA:" />
+            <p:selectOneMenu id="cb_drena" value="#{responsableController.idDrena}" required="true" binding="#{responsableController.oneMenuDrena}">
+            <p:ajax listener="#{responsableController.chargerIep}" event="change" update="cb_iep" process="@this"></p:ajax>
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{responsableController.listDrena}" var="toto" itemLabel="#{toto.nomDrena}" itemValue="#{toto.idDrena}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_iep" value="IEP:" />
+            <p:selectOneMenu id="cb_iep" value="#{responsableController.idIep}" binding="#{responsableController.oneMenuIep}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{responsableController.listIep}" var="toto" itemLabel="#{toto.nomIep}" itemValue="#{toto.idIep}" />
+			</p:selectOneMenu>
 			
 			
-			<p:outputLabel for="mbr_dc" value="Membre DC:"></p:outputLabel>																				
-        	<p:selectBooleanCheckbox id="mbr_dc" value="#{responsableController.responsable.membreDc}"/>
+			<p:outputLabel for="input_arriv" value="Date Arrivée:"></p:outputLabel>
+			<p:calendar id="input_arriv" value="#{responsableController.serviceResponsable.dateArrivee}" binding="#{responsableController.datecalendar}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+			
 			
 	    </h:panelGrid>
 	    </fieldset>
@@ -60,8 +88,8 @@
  	<legend>DETAILS DES DROITS</legend>		
 	<h:panelGrid columns="4" cellpadding="10">
 
-	<p:outputLabel for="input_login" value="Login:"></p:outputLabel>
-	<p:inputText id="input_login" value="#{responsableController.userAuthentication.username}" required="true" requiredMessage="Veuillez resseigner ce champ SVP"></p:inputText>
+	<p:outputLabel for="input_login" value="Login (Matricule):"></p:outputLabel>
+	<p:inputText id="input_login" value="#{responsableController.userAuthentication.username}" required="true" requiredMessage="Veuillez resseigner ce champ SVP" ></p:inputText>
 	
 	
 	<p:outputLabel for="input_mdp" value="Password:"></p:outputLabel>
@@ -71,14 +99,14 @@
 
 <h:panelGrid id="info_profil" columns="2" cellpadding="8">
 	<p:outputLabel for="rd1" value="Profil utilisateur:"/>					
-	<p:selectOneRadio id="rd1" value="#{responsableController.userRole}" layout="grid" columns="4" required="true" >
-		<f:selectItem itemLabel="Conseiller" itemValue="ROLE_CONSEILLER"></f:selectItem>
-		<f:selectItem itemLabel="Coordonnateur IEP" itemValue="ROLE_COORDONNATEUR"></f:selectItem>
-		<f:selectItem itemLabel="Superviseur DRENA" itemValue="ROLE_SUPERVISEUR"></f:selectItem>
-		<f:selectItem itemLabel="IEP" itemValue="ROLE_IEP"></f:selectItem>
-		<f:selectItem itemLabel="DRENA" itemValue="ROLE_DRENA"></f:selectItem>
-		<f:selectItem itemLabel="Utilistaeur standard" itemValue="ROLE_UTILISATAEUR"></f:selectItem>
-		<f:selectItem itemLabel="Adminitrateur" itemValue="ROLE_ADMIN"></f:selectItem>
+		<p:selectOneRadio id="rd1" value="#{responsableController.userRole}" layout="grid" columns="4" required="true">
+		<f:selectItem itemLabel="Conseiller" itemValue="ROLE_CONSEILLER" itemDisabled= "#{responsableController.etatActif_1}"></f:selectItem>
+		<f:selectItem itemLabel="Coordonnateur IEP" itemValue="ROLE_COORDONNATEUR" itemDisabled= "#{responsableController.etatActif_1}"></f:selectItem>
+		<f:selectItem itemLabel="Superviseur DRENA" itemValue="ROLE_SUPERVISEUR" itemDisabled= "#{responsableController.etatActif_1}"></f:selectItem>
+		<f:selectItem itemLabel="IEP" itemValue="ROLE_IEP" itemDisabled= "#{responsableController.etatActif_1}"></f:selectItem>
+		<f:selectItem itemLabel="DRENA" itemValue="ROLE_DRENA" itemDisabled= "#{responsableController.etatActif_1}"></f:selectItem>
+		<f:selectItem itemLabel="Utilistaeur standard" itemValue="ROLE_UTILISATAEUR" itemDisabled= "#{responsableController.etatActif_2}"></f:selectItem>
+		<f:selectItem itemLabel="Adminitrateur" itemValue="ROLE_ADMIN" itemDisabled= "#{responsableController.etatActif_2}"></f:selectItem>
 	</p:selectOneRadio>
 	
 	</h:panelGrid>

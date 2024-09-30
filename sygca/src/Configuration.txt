@@ -37,4 +37,8 @@
  
  ECOLE ========> IEP
  
+ CAMPAGNE ========> ENSEIGNE
+ 
+ ENSEIGNER ========> CENTRE
+ 
  

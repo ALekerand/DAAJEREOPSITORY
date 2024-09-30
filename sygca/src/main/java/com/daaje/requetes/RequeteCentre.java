@@ -18,6 +18,7 @@ public class RequeteCentre {
 	private SessionFactory sessionFactory;
 	
 	
+	//==================================================REQUETTE SELECTION DE TOUT ==========================================================
 	public List recupCentreNonValideIEP(){
 	String query = "SELECT `centre`.* FROM `centre` WHERE `centre`.`ETAT_VALIDATION_IEP` IS NULL";
 	List listeCentre = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Centre.class).list();
@@ -47,6 +48,15 @@ public class RequeteCentre {
 	
 	
 	//==================================================REQUETTE PERSONNALISEE==========================================================
+	
+	//Centre crée par IEP
+	public List recupCentresParIEP(int id_iep){
+		String query = "SELECT `centre`.* FROM `centre` WHERE(`centre`.`ID_IEP` = '"+id_iep+"')";
+		List listeCentre = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Centre.class).list();
+		return listeCentre;
+		}
+	
+	
 	
 	public List recupCentresvalidesParIEP(int id_iep){
 		String query = "SELECT `centre`.* FROM `centre` WHERE (`centre`.`ETAT_VALIDATION_IEP` IS NOT NULL) AND (ETAT_VALIDATION_DRENA IS NOT NULL) AND (`centre`.`ID_IEP` = '"+id_iep+"')";
