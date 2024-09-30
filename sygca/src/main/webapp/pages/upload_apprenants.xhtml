@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<p:panel header="Enregistrement des genres">
+		<fieldset>
+		<legend>Chargement de liste d'apprenant</legend>
+		<h:panelGrid id="info_grid" columns="4" cellpadding="8">	
+		
+			<p:fileUpload value="#{fileUploadView.file}"  allowTypes="/(\.|\/)(csv)$/" mode="simple" skinSimple="true">
+        	</p:fileUpload>	
+
+	    </h:panelGrid>
+	    
+	    </fieldset>
+	    
+	    </p:panel>
+	    
+	    <br />
+	    
+	    <p:toolbar id="toob">
+		<f:facet name="left">
+			<p:commandButton  value="Valider"  update="info_grid">
+				<p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm>
+			</p:commandButton>
+			<p:commandButton value="Annuler" process="@this" update="info_grid, toob"></p:commandButton>
+		</f:facet>
+		</p:toolbar>
+	    
+	    <br />
+	    
+
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
+	   
+		</h:form>
+	
+	</ui:define>
+	
+	</ui:composition>
+</html>

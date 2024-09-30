@@ -37,7 +37,6 @@ public class RequeteUtilisateur {
 	 public String recupererLogin() {
 	      User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	      String name = user.getUsername(); //get logged in username
-	      System.out.println("Retour de la requete:"+name);
 	      return name;
 	  }
 	 
@@ -47,6 +46,17 @@ public class RequeteUtilisateur {
 		UserAuthentication user = (UserAuthentication) getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(UserAuthentication.class).uniqueResult();
 		 return user;
 	 }
+	
+	
+	
+	public UserAuthentication recupererUserParLogin(String user_name) {
+		String query = "SELECT * FROM `user_authentication` WHERE USERNAME = '"+user_name+"'";
+		UserAuthentication user = (UserAuthentication) getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(UserAuthentication.class).uniqueResult();
+		 return user;
+	 }
+	
+	
+	
 	 
 	 
 		public SessionFactory getSessionFactory() {

@@ -83,7 +83,7 @@ public class Enseigner implements java.io.Serializable {
 		this.campagne = campagne;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_CENTRE", nullable = false)
 	public Centre getCentre() {
 		return this.centre;

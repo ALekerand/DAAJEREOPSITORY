@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,14 +18,16 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
+import org.primefaces.component.inputtext.InputText;
+import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.selectoneradio.SelectOneRadio;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Activite;
@@ -34,6 +37,7 @@ import com.daaje.model.Centre;
 import com.daaje.model.Departement;
 import com.daaje.model.Drena;
 import com.daaje.model.DrenaDepartement;
+import com.daaje.model.Ecole;
 import com.daaje.model.Enseigner;
 import com.daaje.model.Genre;
 import com.daaje.model.Iep;
@@ -50,25 +54,32 @@ import com.daaje.model.PersonnePhysique;
 import com.daaje.model.Profession;
 import com.daaje.model.Programme;
 import com.daaje.model.Promoteur;
+import com.daaje.model.Responsable;
+import com.daaje.model.ServiceResponsable;
 import com.daaje.model.SousPrefecture;
 import com.daaje.model.TypeActivite;
 import com.daaje.model.TypeAlphabetisation;
 import com.daaje.model.UserAuthentication;
+import com.daaje.requetes.RequeteCentre;
 import com.daaje.requetes.RequeteEcole;
+import com.daaje.requetes.RequeteSeviceResponsable;
 import com.daaje.requetes.RequeteUtilisateur;
 import com.daaje.service.Iservice;
 
 @Component
+@Scope("session")
 public class CentreControllers {
 	@Autowired
 	private Iservice iservice;
-	
 	@Autowired
-	RequeteEcole requeteEcole;
-	
+	private RequeteEcole requeteEcole;
+	@Autowired 
+	private RequeteSeviceResponsable requeteSeviceResponsable;
 	@Autowired
-	RequeteUtilisateur requeteUtilisateur;
-
+	private RequeteCentre requeteCentre;
+	@Autowired
+	private RequeteUtilisateur requeteUtilisateur;
+	
 	private Centre centre = new Centre();
 	private int idLocalite;
 	private int idIep;
@@ -89,11 +100,18 @@ public class CentreControllers {
 	private boolean skip;
 	private String etatPermanence;
 	private String etatLieu;
+	private LocaliteDImplantation localite = new LocaliteDImplantation();
+	private TypeAlphabetisation typeAlphabetisation = new TypeAlphabetisation();
 	private UserAuthentication userAuthentication = new UserAuthentication();
 	private Animateur animateur = new Animateur();
 	private Nature natureCentre = new Nature();
+	private Langue langue = new Langue();
 	private Departement choosedDepartement = new Departement();
 	private SousPrefecture choosedSousPrefecture = new SousPrefecture();
+	private NatureProjet natureProjet = new NatureProjet();
+	private NiveauAnimateur niveauAnimateur = new NiveauAnimateur();
+	private ServiceResponsable serviceResponsable = new ServiceResponsable();
+	
 	private Drena choosedDrena = new Drena();
 	private Iep choosedIep = new Iep();
 	private LocaliteDImplantation choosedLocalite = new LocaliteDImplantation();
@@ -107,7 +125,7 @@ public class CentreControllers {
 	private Activite activitePrimaire = new Activite();
 	private Activite activiteSecondaire = new Activite();
 	private Enseigner enseigner = new Enseigner();
-	private  Ong ong = new Ong();
+	private Ong ong = new Ong();
 	private PersonnePhysique personnePhysique = new PersonnePhysique();
 	private PersonneMorale personneMorale = new PersonneMorale();
 	private Programme programme = new Programme();
@@ -127,15 +145,15 @@ public class CentreControllers {
 	private List listEcole = new ArrayList<>();
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
 	private List<Langue> listLangue = new ArrayList<Langue>();
-	private List<TypeAlphabetisation> listTypeAlpha = new ArrayList<TypeAlphabetisation>(); 
+	private List<TypeAlphabetisation> listTypeAlpha = new ArrayList<TypeAlphabetisation>();
+	private String naturePromoteur;
 	
-	private UploadedFile fichier;
+	//private UploadedFile fichier;
 	private String chemin = "C:\\SYGCA\\AUTORISATION";
 	
-	// Pour l'upload
-		private String destination = "C:/photo/";
-		private String cheminFinal ="";
-		private	StreamedContent content = new DefaultStreamedContent();
+	private	StreamedContent content = new DefaultStreamedContent();
+	private String cheminFinal ="";
+	private String destination = "C:/SYGCA/";
 	
 	
 //Controle des composants
@@ -145,17 +163,37 @@ public class CentreControllers {
 	private SelectOneMenu natureProOneMenu = new SelectOneMenu();
 	private boolean etatGraphicImage;
 	private boolean etatFileUpload;
-	//private PanelGrid pGridOng = new PanelGrid();
-	//private PanelGrid pGridPh = new PanelGrid();
-	//private PanelGrid pGridMini = new PanelGrid();
-	//private PanelGrid pGridProg = new PanelGrid();
-	//private PanelGrid pGridEntrep = new PanelGrid();
+	private SelectOneMenu oneMenuEcole = new SelectOneMenu();
+	private InputText inputLieu = new InputText();
+	private SelectOneRadio oneRadioNatureLieu = new SelectOneRadio();
+	private SelectBooleanCheckbox checkbox1 = new SelectBooleanCheckbox();
+	private SelectBooleanCheckbox checkbox2 = new SelectBooleanCheckbox();
+	private SelectBooleanCheckbox checkbox3 = new SelectBooleanCheckbox();
+	private SelectOneRadio oneRadioPermanent = new SelectOneRadio();
 	
+	public SelectOneRadio getOneRadioNatureLieu() {
+		return oneRadioNatureLieu;
+	}
+
+
+	public void setOneRadioNatureLieu(SelectOneRadio oneRadioNatureLieu) {
+		this.oneRadioNatureLieu = oneRadioNatureLieu;
+	}
+
 	private boolean pGridOng;
 	private boolean pGridPh;
 	private boolean pGridMini;
 	private boolean pGridProg;
 	private boolean pGridEntrep;
+	
+	//Pour le recap
+	private boolean recap_grid_ph;
+	private boolean recap_grid_pm;
+	private boolean recap_grid_ong;
+	private boolean recap_grid_prog;
+	private boolean recap_grid_mini;
+	
+
 		
 	//Methodes
 	@PostConstruct
@@ -167,16 +205,37 @@ public class CentreControllers {
 		this.setpGridProg(false);
 		this.setpGridEntrep(false);
 		this.natureProOneMenu.setDisabled(true);
+		this.oneMenuEcole.setDisabled(true);
 		this.setEtatFileUpload(false);
 		this.setEtatGraphicImage(false);
+		this.inputLieu.setDisabled(true);
 		recupererCampagneEncours();
 		genererCodePromoteur();
 		genererCodeAnimateur();
+		recupererResponsable();
+	}
+	
+	public void recupererResponsable() {
+		userAuthentication = requeteUtilisateur.recuperUser();
+		serviceResponsable = requeteSeviceResponsable.recupServiceRespoParRespo(userAuthentication.getResponsable().getIdResponsable());
+	}
+	
+	
+	public void genererCodeEnseigner() {
+		// A terminer
+	}
+	
+	
+	public void genererCodeCentre() {
+		int nbEnregistrement = this.iservice.getObjects("Centre").size()+1;
+		//choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
+		String code = "D"+choosedDrena.getCodeDrena().substring(4, 6)+"I"+choosedIep.getCodeIep().substring(3, 6)+"-"+nbEnregistrement;
+		centre.setCodeCentre(code);
 	}
 	
 	
 	public UserAuthentication chagerUtilisateur() {
-		return userAuthentication = requeteUtilisateur.recuperUser();
+		return userAuthentication;
 	}
 	
 	public void recupererCampagneEncours() {
@@ -189,54 +248,42 @@ public class CentreControllers {
 	}
 	
 	
-	public void uploadPhoto(FileUploadEvent event) {
-        FacesMessage msg = new FacesMessage("Photo validée!");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        // Do what you want with the file
-        try {
-            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
- 
-    }
 	
-	
-	public void upload() {
-		String extValidate;
-		if(getFichier() != null) {
-			String ext = getFichier().getFileName();
-			if(ext != null) {
-				extValidate = ext.substring(ext.indexOf(".")+1);
-			}else {
-				extValidate = "null";
-			}
-			if(extValidate.equals("docx") || extValidate.equals("pdf") || extValidate.equals("pptx") || extValidate.equals("xlsx")) {
-				try {
-					transfererFile(getFichier().getFileName(), getFichier().getInputstream());
-				}catch (IOException ex) {
-					System.out.println(ex);
-				}
-			}
-		}
+	public void choisirLocalite() {
+		localite = (LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation");
 	}
 	
-	public void transfererFile(String fileName, InputStream in) {
-		try {
-			OutputStream out = new FileOutputStream(new File(chemin + fileName));
-			int reader = 0;
-			byte[] bytes = new byte[(int)getFichier().getSize()];
-			while ((reader = in.read(bytes))!= -1) {
-				out.write(bytes,0,reader);
-			}
-			in.close();
-			out.flush();
-			out.close();
-		}catch (IOException e) {
-			System.out.println(e);
-		}
+	public void choisirNatureProjet() {
+		natureProjet = (NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet");
 	}
 	
+	
+	public void choisirTypeAlpha() {
+		typeAlphabetisation = (TypeAlphabetisation) iservice.getObjectById(idTypeAlpha, "TypeAlphabetisation");
+	}
+	
+	
+	public void choisirLangue() {
+		setLangue((Langue) iservice.getObjectById(idLangue, "Langue"));
+	}
+	
+	public void choisirNiveauFormateur() {
+		setNiveauAnimateur((NiveauAnimateur) iservice.getObjectById(idNiveau, "NiveauAnimateur"));
+		}
+	
+	public void choisirActivitePricipale() {
+		activitePrimaire = (Activite) iservice.getObjectById(idActivitePrimaire, "Activite");
+	}
+	
+	public void choisirActiviteSecondaire() {
+		activiteSecondaire = (Activite) iservice.getObjectById(getIdActiviteSecondaire(), "Activite");
+	}
+	
+	
+	
+	
+	
+		
 	public String onFlowProcess(FlowEvent event) {
         if (skip) {
             skip = false; //reset in case user goes back
@@ -278,6 +325,8 @@ public class CentreControllers {
 		 
 			switch (type_promoteur){
 			
+			
+			
 			case "personne_physique": {
 				personnePhysique.setPromoteur(promoteur);
 				personnePhysique.setCodePromoteur(promoteur.getCodePromoteur());
@@ -287,9 +336,8 @@ public class CentreControllers {
 			
 			case "personne_morale": {
 				personneMorale.setPromoteur(promoteur);
-				personneMorale.setRaisonSociale(chemin);
-				personnePhysique.setCodePromoteur(promoteur.getCodePromoteur());
-				iservice.addObject(personnePhysique);
+				personneMorale.setCodePromoteur(promoteur.getCodePromoteur());
+				iservice.addObject(personneMorale);
 				break;
 			}
 			
@@ -317,12 +365,13 @@ public class CentreControllers {
 			}
 			
 			//Enregistrer le centre
-			choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
+			//choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
 			centre.setIep(choosedIep);
-			centre.setLocaliteDImplantation((LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation"));
+			//localite = (LocaliteDImplantation) iservice.getObjectById(idLocalite, "LocaliteDImplantation");
+			centre.setLocaliteDImplantation(localite);
 			centre.setNature((Nature) iservice.getObjectById(idNature, "Nature"));
 			if (idNatureProjet!=0) {
-				centre.setNatureProjet((NatureProjet) iservice.getObjectById(idNatureProjet, "NatureProjet"));
+				centre.setNatureProjet(natureProjet);
 			}
 			centre.setPromoteur(promoteur);
 			centre.setDroitOuvertureCentre(chemin);
@@ -334,26 +383,31 @@ public class CentreControllers {
 				centre.setPermanent(false);
 			}
 			
-			upload();
+			//upload();
 			chagerUtilisateur();
 			
 			//L'enregistreur du centre
+	
 			centre.setResponsableByIdResponsable(userAuthentication.getResponsable());
-			//centre.setResponsable(userAuthentication.getResponsable());
+			centre.setDateCreation(new Date());
+			genererCodeCentre();
 			iservice.addObject(this.centre);
 		
 			//Gestion de l'animateur
 			animateur.setGenre((Genre)iservice.getObjectById(idGenre, "Genre"));
-			animateur.setNiveauAnimateur((NiveauAnimateur) iservice.getObjectById(idNiveau, "NiveauAnimateur"));
+			//setNiveauAnimateur((NiveauAnimateur) iservice.getObjectById(idNiveau, "NiveauAnimateur"));
+			animateur.setNiveauAnimateur(niveauAnimateur);
 			iservice.addObject(animateur);
 			
 			//Gestion de la profession
-			profession.setActivite((Activite) iservice.getObjectById(idActivitePrimaire, "Activite"));
+		//	activitePrimaire = (Activite) iservice.getObjectById(idActivitePrimaire, "Activite");
+			profession.setActivite(activitePrimaire);
 			profession.setTypeActivite((TypeActivite) iservice.getObjectById(1, "TypeActivite"));
 			profession.setAnimateur(animateur);
 			iservice.addObject(profession);
 			if ((activiteSecondaire.getNomActivite()!= null) && (typeActiviteSecondaire.getLibelleTypeactivite() != null)) {
-			profession.setActivite((Activite) iservice.getObjectById(getIdActiviteSecondaire(), "Activite"));
+			//activiteSecondaire = (Activite) iservice.getObjectById(getIdActiviteSecondaire(), "Activite");
+			profession.setActivite(activiteSecondaire);
 			profession.setTypeActivite((TypeActivite) iservice.getObjectById(2, "TypeActivite"));
 			profession.setAnimateur(animateur);
 			iservice.addObject(profession);
@@ -361,8 +415,10 @@ public class CentreControllers {
 			
 			//Gestion de la table Enseigner
 			enseigner.setCampagne(campagneEnCours);
-			enseigner.setTypeAlphabetisation((TypeAlphabetisation) iservice.getObjectById(idTypeAlpha, "TypeAlphabetisation"));
-			enseigner.setLangue((Langue) iservice.getObjectById(idLangue, "Langue"));
+			//typeAlphabetisation = (TypeAlphabetisation) iservice.getObjectById(idTypeAlpha, "TypeAlphabetisation");
+			enseigner.setTypeAlphabetisation(typeAlphabetisation);
+			//setLangue((Langue) iservice.getObjectById(idLangue, "Langue"));
+			enseigner.setLangue(langue);
 			if (value1 !="") {
 				enseigner.setNiveauFormation((NiveauFormation) iservice.getObjectById(1, "NiveauFormation"));
 				enseigner.setAnimateur(animateur);
@@ -389,7 +445,7 @@ public class CentreControllers {
 			
 		annuler();
 		genererCodePromoteur();
-		genererCodeAnimateur();;
+		genererCodeAnimateur();
 		info("Enregistrement effectué");
 	}
 	
@@ -405,22 +461,40 @@ public class CentreControllers {
 		personnePhysique.setPrenomsPersonne(null);
 		personnePhysique.setTelephonePersonne(null);
 		personnePhysique.setMailPersonne(null);
+		personnePhysique.setNumCni(null);
+		
+		//Personne Morale
+		personneMorale.setTelephonePersMorale(null);
+		personneMorale.setRaisonSociale(null);
+		personneMorale.setEmailPersMorale(null);
+
+		
 		//ONG
 		ong.setNomOng(null);
 		ong.setTelephoneOng(null);
 		ong.setMailOng(null);
+		
 		//Ministère
 		ministere.setNomMinistere(null);
 		ministere.setTelephoneMinistere(null);
+		
+		//Programme
+		programme.setLibelleProgramme(null);
+		
 		//Centre
+		centre.setCodeCentre(null);
 		centre.setNomCentre(null);
 		centre.setAbreviationNomCentre(null);
 		centre.setAdresseCentre(null);
 		centre.setTelephoneCentre(null);
 		centre.setMailCentre(null);
 		centre.setDroitOuvertureCentre(null);
+		centre.setLongitude(null);
+		centre.setLatitude(null);
+		
 		//les combos
 		setIdDepartement(0);
+		setIdSousPrefecture(0);
 		setIdDrena(0);
 		setIdIep(0);
 		setIdLocalite(0);
@@ -430,6 +504,9 @@ public class CentreControllers {
 		setIdNiveau(0);
 		setIdActivitePrimaire(0);
 		setIdActiviteSecondaire(0);
+		setIdLangue(0);
+		setIdTypeAlpha(0);
+		setIdEcole(0);
 		//Animateur
 		animateur.setCodeAnimateur(null);
 		animateur.setNomAnimateur(null);
@@ -437,10 +514,28 @@ public class CentreControllers {
 		animateur.setAdresseAnimateur(null);
 		animateur.setDateNaisAnimateur(null);
 		animateur.setTelephoneAnimateur(null);
+		animateur.setMailAnimateur(null);
 		
+		//Deselectionner les composant
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
+		
 		natureProOneMenu.setDisabled(true);
+		
+		oneRadioPermanent.resetValue();
+		oneRadioNatureLieu.resetValue();
+		
+		
+		checkbox1.setSelected(false);
+		checkbox2.setSelected(false);
+		checkbox3.setSelected(false);
+		
+		//Vider les listes
+		listSousPrefecture.clear();
+		listDrena.clear();
+		listIep.clear();
+		listLocalite.clear();
+		listEcole.clear();
 	}
 	
 	
@@ -454,6 +549,15 @@ public class CentreControllers {
 			this.setpGridMini(false);
 			this.setpGridProg(false);
 			this.setpGridEntrep(false);
+			
+			//Pour le recap
+			this.naturePromoteur = "Personne physique";
+			
+			this.setRecap_grid_ph(true);
+			this.setRecap_grid_pm(false);
+			this.setRecap_grid_mini(false);
+			this.setRecap_grid_ong(false);
+			this.setRecap_grid_prog(false);
 			break;
 		}
 		
@@ -465,6 +569,15 @@ public class CentreControllers {
 			this.setEtatGraphicImage(false);
 			this.setpGridProg(false);
 			this.setpGridEntrep(true);
+			
+			//Pour le recap
+			this.naturePromoteur = "Prsonne morale";
+			
+			this.setRecap_grid_ph(false);
+			this.setRecap_grid_pm(true);
+			this.setRecap_grid_ong(false);
+			this.setRecap_grid_mini(false);
+			this.setRecap_grid_prog(false);
 			break;
 		}
 		
@@ -476,6 +589,16 @@ public class CentreControllers {
 			this.setEtatGraphicImage(false);
 			this.setpGridProg(false);
 			this.setpGridEntrep(false);
+			
+			//Pour le recap
+			this.naturePromoteur = "Ong";
+			
+			this.setRecap_grid_ph(false);
+			this.setRecap_grid_pm(false);
+			this.setRecap_grid_ong(true);
+			this.setRecap_grid_mini(false);
+			this.setRecap_grid_prog(false);
+			
 			break;
 		}
 		
@@ -487,6 +610,16 @@ public class CentreControllers {
 			this.setEtatGraphicImage(false);
 			this.setpGridProg(true);
 			this.setpGridEntrep(false);
+			
+			//Pour le recap
+			this.naturePromoteur = "Programme";
+			
+			this.setRecap_grid_ph(false);
+			this.setRecap_grid_pm(false);
+			this.setRecap_grid_ong(false);
+			this.setRecap_grid_mini(false);
+			this.setRecap_grid_prog(true);
+			
 			break;
 		}
 		
@@ -498,6 +631,16 @@ public class CentreControllers {
 			this.setEtatFileUpload(false);
 			this.setEtatGraphicImage(false);
 			this.setpGridProg(false);
+			
+			//Pour le recap
+			this.naturePromoteur = "Ministère";
+			
+			this.setRecap_grid_ph(false);
+			this.setRecap_grid_pm(false);
+			this.setRecap_grid_ong(false);
+			this.setRecap_grid_mini(true);
+			this.setRecap_grid_prog(false);
+			
 			break;
 		}
 		
@@ -506,11 +649,11 @@ public class CentreControllers {
 	
 	
 		public void chargerLocalite() {
+			listLocalite.clear();
 		choosedSousPrefecture = (SousPrefecture) iservice.getObjectById(idSousPrefecture, "SousPrefecture");
 		for ( LocaliteDImplantation var : choosedSousPrefecture.getLocaliteDImplantations()) {
 			listLocalite.add(var);
 			}
-			System.out.println(listSousPrefecture.size());
 			
 			//=======Pour le rangement par ordre alphabétique======
 					Collections.sort(listLocalite, new Comparator<LocaliteDImplantation>() {
@@ -520,13 +663,27 @@ public class CentreControllers {
 				            return  ob1.getNomLocalite().compareTo(ob2.getNomLocalite());
 				        }
 				    });
-					//========================  Fin  =======================
+			//========================  Fin  =======================
 		}
 	
 	public void selectionnerLigne() {
 		centre = selectedObject;
 		cmdBEnregistrer.setDisabled(true);
 		cmdBModifier.setDisabled(false);
+	}
+	
+	
+	public void actualiserLieu() {
+		System.out.println("===== Methode de lieu appelée=====");
+		if (oneRadioNatureLieu.getValue().equals("ecole")) {
+			oneMenuEcole.setDisabled(false);
+			inputLieu.setDisabled(true);
+		}
+		
+		if (oneRadioNatureLieu.getValue().equals("autre")) {
+			oneMenuEcole.setDisabled(true);
+			inputLieu.setDisabled(false);
+		}
 	}
 	
 	
@@ -541,29 +698,31 @@ public class CentreControllers {
 		listDrena.clear();
 		listIep.clear();
 		listLocalite.clear();
+		listEcole.clear();
 		
 		//Charger la liste des Sous-Préfecture
 		for ( SousPrefecture var : choosedDepartement.getSousPrefectures()) {
 			listSousPrefecture.add(var);
 		}
-		System.out.println(listSousPrefecture.size());
 		
-		//=======Pour le rangement par ordre alphabétique======
-				Collections.sort(listSousPrefecture, new Comparator<SousPrefecture>() {
-			        @Override
-			        public int compare(SousPrefecture ob1, SousPrefecture ob2)
-			        {
-			            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
-			        }
-			    });
-				//========================  Fin  =======================	
-				
 		//Charger les DRENA
 		choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
 		listDrena.clear();
 		for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
 			listDrena.add(var.getDrena());
 		}
+		
+		
+		//=======Pour le rangement par ordre alphabétique======
+		Collections.sort(listSousPrefecture, new Comparator<SousPrefecture>() {
+	        @Override
+	        public int compare(SousPrefecture ob1, SousPrefecture ob2)
+	        {
+	            return  ob1.getNomSousPrefecture().compareTo(ob2.getNomSousPrefecture());
+	        }
+	    });
+		
+		//========================  Fin  =======================	
 		
 		
 		//=======Pour le rangement par ordre alphabétique======
@@ -575,8 +734,7 @@ public class CentreControllers {
 	        }
 	    });
 		//========================  Fin  =======================	
-		
-				
+			
 	}
 	
 	
@@ -586,11 +744,15 @@ public class CentreControllers {
 	public void chargerIep() {
 			listIep.clear();
 			listEcole.clear();
-			
 			choosedDrena = (Drena) iservice.getObjectById(idDrena, "Drena");
-			for (DrenaDepartement var : choosedDepartement.getDrenaDepartements()) {
-				listDrena.add(var.getDrena());
+			System.out.println("===== DRENA selectionné:"+choosedDrena.getNomDrena()); //Clear after;
+			
+			for (Iep varIep : choosedDrena.getIeps()) {
+				listIep.add(varIep);
 			}
+			
+			System.out.println("===== Taille liste IEP:"+listIep.size()); //Clear after;
+
 	}
 	
 	
@@ -607,55 +769,66 @@ public class CentreControllers {
 	
 	public void chargerEcole() {
 		listEcole.clear();
+		choosedIep = (Iep) iservice.getObjectById(idIep, "Iep");
+		for (Ecole varecole : choosedIep.getEcoles()) {
+			listEcole.add(varecole);
+		}
 		listEcole = requeteEcole.recupEcoleParIEP(idIep);
 	}
+	
+	
+	
+	
+	
 	
 	public void info(String message){
 	    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
 	}
 	
 	
-	//************************Pour le traitement de la photo
 	
-		public void upload(FileUploadEvent event) {
-	        FacesMessage msg = new FacesMessage("Photo validée!");
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-	        // Do what you want with the file
-	        try {
-	            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	 
-	    }
-		
-		
-		public void copyFile(String fileName, InputStream in) {
-	        try {
-	        //lE CHEMIN
-	        	cheminFinal = destination + fileName;
-	            OutputStream out = new FileOutputStream(new File(destination + fileName));
-	 
-	            int read = 0;
-	            byte[] bytes = new byte[1024];
-	 
-	            while ((read = in.read(bytes)) != -1) {
-	                out.write(bytes, 0, read);
-	            }
-	 
-	            in.close();
-	            out.flush();
-	            out.close();
-	            
-	 // Charger le fichier dans le graphique image
-	            getContent();
-	            System.out.println("New file created!");
-	        } catch (IOException e) {
-	            System.out.println(e.getMessage());
-	        }
-	        
-	       
-	    }
+	
+	public void upload(FileUploadEvent event) {
+		System.out.println("======= Upload lancée");//clean after
+        FacesMessage msg = new FacesMessage("Photo validée!");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        // Do what you want with the file
+        try {
+            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
+	
+	public void copyFile(String fileName, InputStream in){
+        try {
+        //lE CHEMIN
+        	cheminFinal = destination + fileName;
+            OutputStream out = new FileOutputStream(new File(destination + fileName));
+ 
+            //int read = 0;
+            int byteValue;
+            //byte[] bytes = new byte[1024];
+ 
+            while ((byteValue = in.read()) != -1) {
+                out.write(byteValue);
+            }
+ 
+            in.close();
+            out.flush();
+            out.close();
+            System.out.println("======= Fin copie image");//clean after
+            
+ // Charger le fichier dans le graphique image
+            getContent();
+            System.out.println("New file created!");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        
+       
+    }
 	
 	
 	
@@ -664,7 +837,15 @@ public class CentreControllers {
 //Getters and setters
 	
 	public List<Centre> getListObject() {
-		listObject = iservice.getObjects("Centre");
+		
+		try {
+			listObject = requeteCentre.recupCentresParIEP(serviceResponsable.getIep().getIdIep());
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			listObject = iservice.getObjects("Centre");
+		}
+		
+		//listObject = iservice.getObjects("Centre");
 		
 		//=======Pour le rangement par ordre alphabétique======
 		Collections.sort(listObject, new Comparator<Centre>() {
@@ -734,7 +915,7 @@ return listObject;
 	}
 
 	public List getListLocalite() {
-		return listLocalite = iservice.getObjects("LocaliteDImplantation");
+		return listLocalite;
 	}
 
 	public void setListLocalite(List listLocalite) {
@@ -742,7 +923,8 @@ return listObject;
 	}
 
 	public List getListIep() {
-		return listIep = iservice.getObjects("Iep");
+		//listIep = iservice.getObjects("Iep");
+		return listIep;
 	}
 
 	public void setListIep(List listIep) {
@@ -1015,14 +1197,13 @@ return listObject;
 		this.value3 = value3;
 	}
 
-	public UploadedFile getFichier() {
-		return fichier;
-	}
+	/*
+	 * public UploadedFile getFichier() { return fichier; }
+	 */
 
-	public void setFichier(UploadedFile fichier) {
-		this.fichier = fichier;
-	}
-
+	/*
+	 * public void setFichier(UploadedFile fichier) { this.fichier = fichier; }
+	 */
 	public String getEtatPermanence() {
 		return etatPermanence;
 	}
@@ -1179,41 +1360,34 @@ return listObject;
 	}
 
 
-	public String getCheminFinal() {
-		return cheminFinal;
-	}
+	/*
+	 * public String getCheminFinal() { return cheminFinal; }
+	 */
+
+	/*
+	 * public void setCheminFinal(String cheminFinal) { this.cheminFinal =
+	 * cheminFinal; }
+	 */
 
 
-	public void setCheminFinal(String cheminFinal) {
-		this.cheminFinal = cheminFinal;
-	}
+	/*
+	 * public StreamedContent getContent() { if ((cheminFinal.equals(""))) {
+	 * setCheminFinal(destination + "avatar.jpg"); }
+	 * 
+	 * try {
+	 * 
+	 * InputStream is = new FileInputStream(cheminFinal); //is.close(); content =
+	 * new DefaultStreamedContent(is);
+	 * 
+	 * } catch (FileNotFoundException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated catch
+	 * block e.printStackTrace(); } return content; }
+	 */
 
 
-	public StreamedContent getContent() {
-		if ((cheminFinal.equals(""))) {
-    		setCheminFinal(destination + "avatar.jpg");
-    	}
-    	
-    	try {
-			 
- 			InputStream is = new FileInputStream(cheminFinal);
- 			//is.close();  
- 			content	= new DefaultStreamedContent(is);
- 			
- 		} catch (FileNotFoundException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 		} catch (IOException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 		}
-		  return content;
-	}
-
-
-	public void setContent(StreamedContent content) {
-		this.content = content;
-	}
+	/*
+	 * public void setContent(StreamedContent content) { this.content = content; }
+	 */
 
 
 	public boolean ispGridOng() {
@@ -1294,4 +1468,235 @@ return listObject;
 	public void setPersonneMorale(PersonneMorale personneMorale) {
 		this.personneMorale = personneMorale;
 	}
+
+
+	public SelectOneMenu getOneMenuEcole() {
+		return oneMenuEcole;
+	}
+
+
+	public void setOneMenuEcole(SelectOneMenu oneMenuEcole) {
+		this.oneMenuEcole = oneMenuEcole;
+	}
+
+
+	public InputText getInputLieu() {
+		return inputLieu;
+	}
+
+
+	public void setInputLieu(InputText inputLieu) {
+		this.inputLieu = inputLieu;
+	}
+
+
+	public StreamedContent getContent() {
+		if ((cheminFinal.equals(""))) {
+    		setCheminFinal(destination + "avatar.jpg");
+    	}
+    	
+    	try {
+			 
+ 			InputStream is = new FileInputStream(cheminFinal);
+ 			//is.close();  
+ 			content	= new DefaultStreamedContent(is);
+ 			
+ 		} catch (FileNotFoundException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+		return content;
+	}
+
+
+	public void setContent(StreamedContent content) {
+		this.content = content;
+	}
+
+
+	public String getCheminFinal() {
+		return cheminFinal;
+	}
+
+
+	public void setCheminFinal(String cheminFinal) {
+		this.cheminFinal = cheminFinal;
+	}
+
+
+	
+
+
+	public String getNaturePromoteur() {
+		return naturePromoteur;
+	}
+
+
+	public void setNaturePromoteur(String naturePromoteur) {
+		this.naturePromoteur = naturePromoteur;
+	}
+
+
+	public boolean isRecap_grid_ong() {
+		return recap_grid_ong;
+	}
+
+
+	public void setRecap_grid_ong(boolean recap_grid_ong) {
+		this.recap_grid_ong = recap_grid_ong;
+	}
+
+
+	public boolean isRecap_grid_mini() {
+		return recap_grid_mini;
+	}
+
+
+	public void setRecap_grid_mini(boolean recap_grid_mini) {
+		this.recap_grid_mini = recap_grid_mini;
+	}
+
+
+	public boolean isRecap_grid_prog() {
+		return recap_grid_prog;
+	}
+
+
+	public void setRecap_grid_prog(boolean recap_grid_prog) {
+		this.recap_grid_prog = recap_grid_prog;
+	}
+
+
+	public boolean isRecap_grid_pm() {
+		return recap_grid_pm;
+	}
+
+
+	public void setRecap_grid_pm(boolean recap_grid_pm) {
+		this.recap_grid_pm = recap_grid_pm;
+	}
+
+
+	public boolean isRecap_grid_ph() {
+		return recap_grid_ph;
+	}
+
+
+	public void setRecap_grid_ph(boolean recap_grid_ph) {
+		this.recap_grid_ph = recap_grid_ph;
+	}
+
+
+	public Nature getNatureCentre() {
+		return natureCentre;
+	}
+
+
+	public void setNatureCentre(Nature natureCentre) {
+		this.natureCentre = natureCentre;
+	}
+
+
+	public SelectBooleanCheckbox getCheckbox1() {
+		return checkbox1;
+	}
+
+
+	public void setCheckbox1(SelectBooleanCheckbox checkbox1) {
+		this.checkbox1 = checkbox1;
+	}
+
+
+	public SelectBooleanCheckbox getCheckbox2() {
+		return checkbox2;
+	}
+
+
+	public void setCheckbox2(SelectBooleanCheckbox checkbox2) {
+		this.checkbox2 = checkbox2;
+	}
+
+
+	public SelectBooleanCheckbox getCheckbox3() {
+		return checkbox3;
+	}
+
+
+	public void setCheckbox3(SelectBooleanCheckbox checkbox3) {
+		this.checkbox3 = checkbox3;
+	}
+
+
+	public SelectOneRadio getOneRadioPermanent() {
+		return oneRadioPermanent;
+	}
+
+
+	public void setOneRadioPermanent(SelectOneRadio oneRadioPermanent) {
+		this.oneRadioPermanent = oneRadioPermanent;
+	}
+
+
+	public LocaliteDImplantation getLocalite() {
+		return localite;
+	}
+
+
+	public void setLocalite(LocaliteDImplantation localite) {
+		this.localite = localite;
+	}
+
+
+	public TypeAlphabetisation getTypeAlphabetisation() {
+		return typeAlphabetisation;
+	}
+
+
+	public void setTypeAlphabetisation(TypeAlphabetisation typeAlphabetisation) {
+		this.typeAlphabetisation = typeAlphabetisation;
+	}
+
+
+	public Langue getLangue() {
+		return langue;
+	}
+
+
+	public void setLangue(Langue langue) {
+		this.langue = langue;
+	}
+
+	public SousPrefecture getChoosedSousPrefecture() {
+		return choosedSousPrefecture;
+	}
+
+
+	public void setChoosedSousPrefecture(SousPrefecture choosedSousPrefecture) {
+		this.choosedSousPrefecture = choosedSousPrefecture;
+	}
+
+
+	public NatureProjet getNatureProjet() {
+		return natureProjet;
+	}
+
+
+	public void setNatureProjet(NatureProjet natureProjet) {
+		this.natureProjet = natureProjet;
+	}
+
+
+	public NiveauAnimateur getNiveauAnimateur() {
+		return niveauAnimateur;
+	}
+
+
+	public void setNiveauAnimateur(NiveauAnimateur niveauAnimateur) {
+		this.niveauAnimateur = niveauAnimateur;
+	}
+
+	
 }

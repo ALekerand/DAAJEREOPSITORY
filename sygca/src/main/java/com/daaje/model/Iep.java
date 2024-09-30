@@ -108,7 +108,7 @@ public class Iep implements java.io.Serializable {
 		this.telephoneIep = telephoneIep;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iep")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "iep")
 	public Set<Centre> getCentres() {
 		return this.centres;
 	}
@@ -126,7 +126,7 @@ public class Iep implements java.io.Serializable {
 		this.serviceResponsables = serviceResponsables;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "iep")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "iep")
 	public Set<Ecole> getEcoles() {
 		return this.ecoles;
 	}

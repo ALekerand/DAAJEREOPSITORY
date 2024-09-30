@@ -1,11 +1,24 @@
-
- 02/02/2024
+ 	
+ 19/05/2024
+ 	- Des départements n'ont pas de sous-préfecture (les communes d'Abidjan)
  
- 
- 	- numCNI ajouté à Personne Physique
- 	- Table Personne Morale créée
- 	- Adresse centre,Ecole,Responsable passé à 30
- 	- le nom de la table LocaliteImplementation a changé
+ 20/05/2024
+ 	- Voir la fate de naissance (Alphabétiseur) OK
+ 	- Integrer le mail de l'animateur la page (Alphabétiseur)OK
+ 	- Régler le lien pour le stockage de l'autorisation (Centre)
+ 	- Régler la photo (Centre)
+ 	- Régler Code Enseigner (Enseigner)
+ 	- Code Responsable à créer OK
+ 	- Actualiser le responsable validation en IEP OK
+ 	
+ 22/05/2024
+ 	- Champ lieu a été ajouté à la table Centre (Refaire le maping)
+ 	- Date creation du centre à été ajouté (Refaire maping)
+ 	
+ 28/05/2025 
+ 	- Num CC ajouté dans la table Personne morale (Refaire mapping)
+ 	
+ 	
  
 	
 	

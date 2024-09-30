@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Departement;
@@ -20,6 +21,7 @@ import com.daaje.service.Iservice;
 import com.daaje.service.Service;
 
 @Component
+@Scope("session")
 public class DrenaController {
 	@Autowired
 	private Iservice iservice;

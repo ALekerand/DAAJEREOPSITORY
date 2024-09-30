@@ -19,13 +19,31 @@
 	</table>
 	</div>
 	
-    <h:form id="frm" onsubmit="return initialize();">
+    <h:form id="form" onsubmit="return initialize();">
+    <p:messages autoUpdate="true" closable="true" showDetail="false"/>
      <div style="position: absolute; width: 400px; height: 300px; top:0; bottom:0; left:0; right: 0; margin: auto;" align="center">
      <img src="resource/images/alphabetistion_reduir_50.jpg" style="margin:0px;" alt="lolo" align="center"/>
      	
+            
+      
+      
       <h:panelGrid columns="3" cellspacing="10" style="top:50px; position:relative;" align="center">
-      <h:link style="color:red" value="DEMARRER"  outcome="/templates/template.xhtml"/>
-
+         <p:outputLabel for="cb_profil" value="Profil:" />
+            <p:selectOneMenu id="cb_profil" value="#{profilController.profil}">
+            <p:ajax partialSubmit="true" process="@this"  update="form" listener="#{profilController.router}"/> 
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItem itemLabel="Conseiller" itemValue="conseiller"/>
+            <f:selectItem itemLabel="Coordonnateur IEP" itemValue="coodornateur_iep"/>
+            <f:selectItem itemLabel="Superviseur DRENA" itemValue="superviseur_drena"/>
+            <f:selectItem itemLabel="Inspecteur d'enseignement" itemValue="IEPP"/>
+            <f:selectItem itemLabel="Directeur régionnal" itemValue="DRENA"/>
+            <f:selectItem itemLabel="Utilisateur simple" itemValue="utilisateur_simple"/>
+            <f:selectItem itemLabel="Administrateur" itemValue="adminstrateur"/>
+			</p:selectOneMenu>
+			
+			<p:linkButton value="Demarrer" style="margin-right:20px;" binding="#{profilController.linkButton}" >
+    		</p:linkButton>
+			
      </h:panelGrid>
      </div>
     

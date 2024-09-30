@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Apprenant;
@@ -24,6 +25,7 @@ import com.daaje.requetes.RequeteInscription;
 import com.daaje.service.Iservice;
 
 @Component
+@Scope("session")
 public class ListeApprenantController {
 	@Autowired
 	private Iservice iservice;

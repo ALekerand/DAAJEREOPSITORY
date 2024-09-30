@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+	   
+	   <p:panel header="VALIDATION DES CENTRES AU NIVEAU DRENA">
+	   
+	    
+	<p:dataTable  var="var" value="#{validationCentreController.listeCentreDRENA}"  selection="#{validationCentreController.selectedObject}" rowKey="#{var.idCentre}" paginator="true" paginatorPosition="bottom" rows="5" rowsPerPageTemplate="5,10,15,{ShowAll|'All'}">
+ 	<f:facet name="header">Liste des centres en attente de validation</f:facet>
+     <p:ajax event="rowSelect" process="@this"  update="form" listener="#{validationCentreController.selectionnerLigne}"></p:ajax>
+   		
+   		<p:column selectionMode="single" style="width:16px;text-align:center"/>
+   		
+   		<p:column headerText="Code" >
+        <h:outputText value="#{var.codeCentre}"/>
+        </p:column>
+        
+        <p:column headerText="Nom centre">
+	    		<h:outputText value="#{var.nomCentre}" />
+	    	</p:column>
+        
+        <p:column headerText="IEP">
+	    		<h:outputText value="#{var.iep.nomIep}"/>
+	    	</p:column>
+        
+        <p:column headerText="DRENA">
+	    		<h:outputText value="#{var.iep.drena.nomDrena}"/>
+	    	</p:column>
+	    	
+       		<p:column>
+                <p:commandButton value="Valider" actionListener="#{validationCentreController.validerCentreDRENA}" update="form" >
+                  <f:setPropertyActionListener value="#{variable}" target="#{validationCentreController.selectedObject}"/>
+                </p:commandButton>
+            </p:column>
+        
+        </p:dataTable>
+        
+         </p:panel>
+	
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
+	   
+		</h:form>
+	
+	</ui:define>
+	
+	</ui:composition>
+</html>

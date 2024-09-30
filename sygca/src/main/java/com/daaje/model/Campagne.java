@@ -104,7 +104,7 @@ public class Campagne implements java.io.Serializable {
 		this.etatCampagne = etatCampagne;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "campagne")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "campagne")
 	public Set<Enseigner> getEnseigners() {
 		return this.enseigners;
 	}

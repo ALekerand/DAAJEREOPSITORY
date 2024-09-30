@@ -47,13 +47,12 @@
 			 <p:menuitem value="Enregistrer Animateur" outcome="/pages/animateur.xhtml" /> 
 			 <p:menuitem value="Enregistrer Apprenant" outcome="/pages/apprenant.xhtml" /> 
 			 <p:menuitem value="Enregistrer Profession" outcome="/pages/profession.xhtml" />   
-			
 			</p:submenu>
-            
-           
             
             <p:submenu label="Activités">
             <p:menuitem value="Enregistrer un centre" outcome="/pages/centre.xhtml" /> 
+            <p:menuitem value="Ajout d'apprenants" outcome="/pages/apprenant.xhtml" />
+            <p:menuitem value="Uploader liste d'apprenants" outcome="/pages/upload_apprenants.xhtml"/>
             </p:submenu>
             
             <p:submenu label="Inscription">
@@ -61,7 +60,13 @@
             </p:submenu>
             
             <p:submenu label="Consultation">
+   			  <p:menuitem value="Listes de centres" outcome="/pages/consultation_centre.xhtml" />
+   			  <p:menuitem value="Détails des centres"  />
+   			</p:submenu>
    			
+   			<p:submenu label="Validation">
+   				<p:menuitem value="Validation en IEP" outcome="/pages/validationCentreIEP.xhtml" />
+   				<p:menuitem value="Validation en DRENA" outcome="/pages/validationCentreDRENA.xhtml"/>
    			</p:submenu>
    			
             <p:submenu label="Gestion des Utilisateurs">

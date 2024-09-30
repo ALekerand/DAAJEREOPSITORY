@@ -7,10 +7,29 @@
         http://www.springframework.org/schema/security
         http://www.springframework.org/schema/security/spring-security.xsd">
         
-    <http auto-config="true">
+    	<http auto-config="true">
         <intercept-url pattern="/pages/**" access="ROLE_ADMIN"/>
-        <intercept-url pattern="/templates/template.xhtml" access="ROLE_ADMIN" />
-       
+        <intercept-url pattern="/templates/template.xhtml" access="ROLE_ADMIN"/>
+        
+        <intercept-url pattern="/templates/templateConseiller.xhtml" access="ROLE_CONSEILLER"/>
+        <intercept-url pattern="/conseiller/**" access="ROLE_CONSEILLER"/>
+        
+        <intercept-url pattern="/templates/templateCoodonnateurIEP.xhtml" access="ROLE_COORDONNATEUR"/>
+        <intercept-url pattern="/coordoIEP/**" access="ROLE_COORDONNATEUR"/>
+
+        <intercept-url pattern="/templates/templateSuperperviseurDRENA.xhtml" access="ROLE_SUPERVISEUR"/>
+        <intercept-url pattern="/superDRENA/**" access="ROLE_SUPERVISEUR"/>
+        
+        
+        <intercept-url pattern="/templates/templateUtilistaeurSimple.xhtml" access="ROLE_CENTRALE"/>
+        <intercept-url pattern="/direction_centrale/**" access="ROLE_CENTRALE"/>
+        
+        <intercept-url pattern="/templates/template_IEP.xhtml" access="ROLE_IEP"/>
+        
+        
+        <intercept-url pattern="/templates/template_DRENA.xhtml" access="ROLE_DRENA"/>
+        
+        
         <form-login 
         			login-page="/login.jsp" 
         			default-target-url="/index.xhtml"

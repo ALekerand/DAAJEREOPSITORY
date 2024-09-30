@@ -23,6 +23,7 @@ public class RequeteIEP {
 	return listeEcole;
 	}
 	
+	
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
