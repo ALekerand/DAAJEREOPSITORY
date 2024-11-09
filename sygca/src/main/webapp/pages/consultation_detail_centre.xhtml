@@ -6,6 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
 
 	<ui:composition template="/templates/template.xhtml">
+	
 	<ui:define name="body">
 		<h:form id="form">
 		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
@@ -39,7 +40,7 @@
 	    	</p:column>
 	    	
 	    <p:column headerText="Action">
-	   			<p:commandButton update=":form:productDetail" oncomplete="PF('centreDialog').show()" icon="pi pi-search" title="View" actionListener="#{consultationDetailCentreController.}">
+	   			<p:commandButton update=":form:productDetail" oncomplete="PF('centreDialog').show()" icon="pi pi-search" title="View" actionListener="#{consultationDetailCentreController.consulterDetailCentrey}">
                     <f:setPropertyActionListener value="#{centre}" target="#{consultationDetailCentreController.selectedCentre}"  />
 	            </p:commandButton>
 	    </p:column>

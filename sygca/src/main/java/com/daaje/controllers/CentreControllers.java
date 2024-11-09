@@ -171,15 +171,6 @@ public class CentreControllers {
 	private SelectBooleanCheckbox checkbox3 = new SelectBooleanCheckbox();
 	private SelectOneRadio oneRadioPermanent = new SelectOneRadio();
 	
-	public SelectOneRadio getOneRadioNatureLieu() {
-		return oneRadioNatureLieu;
-	}
-
-
-	public void setOneRadioNatureLieu(SelectOneRadio oneRadioNatureLieu) {
-		this.oneRadioNatureLieu = oneRadioNatureLieu;
-	}
-
 	private boolean pGridOng;
 	private boolean pGridPh;
 	private boolean pGridMini;
@@ -1696,6 +1687,14 @@ return listObject;
 
 	public void setNiveauAnimateur(NiveauAnimateur niveauAnimateur) {
 		this.niveauAnimateur = niveauAnimateur;
+	}
+	
+	public SelectOneRadio getOneRadioNatureLieu() {
+		return oneRadioNatureLieu;
+	}
+
+	public void setOneRadioNatureLieu(SelectOneRadio oneRadioNatureLieu) {
+		this.oneRadioNatureLieu = oneRadioNatureLieu;
 	}
 
 	

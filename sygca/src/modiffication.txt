@@ -17,6 +17,8 @@
  	
  28/05/2025 
  	- Num CC ajouté dans la table Personne morale (Refaire mapping)
+ 
+ 06/11/2024
  	
  	
  

@@ -101,6 +101,10 @@ public class ConsultationDetailCentreController {
 			}
 		
 	}
+	
+	public void consulterDetailCentre() {
+		
+	}
 
 	
 	//Getters and setters
