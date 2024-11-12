@@ -43,6 +43,16 @@ public class ProfilController {
 	
 	}
 	
+	case "drena": {
+		linkButton.setOutcome("/templates/template_DRENA.xhtml");
+		break;
+	}
+	
+	case "iepp": {
+		linkButton.setOutcome("/templates/template_IEP.xhtml");
+		break;
+	}
+	
 		default:
 	}
 		

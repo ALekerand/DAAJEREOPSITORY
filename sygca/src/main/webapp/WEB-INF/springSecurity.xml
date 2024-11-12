@@ -26,7 +26,6 @@
         
         <intercept-url pattern="/templates/template_IEP.xhtml" access="ROLE_IEP"/>
         
-        
         <intercept-url pattern="/templates/template_DRENA.xhtml" access="ROLE_DRENA"/>
         
         

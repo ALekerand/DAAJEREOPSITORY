@@ -40,7 +40,7 @@
 	    	</p:column>
 	    	
 	    <p:column headerText="Action">
-	   			<p:commandButton update=":form:productDetail" oncomplete="PF('centreDialog').show()" icon="pi pi-search" title="View" actionListener="#{consultationDetailCentreController.consulterDetailCentrey}">
+	   			<p:commandButton update=":form:productDetail" oncomplete="PF('centreDialog').show()" icon="pi pi-search" title="View">
                     <f:setPropertyActionListener value="#{centre}" target="#{consultationDetailCentreController.selectedCentre}"  />
 	            </p:commandButton>
 	    </p:column>

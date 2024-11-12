@@ -41,6 +41,7 @@ public class ConsultationDetailCentreController {
 	private Centre selectedCentre = new Centre();
 	private Promoteur promoteur = new Promoteur();
 	private PersonnePhysique personnePhysique = new PersonnePhysique();
+	private List<Centre> listCentreIep = new ArrayList<Centre>();
 	
 
 	private PersonneMorale personneMorale = new PersonneMorale();
@@ -231,5 +232,13 @@ public class ConsultationDetailCentreController {
 
 	public void setpGridEntrep(boolean pGridEntrep) {
 		this.pGridEntrep = pGridEntrep;
+	}
+
+	public List<Centre> getListCentreIep() {
+		return listCentreIep;
+	}
+
+	public void setListCentreIep(List<Centre> listCentreIep) {
+		this.listCentreIep = listCentreIep;
 	}
 }
