@@ -112,14 +112,14 @@ public class ResponsableController {
 			setEtatActif_2(false);
 			oneMenuDrena.setDisabled(true);
 			oneMenuIep.setDisabled(true);
-			oneMenuFonction.setDisabled(true);
+			//oneMenuFonction.setDisabled(true);
 			datecalendar.setDisabled(true);
 		}else {
 			setEtatActif_1(false);
 			setEtatActif_2(true);
 			oneMenuDrena.setDisabled(false);
 			oneMenuIep.setDisabled(false);
-			oneMenuFonction.setDisabled(false);
+			//oneMenuFonction.setDisabled(false);
 			datecalendar.setDisabled(false);
 		}
 	}
@@ -130,8 +130,9 @@ public class ResponsableController {
 		//Vérifier le login avant enregistrement
 		if(requeteUtilisateur.recupererUserParLogin(userAuthentication.getUsername())== null) {
 			genererCodeResponsable();
-			responsable.setFonction((Fonction) iservice.getObjectById(idFonction, "Fonction"));
-
+			
+			responsable.setFonction((Fonction) iservice.getObjectById(4, "Fonction"));
+				
 			//Enregistrer les parametres de connection
 			this.userAuthorization.setRole(this.userRole);
 			this.iservice.addObject(this.userAuthorization);

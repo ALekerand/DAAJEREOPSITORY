@@ -43,7 +43,7 @@
 			
 			<p:outputLabel for="mbr_dc" value="Membre DC:"></p:outputLabel>																				
         	<p:selectBooleanCheckbox id="mbr_dc" value="#{responsableController.responsable.membreDc}" binding="#{responsableController.checkboxMembre}">
-        		<p:ajax listener="#{responsableController.activerChamps}" event="change" update="info_profil, cb_drena, cb_iep" process="@this"></p:ajax>
+        		<p:ajax listener="#{responsableController.activerChamps}" event="change" update="info_profil, cb_drena, cb_iep,input_arriv" process="@this"></p:ajax>
         	</p:selectBooleanCheckbox>
         	
         	
