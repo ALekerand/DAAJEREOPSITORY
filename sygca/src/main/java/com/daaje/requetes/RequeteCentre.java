@@ -93,7 +93,7 @@ public class RequeteCentre {
 		}
 	
 	public List recupCentreNonValideParDRENA(int id_drena){
-		String query = "Select centre.* FROM Centre INNER JOIN iep ON centre.ID_IEP = iep.ID_IEP INNER JOIN drena ON iep.ID_DRENA = drena.ID_DRENA WHERE (centre.ETAT_VALIDATION_IEP IS NULL) AND (centre.ETAT_VALIDATION_DRENA IS NULL) AND (drena.ID_DRENA ="+id_drena+")";
+		String query = "Select centre.* FROM Centre INNER JOIN iep ON centre.ID_IEP = iep.ID_IEP INNER JOIN drena ON iep.ID_DRENA = drena.ID_DRENA WHERE (centre.ETAT_VALIDATION_IEP IS NOT NULL) AND (centre.ETAT_VALIDATION_DRENA IS NULL) AND (drena.ID_DRENA ="+id_drena+")";
 		List listeCentre = getSessionFactory().getCurrentSession().createSQLQuery(query).addEntity(Centre.class).list();
 		return listeCentre;
 		}
