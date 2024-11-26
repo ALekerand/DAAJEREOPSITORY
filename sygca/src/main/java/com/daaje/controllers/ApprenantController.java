@@ -20,6 +20,12 @@ import com.daaje.model.Centre;
 import com.daaje.model.Genre;
 import com.daaje.model.Inscription;
 import com.daaje.model.NiveauFormation;
+import com.daaje.model.Responsable;
+import com.daaje.model.ServiceResponsable;
+import com.daaje.model.UserAuthentication;
+import com.daaje.requetes.RequeteCentre;
+import com.daaje.requetes.RequeteSeviceResponsable;
+import com.daaje.requetes.RequeteUtilisateur;
 import com.daaje.service.Iservice;
 
 @Component
@@ -27,6 +33,13 @@ import com.daaje.service.Iservice;
 public class ApprenantController {
 	@Autowired
 	private Iservice iservice;
+	@Autowired
+	private RequeteCentre requeteCentre;
+	@Autowired 
+	private RequeteSeviceResponsable requeteSeviceResponsable;
+	@Autowired
+	private RequeteUtilisateur requeteUtilisateur;
+	
 	private int idGenre;
 	private int idActivite;
 	private int idCentre;
@@ -39,6 +52,8 @@ public class ApprenantController {
 	private List<Genre> listGenre = new ArrayList<Genre>();
 	private List<Campagne> campagnes = new ArrayList<Campagne>();
 	private List<Centre> listCentre = new ArrayList<Centre>();
+	private ServiceResponsable serviceResponsable = new ServiceResponsable();
+	private Responsable responsable = new Responsable();
 	
 //Controle des composants
 	private CommandButton cmdBModifier = new CommandButton();
@@ -50,6 +65,15 @@ public class ApprenantController {
 		this.cmdBModifier.setDisabled(true);
 		genererCode();
 		recupererCampagneEncours();
+		recuperationResponsable();
+	}
+	
+	
+	public void recuperationResponsable() {
+		UserAuthentication userAuthentication = requeteUtilisateur.recuperUser();
+		responsable = userAuthentication.getResponsable();
+		//Recuperation du service responsable
+		serviceResponsable = requeteSeviceResponsable.recupServiceRespoParRespo(responsable.getIdResponsable());
 	}
 	
 	public void recupererCampagneEncours() {
@@ -225,7 +249,10 @@ public class ApprenantController {
 	}
 
 	public List<Centre> getListCentre() {
-		return listCentre = iservice.getObjects("Centre");
+		//Charger la liste en fonction de l'utilisateur
+		listCentre = requeteCentre.recupCentresvalidesParIEP(serviceResponsable.getIep().getIdIep());
+		
+		return listCentre;
 	}
 
 	public void setListCentre(List<Centre> listCentre) {

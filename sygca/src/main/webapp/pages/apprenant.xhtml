@@ -27,16 +27,16 @@
 			<p:inputText id="input_prenom" value="#{apprenantController.apprenant.prenomApprenant}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_date_nais" value="Date naissance:"></p:outputLabel>
-			<p:calendar id="input_date_nais" value="#{apprenantController.apprenant.dateNaissApprenant}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+			<p:calendar id="input_date_nais" value="#{apprenantController.apprenant.dateNaissApprenant}" pattern="dd/MM/yyyy"></p:calendar>
 			
 			<p:outputLabel for="input_tel" value="Contact:"></p:outputLabel>
-			<p:inputText id="input_tel" value="#{apprenantController.apprenant.telephoneApprenant}" required="true"></p:inputText>
+			<p:inputText id="input_tel" value="#{apprenantController.apprenant.telephoneApprenant}"></p:inputText>
 			
 			<p:outputLabel for="input_arrivee" value="Adresse:"></p:outputLabel>
-			<p:inputText id="input_arrivee" value="#{apprenantController.apprenant.adresseApprenant}" required="true"></p:inputText>
+			<p:inputText id="input_arrivee" value="#{apprenantController.apprenant.adresseApprenant}"></p:inputText>
 			
 			<p:outputLabel for="input_adresse" value="Mail:"></p:outputLabel>
-			<p:inputText id="input_adresse" value="#{apprenantController.apprenant.mailApprenant}" required="true"></p:inputText>
+			<p:inputText id="input_adresse" value="#{apprenantController.apprenant.mailApprenant}"></p:inputText>
 			
 			<p:outputLabel for="cb_genre" value="Genre:" />
             <p:selectOneMenu id="cb_genre" value="#{apprenantController.idGenre}">

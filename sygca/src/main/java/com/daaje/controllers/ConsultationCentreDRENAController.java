@@ -1,24 +1,17 @@
 package com.daaje.controllers;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.component.commandbutton.CommandButton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.daaje.model.Centre;
-import com.daaje.model.Departement;
-import com.daaje.model.Drena;
-import com.daaje.model.Genre;
-import com.daaje.model.Iep;
 import com.daaje.model.Responsable;
 import com.daaje.model.ServiceResponsable;
 import com.daaje.model.UserAuthentication;
