@@ -99,10 +99,9 @@ public class ConsultationCentreDRENAController {
 
 	public List<Centre> getListCentreAttenteIep() {
 		try {
-			listCentreAttenteIep = requeteCentre.recupCentreNonValideParDRENA(serviceResponsable.getDrena().getIdDrena());
+			listCentreAttenteIep = requeteCentre.recupCentreNonValideParIEP_et_DRENA(serviceResponsable.getDrena().getIdDrena());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("=======  Partie info reperée");
 			info("Ce compte n'est pas rattaché à une DRENA. Veuillez contacter l'administrateur");
 		}
 		return listCentreAttenteIep;
