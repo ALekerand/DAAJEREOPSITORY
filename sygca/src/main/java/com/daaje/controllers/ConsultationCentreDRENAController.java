@@ -80,8 +80,10 @@ public class ConsultationCentreDRENAController {
 
 
 	public List<Centre> getListCentreAttenteDrena() {
+		System.out.println("======= le code drena: "+serviceResponsable.getDrena().getIdDrena());
 		try {
 			listCentreAttenteDrena = requeteCentre.recupCentreValideIEPParDRENA(serviceResponsable.getDrena().getIdDrena());
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			info("Ce compte n'est pas rattacher à une DRENA. Veuillez contacter l'administrateur");
