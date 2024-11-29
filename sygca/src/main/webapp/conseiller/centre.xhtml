@@ -34,10 +34,10 @@
 					<h:panelGrid id="info_ph" columns="6" cellpadding="8" rendered="#{centreControllers.pGridPh}">
 					
 					<p:outputLabel for="input_nom_ph" value="Nom :"></p:outputLabel>
-					<p:inputText id="input_nom_ph" value="#{centreControllers.personnePhysique.nomPersonne}"></p:inputText>
+					<p:inputText id="input_nom_ph" value="#{centreControllers.personnePhysique.nomPersonne}" required="true"></p:inputText>
 					
 					<p:outputLabel for="input_prenom_ph" value="Prénoms:"></p:outputLabel>
-					<p:inputText id="input_prenom_ph" value="#{centreControllers.personnePhysique.prenomsPersonne}"></p:inputText>
+					<p:inputText id="input_prenom_ph" value="#{centreControllers.personnePhysique.prenomsPersonne}" required="true"></p:inputText>
 					
 					<p:outputLabel for="input_cni_ph" value="Numéro CNI:"></p:outputLabel>
 					<p:inputText id="input_cni_ph" value="#{centreControllers.personnePhysique.numCni}" ></p:inputText>
@@ -64,13 +64,13 @@
         
         		<h:panelGrid id="info_entrep" columns="6" cellpadding="8" rendered="#{centreControllers.pGridEntrep}">
 				<p:outputLabel for="input_raison_soc" value="Raison sociale:"></p:outputLabel>
-				<p:inputText id="input_raison_soc" value="#{centreControllers.personneMorale.raisonSociale}"></p:inputText>
+				<p:inputText id="input_raison_soc" value="#{centreControllers.personneMorale.raisonSociale}" required="true"></p:inputText>
 				
 				<p:outputLabel for="input_numcc_entrep" value="Num CC:"></p:outputLabel>
-				<p:inputText id="input_numcc_entrep"></p:inputText>
+				<p:inputText id="input_numcc_entrep" required="true" required="true"></p:inputText>
 				
 				<p:outputLabel for="input_phone_entrep" value="Téléphone:"></p:outputLabel>
-				<p:inputText id="input_phone_entrep" value="#{centreControllers.personneMorale.telephonePersMorale}"></p:inputText>
+				<p:inputText id="input_phone_entrep" value="#{centreControllers.personneMorale.telephonePersMorale}" required="true"></p:inputText>
 	    		
 	    		<p:outputLabel for="input_email_entrep" value="E-mail:"></p:outputLabel>
 				<p:inputText id="input_email_entrep"></p:inputText>
@@ -78,10 +78,10 @@
 	    		
        			<h:panelGrid id="info_ong" columns="6" cellpadding="8" rendered="#{centreControllers.pGridOng}" >
 				<p:outputLabel for="input_nom_ong" value="Dénomination:"></p:outputLabel>
-				<p:inputText id="input_nom_ong" value="#{centreControllers.ong.nomOng}" ></p:inputText>
+				<p:inputText id="input_nom_ong" value="#{centreControllers.ong.nomOng}" required="true"></p:inputText>
 				
 				<p:outputLabel for="input_phone" value="Téléphone:"></p:outputLabel>
-				<p:inputText id="input_phone" value="#{centreControllers.ong.telephoneOng}" ></p:inputText>
+				<p:inputText id="input_phone" value="#{centreControllers.ong.telephoneOng}" required="true"></p:inputText>
 				
 				<p:outputLabel for="input_mail_ong" value="Mail:"></p:outputLabel>
 				<p:inputText id="input_mail_ong" value="#{centreControllers.ong.mailOng}" ></p:inputText>
@@ -89,7 +89,7 @@
         	
     			<h:panelGrid id="info_prog" columns="6" cellpadding="8" rendered="#{centreControllers.pGridProg}">
 				<p:outputLabel for="input_lib_prog" value="Nom programme:"></p:outputLabel>
-				<p:inputText id="input_lib_prog" value="#{centreControllers.programme.libelleProgramme}"></p:inputText>
+				<p:inputText id="input_lib_prog" value="#{centreControllers.programme.libelleProgramme}" required="true"></p:inputText>
 		    	</h:panelGrid>
 	    	
 	    	
@@ -97,10 +97,10 @@
 	    	
 	    	<h:panelGrid id="info_mini" columns="6" cellpadding="8" rendered="#{centreControllers.pGridMini}">
 			<p:outputLabel for="input_nom_min" value="Nom:"></p:outputLabel>
-			<p:inputText id="input_nom_min" value="#{centreControllers.ministere.nomMinistere}" ></p:inputText>
+			<p:inputText id="input_nom_min" value="#{centreControllers.ministere.nomMinistere}" required="true"></p:inputText>
 			
 			<p:outputLabel for="input_phone_min" value="Téléphone:"></p:outputLabel>
-			<p:inputText id="input_phone_min" value="#{centreControllers.ministere.telephoneMinistere}"></p:inputText>
+			<p:inputText id="input_phone_min" value="#{centreControllers.ministere.telephoneMinistere}" required="true"></p:inputText>
 	    	</h:panelGrid>
 	    	
 	    </fieldset>
@@ -434,7 +434,7 @@
 					<p:outputLabel value="Niveau de formation:"/>
 					<p:outputLabel value="#{centreControllers.value1}, #{centreControllers.value2}, #{centreControllers.value3}"/>
 					
-					<p:outputLabel value="Autorisation:"/>
+					<p:outputLabel value="Fiche demande:"/>
 					<p:outputLabel value=""/>
 				</h:panelGrid>
 					</td>

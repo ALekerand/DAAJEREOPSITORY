@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>SYGCA</title>
+		<title>SYSGCA</title>
 		
 		<link rel="stylesheet" type="text/css" href="resource/static/css/bootstrap.css"></link>
 		<link rel="stylesheet" type="text/css" href="resource/static/css/app.css"></link>
