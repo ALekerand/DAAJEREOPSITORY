@@ -25,6 +25,7 @@
  *Actualiser les informations sur le découpage des Departements, les nouvelles IEPP, les nouvelles écoles et autres  
  
  - Page Apprenant, faire afficher que la liste du centre 
+ - REvoir tous les codes générés. Ils doivent être générer au moment de l'enregistrement en base afin d'éviter les mêmes code
  
  	
  	

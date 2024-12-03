@@ -14,8 +14,13 @@
 		<fieldset>
 		<legend>Informations sur l'apprenant</legend>
 		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
-			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
-			<p:inputText id="input_code" value="#{apprenantController.apprenant.codeApprenant}" readonly="true"></p:inputText>
+		
+			<p:outputLabel for="cb_centre" value="Centre:" />
+            <p:selectOneMenu id="cb_centre" value="#{apprenantController.idCentre}">
+            <p:ajax listener="#{apprenantController.actualiserListe}" event="change" process="@this" update=""></p:ajax>
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{apprenantController.listCentre}" var="toto" itemLabel="#{toto.nomCentre}" itemValue="#{toto.idCentre}" />
+			</p:selectOneMenu>
 			
 			<p:outputLabel for="input_camp" value="Campagne:"></p:outputLabel>
 			<p:inputText id="input_camp" value="#{apprenantController.campagne.libelleCampagne}" readonly="true"></p:inputText>
@@ -48,12 +53,6 @@
             <p:selectOneMenu id="cb_activite" value="#{apprenantController.idActivite}">
             <f:selectItem itemLabel="Selctionnez" itemValue=""/>
             <f:selectItems value="#{apprenantController.listActivite}" var="toto" itemLabel="#{toto.nomActivite}" itemValue="#{toto.idActivite}" />
-			</p:selectOneMenu>
-			
-			<p:outputLabel for="cb_centre" value="Centre:" />
-            <p:selectOneMenu id="cb_centre" value="#{apprenantController.idCentre}">
-            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
-            <f:selectItems value="#{apprenantController.listCentre}" var="toto" itemLabel="#{toto.nomCentre}" itemValue="#{toto.idCentre}" />
 			</p:selectOneMenu>
 						
 			</h:panelGrid>

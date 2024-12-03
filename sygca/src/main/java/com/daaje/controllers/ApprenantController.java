@@ -63,7 +63,7 @@ public class ApprenantController {
 	@PostConstruct
 	public void initialisation(){
 		this.cmdBModifier.setDisabled(true);
-		genererCode();
+		//genererCode();
 		recupererCampagneEncours();
 		recuperationResponsable();
 	}
@@ -86,7 +86,7 @@ public class ApprenantController {
 		}
 	}
 	
-	public void genererCode() {
+	public void genererCodeApprenant() {
 		String prefix="";
 		int nbEnregistrement = this.iservice.getObjects("Apprenant").size();
 		if(nbEnregistrement < 10)
@@ -101,6 +101,7 @@ public class ApprenantController {
 	public void enregistrer(){
 		apprenant.setActivite((Activite) iservice.getObjectById(idActivite, "Activite"));
 		apprenant.setGenre((Genre) iservice.getObjectById(idGenre, "Genre"));
+		genererCodeApprenant();
 		iservice.addObject(this.apprenant);
 		
 		inscription.setApprenant(apprenant);
@@ -112,6 +113,11 @@ public class ApprenantController {
 		
 		annuler();
 		info("Enregistrement effectué");
+	}
+	
+	public void actualiserListe() {
+		listObject = //Charger la liste en fonction de l'utilisateur
+				listCentre = requeteCentre.recupCentresvalidesParIEP(serviceResponsable.getIep().getIdIep()); ;
 	}
 	
 	public void modifier() {
@@ -135,7 +141,7 @@ public class ApprenantController {
 		
 		cmdBEnregistrer.setDisabled(false);
 		cmdBModifier.setDisabled(true);
-		genererCode();
+		genererCodeApprenant();
 		
 	}
 	
@@ -249,9 +255,6 @@ public class ApprenantController {
 	}
 
 	public List<Centre> getListCentre() {
-		//Charger la liste en fonction de l'utilisateur
-		listCentre = requeteCentre.recupCentresvalidesParIEP(serviceResponsable.getIep().getIdIep());
-		
 		return listCentre;
 	}
 
