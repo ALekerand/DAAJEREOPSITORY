@@ -724,12 +724,9 @@ public class CentreControllers {
 	            return  ob1.getNomDrena().compareTo(ob2.getNomDrena());
 	        }
 	    });
-		//========================  Fin  =======================	
+		//========================  Fin  =======================
 			
 	}
-	
-	
-	
 	
 	
 	public void chargerIep() {
@@ -743,6 +740,16 @@ public class CentreControllers {
 			}
 			
 			System.out.println("===== Taille liste IEP:"+listIep.size()); //Clear after;
+	
+			//=======Pour le rangement par ordre alphabétique======
+			Collections.sort(listIep, new Comparator<Iep>() {
+		        @Override
+		        public int compare(Iep ob1, Iep ob2)
+		        {
+		            return  ob1.getNomIep().compareTo(ob2.getNomIep());
+		        }
+		    });
+			//========================  Fin  =======================
 
 	}
 	

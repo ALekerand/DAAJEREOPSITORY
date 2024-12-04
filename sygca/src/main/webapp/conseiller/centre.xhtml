@@ -208,10 +208,10 @@
 			<p:inputText id="input_lieu" binding="#{centreControllers.inputLieu}"></p:inputText>
 			
 			<p:outputLabel for="input_lat" value="Latitude:"></p:outputLabel>
-			<p:inputText id="input_lat" value="#{centreControllers.centre.latitude}" style="width:25px"></p:inputText>
+			<p:inputText id="input_lat" value="#{centreControllers.centre.latitude}" style="width:50px"></p:inputText>
 			
 			<p:outputLabel for="input_long" value="Longitude:"></p:outputLabel>
-			<p:inputText id="input_long" value="#{centreControllers.centre.longitude}" style="width:25px"></p:inputText>
+			<p:inputText id="input_long" value="#{centreControllers.centre.longitude}" style="width:50px"></p:inputText>
 			
 			
 			<p:outputLabel for="cb_type_alpha" value="Type Alphabétisation:"/>
@@ -238,7 +238,7 @@
 	     	</h:panelGrid>
 	     	
 	     	<h:panelGrid columns="2" cellpadding="5">
-			<p:outputLabel  value="Autorisation(PDF):"></p:outputLabel>
+			<p:outputLabel  value="Fiche de demande(PDF):"></p:outputLabel>
 			<p:fileUpload id="fichier" value="#{centreControllers.fichier}" mode="simple" skinSimple="true"> </p:fileUpload>
             </h:panelGrid>
 	     	
