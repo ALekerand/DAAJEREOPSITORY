@@ -8,8 +8,8 @@
     <param-value>
             /WEB-INF/applicationContext.xml
        	   	/WEB-INF/springSecurity.xml
-         </param-value>
-  </context-param>
+    </param-value>
+   </context-param>
   
   <!-- Spring security-->
        <filter>
