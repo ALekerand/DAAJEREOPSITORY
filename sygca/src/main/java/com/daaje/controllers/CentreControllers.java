@@ -18,6 +18,8 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
@@ -237,7 +239,7 @@ public class CentreControllers {
 	}
 	
 	
-	public void genererFicheEnreg() throws JRException {
+	public void genererFicheEnreg() throws JRException, ServletException, IOException {
 		//Localisation du fichier
 		JasperDesign jasperDesign = JRXmlLoader.load("C:/rapport_sygca/Fiche_enregistrement.jrxml");
 		//Compilation du fichier
@@ -247,7 +249,42 @@ public class CentreControllers {
 		parameters.put("prenom_prom", "MAHAMA");
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
 		JasperExportManager.exportReportToPdfFile(jasperPrint, "C:/rapport_sygca/"+centre.getCodeCentre()+".pdf");
+		
+		//Ouvrir le fichier
+		ouvrirPDF();
 	}
+	
+	
+	public void ouvrirPDF()throws ServletException, IOException {
+        // Chemin du fichier PDF
+		
+		//if ((selectedObject == null) ||(selectedObject.getCodeMateriel().equals("")) ) {
+		//	error("Veuillez selectionner le matériel avnt l'impression du QR CODE");
+	//	}else {
+			try {
+				String pdfFilePath = "C:\\rapport_sygca\\null.pdf";
+				File pdfFile = new File(pdfFilePath);
+				
+				// Configuration de la réponse
+				HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+				response.setContentType("application/pdf");
+				response.setContentLength((int) pdfFile.length());
+				response.setHeader("Content-Disposition", "inline; filename=\"" + pdfFile.getName() + "\"");
+
+				// Lecture et envoi du fichier PDF
+				FileInputStream fis = new FileInputStream(pdfFile);
+				OutputStream os = response.getOutputStream(); 
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+				while ((bytesRead = fis.read(buffer)) != -1) {
+				        os.write(buffer, 0, bytesRead);
+				    }
+		
+			} catch (NullPointerException e) {
+				// TODO Auto-generated catch block
+				//error("Veuillez selectionner le matériel avnt l'impression du QR CODE");
+			} 
+        }
 	
 	
 	public UserAuthentication chagerUtilisateur() {
@@ -334,7 +371,7 @@ public class CentreControllers {
 		this.animateur.setCodeAnimateur(prefix+(nbEnregistrement+1));
 	}
 	
-	public void enregistrer() throws JRException{
+	public void enregistrer() throws JRException, ServletException, IOException{
 		//Enregistrer le promoteur
 		 genererCodePromoteur();
 		 iservice.addObject(this.promoteur);
@@ -776,7 +813,7 @@ public class CentreControllers {
 		            return  ob1.getNomIep().compareTo(ob2.getNomIep());
 		        }
 		    });
-			//========================  Fin  =======================
+			//======================  Fin  =====================
 
 	}
 	
