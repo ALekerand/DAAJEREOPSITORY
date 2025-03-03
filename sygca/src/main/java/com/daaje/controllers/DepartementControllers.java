@@ -86,6 +86,7 @@ public class DepartementControllers {
 	}
 		
 	public void info(String message){
+		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,message,null));	
 		}
 			

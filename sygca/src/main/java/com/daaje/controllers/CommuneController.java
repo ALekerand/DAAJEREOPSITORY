@@ -54,6 +54,11 @@ public class CommuneController {
         selectedObject = null;
 	}
 	
+	/**
+	 * @author ALekerand
+	 * @since 205
+	 * @ Ce code sert a annuler les info
+	 *  */
 	public void annuler() {
 		commune.setCodeCommune(null);
 		commune.setNomCommune(null);
