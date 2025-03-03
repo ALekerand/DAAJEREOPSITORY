@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -65,6 +67,16 @@ import com.daaje.requetes.RequeteEcole;
 import com.daaje.requetes.RequeteSeviceResponsable;
 import com.daaje.requetes.RequeteUtilisateur;
 import com.daaje.service.Iservice;
+
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 @Component
 @Scope("session")
@@ -225,6 +237,19 @@ public class CentreControllers {
 	}
 	
 	
+	public void genererFicheEnreg() throws JRException {
+		//Localisation du fichier
+		JasperDesign jasperDesign = JRXmlLoader.load("C:/rapport_sygca/Fiche_enregistrement");
+		//Compilation du fichier
+		JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("nom_prom", "GBANE");
+		parameters.put("prenom_prom", "MAHAMA");
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+		JasperExportManager.exportReportToPdfFile(jasperPrint, "C:/rapport_sygca/"+centre.getCodeCentre()+".pdf");
+	}
+	
+	
 	public UserAuthentication chagerUtilisateur() {
 		return userAuthentication;
 	}
@@ -309,7 +334,7 @@ public class CentreControllers {
 		this.animateur.setCodeAnimateur(prefix+(nbEnregistrement+1));
 	}
 	
-	public void enregistrer(){
+	public void enregistrer() throws JRException{
 		//Enregistrer le promoteur
 		 genererCodePromoteur();
 		 iservice.addObject(this.promoteur);
@@ -433,6 +458,8 @@ public class CentreControllers {
 				enseigner.setCentre(centre);
 				iservice.addObject(enseigner);
 			}
+			
+			genererFicheEnreg();
 			
 		annuler();
 		genererCodePromoteur();
