@@ -239,7 +239,7 @@ public class CentreControllers {
 	
 	public void genererFicheEnreg() throws JRException {
 		//Localisation du fichier
-		JasperDesign jasperDesign = JRXmlLoader.load("C:/rapport_sygca/Fiche_enregistrement");
+		JasperDesign jasperDesign = JRXmlLoader.load("C:/rapport_sygca/Fiche_enregistrement.jrxml");
 		//Compilation du fichier
 		JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 		Map<String, Object> parameters = new HashMap<String, Object>();
