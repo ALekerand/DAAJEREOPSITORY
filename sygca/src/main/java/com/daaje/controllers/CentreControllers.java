@@ -371,7 +371,7 @@ public class CentreControllers {
 		this.animateur.setCodeAnimateur(prefix+(nbEnregistrement+1));
 	}
 	
-	public void enregistrer() throws JRException{
+	public void enregistrer() throws JRException, ServletException, IOException{
 		//Enregistrer le promoteur
 		 genererCodePromoteur();
 		 iservice.addObject(this.promoteur);
