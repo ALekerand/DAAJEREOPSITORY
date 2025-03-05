@@ -245,8 +245,33 @@ public class CentreControllers {
 		//Compilation du fichier
 		JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("nom_prom", "GBANE");
-		parameters.put("prenom_prom", "MAHAMA");
+		parameters.put("type_prom" , "" );
+		parameters.put("nom_prom" , "" );
+		parameters.put("prenom_prom" , "" );
+		parameters.put("contact_prom" , "" );
+		parameters.put("mail_prom" , "" );
+		parameters.put("ref_centre" , "" );
+		parameters.put("nom_centre" , "" );
+		parameters.put("mail_centre" , "" );
+		parameters.put("drena_centre" , "" );
+		parameters.put("iep_centre" , "" );
+		parameters.put("date_centre" , "" );
+		parameters.put("type_centre" , "" );
+		parameters.put("localite_centre" , "" );
+		parameters.put("contact_centre" , "" );
+		parameters.put("permanent_centre" , "" );
+		parameters.put("niveau_centre" , "" );
+		parameters.put("langue_centre" , "" );
+		parameters.put("nature_centre" , "" );
+		parameters.put("lieu_centre" , "" );
+		parameters.put("nom_alpha" , "" );
+		parameters.put("prenom_alpha" , "" );
+		parameters.put("niv_alpha" , "" );
+		parameters.put("adresse_alpha" , "" );
+		parameters.put("genre_alpha" , "" );
+		parameters.put("mail_alpha" , "" );
+		parameters.put("contact_alpha" , "" );
+		
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
 		JasperExportManager.exportReportToPdfFile(jasperPrint, "C:/rapport_sygca/"+centre.getCodeCentre()+".pdf");
 		
