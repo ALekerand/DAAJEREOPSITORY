@@ -94,6 +94,7 @@ public class CentreControllers {
 	@Autowired
 	private RequeteUtilisateur requeteUtilisateur;
 	
+	
 	private Centre centre = new Centre();
 	private int idLocalite;
 	private int idIep;
