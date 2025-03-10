@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/template.xhtml">
+	
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<p:commandButton ></p:commandButton>
+	   
+	   <p:panel header="CONSULTATION DETAILS DES CENTRES">
+            <f:facet name="actions">
+                LISTE DES CENTRES
+            </f:facet>
+            
+           
+            
+         <p:dataTable id="table2" var="var" value="#{consultationDetailCentreController.listCentreIep}" paginator="true" paginatorPosition="bottom" rows="10"  rowsPerPageTemplate="5,10,15,{ShowAll|'All'}" >
+		 <f:facet name="header">LISTE DES CENTRES</f:facet>
+						 
+		<p:column headerText="Code" >
+     		<h:outputText value="#{var.codeCentre}"/>
+     	</p:column>
+        
+        <p:column headerText="Nom centre">
+	    		<h:outputText value="#{var.nomCentre}" />
+	    </p:column>
+        
+        <p:column headerText="IEP">
+	    		<h:outputText value="#{var.iep.nomIep}"/>
+	    </p:column>
+        
+        <p:column headerText="DRENA">
+	    		<h:outputText value="#{var.iep.drena.nomDrena}"/>
+	    	</p:column>
+	    	
+	    <p:column headerText="Action">
+	   			<p:commandButton update=":form:productDetail" oncomplete="PF('centreDialog').show()" icon="pi pi-search" title="View">
+                    <f:setPropertyActionListener value="#{centre}" target="#{consultationDetailCentreController.selectedCentre}"  />
+	            </p:commandButton>
+	    </p:column>
+					
+       </p:dataTable>
+
+       </p:panel>
+       
+       <p:dialog header="Information sur le centre" widgetVar="centretDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="centreDetail" style="text-align:center;">
+        <table border="1">
+				<tr>
+				    <th scope="col">PROMOTEUR</th>
+				    <th scope="col">CENTRE</th>
+				    <th scope="col">ALPHABETISEUR</th>
+				 </tr>
+					<tr>
+						<td>
+					
+					<h4><p:outputLabel value="#{consultationDetailCentreController.naturePromoteur}"/></h4>
+					<h:panelGrid id="recap_grid_ph" columns="2" cellpadding="8" rendered="#{consultationDetailCentreController.recap_grid_ph}">
+					<p:outputLabel value="Nom:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.personnePhysique.nomPersonne}"/>
+					
+					<p:outputLabel value="Prénoms:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.personnePhysique.prenomsPersonne}"/>
+					
+					<p:outputLabel value="Numéro CNI:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.personnePhysique.numCni}"/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.personnePhysique.telephonePersonne}"/>
+					
+					<p:outputLabel value="E-mail:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.personnePhysique.mailPersonne}"/>
+					
+					<p:graphicImage id="graphIm_1" value="#{consultationDetailCentreController.content}" height="110" width="110"></p:graphicImage>
+					</h:panelGrid>
+					
+					<h:panelGrid id="recap_grid_pm" columns="2" cellpadding="8" rendered="#{consultationDetailCentreController.recap_grid_pm}">
+					<p:outputLabel value="Raison sociales:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.personneMorale.raisonSociale}"/>
+					
+					<p:outputLabel value="N°CC"/>
+					<p:outputLabel value=""/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.personneMorale.telephonePersMorale}"/>
+					</h:panelGrid>
+					
+					<h:panelGrid id="recap_grid_ong" columns="2" cellpadding="8" rendered="#{consultationDetailCentreController.recap_grid_ong}">
+					<p:outputLabel value="Dénomination:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.ong.nomOng}"/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.ong.telephoneOng}"/>
+					
+					<p:outputLabel value="Mail:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.ong.mailOng}"/>
+					</h:panelGrid>
+					
+					<h:panelGrid id="recap_grid_prog" columns="2" cellpadding="8" rendered="#{consultationDetailCentreController.recap_grid_prog}">
+					<p:outputLabel value="Nom programme:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.programme.libelleProgramme}"/>
+					</h:panelGrid>
+					
+					<h:panelGrid id="recap_grid_mini" columns="2" cellpadding="8" rendered="#{consultationDetailCentreController.recap_grid_mini}">
+					<p:outputLabel value="Nom:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.ministere.nomMinistere}"/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.ministere.telephoneMinistere}"/>
+					</h:panelGrid>
+				</td>
+					
+					
+					<td>
+					<h:panelGrid id="recap_grid_recap" columns="4" cellpadding="8">
+					<p:outputLabel value="Département:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.choosedDepartement.nomDepartement}"/>
+					
+					<p:outputLabel value="Sous-préfecture:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.choosedSousPrefecture.nomSousPrefecture}"/>
+					
+					<p:outputLabel value="DRENA:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.choosedDrena.nomDrena}"/>
+					
+					<p:outputLabel value="IEP:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.choosedIep.nomIep}"/>
+					
+					<p:outputLabel value="Localité:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.localite.nomLocalite}"/>
+					
+					<p:outputLabel value="Code:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.centre.codeCentre}"/>
+					
+					<p:outputLabel value="Abréviation:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.centre.abreviationNomCentre}"/>
+					
+					<p:outputLabel value="Adresse:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.centre.adresseCentre}"/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.centre.telephoneCentre}"/>
+					
+					<p:outputLabel value="Mail:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.centre.mailCentre}"/>
+					
+					<p:outputLabel value="Nature centre:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.natureCentre.libelleNature}"/>
+					
+					<p:outputLabel value="Nature projet:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.natureProjet.libelleNatureProjet}"/>
+					
+					<p:outputLabel value="Permanent:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.etatPermanence}"/>
+					
+					<p:outputLabel value="Nature lieu:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.etatLieu}"/>
+					
+					<p:outputLabel value="Lieu:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.etatLieu}"/>
+					
+					<p:outputLabel value="Latitude:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.centre.latitude}"/>
+					
+					<p:outputLabel value="Longitude:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.centre.longitude}"/>
+					
+					<p:outputLabel value="Type alphabétisation:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.typeAlphabetisation.libTypeAlpha}"/>
+					
+					<p:outputLabel value="Langue:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.langue.libLangue}"/>
+					
+					<p:outputLabel value="Niveau de formation:"/>
+					<p:outputLabel value="#{consultationDetailCentreController.value1}, #{consultationDetailCentreController.value2}, #{consultationDetailCentreController.value3}"/>
+					
+					<p:outputLabel value="Autorisation:"/>
+					<p:outputLabel value=""/>
+				</h:panelGrid>
+					</td>
+					
+					<td>
+						<h:panelGrid id="recap_grid_alpha" columns="2" cellpadding="8">
+							<p:outputLabel value="Nom:"/>
+							<p:outputLabel value="#{consultationDetailCentreController.animateur.nomAnimateur}"/>
+							
+							<p:outputLabel value="Prénoms:"/>
+							<p:outputLabel value="#{consultationDetailCentreController.animateur.prenomAnimateur}"/>
+							
+							<p:outputLabel value="Date naissance:"/>
+							<p:outputLabel value="#{consultationDetailCentreController.animateur.dateNaisAnimateur}"/>
+							
+							<p:outputLabel value="Téléphone:"/>
+							<p:outputLabel value="#{consultationDetailCentreController.animateur.telephoneAnimateur}"/>
+							
+							<p:outputLabel value="Adresse:"/>
+							<p:outputLabel value="#{consultationDetailCentreController.animateur.adresseAnimateur}"/>
+							
+							<p:outputLabel value="Genre:"/>
+							<p:outputLabel value="#{consultationDetailCentreController.animateur.mailAnimateur}"/>
+							
+							<p:outputLabel value="Niveau:"/>
+							<p:outputLabel value="#{consultationDetailCentreController.niveauAnimateur.nomNiveau}"/>
+							
+							<p:outputLabel value="Activité principale:"/>
+							<p:outputLabel value="#{consultationDetailCentreController.activitePrimaire.nomActivite}"/>
+							
+							<p:outputLabel value="Activité secondaire:"/>
+							<p:outputLabel value="#{consultationDetailCentreController.activiteSecondaire.nomActivite}"/>
+						</h:panelGrid>
+						
+					</td>
+					</tr>
+				</table>
+            
+        </p:outputPanel>
+    </p:dialog>
+       
+       
+       
+       
+       <p:dialog >
+       
+       <div>
+       
+       </div>
+       
+       </p:dialog>
+	
+	
+		</h:form>
+	
+	</ui:define>
+	
+	</ui:composition>
+</html>

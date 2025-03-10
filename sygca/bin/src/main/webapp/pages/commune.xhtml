@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">		
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<p:panel header="Enregistrement des communes">
+		<fieldset>
+		<legend>Informations sur la commune</legend>
+		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
+			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+			<p:inputText id="input_code" value="#{communeController.commune.codeCommune}" readonly="true"></p:inputText>
+			
+			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom" value="#{communeController.commune.nomCommune}" required="true"></p:inputText>			    
+	    </h:panelGrid>
+	    
+	    </fieldset>
+	    
+	    </p:panel>
+	    
+	    <br />
+	    
+	    <p:toolbar id="toob">
+	    	<f:facet name="left">
+	    		<p:commandButton value="Enregistrer" actionListener="#{communeController.enregistrer}" update="form" disabled="#{communeController.etatBtnEnregistrer}"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" action="#{communeController.modifier}" update="info_grid, data, toob" disabled="#{communeController.etatBtnModifier}"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+	    		<p:commandButton value="Annuler" process="@this" actionListener="#{communeController.annuler}" update="form"></p:commandButton>
+	    	</f:facet>
+	    </p:toolbar>
+	    
+	    <br />
+	    
+	    <p:dataTable id="data" var="toto" value="#{communeController.listObject}" selectionMode="single" selection="#{communeController.selectedObject}" rowKey="#{toto.idCommune}"       
+	     rows="10" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    <p:ajax event="rowSelect" process="@this" listener="#{communeController.selectionnerLigne}" update="form"></p:ajax>
+	    	<f:facet name="header">
+                Liste des communes
+            </f:facet>	
+	    	<p:column headerText="Code">
+	    		<h:outputText value="#{toto.codeCommune}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Nom">
+	    		<h:outputText value="#{toto.nomCommune}" />
+	    	</p:column>
+	    
+	    </p:dataTable>
+	    
+	    <br />
+
+
+		<br/>
+		
+		
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
+		
+		</h:form>
+				
+	</ui:define>	
+	
+	</ui:composition>
+</html>

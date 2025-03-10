@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<p:panel header="Consultation des listes d'apprenants">
+		<p:tabView>
+            <f:facet name="actions">
+                Global actions
+                
+            </f:facet>
+            <p:tab title="Apprenants par centre">
+                <f:facet name="actions">
+                    Options I
+                </f:facet>
+               
+               
+                <p:outputLabel for="cb_centre" value="Centre:"/>
+			<p:selectOneMenu id="cb_centre" required="true" value="#{ListeApprenantController.idCentre}">
+			<p:ajax listener="#{ListeApprenantController.chargerListApprenant}" event="change" process="@this"  update="tab1"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{ListeApprenantController.listCentres}" var="tata" itemLabel="#{tata.nomCentre}" itemValue="#{tata.idCentre}"></f:selectItems>
+			</p:selectOneMenu>
+            
+            <p:dataTable id="tab1" var="toto" value="#{genreController.listObject}"       
+	     rows="20" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    	<f:facet name="header">
+                Liste des apprenants
+            </f:facet>	
+	    	<p:column headerText="Code">
+	    		<h:outputText value="#{toto.codeApprenant}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Nom">
+	    		<h:outputText value="#{toto.nomApprenant}" />
+	    	</p:column>
+	    	<p:column headerText="Prénom">
+	    		<h:outputText value="#{toto.prenomApprenant}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Date de naissance">
+	    		<h:outputText value="#{toto.dateNaissApprenant}" />
+	    	</p:column>
+	    	<p:column headerText="Téléphone">
+	    		<h:outputText value="#{toto.telephoneApprenant}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Genre">
+	    		<h:outputText value="#{toto.genre.libelleGenre}" />
+	    	</p:column>
+	    	<p:column headerText="Activité">
+	    		<h:outputText value="#{toto.activite.nomActivite}" />
+	    	</p:column>
+	    	
+	    
+	    </p:dataTable>
+            
+            </p:tab>
+            <p:tab title="">
+                <f:facet name="actions">
+                    Options II
+                </f:facet>
+                <p class="m-0">
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
+                    illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+                    odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                </p>
+            </p:tab>
+            <p:tab title="Header III">
+                <p class="m-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
+                    et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+                    Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+                </p>
+            </p:tab>
+        </p:tabView>
+	    
+	    </p:panel>
+	 
+	   
+		</h:form>
+	
+	</ui:define>
+	
+	</ui:composition>
+</html>

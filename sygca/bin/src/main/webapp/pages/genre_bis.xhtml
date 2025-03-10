@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<h:form id="form">
+<h:body> 
+
+<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<p:panel header="Enregistrement des genres">
+		<fieldset>
+		<legend>Informations sur le genre</legend>
+		<h:panelGrid id="info_grid" columns="4" cellpadding="8">		
+			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+			<p:inputText id="input_code" value="#{genreController.genre.codeGenre}" readonly="true"></p:inputText>
+			
+			<p:outputLabel for="input_genre" value="Genre:"></p:outputLabel>
+			<p:inputText id="input_genre" value="#{genreController.genre.libelleGenre}" required="true"></p:inputText>
+	    </h:panelGrid>
+	    
+	    </fieldset>
+	    
+	    </p:panel>
+	    
+	    <br />
+	    
+	    <p:toolbar id="toob">
+		<f:facet name="left">
+			<p:commandButton value="Enregistrer" action="#{genreController.enregistrer}" binding="#{genreController.cmdBEnregistrer}" update="info_grid, data"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+			<p:commandButton value="Modifier" action="#{genreController.modifier}" binding="#{genreController.cmdBModifier}" update="info_grid, data, toob"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+			<p:commandButton value="Annuler" process="@this" actionListener="#{genreController.annuler}" update="info_grid, data"></p:commandButton>
+		</f:facet>
+		</p:toolbar>
+	    
+	    <br />
+	    
+	    <p:dataTable id="data" var="toto" value="#{genreController.listObject}" selectionMode="single" selection="#{genreController.selectedObject}" rowKey="#{toto.idGenre}"       
+	     rows="10" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    <p:ajax event="rowSelect" process="@this" listener="#{genreController.selectionnerLigne}" update="form"></p:ajax>
+	    	<f:facet name="header">
+                Liste des genres
+            </f:facet>	
+	    	<p:column headerText="Code">
+	    		<h:outputText value="#{toto.codeGenre}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Genre">
+	    		<h:outputText value="#{toto.libelleGenre}" />
+	    	</p:column>
+	    
+	    </p:dataTable>
+		
+				
+<br />
+
+
+		<br/>
+		
+		
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
+
+</h:body> 
+</h:form>
+</html>

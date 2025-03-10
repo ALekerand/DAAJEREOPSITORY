@@ -1,0 +1,40 @@
+ 	
+ 19/05/2024
+ 	- Des départements n'ont pas de sous-préfecture (les communes d'Abidjan)
+ 
+ 20/05/2024
+ 	- Régler le lien pour le stockage de l'autorisation (Centre)
+ 	- Régler la photo (Centre)
+ 	- Régler Code Enseigner (Enseigner)
+ 	
+ 22/05/2024
+ 	- Date creation du centre à été ajouté (Refaire maping) 
+ 	
+ 28/05/2025 
+ 	- Num CC ajouté dans la table Personne morale (Refaire mapping)
+ 
+ =====================27/11/2024 au 30/11/2024 ATELIER DE FORMATION SYSGCA YAKRO PALACE =================================
+ 
+ - Implementation du suivi des centres
+ - Faire un tableau de bord pour le Directeur, l'administrateur, le DRENA, l'IEP, 
+ - La Consultation des effectifs des apprenants (Général, par DRENA, par IEP, par localité), l'âge des aprenants
+ 
+ 
+ * Générer une fiche après l'enregistrement du dossier en IEPP.
+ *Regler le cas des DRENA d'Abidjan
+ *Actualiser les informations sur le découpage des Departements, les nouvelles IEPP, les nouvelles écoles et autres  
+ 
+ - Page Apprenant, faire afficher que la liste du centre 
+ - REvoir tous les codes générés. Ils doivent être générer au moment de l'enregistrement en base afin d'éviter les mêmes code
+ 
+ 	
+ 	
+ 
+	
+	
+	
+	
+	
+	
+
+	

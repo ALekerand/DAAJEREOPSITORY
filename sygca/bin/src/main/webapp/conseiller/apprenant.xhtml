@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/templateConseiller.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<p:panel header="Enregistrement des apprenants">
+		<fieldset>
+		<legend>Informations sur l'apprenant</legend>
+		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
+		
+			<p:outputLabel for="cb_centre" value="Centre:" />
+            <p:selectOneMenu id="cb_centre" value="#{apprenantController.idCentre}">
+            <p:ajax listener="#{apprenantController.actualiserListe}" event="change" process="@this" update=""></p:ajax>
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{apprenantController.listCentre}" var="toto" itemLabel="#{toto.nomCentre}" itemValue="#{toto.idCentre}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="input_camp" value="Campagne:"></p:outputLabel>
+			<p:inputText id="input_camp" value="#{apprenantController.campagne.libelleCampagne}" readonly="true"></p:inputText>
+			
+			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom" value="#{apprenantController.apprenant.nomApprenant}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_prenom" value="Prénom:"></p:outputLabel>
+			<p:inputText id="input_prenom" value="#{apprenantController.apprenant.prenomApprenant}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_date_nais" value="Date naissance:"></p:outputLabel>
+			<p:calendar id="input_date_nais" value="#{apprenantController.apprenant.dateNaissApprenant}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+			
+			<p:outputLabel for="input_tel" value="Contact:"></p:outputLabel>
+			<p:inputText id="input_tel" value="#{apprenantController.apprenant.telephoneApprenant}"></p:inputText>
+			
+			<p:outputLabel for="input_arrivee" value="Adresse:"></p:outputLabel>
+			<p:inputText id="input_arrivee" value="#{apprenantController.apprenant.adresseApprenant}"></p:inputText>
+			
+			<p:outputLabel for="input_adresse" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_adresse" value="#{apprenantController.apprenant.mailApprenant}"></p:inputText>
+			
+			<p:outputLabel for="cb_genre" value="Genre:" />
+            <p:selectOneMenu id="cb_genre" value="#{apprenantController.idGenre}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{apprenantController.listGenre}" var="toto" itemLabel="#{toto.libelleGenre}" itemValue="#{toto.idGenre}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_activite" value="Activite:" />
+            <p:selectOneMenu id="cb_activite" value="#{apprenantController.idActivite}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{apprenantController.listActivite}" var="toto" itemLabel="#{toto.nomActivite}" itemValue="#{toto.idActivite}" />
+			</p:selectOneMenu>
+						
+			</h:panelGrid>
+			
+	    </fieldset>
+	    </p:panel>
+	    
+	    <br />
+	    
+	    <p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" actionListener="#{apprenantController.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{apprenantController.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{apprenantController.annuler}" update="form"></p:commandButton>
+			</f:facet>
+		</p:toolbar>	    
+	    
+	    <br />
+	    	    
+	    <p:dataTable id="data" var="toto" value="#{apprenantController.listObject}" selectionMode="single" selection="#{apprenantController.selectedObject}" rowKey="#{toto.idApprenant}"       
+	     rows="10" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    <p:ajax event="rowSelect" process="@this" listener="#{apprenantController.selectionnerLigne}" update="form"></p:ajax>
+	    	<f:facet name="header">
+                Liste des apprenants
+            </f:facet>	
+	    	<p:column headerText="Code">
+	    		<h:outputText value="#{toto.codeApprenant}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Nom">
+	    		<h:outputText value="#{toto.nomApprenant}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Prénom">
+	    		<h:outputText value="#{toto.prenomApprenant}" />	
+	    	</p:column>	
+	    	
+	    	<p:column headerText="Date naissance">
+	    		<h:outputText value="#{toto.dateNaissApprenant}" >
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    		</h:outputText>
+	    	</p:column>
+	    	
+	    	<p:column headerText="Téléphone">
+	    		<h:outputText value="#{toto.telephoneApprenant}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Adresse">
+	    		<h:outputText value="#{toto.adresseApprenant}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Mail">
+	    		<h:outputText value="#{toto.mailApprenant}" />
+	    	</p:column>
+	    
+	    </p:dataTable>
+		
+				
+<br />
+
+
+		<br/>
+		
+		
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
+	   
+		</h:form>
+	
+	</ui:define>
+	
+	</ui:composition>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<title>SYGEP</title>
+</h:head>
+<h:body>
+	<div style="background-color:#3374FF">
+	 <table> 
+		<tr>
+		<td> <img src="resource/images/amoiries_ci_X_small.png" style="margin-right: 50px; margin-left: 5px"/></td>
+		<td><h2 align="center" style="color: #FFF;" >SYSTEME DE GESTION DES CENTRES D'ALPHABETISATION</h2></td> 
+		</tr>
+	</table>
+	</div>
+	
+    <h:form id="form" onsubmit="return initialize();">
+    <p:messages autoUpdate="true" closable="true" showDetail="false"/>
+     <div style="position: absolute; width: 400px; height: 300px; top:0; bottom:0; left:0; right: 0; margin: auto;" align="center">
+     <img src="resource/images/alphabetistion_reduir_50.jpg" style="margin:0px;" alt="lolo" align="center"/>
+     	
+            
+      
+      
+      <h:panelGrid columns="3" cellspacing="10" style="top:50px; position:relative;" align="center">
+         <p:outputLabel for="cb_profil" value="Profil:" />
+            <p:selectOneMenu id="cb_profil" value="#{profilController.profil}">
+            <p:ajax partialSubmit="true" process="@this"  update="form" listener="#{profilController.router}"/> 
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItem itemLabel="Conseiller" itemValue="conseiller"/>
+            <f:selectItem itemLabel="Coordonnateur IEPP" itemValue="coodornateur_iep"/>
+            <f:selectItem itemLabel="Superviseur DRENA" itemValue="superviseur_drena"/>
+            <f:selectItem itemLabel="IEPP" itemValue="iepp"/>
+            <f:selectItem itemLabel="DRENA" itemValue="drena"/>
+            <f:selectItem itemLabel="Utilisateur en central" itemValue="utilisateur_simple"/>
+            <f:selectItem itemLabel="Administrateur" itemValue="adminstrateur"/>
+			</p:selectOneMenu>
+			
+			<p:linkButton value="Demarrer" style="margin-right:20px;" binding="#{profilController.linkButton}" >
+    		</p:linkButton>
+			
+     </h:panelGrid>
+     </div>
+    
+  </h:form>
+</h:body>
+</html>

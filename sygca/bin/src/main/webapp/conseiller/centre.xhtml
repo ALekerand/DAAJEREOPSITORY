@@ -1,0 +1,551 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+           
+<ui:composition template="/templates/templateConseiller.xhtml">
+	<ui:define name="body">
+		<h:form id="form" enctype = "multipart/form-data">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<p:wizard flowListener="#{centreControllers.onFlowProcess}">
+         <p:tab id="promoteur" title="Promoteur">
+            	<p:panel header="Enregistrement du promoteur">
+		<fieldset>
+	    
+		<legend> Informations sur le promoteur</legend>
+		
+        <p:selectOneRadio id="promo_rodio" value="#{centreControllers.type_promoteur}" binding="#{centreControllers.radio_promo}">
+          <p:ajax partialSubmit="true" process="@this"  update="form" listener="#{centreControllers.activiverChamp}"/> 
+          <f:selectItem itemLabel="Personne physique" itemValue="personne_physique"/>
+           <f:selectItem itemLabel="Personne morale" itemValue="personne_morale"/>
+          <f:selectItem itemLabel="ONG" itemValue="ong"/>
+          <f:selectItem itemLabel="Programme" itemValue="programme"/>
+          <f:selectItem itemLabel="Ministère" itemValue="ministere"/>
+        </p:selectOneRadio>
+        
+        <br />
+        <table >
+        	<tr>
+        		<td>
+		        
+					<h:panelGrid id="info_ph" columns="6" cellpadding="8" rendered="#{centreControllers.pGridPh}">
+					
+					<p:outputLabel for="input_nom_ph" value="Nom :"></p:outputLabel>
+					<p:inputText id="input_nom_ph" value="#{centreControllers.personnePhysique.nomPersonne}" required="true"></p:inputText>
+					
+					<p:outputLabel for="input_prenom_ph" value="Prénoms:"></p:outputLabel>
+					<p:inputText id="input_prenom_ph" value="#{centreControllers.personnePhysique.prenomsPersonne}" required="true"></p:inputText>
+					
+					<p:outputLabel for="input_cni_ph" value="Numéro CNI:"></p:outputLabel>
+					<p:inputText id="input_cni_ph" value="#{centreControllers.personnePhysique.numCni}" ></p:inputText>
+					
+					<p:outputLabel for="input_phone_ph" value="Téléphone:"></p:outputLabel>
+					<p:inputText id="input_phone_ph" value="#{centreControllers.personnePhysique.telephonePersonne}" ></p:inputText>
+					
+					<p:outputLabel for="input_mail_ph" value="E-Mail:"></p:outputLabel>
+					<p:inputText id="input_mail_ph" value="#{centreControllers.personnePhysique.mailPersonne}" ></p:inputText>
+			    	
+			    	</h:panelGrid>
+			    	
+			    	<p:fileUpload id="File_up" fileUploadListener ="#{centreControllers.upload}" mode="advanced" auto="true" dragDropSupport="false" cancelLabel="Annuler"
+								  label="Photo" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="graphIm" rendered ="#{centreControllers.etatFileUpload}"/>
+        		</td>
+        		
+        		<td align="right">
+					<p:graphicImage id="graphIm" value="#{centreControllers.content}" height="110" width="110" rendered="#{centreControllers.etatGraphicImage}"></p:graphicImage>	
+
+        		</td>
+        	</tr>
+        
+        </table>
+        
+        		<h:panelGrid id="info_entrep" columns="6" cellpadding="8" rendered="#{centreControllers.pGridEntrep}">
+				<p:outputLabel for="input_raison_soc" value="Raison sociale:"></p:outputLabel>
+				<p:inputText id="input_raison_soc" value="#{centreControllers.personneMorale.raisonSociale}" required="true"></p:inputText>
+				
+				<p:outputLabel for="input_numcc_entrep" value="Num CC:"></p:outputLabel>
+				<p:inputText id="input_numcc_entrep" required="true"></p:inputText>
+				
+				<p:outputLabel for="input_phone_entrep" value="Téléphone:"></p:outputLabel>
+				<p:inputText id="input_phone_entrep" value="#{centreControllers.personneMorale.telephonePersMorale}" required="true"></p:inputText>
+	    		
+	    		<p:outputLabel for="input_email_entrep" value="E-mail:"></p:outputLabel>
+				<p:inputText id="input_email_entrep"></p:inputText>
+	    		</h:panelGrid>
+	    		
+       			<h:panelGrid id="info_ong" columns="6" cellpadding="8" rendered="#{centreControllers.pGridOng}" >
+				<p:outputLabel for="input_nom_ong" value="Dénomination:"></p:outputLabel>
+				<p:inputText id="input_nom_ong" value="#{centreControllers.ong.nomOng}" required="true"></p:inputText>
+				
+				<p:outputLabel for="input_phone" value="Téléphone:"></p:outputLabel>
+				<p:inputText id="input_phone" value="#{centreControllers.ong.telephoneOng}" required="true"></p:inputText>
+				
+				<p:outputLabel for="input_mail_ong" value="Mail:"></p:outputLabel>
+				<p:inputText id="input_mail_ong" value="#{centreControllers.ong.mailOng}" ></p:inputText>
+		    	</h:panelGrid>
+        	
+    			<h:panelGrid id="info_prog" columns="6" cellpadding="8" rendered="#{centreControllers.pGridProg}">
+				<p:outputLabel for="input_lib_prog" value="Nom programme:"></p:outputLabel>
+				<p:inputText id="input_lib_prog" value="#{centreControllers.programme.libelleProgramme}" required="true"></p:inputText>
+		    	</h:panelGrid>
+	    	
+	    	
+	    	
+	    	
+	    	<h:panelGrid id="info_mini" columns="6" cellpadding="8" rendered="#{centreControllers.pGridMini}">
+			<p:outputLabel for="input_nom_min" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom_min" value="#{centreControllers.ministere.nomMinistere}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_phone_min" value="Téléphone:"></p:outputLabel>
+			<p:inputText id="input_phone_min" value="#{centreControllers.ministere.telephoneMinistere}" required="true"></p:inputText>
+	    	</h:panelGrid>
+	    	
+	    </fieldset>
+		
+		
+	    </p:panel>
+			</p:tab>
+			
+			<p:tab id="centre" title="Centre">
+				<p:panel header="Enregistrement des centre d'aphabétisation">
+		
+		<fieldset>
+		<legend> Informations sur le centre</legend>
+		<h:panelGrid id="centre_grid" columns="6" cellpadding="8">		
+			
+			<p:outputLabel for="cb_departement" value="Département:"/>
+			<p:selectOneMenu id="cb_departement" required="true" value="#{centreControllers.idDepartement}">
+			<p:ajax listener="#{centreControllers.chargerCombo}" event="change" process="@this"  update="cb_drena, cb_sp, cb_iep, cb_localite"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listDepartement}" var="tata" itemLabel="#{tata.nomDepartement}" itemValue="#{tata.idDepartement}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_sp" value="Sous-Préfecture:"/>
+			<p:selectOneMenu id="cb_sp"  value="#{centreControllers.idSousPrefecture}">
+			<p:ajax listener="#{centreControllers.chargerLocalite}" event="change" process="@this"  update="cb_localite"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listSousPrefecture}" var="tata" itemLabel="#{tata.nomSousPrefecture}" itemValue="#{tata.idSousPrefecture}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_drena" value="DRENA:"/>
+			<p:selectOneMenu id="cb_drena" required="true" value="#{centreControllers.idDrena}">
+			<p:ajax listener="#{centreControllers.chargerIep}" event="change" process="@this"  update="cb_iep,cb_ecole"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listDrena}" var="tata" itemLabel="#{tata.nomDrena}" itemValue="#{tata.idDrena}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_iep" value="IEP:"/>
+			<p:selectOneMenu id="cb_iep" required="true" value="#{centreControllers.idIep}">
+			<p:ajax listener="#{centreControllers.chargerEcole}" event="change" process="@this" update="cb_ecole"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+			<f:selectItems value="#{centreControllers.listIep}" var="tata" itemLabel="#{tata.nomIep}" itemValue="#{tata.idIep}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_localite" value="Localité:"/>
+			<p:selectOneMenu id="cb_localite" required="true" value="#{centreControllers.idLocalite}">
+			<p:ajax listener="#{centreControllers.choisirLocalite}" event="change" process="@this"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listLocalite}" var="tata" itemLabel="#{tata.nomLocalite}" itemValue="#{tata.idLocalite}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel/>
+			<p:outputLabel/>
+			
+			<p:outputLabel for="input_nom" value="Nom centre:"></p:outputLabel>
+			<p:inputText id="input_nom" value="#{centreControllers.centre.nomCentre}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_abrev" value="Abréviation:"></p:outputLabel>
+			<p:inputText id="input_abrev" value="#{centreControllers.centre.abreviationNomCentre}" ></p:inputText>
+			
+			<p:outputLabel for="input_adr" value="Adresse:"></p:outputLabel>
+			<p:inputText id="input_adr" value="#{centreControllers.centre.adresseCentre}" ></p:inputText>
+			
+			<p:outputLabel for="input_tel" value="Téléphone:"></p:outputLabel>
+			<p:inputText id="input_tel" value="#{centreControllers.centre.telephoneCentre}"></p:inputText>
+			
+			<p:outputLabel for="input_mail" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_mail" value="#{centreControllers.centre.mailCentre}" required="true"></p:inputText>
+			
+
+			
+			<p:outputLabel for="cb_nature_centre" value="Nature centre:"/>
+			<p:selectOneMenu id="cb_nature_centre" required="true" value="#{centreControllers.idNature}">
+			<p:ajax listener="#{centreControllers.chargerNatureProjet}" event="change" process="@this"  update="cb_natureP"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listNature}" var="tata" itemLabel="#{tata.libelleNature}" itemValue="#{tata.idNature}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_natureP" value="Nature projet:"/>
+			<p:selectOneMenu id="cb_natureP" required="true" value="#{centreControllers.idNatureProjet}" binding="#{centreControllers.natureProOneMenu}">
+			<p:ajax listener="#{centreControllers.choisirNatureProjet}" event="change" process="@this"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listNatureProjet}" var="tata" itemLabel="#{tata.libelleNatureProjet}" itemValue="#{tata.idNatureProjet}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="perm" value="Permanent:"/>
+        	<p:selectOneRadio id="perm" value="#{centreControllers.etatPermanence}" binding="#{centreControllers.oneRadioPermanent}">
+            <f:selectItem itemLabel="Non" itemValue="NON"/>
+            <f:selectItem itemLabel="Oui" itemValue="OUI"/>
+            </p:selectOneRadio>
+            
+            <p:outputLabel for="nature_lieu" value="Nature lieu:"/>
+        	<p:selectOneRadio id="nature_lieu" value="#{centreControllers.etatLieu}" binding="#{centreControllers.oneRadioNatureLieu}">
+        	<p:ajax event="valueChange" process="@this" listener="#{centreControllers.actualiserLieu}" update="cb_ecole, input_lieu"/>
+            <f:selectItem itemLabel="Ecole" itemValue="ecole"/>
+            <f:selectItem itemLabel="Autre" itemValue="autre"/>
+            </p:selectOneRadio>
+            
+            <p:outputLabel for="cb_ecole" value="Ecole:"/>
+			<p:selectOneMenu id="cb_ecole" value="#{centreControllers.idEcole}" binding="#{centreControllers.oneMenuEcole}">
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listEcole}" var="tata" itemLabel="#{tata.nomEcole}" itemValue="#{tata.idEcole}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="input_lieu" value="Lieu:"></p:outputLabel>
+			<p:inputText id="input_lieu" binding="#{centreControllers.inputLieu}"></p:inputText>
+			
+			<p:outputLabel for="input_lat" value="Latitude:"></p:outputLabel>
+			<p:inputText id="input_lat" value="#{centreControllers.centre.latitude}" style="width:50px"></p:inputText>
+			
+			<p:outputLabel for="input_long" value="Longitude:"></p:outputLabel>
+			<p:inputText id="input_long" value="#{centreControllers.centre.longitude}" style="width:50px"></p:inputText>
+			
+			
+			<p:outputLabel for="cb_type_alpha" value="Type Alphabétisation:"/>
+			<p:selectOneMenu id="cb_type_alpha" required="true" value="#{centreControllers.idTypeAlpha}">
+			<p:ajax listener="#{centreControllers.choisirTypeAlpha}" event="change" process="@this"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listTypeAlpha}" var="tata" itemLabel="#{tata.libTypeAlpha}" itemValue="#{tata.idTypeAlpha}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_langue" value="Langue:"/>
+			<p:selectOneMenu id="cb_langue" required="true" value="#{centreControllers.idLangue}">
+			<p:ajax listener="#{centreControllers.choisirLangue}" event="change" process="@this"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue="" />
+			<f:selectItems value="#{centreControllers.listLangue}" var="tata" itemLabel="#{tata.libLangue}" itemValue="#{tata.idLangue}"></f:selectItems>
+			</p:selectOneMenu>
+	    
+	    </h:panelGrid>
+	    
+	    	<h:panelGrid id="niveau_grid" columns="4" cellpadding="8">	
+	    	<h4>Niveau de formation:</h4>
+	       		<p:selectBooleanCheckbox value="#{centreControllers.value1}" itemLabel="Niveau 1" binding="#{centreControllers.checkbox1}"/>
+	       		<p:selectBooleanCheckbox value="#{centreControllers.value2}" itemLabel="Niveau 2" binding="#{centreControllers.checkbox2}"/>
+	       		<p:selectBooleanCheckbox value="#{centreControllers.value3}" itemLabel="Post Alphabétisation" binding="#{centreControllers.checkbox3}"/>
+	     	</h:panelGrid>
+	     	
+	     	<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel  value="Fiche de demande(PDF):"></p:outputLabel>
+			<p:fileUpload id="fichier" value="#{centreControllers.fichier}" mode="simple" skinSimple="true"> </p:fileUpload>
+            </h:panelGrid>
+	     	
+	     </fieldset>
+	    
+	    </p:panel>
+			</p:tab>
+			
+			<p:tab id="alphabetiseur" title="Alphabetiseur">
+			<p:panel header="Enregistrement de l'Alphabétiseur">
+			<fieldset>
+			<legend> Informations sur l'animateur</legend>
+			<h:panelGrid id="info_animateur" columns="6" cellpadding="8">
+			
+			<p:outputLabel for="input_nom_anim" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom_anim" value="#{centreControllers.animateur.nomAnimateur}"></p:inputText>
+			
+			<p:outputLabel for="input_prenom_anim" value="Prenoms:"></p:outputLabel>
+			<p:inputText id="input_prenom_anim" value="#{centreControllers.animateur.prenomAnimateur}" ></p:inputText>
+				    
+		   	<p:outputLabel for="date_nais_anim" value="Date naisance:"></p:outputLabel>
+			<p:calendar id="date_nais_anim" value="#{centreControllers.animateur.dateNaisAnimateur}" locale="fr" navigator="true" pattern="dd/MM/yyyy"/>
+			
+			<p:outputLabel for="input_telephone_anim" value="Téléphone:"></p:outputLabel>
+			<p:inputText id="input_telephone_anim" value="#{centreControllers.animateur.telephoneAnimateur}" ></p:inputText>
+			
+			<p:outputLabel for="input_adresse_anim" value="Adresse:"></p:outputLabel>
+			<p:inputText id="input_adresse_anim" value="#{centreControllers.animateur.adresseAnimateur}" ></p:inputText>
+			
+			<p:outputLabel for="input_mail_anim" value="E-Mail:"></p:outputLabel>
+			<p:inputText id="input_mail_anim" value="#{centreControllers.animateur.mailAnimateur}"></p:inputText>
+			
+			<p:outputLabel for="cb_genre" value="Genre: "/>
+			<p:selectOneMenu id="cb_genre" required="true" value="#{centreControllers.idGenre}">
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+			<f:selectItems value="#{centreControllers.listGenre}" var="tata" itemLabel="#{tata.libelleGenre}" itemValue="#{tata.idGenre}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_niveau" value="Niveau:"/>
+			<p:selectOneMenu id="cb_niveau" required="true" value="#{centreControllers.idNiveau}">
+			<p:ajax listener="#{centreControllers.choisirNiveauFormateur}" event="change" process="@this"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+			<f:selectItems value="#{centreControllers.listNiveauAnimateur}" var="tata" itemLabel="#{tata.nomNiveau}" itemValue="#{tata.idNiveau}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_activite_principale" value="Activité principale: "/>
+			<p:selectOneMenu id="cb_activite_principale" required="true" value="#{centreControllers.idActivitePrimaire}">
+			<p:ajax listener="#{centreControllers.choisirActivitePricipale}" event="change" process="@this"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+			<f:selectItems value="#{centreControllers.listActivite}" var="tata" itemLabel="#{tata.nomActivite}" itemValue="#{tata.idActivite}"></f:selectItems>
+			</p:selectOneMenu>
+			
+			<p:outputLabel for="cb_activite_secondaire" value="Activité secondaire: "/>
+			<p:selectOneMenu id="cb_activite_secondaire" value="#{centreControllers.idActiviteSecondaire}">
+			<p:ajax listener="#{centreControllers.choisirActiviteSecondaire}" event="change" process="@this"></p:ajax>
+			<f:selectItem itemLabel="Selectionnez" itemValue=""/>
+			<f:selectItems value="#{centreControllers.listActivite}" var="tata" itemLabel="#{tata.nomActivite}" itemValue="#{tata.idActivite}"></f:selectItems>
+			</p:selectOneMenu>
+	    	
+	    	</h:panelGrid>
+	    	</fieldset>
+	   
+	    </p:panel>
+			</p:tab>
+			
+			
+			<p:tab id="recap" title="Recapitulatif">
+				<p:panel header="Recapitulatif d'informentions">
+				
+				<table border="1">
+				<tr>
+				    <th scope="col">PROMOTEUR</th>
+				    <th scope="col">CENTRE</th>
+				    <th scope="col">ALPHABETISEUR</th>
+				 </tr>
+					<tr>
+						<td>
+					
+					<h4><p:outputLabel value="#{centreControllers.naturePromoteur}"/></h4>
+					<h:panelGrid id="recap_grid_ph" columns="2" cellpadding="8" rendered="#{centreControllers.recap_grid_ph}">
+					<p:outputLabel value="Nom:"/>
+					<p:outputLabel value="#{centreControllers.personnePhysique.nomPersonne}"/>
+					
+					<p:outputLabel value="Prénoms:"/>
+					<p:outputLabel value="#{centreControllers.personnePhysique.prenomsPersonne}"/>
+					
+					<p:outputLabel value="Numéro CNI:"/>
+					<p:outputLabel value="#{centreControllers.personnePhysique.numCni}"/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{centreControllers.personnePhysique.telephonePersonne}"/>
+					
+					<p:outputLabel value="E-mail:"/>
+					<p:outputLabel value="#{centreControllers.personnePhysique.mailPersonne}"/>
+					
+					<p:graphicImage id="graphIm_1" value="#{centreControllers.content}" height="110" width="110"></p:graphicImage>
+					</h:panelGrid>
+					
+					<h:panelGrid id="recap_grid_pm" columns="2" cellpadding="8" rendered="#{centreControllers.recap_grid_pm}">
+					<p:outputLabel value="Raison sociales:"/>
+					<p:outputLabel value="#{centreControllers.personneMorale.raisonSociale}"/>
+					
+					<p:outputLabel value="N°CC"/>
+					<p:outputLabel value=""/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{centreControllers.personneMorale.telephonePersMorale}"/>
+					</h:panelGrid>
+					
+					<h:panelGrid id="recap_grid_ong" columns="2" cellpadding="8" rendered="#{centreControllers.recap_grid_ong}">
+					<p:outputLabel value="Dénomination:"/>
+					<p:outputLabel value="#{centreControllers.ong.nomOng}"/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{centreControllers.ong.telephoneOng}"/>
+					
+					<p:outputLabel value="Mail:"/>
+					<p:outputLabel value="#{centreControllers.ong.mailOng}"/>
+					</h:panelGrid>
+					
+					<h:panelGrid id="recap_grid_prog" columns="2" cellpadding="8" rendered="#{centreControllers.recap_grid_prog}">
+					<p:outputLabel value="Nom programme:"/>
+					<p:outputLabel value="#{centreControllers.programme.libelleProgramme}"/>
+					</h:panelGrid>
+					
+					<h:panelGrid id="recap_grid_mini" columns="2" cellpadding="8" rendered="#{centreControllers.recap_grid_mini}">
+					<p:outputLabel value="Nom:"/>
+					<p:outputLabel value="#{centreControllers.ministere.nomMinistere}"/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{centreControllers.ministere.telephoneMinistere}"/>
+					</h:panelGrid>
+				</td>
+					
+					
+					<td>
+					<h:panelGrid id="recap_grid_recap" columns="4" cellpadding="8">
+					<p:outputLabel value="Département:"/>
+					<p:outputLabel value="#{centreControllers.choosedDepartement.nomDepartement}"/>
+					
+					<p:outputLabel value="Sous-préfecture:"/>
+					<p:outputLabel value="#{centreControllers.choosedSousPrefecture.nomSousPrefecture}"/>
+					
+					<p:outputLabel value="DRENA:"/>
+					<p:outputLabel value="#{centreControllers.choosedDrena.nomDrena}"/>
+					
+					<p:outputLabel value="IEP:"/>
+					<p:outputLabel value="#{centreControllers.choosedIep.nomIep}"/>
+					
+					<p:outputLabel value="Localité:"/>
+					<p:outputLabel value="#{centreControllers.localite.nomLocalite}"/>
+					
+					
+					<p:outputLabel value="Abréviation:"/>
+					<p:outputLabel value="#{centreControllers.centre.abreviationNomCentre}"/>
+					
+					<p:outputLabel value="Adresse:"/>
+					<p:outputLabel value="#{centreControllers.centre.adresseCentre}"/>
+					
+					<p:outputLabel value="Téléphone:"/>
+					<p:outputLabel value="#{centreControllers.centre.telephoneCentre}"/>
+					
+					<p:outputLabel value="Mail:"/>
+					<p:outputLabel value="#{centreControllers.centre.mailCentre}"/>
+					
+					<p:outputLabel value="Nature centre:"/>
+					<p:outputLabel value="#{centreControllers.natureCentre.libelleNature}"/>
+					
+					<p:outputLabel value="Nature projet:"/>
+					<p:outputLabel value="#{centreControllers.natureProjet.libelleNatureProjet}"/>
+					
+					<p:outputLabel value="Permanent:"/>
+					<p:outputLabel value="#{centreControllers.etatPermanence}"/>
+					
+					<p:outputLabel value="Nature lieu:"/>
+					<p:outputLabel value="#{centreControllers.etatLieu}"/>
+					
+					<p:outputLabel value="Lieu:"/>
+					<p:outputLabel value="#{centreControllers.etatLieu}"/>
+					
+					<p:outputLabel value="Latitude:"/>
+					<p:outputLabel value="#{centreControllers.centre.latitude}"/>
+					
+					<p:outputLabel value="Longitude:"/>
+					<p:outputLabel value="#{centreControllers.centre.longitude}"/>
+					
+					<p:outputLabel value="Type alphabétisation:"/>
+					<p:outputLabel value="#{centreControllers.typeAlphabetisation.libTypeAlpha}"/>
+					
+					<p:outputLabel value="Langue:"/>
+					<p:outputLabel value="#{centreControllers.langue.libLangue}"/>
+					
+					<p:outputLabel value="Niveau de formation:"/>
+					<p:outputLabel value="#{centreControllers.value1}, #{centreControllers.value2}, #{centreControllers.value3}"/>
+					
+					<p:outputLabel value="Fiche demande:"/>
+					<p:outputLabel value=""/>
+				</h:panelGrid>
+					</td>
+					
+					<td>
+						<h:panelGrid id="recap_grid_alpha" columns="2" cellpadding="8">
+							<p:outputLabel value="Nom:"/>
+							<p:outputLabel value="#{centreControllers.animateur.nomAnimateur}"/>
+							
+							<p:outputLabel value="Prénoms:"/>
+							<p:outputLabel value="#{centreControllers.animateur.prenomAnimateur}"/>
+							
+							<p:outputLabel value="Date naissance:"/>
+							<p:outputLabel value="#{centreControllers.animateur.dateNaisAnimateur}" pattern="dd/MM/yyyy"/>
+							
+							<p:outputLabel value="Téléphone:"/>
+							<p:outputLabel value="#{centreControllers.animateur.telephoneAnimateur}"/>
+							
+							<p:outputLabel value="Adresse:"/>
+							<p:outputLabel value="#{centreControllers.animateur.adresseAnimateur}"/>
+							
+							<p:outputLabel value="Genre:"/>
+							<p:outputLabel value="#{centreControllers.animateur.genre.libelleGenre}"/>
+							
+							<p:outputLabel value="Niveau:"/>
+							<p:outputLabel value="#{centreControllers.niveauAnimateur.nomNiveau}"/>
+							
+							<p:outputLabel value="Activité principale:"/>
+							<p:outputLabel value="#{centreControllers.activitePrimaire.nomActivite}"/>
+							
+							<p:outputLabel value="Activité secondaire:"/>
+							<p:outputLabel value="#{centreControllers.activiteSecondaire.nomActivite}"/>
+						</h:panelGrid>
+						
+					</td>
+					</tr>
+				</table>
+				
+			<br></br> 
+	    	<p:toolbar >
+			<f:facet name="right">
+				<p:commandButton value="Enregistrer" action="#{centreControllers.enregistrer}" immediate="true" update="@parent, :form" oncomplete="document.location.reload(false)" ajax="true">
+				<p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?" ></p:confirm>
+				</p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{centreControllers.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{centreControllers.annuler}" update="form"></p:commandButton>
+			</f:facet>
+				</p:toolbar>
+				
+			</p:panel>
+			</p:tab>
+			
+			
+		</p:wizard>
+		
+		<br></br>
+	    
+	    <p:dataTable id="data" var="toto" value="#{centreControllers.listObject}"        
+	     rows="5" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    
+	    	<f:facet name="header">
+                Liste des centres
+            </f:facet>	
+	    	<p:column headerText="Code">
+	    		<h:outputText value="#{toto.codeCentre}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Nom ">
+	    		<h:outputText value="#{toto.nomCentre}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Téléphone">
+	    		<h:outputText value="#{toto.telephoneCentre}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Localité">
+	    		<h:outputText value="#{toto.localiteDImplantation.nomLocalite}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Promoteur">
+	    		<h:outputText value="#{toto.promoteur.codePromoteur}" />
+	    	</p:column>
+	    
+	    	<p:column headerText="Nature centre">
+	    		<h:outputText value="#{toto.nature.libelleNature}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Lieu implantation">
+	    		<h:outputText value="#{toto.localiteDImplantation.nomLocalite}" />
+	    	</p:column>
+	    
+	    </p:dataTable>
+	    
+		<br />
+		
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
+	   
+		</h:form>
+	
+	</ui:define>
+
+</ui:composition> 
+</html>

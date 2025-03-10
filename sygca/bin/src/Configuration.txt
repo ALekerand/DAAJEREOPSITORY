@@ -1,0 +1,44 @@
+===================== CONFIGURATION ====================
+
+
+
+ =============== LAZY =====================
+ DEPARTEMENT ========> SOUSPREFECTURE
+ DEPARTEMENT ========> DRENADEPARTEMENT
+ 
+ DRENA ========> IEPS
+ 
+ DRENADEPARTEMENT ========> DRENA
+ 
+ 
+ SOUPREFECTURE ========> DEPARTEMENT
+ SOUPREFECTURE ========> LOCALITEDIMPLEMENTATION
+ 
+ LocaliteImplementation ========> Commune
+ LocaliteImplementation ========> SousPrefecture
+ LocaliteImplementation  ========> CENTRE (Set)
+ 
+ USERAUTHENTIFICATION ========> RESPONSABLE
+ 
+ CENTRE ========> LocaliteImplementation
+ CENTRE ========> NATURE
+ CENTRE ========> PROMOTEUR
+ CENTRE ========> IEP
+ CENTRE ========> ECOLE
+ 
+ SERVICE RESPONSABLE ========> DRENA
+ SERVICE RESPONSABLE ========> IEP
+ SERVICE RESPONSABLE ========> RESPONSABLE
+ 
+ 
+ 
+ IEP ========> DRENA
+ IEP ========> CENTRES
+ 
+ ECOLE ========> IEP
+ 
+ CAMPAGNE ========> ENSEIGNE
+ 
+ ENSEIGNER ========> CENTRE
+ 
+ 

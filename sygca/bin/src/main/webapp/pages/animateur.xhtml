@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h:form id="form">
+		<p:messages autoUpdate="true" closable="true" showDetail="false"/>
+		
+		<p:panel header="Enregistrement des animateurs">
+		<fieldset>
+		<legend>Informations sur l'animateur</legend>
+		<h:panelGrid id="info_grid" columns="6" cellpadding="8">		
+			<p:outputLabel for="input_code" value="Code:"></p:outputLabel>
+			<p:inputText id="input_code" value="#{animateurContoller.animateur.codeAnimateur}" readonly="true"></p:inputText>
+			
+			<p:outputLabel for="input_nom" value="Nom:"></p:outputLabel>
+			<p:inputText id="input_nom" value="#{animateurContoller.animateur.nomAnimateur}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_prenom" value="Prénom:"></p:outputLabel>
+			<p:inputText id="input_prenom" value="#{animateurContoller.animateur.prenomAnimateur}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_age" value="Date de naissance:"></p:outputLabel>
+			<p:calendar id="input_age" value="#{animateurContoller.animateur.dateNaisAnimateur}" required="true" pattern="dd/MM/yyyy"></p:calendar>
+			
+			<p:outputLabel for="input_tel" value="Contact:"></p:outputLabel>
+			<p:inputText id="input_tel" value="#{animateurContoller.animateur.telephoneAnimateur}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_arrivee" value="Adresse:"></p:outputLabel>
+			<p:inputText id="input_arrivee" value="#{animateurContoller.animateur.adresseAnimateur}" required="true"></p:inputText>
+			
+			<p:outputLabel for="input_adresse" value="Mail:"></p:outputLabel>
+			<p:inputText id="input_adresse" value="#{animateurContoller.animateur.mailAnimateur}" required="true"></p:inputText>
+			
+		</h:panelGrid>
+			
+			
+		<h:panelGrid columns="6" cellpadding="8">			
+			<p:outputLabel for="cb_niv_animateur" value="Niveau animateur:" />
+            <p:selectOneMenu id="cb_niv_animateur" value="#{animateurContoller.idNiveau}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{animateurContoller.listNiveauAnimateur}" var="toto" itemLabel="#{toto.nomNiveau}" itemValue="#{toto.idNiveau}" />
+			</p:selectOneMenu>
+					
+			<p:outputLabel for="cb_genre" value="Genre:" />
+            <p:selectOneMenu id="cb_genre" value="#{animateurContoller.idGenre}">
+            <f:selectItem itemLabel="Selctionnez" itemValue=""/>
+            <f:selectItems value="#{animateurContoller.listGenre}" var="toto" itemLabel="#{toto.libelleGenre}" itemValue="#{toto.idGenre}" />
+			</p:selectOneMenu>			
+		</h:panelGrid>
+	    
+	    </fieldset>
+	    </p:panel>
+	    
+	    <br />
+	    
+	    <p:toolbar >
+			<f:facet name="left">
+				<p:commandButton value="Enregistrer" actionListener="#{animateurContoller.enregistrer}" update="form"><p:confirm header="Confirmation" message="confirmez-vous l'enregistrement?"></p:confirm></p:commandButton>
+				<p:commandButton value="Modifier" actionListener="#{animateurContoller.modifier}" update="form"><p:confirm header="Confirmation" message="confirmez-vous la modification?"></p:confirm></p:commandButton>
+				<p:commandButton value="Annuler" process="@this" actionListener="#{animateurContoller.annuler}" update="form"></p:commandButton>
+			</f:facet>
+		</p:toolbar>	    
+	    
+	    <br />
+	    	    
+	    <p:dataTable id="data" var="toto" value="#{animateurContoller.listObject}" selectionMode="single" selection="#{animateurContoller.selectedObject}" rowKey="#{toto.idAnimateur}"       
+	     rows="10" paginatorPosition="bottom" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+	    
+	    <p:ajax event="rowSelect" process="@this" listener="#{animateurContoller.selectionnerLigne}" update="form"></p:ajax>
+	    	<f:facet name="header">
+                Liste des services responsables
+            </f:facet>	
+	    	<p:column headerText="Code">
+	    		<h:outputText value="#{toto.codeAnimateur}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Niveau animateur">
+	    		<h:outputText value="#{toto.nomAnimateur}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Prénom">
+	    		<h:outputText value="#{toto.prenomAnimateur}" />	
+	    	</p:column>	
+	    	
+	    	<p:column headerText="Date de naissance">
+	    		<h:outputText value="#{toto.dateNaisAnimateur}" >
+	    		<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    		</h:outputText>
+	    	</p:column>
+	    	
+	    	<p:column headerText="Téléphone">
+	    		<h:outputText value="#{toto.telephoneAnimateur}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Adresse">
+	    		<h:outputText value="#{toto.adresseAnimateur}" />
+	    	</p:column>
+	    	
+	    	<p:column headerText="Mail">
+	    		<h:outputText value="#{toto.mailAnimateur}" />
+	    	</p:column>
+	    
+	    </p:dataTable>
+		
+				
+<br />
+
+
+		<br/>
+		
+		
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	   <p:commandButton value="Oui" type="button"
+	   styleClass="ui-confirmdialog-yes" icon="ui-icon-check" >
+	   </p:commandButton>
+	   <p:commandButton value="Non" type="button"
+	   styleClass="ui-confirmdialog-no" icon="ui-icon-close" >
+	   </p:commandButton>
+	  </p:confirmDialog>
+	   
+		</h:form>
+	
+	</ui:define>
+	
+	</ui:composition>
+</html>
