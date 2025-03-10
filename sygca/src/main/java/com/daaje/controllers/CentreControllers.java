@@ -95,6 +95,7 @@ public class CentreControllers {
 	private RequeteUtilisateur requeteUtilisateur;
 	
 	
+	
 	private Centre centre = new Centre();
 	private int idLocalite;
 	private int idIep;
